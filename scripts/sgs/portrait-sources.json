@@ -1,0 +1,58 @@
+{
+  "cuizhi": {
+    "url": "https://web.sanguosha.com/10/pc/res/assets/runtime/general/big/static/1185301.png",
+    "page": "https://x.sanguosha.com/hero/1853.html",
+    "evidence": "Official hero list: 崔芷, gid 1853, resource 1185301."
+  },
+  "key_crow": {
+    "url": "https://d235zo2kjgm9jl.cloudfront.net/original/2X/f/fd3a04b3627eebcd8d0877b89c6c83572de75916.jpg",
+    "page": "https://forum.kazamatsuri.org/t/air-sora-character-discussion/1175",
+    "evidence": "AIR Sora character discussion, attachment Sora.jpg, verified crow at right.",
+    "centering": [
+      0.75,
+      0.5
+    ]
+  },
+  "sunhe": {
+    "url": "https://www.cne3online.com/biography/pic/id/240/359.jpg",
+    "page": "https://www.cne3online.com/biography/view/%E5%AD%99%E5%92%8C.shtml",
+    "evidence": "Person page identifies Sun He, courtesy name Zixiao, son of Sun Quan. Image visually checked.",
+    "note": "同人物资料画像"
+  },
+  "zhangjian": {
+    "url": "https://p3-sdbk2-media.byteimg.com/tos-cn-i-xv4ileqgde/ea3f61a65b6e49cda75a19c686dc5303~tplv-xv4ileqgde-resize-w%3A360.image",
+    "page": "https://www.baike.com/wikiid/7932598171386044310",
+    "evidence": "Person page and image inscription identify 張臶 子明. Image visually checked.",
+    "note": "同人物历史画像"
+  },
+  "hanxuan": {
+    "url": "https://cdn.wikiwiki.jp/to/w/sangokushi14/%E9%9F%93%E7%8E%84/::ref/%E3%82%AB%E3%83%B3%E3%82%B2%E3%83%B3.jpg?rev=8882da48d71c2fa3b675867595b7ec1a&t=20200316210330",
+    "page": "https://wikiwiki.jp/sangokushi14/%E9%9F%93%E7%8E%84",
+    "evidence": "Koei Tecmo ROTK14 page: 韓玄, Changsha prefect, full portrait visually checked.",
+    "note": "同人物画像 · 三国志14"
+  },
+  "pot_lvyi": {
+    "url": "https://cdn.wikiwiki.jp/to/w/sangokushi14/%E5%91%82%E5%A3%B1/::ref/%E3%83%AA%E3%83%A7%E3%82%A4%E3%83%84.jpg?rev=cd0e9c0a0ada867c9d7bd59621fb169d&t=20200402000620",
+    "page": "https://wikiwiki.jp/sangokushi14/%E5%91%82%E5%A3%B1",
+    "evidence": "Koei Tecmo ROTK14 page: 呂壱, Wu official favored by Sun Quan; image visually checked, matches official tweet reported by 3dmgame 2019.",
+    "note": "同人物画像 · 三国志14"
+  },
+  "dengwantang": {
+    "url": "https://patchwiki.biligame.com/images/msgs/1/17/f36ktt3no886poa6fx0cctg5r1rh411.png",
+    "page": "https://www.bilibili.com/video/BV1hjTt6DEZw/",
+    "evidence": "2026-07-04 public test gameplay at 00:06 identifies 邓晚棠·体验 and the generic female silhouette. The full silhouette asset is hosted by BWIKI under a misleading Han Xuan filename; it is not used as Han Xuan. User approved the labeled test silhouette.",
+    "note": "公开测试形象 · 剪影"
+  },
+  "liupanxi": {
+    "url": "https://patchwiki.biligame.com/images/msgs/1/17/f36ktt3no886poa6fx0cctg5r1rh411.png",
+    "page": "https://www.bilibili.com/video/BV1j1hk6hEq2/",
+    "evidence": "Public gameplay cover identifies 刘盼兮·体验 and the same generic female silhouette. Another introduction BV15whB65EqM at 00:16 explicitly states 新杀原画暂无. User approved the labeled test silhouette.",
+    "note": "公开测试形象 · 剪影"
+  },
+  "luwenyi": {
+    "url": "https://patchwiki.biligame.com/images/msgs/1/17/f36ktt3no886poa6fx0cctg5r1rh411.png",
+    "page": "https://wiki.biligame.com/sgs/%E9%99%86%E6%96%87%E6%BC%AA",
+    "evidence": "Character page identifies the female test hero but contains no portrait. No independently verified character-card image was found; use the existing public generic female test silhouette as explicitly accepted by the user for this ID, not as a verified dedicated illustration.",
+    "note": "测试剪影暂代 · 独立画像待补"
+  }
+}

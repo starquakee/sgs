@@ -1,0 +1,26 @@
+dist
+output
+dist-sgs/
+.sgs-build.log
+.sgs-assets-cache/
+scripts/ralph/.last-branch
+node_modules
+package-lock.json
+
+# IDE
+.idea/
+.vscode/
+
+# macOS
+._*
+.Spotlight-V100
+.Trashes
+.DS_Store
+.DS_Store?
+
+# Windows
+ehthumbs.db
+Thumbs.db
+
+# Skill for private use
+.agents/skills/*-selfuse

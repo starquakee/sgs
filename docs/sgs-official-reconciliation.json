@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-03",
+  "fullRosterStatus": "pending",
+  "officialTotal": null,
+  "entries": [
+    {
+      "character": "xianding:dc_sb_zhouyu",
+      "officialName": "谋周瑜",
+      "source": "https://x.sanguosha.com/news/20260309_7109_3517.html",
+      "publicationDate": "2026-03-11",
+      "effectiveVersion": "6.3.5 / 2026-03-12",
+      "textReview": "Core triggers, opening conversion, faction-based additive fire damage, extra-target rule, and Yingmou branches are present in upstream description. This is a dated reference, not a claim that no later revisions exist.",
+      "skills": [
+        {"id": "dcsbyingmou", "behaviorStatus": "partially-sampled", "evidence": "docs/sgs-validation.md", "remaining": ["yin branch", "no-damage fallback", "once-per-turn interactions"]},
+        {"id": "dcsbronghuo", "behaviorStatus": "partially-sampled", "evidence": "docs/sgs-validation.md", "remaining": ["additional target selection", "chained fire damage", "faction changes during resolution"]}
+      ]
+    }
+  ]
+}

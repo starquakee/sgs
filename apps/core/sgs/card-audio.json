@@ -1,0 +1,1487 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "attribution": [
+    {
+      "name": "Noname / 无名杀",
+      "repository": "https://github.com/libnoname/noname",
+      "commit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+      "license": "GPL-3.0",
+      "licenseUrl": "https://github.com/libnoname/noname/blob/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/LICENSE"
+    },
+    {
+      "name": "Microsoft Windows 中文系统语音（桃）",
+      "engine": "System.Speech / SAPI",
+      "note": "本机合成的桃字读音；非官方游戏配音，未分发系统语音引擎。"
+    }
+  ],
+  "scope": "All pinned Noname card recordings plus two explicitly labeled local Chinese system voices saying Peach; no background music or hero skill/death packs.",
+  "uniqueFiles": 160,
+  "totalBytes": 1577317,
+  "aliases": {
+    "card/male/huosha": "card/male/sha_fire",
+    "card/male/leisha": "card/male/sha_thunder",
+    "card/male/icesha": "card/male/sha_ice",
+    "card/male/cisha": "card/male/sha_stab",
+    "card/female/huosha": "card/female/sha_fire",
+    "card/female/leisha": "card/female/sha_thunder",
+    "card/female/icesha": "card/female/sha_ice",
+    "card/female/cisha": "card/female/sha_stab"
+  },
+  "clips": {
+    "card/female/bagua": {
+      "key": "card/female/bagua",
+      "file": "audio/card/female/bagua.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/bagua.mp3",
+      "sourceGitBlob": "2de4cfe08ef5e5a3d7d4f377b62cb619e4b5ee2c",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "02fc83d3a47c8a9740a0b788a0ea3622a57769d31c4856649f27d9d8b15cdecd"
+    },
+    "card/female/baiyin": {
+      "key": "card/female/baiyin",
+      "file": "audio/card/female/baiyin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/baiyin.mp3",
+      "sourceGitBlob": "c88e17582c9f5e76e4286461852b7130f4669948",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "7cc1eed77b413d72e103860b9da3e93ec2dee71635371dae273cb6ed5f0135f0"
+    },
+    "card/female/bingliang": {
+      "key": "card/female/bingliang",
+      "file": "audio/card/female/bingliang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/bingliang.mp3",
+      "sourceGitBlob": "2749c9a3de2bbd1325ac80852951b20c7690b120",
+      "kind": "upstream-card-audio",
+      "bytes": 5491,
+      "sha256": "4e94413716127b6585a36a16cbf5b991fddaf6d09cd6b35eefcc77924855c155"
+    },
+    "card/female/binglinchengxiax": {
+      "key": "card/female/binglinchengxiax",
+      "file": "audio/card/female/binglinchengxiax.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/binglinchengxiax.mp3",
+      "sourceGitBlob": "8b002295051986195c4ab3340d8c5036e3bd12fc",
+      "kind": "upstream-card-audio",
+      "bytes": 17972,
+      "sha256": "637dc6a2e0a71b159a24357671c6d7e31900431706439770a5037e8bac1a8d44"
+    },
+    "card/female/caomu": {
+      "key": "card/female/caomu",
+      "file": "audio/card/female/caomu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/caomu.mp3",
+      "sourceGitBlob": "b16348259dad099d0f383e77e278c464411550ed",
+      "kind": "upstream-card-audio",
+      "bytes": 6897,
+      "sha256": "c2dd92f98757f97105aa3df6ce79fdc8b14554f3890c26a2b2a1595317890237"
+    },
+    "card/female/chenghuodajie": {
+      "key": "card/female/chenghuodajie",
+      "file": "audio/card/female/chenghuodajie.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/chenghuodajie.mp3",
+      "sourceGitBlob": "ff44e46964fb835d16b07d843116df4ef407c6e8",
+      "kind": "upstream-card-audio",
+      "bytes": 6085,
+      "sha256": "f57b640463e2011513ece66fa426862bd782567857cd3d6a51b5c96c0ca3ec15"
+    },
+    "card/female/chiling": {
+      "key": "card/female/chiling",
+      "file": "audio/card/female/chiling.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/chiling.mp3",
+      "sourceGitBlob": "35721fd10f00cbe053085147dbc30cdb0e415eaf",
+      "kind": "upstream-card-audio",
+      "bytes": 5207,
+      "sha256": "3ed74c005c8a1ef7f8a4d6b9fc705b6577883d66621bcd6f6c554018303eda0c"
+    },
+    "card/female/chitu": {
+      "key": "card/female/chitu",
+      "file": "audio/card/female/chitu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/chitu.mp3",
+      "sourceGitBlob": "01b0a03bfbbca0bfbdd5873d0391f83d9cd642b7",
+      "kind": "upstream-card-audio",
+      "bytes": 5895,
+      "sha256": "2e24eaf7c3b50231e16e49250e33e496f736d101f9ccb5e7ac3691fbc9336610"
+    },
+    "card/female/chuqibuyi": {
+      "key": "card/female/chuqibuyi",
+      "file": "audio/card/female/chuqibuyi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/chuqibuyi.mp3",
+      "sourceGitBlob": "32149a3a21d67ea8810d7bb03b3dd01eae08a7cb",
+      "kind": "upstream-card-audio",
+      "bytes": 15874,
+      "sha256": "02d92f755116bde3908cb4d83ab78135c7f546c77261b8d7a1f17da0c28b2d37"
+    },
+    "card/female/cixiong": {
+      "key": "card/female/cixiong",
+      "file": "audio/card/female/cixiong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/cixiong.mp3",
+      "sourceGitBlob": "ed3b43a067e85bbecd1364600e2483801d1a5aca",
+      "kind": "upstream-card-audio",
+      "bytes": 13000,
+      "sha256": "d079d86704b6cb8d38ad55fbb96d5bff34582e23db2b93a0eb2318c4ba1dc4b8"
+    },
+    "card/female/dawan": {
+      "key": "card/female/dawan",
+      "file": "audio/card/female/dawan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/dawan.mp3",
+      "sourceGitBlob": "2a9a49d2e06c8414058793b02c1acb1079655baf",
+      "kind": "upstream-card-audio",
+      "bytes": 38553,
+      "sha256": "85df046706dfc819a26f0017da988610749bc9954295894b55af97226ac826bf"
+    },
+    "card/female/diaohulishan": {
+      "key": "card/female/diaohulishan",
+      "file": "audio/card/female/diaohulishan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/diaohulishan.mp3",
+      "sourceGitBlob": "b7d7442903d2cd1715beddd0613e8f07addd7f1c",
+      "kind": "upstream-card-audio",
+      "bytes": 5337,
+      "sha256": "402cdfd942d0663b01725fcb131d989c75b624f772427ac82e24df3cbfc4d01a"
+    },
+    "card/female/dilu": {
+      "key": "card/female/dilu",
+      "file": "audio/card/female/dilu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/dilu.mp3",
+      "sourceGitBlob": "b93278f43088c9ca650eeaf035d7da60b2952a15",
+      "kind": "upstream-card-audio",
+      "bytes": 7358,
+      "sha256": "6f1fde9f7182aacbdb380c85a69b50809d62b8fc1b928af5c6795f1ae0530138"
+    },
+    "card/female/dongzhuxianji": {
+      "key": "card/female/dongzhuxianji",
+      "file": "audio/card/female/dongzhuxianji.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/dongzhuxianji.mp3",
+      "sourceGitBlob": "caba8c91c10632f27900321208cc838dbd4e8066",
+      "kind": "upstream-card-audio",
+      "bytes": 17964,
+      "sha256": "0d228cd71fe3ec34966f9b99618b3e980bced9c6fb476e388de6e095420b57e3"
+    },
+    "card/female/dz_mantianguohai": {
+      "key": "card/female/dz_mantianguohai",
+      "file": "audio/card/female/dz_mantianguohai.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/dz_mantianguohai.mp3",
+      "sourceGitBlob": "249416839143fd20e2c6dcfb49dfbc369e68d3bb",
+      "kind": "upstream-card-audio",
+      "bytes": 49205,
+      "sha256": "a7004efff7c9810713d3c29c37c32ae95a77a7365f89c45e1a8f4f7bba1d5eb1"
+    },
+    "card/female/fangtian": {
+      "key": "card/female/fangtian",
+      "file": "audio/card/female/fangtian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/fangtian.mp3",
+      "sourceGitBlob": "3f0786f81d8b2254b537711a21d0ee310077e6e5",
+      "kind": "upstream-card-audio",
+      "bytes": 10910,
+      "sha256": "51764e99ce3adf04b1c8489e1e309b0628c540c75771de96b0f9baf6518a5942"
+    },
+    "card/female/fulei": {
+      "key": "card/female/fulei",
+      "file": "audio/card/female/fulei.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/fulei.mp3",
+      "sourceGitBlob": "c8f989f15c58e496e98afa4ab582a0f41478f425",
+      "kind": "upstream-card-audio",
+      "bytes": 4557,
+      "sha256": "e9bad984cb2a77e653cf25a992ceb527a6911ade962265a6b7c498682b9f279c"
+    },
+    "card/female/guaguliaodu": {
+      "key": "card/female/guaguliaodu",
+      "file": "audio/card/female/guaguliaodu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/guaguliaodu.mp3",
+      "sourceGitBlob": "2cfd503ce285c0fbf39b8df95ce43809c7f6b4c8",
+      "kind": "upstream-card-audio",
+      "bytes": 5797,
+      "sha256": "bd34daf45146fc7e9d95e3240a36b6e6dc24be8a0b0514189587010689be479b"
+    },
+    "card/female/guanshi": {
+      "key": "card/female/guanshi",
+      "file": "audio/card/female/guanshi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/guanshi.mp3",
+      "sourceGitBlob": "c9a37329bdfcccc24ca8c6b964a244b2466609f2",
+      "kind": "upstream-card-audio",
+      "bytes": 8821,
+      "sha256": "ddb58f720e9d71fec3ffda3e96dd3e6dbf9fdc750f5dd11628294e6b008fccb6"
+    },
+    "card/female/guding": {
+      "key": "card/female/guding",
+      "file": "audio/card/female/guding.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/guding.mp3",
+      "sourceGitBlob": "ee62bd80fbe67a633597d28d9c596c9bde5f8d9f",
+      "kind": "upstream-card-audio",
+      "bytes": 7567,
+      "sha256": "3801f9abe0d973d7482c93379de9f67c92a1d4584e37bd011a23e2d14516ee54"
+    },
+    "card/female/guohe": {
+      "key": "card/female/guohe",
+      "file": "audio/card/female/guohe.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/guohe.mp3",
+      "sourceGitBlob": "c2e87a1d437894b9b11f214879d77cf95371c658",
+      "kind": "upstream-card-audio",
+      "bytes": 5274,
+      "sha256": "e1fd57009411c4c375b0784d18343cdd282595e7656b4f6ba725838561336bc4"
+    },
+    "card/female/gz_guguoanbang": {
+      "key": "card/female/gz_guguoanbang",
+      "file": "audio/card/female/gz_guguoanbang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/gz_guguoanbang.mp3",
+      "sourceGitBlob": "48e980ba6a7d9434dbaee5e48b00de2e99a552ff",
+      "kind": "upstream-card-audio",
+      "bytes": 4464,
+      "sha256": "c09f057f0e86e72cca2c0048f6c81458c3ac5f4a83e1c478c41178ecc571a2b6"
+    },
+    "card/female/gz_haolingtianxia": {
+      "key": "card/female/gz_haolingtianxia",
+      "file": "audio/card/female/gz_haolingtianxia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/gz_haolingtianxia.mp3",
+      "sourceGitBlob": "ad69376d498f2241929a11e630a9af974fa9bf1a",
+      "kind": "upstream-card-audio",
+      "bytes": 4896,
+      "sha256": "a070e586fddc0fd4677780aadf0dc9b7f6cc0fdca60342e762f47f836e4b573b"
+    },
+    "card/female/gz_kefuzhongyuan": {
+      "key": "card/female/gz_kefuzhongyuan",
+      "file": "audio/card/female/gz_kefuzhongyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/gz_kefuzhongyuan.mp3",
+      "sourceGitBlob": "2a00bea11d804ae382161c78a1dba9796343ab6a",
+      "kind": "upstream-card-audio",
+      "bytes": 5924,
+      "sha256": "ce5611ee882ac09988435b5eb864d15a2b67fa8a9c421315af36fbac0a10724b"
+    },
+    "card/female/gz_wenheluanwu": {
+      "key": "card/female/gz_wenheluanwu",
+      "file": "audio/card/female/gz_wenheluanwu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/gz_wenheluanwu.mp3",
+      "sourceGitBlob": "e74e4c865b0a66dcd3279869e2cd7899e71974eb",
+      "kind": "upstream-card-audio",
+      "bytes": 5040,
+      "sha256": "e4c331c58bbda543d270e54f2c67ce439d374eca49dc67cfef197c9422faeece"
+    },
+    "card/female/hanbing": {
+      "key": "card/female/hanbing",
+      "file": "audio/card/female/hanbing.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/hanbing.mp3",
+      "sourceGitBlob": "417ce571573cfcc8c88d69275c5bba15a3a9eed1",
+      "kind": "upstream-card-audio",
+      "bytes": 7985,
+      "sha256": "02e594665eb4bfbf9fd52fac967fd6a1d2fa68d12bad3bd1a7159c1067ec938d"
+    },
+    "card/female/hualiu": {
+      "key": "card/female/hualiu",
+      "file": "audio/card/female/hualiu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/hualiu.mp3",
+      "sourceGitBlob": "fe891b0859c46192f5030e18714ae34a6168a6c1",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "6e447e62b85604bf14786678552678da8cf2f063e3ddf57b78f8b64a9817351b"
+    },
+    "card/female/huogong": {
+      "key": "card/female/huogong",
+      "file": "audio/card/female/huogong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/huogong.mp3",
+      "sourceGitBlob": "007398ae259fe0d41fe94fb77f659c5b12a71a93",
+      "kind": "upstream-card-audio",
+      "bytes": 3607,
+      "sha256": "bcce57246734e457dbfeb83d6e237fb1ec0a2911ee2ec20545abfee33d601136"
+    },
+    "card/female/huoshaolianying": {
+      "key": "card/female/huoshaolianying",
+      "file": "audio/card/female/huoshaolianying.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/huoshaolianying.mp3",
+      "sourceGitBlob": "eea018e3ab39648946dbed77cdc56d3d05343efa",
+      "kind": "upstream-card-audio",
+      "bytes": 7287,
+      "sha256": "4cf57472c567bda24c892e2a14dbac84dae9f112929da08ef8291fcc1b47cde6"
+    },
+    "card/female/jiedao": {
+      "key": "card/female/jiedao",
+      "file": "audio/card/female/jiedao.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/jiedao.mp3",
+      "sourceGitBlob": "1b809f86d98a5f56f30a89781d85f060878b3cc1",
+      "kind": "upstream-card-audio",
+      "bytes": 5590,
+      "sha256": "5fbc53eab4ea9b9e5767bc02ca54a80e785f26f86bd431ceaf18645f7c9b15a1"
+    },
+    "card/female/jinchan": {
+      "key": "card/female/jinchan",
+      "file": "audio/card/female/jinchan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/jinchan.mp3",
+      "sourceGitBlob": "7d2dfc96b4c9519f08d34bb6e31edba745743231",
+      "kind": "upstream-card-audio",
+      "bytes": 6767,
+      "sha256": "6dae8bb1f6aa5c3b7bb5a611aad09531c96334a4d52c8df6d4ba0330d1e67ea8"
+    },
+    "card/female/jiu": {
+      "key": "card/female/jiu",
+      "file": "audio/card/female/jiu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/jiu.mp3",
+      "sourceGitBlob": "b7ca56ee6359199931239b337f4a65e48762d2fe",
+      "kind": "upstream-card-audio",
+      "bytes": 2638,
+      "sha256": "e51bf99e4c6a8d5dab5570c29d2581e6fdac5bbe1534c5de425f46c03d14f53d"
+    },
+    "card/female/juedou": {
+      "key": "card/female/juedou",
+      "file": "audio/card/female/juedou.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/juedou.mp3",
+      "sourceGitBlob": "7e2e4cd5b6a1928741d7e1537ace9c384ab3553b",
+      "kind": "upstream-card-audio",
+      "bytes": 3814,
+      "sha256": "00764c310f554a87f8e7820005b5c6998f662cfe9373ee094ecc0d25fb3e1a27"
+    },
+    "card/female/jueying": {
+      "key": "card/female/jueying",
+      "file": "audio/card/female/jueying.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/jueying.mp3",
+      "sourceGitBlob": "81312eff1f6bd4766ba59c0af2f5254fc47ab14a",
+      "kind": "upstream-card-audio",
+      "bytes": 6940,
+      "sha256": "f846bda932957e6f9893a017dac9eecc59c4a285dc8dd10e277dec08dc4dc8ac"
+    },
+    "card/female/kaihua": {
+      "key": "card/female/kaihua",
+      "file": "audio/card/female/kaihua.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/kaihua.mp3",
+      "sourceGitBlob": "84bc7464131881199b31f93b256b001b003ca5bb",
+      "kind": "upstream-card-audio",
+      "bytes": 6085,
+      "sha256": "fa0ce44e8684c9d46848ab8dc31efd1673d92de37a5bec8a276b529a5947a6e6"
+    },
+    "card/female/lebu": {
+      "key": "card/female/lebu",
+      "file": "audio/card/female/lebu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/lebu.mp3",
+      "sourceGitBlob": "08c4e34a8986925f14467faaf8075123f3e235bf",
+      "kind": "upstream-card-audio",
+      "bytes": 6213,
+      "sha256": "9252577338130bb30367bb73213987780215218d0f8d7bfdbc67c622af086e4d"
+    },
+    "card/female/lianjunshengyan": {
+      "key": "card/female/lianjunshengyan",
+      "file": "audio/card/female/lianjunshengyan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/lianjunshengyan.mp3",
+      "sourceGitBlob": "0762e1329079a17a4172734a0e53541ea52bbd24",
+      "kind": "upstream-card-audio",
+      "bytes": 6767,
+      "sha256": "62e72890d0e5995408526749dca6759243dce2abba8cce99fd72cc6874ed5313"
+    },
+    "card/female/lulitongxin": {
+      "key": "card/female/lulitongxin",
+      "file": "audio/card/female/lulitongxin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/lulitongxin.mp3",
+      "sourceGitBlob": "34848b20451014ed3e9ccb477434819289c57e5d",
+      "kind": "upstream-card-audio",
+      "bytes": 6377,
+      "sha256": "f4396bc1216dfd35c899d5bb781c2aabcfee3f1675ad2a385b09154cba9dd180"
+    },
+    "card/female/muniu": {
+      "key": "card/female/muniu",
+      "file": "audio/card/female/muniu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/muniu.mp3",
+      "sourceGitBlob": "2b7948b33fb64e11dcb0ed848162e2b6a288ab52",
+      "kind": "upstream-card-audio",
+      "bytes": 10284,
+      "sha256": "75c48b6d358411fea585cd04d91d64e1ac780dba20aae5867e82823fa87005c0"
+    },
+    "card/female/nanman": {
+      "key": "card/female/nanman",
+      "file": "audio/card/female/nanman.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/nanman.mp3",
+      "sourceGitBlob": "0a9b130bed530098d97cca57a18e8ce4fe5b5618",
+      "kind": "upstream-card-audio",
+      "bytes": 4859,
+      "sha256": "dc43269b20d10a4770ef7242f4b3189c80471ec610c52fd0233e2bff257944bd"
+    },
+    "card/female/qijia": {
+      "key": "card/female/qijia",
+      "file": "audio/card/female/qijia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/qijia.mp3",
+      "sourceGitBlob": "7c294a89135e5491594a69467cd02f3607fdd3f1",
+      "kind": "upstream-card-audio",
+      "bytes": 7027,
+      "sha256": "ccd70badde155d529154704b15ed63c66a1e4c304cc188cee648554148c578d7"
+    },
+    "card/female/qilin": {
+      "key": "card/female/qilin",
+      "file": "audio/card/female/qilin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/qilin.mp3",
+      "sourceGitBlob": "d0cc277a971aa9531f19893ecbbc908d4b7cdfcb",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "4a2a0590324095a71ab53533b9ec5ce512e36aaf7313a1f367f38b58005cd086"
+    },
+    "card/female/qinggang": {
+      "key": "card/female/qinggang",
+      "file": "audio/card/female/qinggang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/qinggang.mp3",
+      "sourceGitBlob": "11858587adecd1965d4051cea6f24c61b17c78ca",
+      "kind": "upstream-card-audio",
+      "bytes": 7567,
+      "sha256": "31cf29dfa14b6df71f6d91cd4ad40d1be9a679285bbc49ce7207b575172f2ba3"
+    },
+    "card/female/qinglong": {
+      "key": "card/female/qinglong",
+      "file": "audio/card/female/qinglong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/qinglong.mp3",
+      "sourceGitBlob": "4720d3736a4464db667f7b348e3d95e0f6511232",
+      "kind": "upstream-card-audio",
+      "bytes": 11746,
+      "sha256": "5ce42c9d477a9b3fd1974dacdcf0c026c982b992380b2aa79023e1235e4a25bd"
+    },
+    "card/female/qizhengxiangsheng": {
+      "key": "card/female/qizhengxiangsheng",
+      "file": "audio/card/female/qizhengxiangsheng.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/qizhengxiangsheng.mp3",
+      "sourceGitBlob": "55d7f7611f8c66b94ee677bc66e70427923546df",
+      "kind": "upstream-card-audio",
+      "bytes": 20866,
+      "sha256": "49937e03c595d87b0d82bd98031c3b39004a9cdbed55ae3f2cfef501b0b4f5bd"
+    },
+    "card/female/renwang": {
+      "key": "card/female/renwang",
+      "file": "audio/card/female/renwang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/renwang.mp3",
+      "sourceGitBlob": "3e0b4118b1d16d47e43f2171fcd472c6a03f9db5",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "b02f58430e24d0add4cf97edf5af107fa99db9350985edf27d99863d414881f9"
+    },
+    "card/female/sanjian": {
+      "key": "card/female/sanjian",
+      "file": "audio/card/female/sanjian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sanjian.mp3",
+      "sourceGitBlob": "83af0acd4501ddee6b8105f84bbf6d72052e1c92",
+      "kind": "upstream-card-audio",
+      "bytes": 12582,
+      "sha256": "cc77c90f22f41027dbc1ff0a0af9cb806ab13ab51f68d8c430c6ba2e5174dc96"
+    },
+    "card/female/sha": {
+      "key": "card/female/sha",
+      "file": "audio/card/female/sha.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sha.mp3",
+      "sourceGitBlob": "258e4793e3d7003ba8d1ce9f636e60c233b2360f",
+      "kind": "upstream-card-audio",
+      "bytes": 2972,
+      "sha256": "ad44d3e07b317ad350bb9cd1727610a6bf9a177e840c5b4278d7242ded916b0b"
+    },
+    "card/female/sha_fire": {
+      "key": "card/female/sha_fire",
+      "file": "audio/card/female/sha_fire.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sha_fire.mp3",
+      "sourceGitBlob": "6cbce2334e94f61811fbdfdde56c85109c379736",
+      "kind": "upstream-card-audio",
+      "bytes": 3609,
+      "sha256": "2659d4b9df7cc48bd4056d1aaa6c08490e9e0ba1408af9087a4c3b835e5a8a50"
+    },
+    "card/female/sha_ice": {
+      "key": "card/female/sha_ice",
+      "file": "audio/card/female/sha_ice.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sha_ice.mp3",
+      "sourceGitBlob": "acd7e8d41ff4777ef736b0373ce325279e1ab9ce",
+      "kind": "upstream-card-audio",
+      "bytes": 10859,
+      "sha256": "60549793f359cb1446c723448aa9ff8ff54744c07bad03810be4ad21bdf660f4"
+    },
+    "card/female/sha_stab": {
+      "key": "card/female/sha_stab",
+      "file": "audio/card/female/sha_stab.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sha_stab.mp3",
+      "sourceGitBlob": "f3ff6dfd854fb3d241d2e1eb729b04363726e4d0",
+      "kind": "upstream-card-audio",
+      "bytes": 4213,
+      "sha256": "7bbccf7d4b777126ca559c2a4fc79c9931dc8532d26158d44b3cb34a8cf48a69"
+    },
+    "card/female/sha_thunder": {
+      "key": "card/female/sha_thunder",
+      "file": "audio/card/female/sha_thunder.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/sha_thunder.mp3",
+      "sourceGitBlob": "47042cf2c238bc41f1d4e336c08ec572a5e83c0f",
+      "kind": "upstream-card-audio",
+      "bytes": 3719,
+      "sha256": "88f77bd91b1ea10ee6c6a8bc91f9c3ef08596348dc5250fc136f22db8c216133"
+    },
+    "card/female/shan": {
+      "key": "card/female/shan",
+      "file": "audio/card/female/shan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/shan.mp3",
+      "sourceGitBlob": "17dd3dfa539c11d1206be89bd106e9d4ce9c4fa7",
+      "kind": "upstream-card-audio",
+      "bytes": 3601,
+      "sha256": "14ee446d82f325dc276e0c4d859c5fd111383e299c8fcf37cf711346afe0dba3"
+    },
+    "card/female/shandian": {
+      "key": "card/female/shandian",
+      "file": "audio/card/female/shandian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/shandian.mp3",
+      "sourceGitBlob": "a4689fb791eb17bcadf3dbb83f32628692d88271",
+      "kind": "upstream-card-audio",
+      "bytes": 4027,
+      "sha256": "186ba05ed384c41b307295c8ef60077d687814bdd672d287b39d546fbb7b3ce0"
+    },
+    "card/female/shengdong": {
+      "key": "card/female/shengdong",
+      "file": "audio/card/female/shengdong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/shengdong.mp3",
+      "sourceGitBlob": "72753911000cd7f1794d0c303822434119488bb6",
+      "kind": "upstream-card-audio",
+      "bytes": 7547,
+      "sha256": "30666c52cb031a8a76168f55dee1b43c381751799134fb700762ebd669a64dd2"
+    },
+    "card/female/shuiyanqijunx": {
+      "key": "card/female/shuiyanqijunx",
+      "file": "audio/card/female/shuiyanqijunx.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/shuiyanqijunx.mp3",
+      "sourceGitBlob": "df937ef77da273d8c822230e521e0d8d9cd7442e",
+      "kind": "upstream-card-audio",
+      "bytes": 5987,
+      "sha256": "de0c8f58169a4e3c4a5832d82e91f648b19b1cba772c2f98ecdd161da0fcd9df"
+    },
+    "card/female/shunshou": {
+      "key": "card/female/shunshou",
+      "file": "audio/card/female/shunshou.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/shunshou.mp3",
+      "sourceGitBlob": "b842d8129733b0c99e1f8e62e92ad0ea116c6b85",
+      "kind": "upstream-card-audio",
+      "bytes": 5489,
+      "sha256": "82c32106ab49381ab8ef2b38490604299af8346eeebda370d614b39caaffedc0"
+    },
+    "card/female/suijiyingbian": {
+      "key": "card/female/suijiyingbian",
+      "file": "audio/card/female/suijiyingbian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/suijiyingbian.mp3",
+      "sourceGitBlob": "405441650fa47a7be0c4002f0d8e97ad56f664ee",
+      "kind": "upstream-card-audio",
+      "bytes": 18800,
+      "sha256": "b27dbca6432d4e4c6b3080462c4069b932fbeb9f5c4e5bca9d31eda7533a8775"
+    },
+    "card/female/tao": {
+      "key": "card/female/tao",
+      "file": "audio/card/female/tao.mp3",
+      "kind": "system-speech",
+      "speech": {
+        "engine": "Windows System.Speech / SAPI",
+        "voice": "Microsoft Huihui Desktop",
+        "locale": "zh-CN",
+        "text": "桃",
+        "rate": 0
+      },
+      "recipe": "scripts/sgs/prepare-peach-voice.ps1",
+      "note": "桃：本机中文系统语音补充，非官方真人配音；其余卡牌使用锁定上游录音。",
+      "bytes": 7964,
+      "sha256": "fd328d8efa59467affad230f01152608a206b54841df21e8b98be3a4b0324b26"
+    },
+    "card/female/taoyuan": {
+      "key": "card/female/taoyuan",
+      "file": "audio/card/female/taoyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/taoyuan.mp3",
+      "sourceGitBlob": "6770e27749932d7960b064e09181342f764ffbad",
+      "kind": "upstream-card-audio",
+      "bytes": 5487,
+      "sha256": "5f77d9af1f101a6a55a7860fd1d7aaf9f1c6b46af197edfd67f5ad03c8f72fc6"
+    },
+    "card/female/tengjia": {
+      "key": "card/female/tengjia",
+      "file": "audio/card/female/tengjia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/tengjia.mp3",
+      "sourceGitBlob": "5e84fa6609ad9f2a118fb0cac1ed936a4fd3ad7e",
+      "kind": "upstream-card-audio",
+      "bytes": 7776,
+      "sha256": "2b5772fbbce322518184308e34fe11be40abc9a23355d84e01fb80ea6f495e31"
+    },
+    "card/female/tiaojiyanmei": {
+      "key": "card/female/tiaojiyanmei",
+      "file": "audio/card/female/tiaojiyanmei.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/tiaojiyanmei.mp3",
+      "sourceGitBlob": "dbfd15425b8ef5cda6ea89c28a26b430a799fec2",
+      "kind": "upstream-card-audio",
+      "bytes": 18776,
+      "sha256": "bb7bfb36a4579382b8da953c9a3aa3cb9992cd8e86c5afb410ae50c7da0a7fc4"
+    },
+    "card/female/tiesuo": {
+      "key": "card/female/tiesuo",
+      "file": "audio/card/female/tiesuo.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/tiesuo.mp3",
+      "sourceGitBlob": "58f34a41f8789dac7d6c492d0f3080ffef09f312",
+      "kind": "upstream-card-audio",
+      "bytes": 6008,
+      "sha256": "114f62ef7c757a29f885b273d788c175c48e9a84795b291d7332d72f2f025f90"
+    },
+    "card/female/tuixinzhifu": {
+      "key": "card/female/tuixinzhifu",
+      "file": "audio/card/female/tuixinzhifu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/tuixinzhifu.mp3",
+      "sourceGitBlob": "9766db8afae60363a5d7abf7724851a8f02e9e8f",
+      "kind": "upstream-card-audio",
+      "bytes": 5797,
+      "sha256": "784feaae41a9728b0cd53f2ac9bd4f36cef025ea9a9241a72b8281ff3e1f524a"
+    },
+    "card/female/wanjian": {
+      "key": "card/female/wanjian",
+      "file": "audio/card/female/wanjian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/wanjian.mp3",
+      "sourceGitBlob": "fac554dbe22f325b00169ce7bcfe3ed85d111c39",
+      "kind": "upstream-card-audio",
+      "bytes": 62738,
+      "sha256": "ee311cac45446c8b3c81b8b94dccd8e546488dbcc0e513cdf242a936b734616b"
+    },
+    "card/female/wugu": {
+      "key": "card/female/wugu",
+      "file": "audio/card/female/wugu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/wugu.mp3",
+      "sourceGitBlob": "0a7db409b019f0c13ce47bf51dabdb6bde957cfe",
+      "kind": "upstream-card-audio",
+      "bytes": 5713,
+      "sha256": "bd27c78f506c3808b4730aad8f9801f73f528a028cc611a6fed2f3c0b9503d0c"
+    },
+    "card/female/wuliu": {
+      "key": "card/female/wuliu",
+      "file": "audio/card/female/wuliu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/wuliu.mp3",
+      "sourceGitBlob": "9e9e284c4bd06d47eecf834cb044cac8eea026f1",
+      "kind": "upstream-card-audio",
+      "bytes": 7985,
+      "sha256": "5445966a2e24d0fd283d535fd250effcbfa990df9343ca98176b4253b6c8ea23"
+    },
+    "card/female/wuxie": {
+      "key": "card/female/wuxie",
+      "file": "audio/card/female/wuxie.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/wuxie.mp3",
+      "sourceGitBlob": "2630ab8cf9e13da10a345b87f21b4bf197a437f9",
+      "kind": "upstream-card-audio",
+      "bytes": 5170,
+      "sha256": "1b8fcd2cc625bf1bbb004aaeb6d6fffe90c618326aabd9a493ccfbafd252db68"
+    },
+    "card/female/wuzhong": {
+      "key": "card/female/wuzhong",
+      "file": "audio/card/female/wuzhong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/wuzhong.mp3",
+      "sourceGitBlob": "75498a20d510cb4f6bee2c7c76faa7da2ed1e6da",
+      "kind": "upstream-card-audio",
+      "bytes": 4965,
+      "sha256": "30b8e77b7e6b8ea7bbfd52688aa209bf44137bc04c6a3acc84f248725c108d83"
+    },
+    "card/female/xietianzi": {
+      "key": "card/female/xietianzi",
+      "file": "audio/card/female/xietianzi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/xietianzi.mp3",
+      "sourceGitBlob": "83ffbd7664a2f7a007d6b9e99409aceda1d9efa7",
+      "kind": "upstream-card-audio",
+      "bytes": 13007,
+      "sha256": "57a47d5cf453e377b0cbf7e67255f601490599d55615b6b3e24bac4b9a645982"
+    },
+    "card/female/yiyi": {
+      "key": "card/female/yiyi",
+      "file": "audio/card/female/yiyi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/yiyi.mp3",
+      "sourceGitBlob": "8e9baa328f0b4b6b68a4c4dcc33b26e8ec4b2bac",
+      "kind": "upstream-card-audio",
+      "bytes": 11148,
+      "sha256": "1a10260313e80f9188dab54b329d82147fd5b34726f58785ebf5f46d9b988bcd"
+    },
+    "card/female/yuanjiao": {
+      "key": "card/female/yuanjiao",
+      "file": "audio/card/female/yuanjiao.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/yuanjiao.mp3",
+      "sourceGitBlob": "fec59174ccf8160dcfa3a3fc1ffe8adb79200de7",
+      "kind": "upstream-card-audio",
+      "bytes": 5907,
+      "sha256": "1a37729b4b1a840e950529beff65bd62011048bcb6bb5143c82295d51836c3c0"
+    },
+    "card/female/zengbin": {
+      "key": "card/female/zengbin",
+      "file": "audio/card/female/zengbin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zengbin.mp3",
+      "sourceGitBlob": "d9d92bdc2647a59fd7a91f1c08136e5826fba15a",
+      "kind": "upstream-card-audio",
+      "bytes": 7157,
+      "sha256": "b6f911e6a678a998ddf0d52e5f64e4b29d6f531ac4c4e738bcdd9ca98b8d91c2"
+    },
+    "card/female/zhangba": {
+      "key": "card/female/zhangba",
+      "file": "audio/card/female/zhangba.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhangba.mp3",
+      "sourceGitBlob": "f8f02f957c5f9e74cdd63b8a2dc740654a6585a2",
+      "kind": "upstream-card-audio",
+      "bytes": 9448,
+      "sha256": "cff4661a429dc653f4be44fdc54605d6d408cd1ea4e03734ab3d621aee3531b2"
+    },
+    "card/female/zhibi": {
+      "key": "card/female/zhibi",
+      "file": "audio/card/female/zhibi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhibi.mp3",
+      "sourceGitBlob": "d49898fa6bdc94cd434a8c7aa90955ff4d27365c",
+      "kind": "upstream-card-audio",
+      "bytes": 7364,
+      "sha256": "aab61effc3fe3d5420204dc5a39670eb78637c7731b2139b46f5600d60c29a6a"
+    },
+    "card/female/zhuahuang": {
+      "key": "card/female/zhuahuang",
+      "file": "audio/card/female/zhuahuang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhuahuang.mp3",
+      "sourceGitBlob": "a52461bc5f6dbf8794815b2b18393a0a9c898d25",
+      "kind": "upstream-card-audio",
+      "bytes": 9866,
+      "sha256": "6b0a4f400ea75dfddbdd157bfc32d48f0ad1fec4494888db5165e1162145cc04"
+    },
+    "card/female/zhuge": {
+      "key": "card/female/zhuge",
+      "file": "audio/card/female/zhuge.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhuge.mp3",
+      "sourceGitBlob": "eea1b6799ef82e24422b3f9108d62039f43584d8",
+      "kind": "upstream-card-audio",
+      "bytes": 9448,
+      "sha256": "073e2546f7d79e0498b550289e69ea2c4492905927bbd376ca0f249524ebf429"
+    },
+    "card/female/zhujinqiyuan": {
+      "key": "card/female/zhujinqiyuan",
+      "file": "audio/card/female/zhujinqiyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhujinqiyuan.mp3",
+      "sourceGitBlob": "76f5692f5fa1d2e1d7bb4aa68f093f814aedfe92",
+      "kind": "upstream-card-audio",
+      "bytes": 20054,
+      "sha256": "956e34f49d6df9b49ce19e4c4bc081609d09588485862b1d7f5515216a383d7b"
+    },
+    "card/female/zhuque": {
+      "key": "card/female/zhuque",
+      "file": "audio/card/female/zhuque.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zhuque.mp3",
+      "sourceGitBlob": "1298818e366c5ee44b69874f15bcb9e1b8facf5b",
+      "kind": "upstream-card-audio",
+      "bytes": 10075,
+      "sha256": "8ef5d661ae4384694f5338fbad7dcaa58256e1d3abc9c82d27725c614ce7db44"
+    },
+    "card/female/zixin": {
+      "key": "card/female/zixin",
+      "file": "audio/card/female/zixin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/female/zixin.mp3",
+      "sourceGitBlob": "37fe6dd52a46db82e8b835711f9c263b36410890",
+      "kind": "upstream-card-audio",
+      "bytes": 7149,
+      "sha256": "f692d321fab7ea0a747f4793f94e549cdcc1837e3aed1498f5e7c357f44f1a28"
+    },
+    "card/male/bagua": {
+      "key": "card/male/bagua",
+      "file": "audio/card/male/bagua.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/bagua.mp3",
+      "sourceGitBlob": "19c0d8b3959d0670f0b5801641adb6d58e8819c8",
+      "kind": "upstream-card-audio",
+      "bytes": 7567,
+      "sha256": "5a715c60a783dc87b6f4f12002f2bcf8a1c4b2266c40df16b6bc1c78e84f53aa"
+    },
+    "card/male/baiyin": {
+      "key": "card/male/baiyin",
+      "file": "audio/card/male/baiyin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/baiyin.mp3",
+      "sourceGitBlob": "82ed4235c8397cff8aeab7643610ca6de5f51b80",
+      "kind": "upstream-card-audio",
+      "bytes": 8821,
+      "sha256": "f84bb1a6bbd7ad9e5499a589e9f4a319d986d0425d4aee8be24b5549218adb39"
+    },
+    "card/male/bingliang": {
+      "key": "card/male/bingliang",
+      "file": "audio/card/male/bingliang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/bingliang.mp3",
+      "sourceGitBlob": "a70cda492cd4ede2c3a4249cdc32d004c838c5a1",
+      "kind": "upstream-card-audio",
+      "bytes": 5596,
+      "sha256": "474e0b2f5903f1ec3deae9a863f8b77aeb26df9e200241f818912175b0ebbc32"
+    },
+    "card/male/binglinchengxiax": {
+      "key": "card/male/binglinchengxiax",
+      "file": "audio/card/male/binglinchengxiax.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/binglinchengxiax.mp3",
+      "sourceGitBlob": "e58e7091f38d1b3706da43ad6861a0b9c33f4a3c",
+      "kind": "upstream-card-audio",
+      "bytes": 20866,
+      "sha256": "baaf9561132d6833036dbd109d78098b59ae24c901018377b1b8d0d973129e11"
+    },
+    "card/male/caomu": {
+      "key": "card/male/caomu",
+      "file": "audio/card/male/caomu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/caomu.mp3",
+      "sourceGitBlob": "53622dfa4640c2a5f903ddde399fdb4ac2e0c675",
+      "kind": "upstream-card-audio",
+      "bytes": 7677,
+      "sha256": "5f4c0d2455a9c20a59d58f0d6ca4e8bb655167aa5690f32be7725ffaea65896f"
+    },
+    "card/male/chenghuodajie": {
+      "key": "card/male/chenghuodajie",
+      "file": "audio/card/male/chenghuodajie.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/chenghuodajie.mp3",
+      "sourceGitBlob": "9da64ed1c5f4ea93df3ecadfcfd93bf9310daaaf",
+      "kind": "upstream-card-audio",
+      "bytes": 6085,
+      "sha256": "57a21887911e94b570eca5e3d4e2a83ad1897253de03d5cd4dd7af71e0803b73"
+    },
+    "card/male/chiling": {
+      "key": "card/male/chiling",
+      "file": "audio/card/male/chiling.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/chiling.mp3",
+      "sourceGitBlob": "eea0f78de8d7fd273bfa7bd7ffecd03e7a2f9905",
+      "kind": "upstream-card-audio",
+      "bytes": 4947,
+      "sha256": "eb8b98cec63a639720ee6f389e6840550f4bf567b473ecd2004f51bc10b131b8"
+    },
+    "card/male/chitu": {
+      "key": "card/male/chitu",
+      "file": "audio/card/male/chitu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/chitu.mp3",
+      "sourceGitBlob": "bdc5e409add5932fefba4e91544cbcde9a8ed96e",
+      "kind": "upstream-card-audio",
+      "bytes": 6104,
+      "sha256": "7781e7722db931634ff7bb271c83f515db86954bc48a717072e02798c249a46c"
+    },
+    "card/male/chuqibuyi": {
+      "key": "card/male/chuqibuyi",
+      "file": "audio/card/male/chuqibuyi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/chuqibuyi.mp3",
+      "sourceGitBlob": "39448a59353965c6857460b9d16e6c562a0c9a64",
+      "kind": "upstream-card-audio",
+      "bytes": 18382,
+      "sha256": "49b4221e4911bf77079fe85586e0c8dc9a2f469831c25987c71fbcfde8712f14"
+    },
+    "card/male/cixiong": {
+      "key": "card/male/cixiong",
+      "file": "audio/card/male/cixiong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/cixiong.mp3",
+      "sourceGitBlob": "df4ca4d11b6a4a80b649320f1d17553207e88e82",
+      "kind": "upstream-card-audio",
+      "bytes": 12791,
+      "sha256": "15f430f7398449911b91db34ace711d70cb87e223cceb20a9f8fdd193cbd01c5"
+    },
+    "card/male/dawan": {
+      "key": "card/male/dawan",
+      "file": "audio/card/male/dawan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/dawan.mp3",
+      "sourceGitBlob": "33e928e7d10c8c1682cad047ab9ee9a0aa3503fe",
+      "kind": "upstream-card-audio",
+      "bytes": 36049,
+      "sha256": "cd0f88ccdc10269d1e8430e8ea770f58483a1101275997dc9a6e0d55cec13f1b"
+    },
+    "card/male/diaohulishan": {
+      "key": "card/male/diaohulishan",
+      "file": "audio/card/male/diaohulishan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/diaohulishan.mp3",
+      "sourceGitBlob": "8c31a56776413297ac0cfe64b092b0938dd8fa8f",
+      "kind": "upstream-card-audio",
+      "bytes": 5727,
+      "sha256": "f635f4793b5b4d2bc66c82ab5c8474919ffbe7c30a8cd7f6235ae7351f214165"
+    },
+    "card/male/dilu": {
+      "key": "card/male/dilu",
+      "file": "audio/card/male/dilu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/dilu.mp3",
+      "sourceGitBlob": "e88c1a1777592af55bd6de11eeedbce9c09ec150",
+      "kind": "upstream-card-audio",
+      "bytes": 5477,
+      "sha256": "f39524735b3d172814d6bef9a4e4e1fafc504a79b00f2aec5d8e397139977b70"
+    },
+    "card/male/dongzhuxianji": {
+      "key": "card/male/dongzhuxianji",
+      "file": "audio/card/male/dongzhuxianji.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/dongzhuxianji.mp3",
+      "sourceGitBlob": "211c0afa680b79c185a075982a3186cb5d4a0a78",
+      "kind": "upstream-card-audio",
+      "bytes": 19636,
+      "sha256": "e8c736365dc66486e22ef1e8afb9dd2d71dbfdebaf99ee90071c3d1f41a7f728"
+    },
+    "card/male/dz_mantianguohai": {
+      "key": "card/male/dz_mantianguohai",
+      "file": "audio/card/male/dz_mantianguohai.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/dz_mantianguohai.mp3",
+      "sourceGitBlob": "413c195ebb6b03f355dc010769df5dec14dbc9ed",
+      "kind": "upstream-card-audio",
+      "bytes": 51295,
+      "sha256": "e87063c501cc970c6e86d37e08ab0c9a3e5d17eb060029de438dc8750d6d998c"
+    },
+    "card/male/fangtian": {
+      "key": "card/male/fangtian",
+      "file": "audio/card/male/fangtian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/fangtian.mp3",
+      "sourceGitBlob": "3bae2068074f290d23caaf8a5fae0e3383740627",
+      "kind": "upstream-card-audio",
+      "bytes": 12791,
+      "sha256": "1652e6fe0227a7eb55cd6813a29e6ef9edf3e19fac7db8479ec63948a254d176"
+    },
+    "card/male/fulei": {
+      "key": "card/male/fulei",
+      "file": "audio/card/male/fulei.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/fulei.mp3",
+      "sourceGitBlob": "4c421931823ef995f8319a9e8c5bdd4bd3ea8d08",
+      "kind": "upstream-card-audio",
+      "bytes": 5727,
+      "sha256": "4cd3ef9e52d8505c4ef0f1177206016f4395b42b5341a9a014003520b8112e0b"
+    },
+    "card/male/guaguliaodu": {
+      "key": "card/male/guaguliaodu",
+      "file": "audio/card/male/guaguliaodu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/guaguliaodu.mp3",
+      "sourceGitBlob": "3f9331eb83ad28f7ece60644ec9f39c52ce3b596",
+      "kind": "upstream-card-audio",
+      "bytes": 6085,
+      "sha256": "f4c2ee2856a0f7c4d1acd4fc180db28f839ebb71edb8441b9c74bb58315a2ee2"
+    },
+    "card/male/guanshi": {
+      "key": "card/male/guanshi",
+      "file": "audio/card/male/guanshi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/guanshi.mp3",
+      "sourceGitBlob": "de9d8ac1c02454426cf041a8099bb832cecf0ac1",
+      "kind": "upstream-card-audio",
+      "bytes": 9239,
+      "sha256": "c59367572cdcff599f72a8bd180baec1aceba75e0653ddf31e2a005d7ecd61fc"
+    },
+    "card/male/guding": {
+      "key": "card/male/guding",
+      "file": "audio/card/male/guding.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/guding.mp3",
+      "sourceGitBlob": "ec6b40d64534d8af19acf6c5defbb0370ce01ec4",
+      "kind": "upstream-card-audio",
+      "bytes": 8403,
+      "sha256": "79c5d3caaba71a0dd63b11c115d6098100182a313fa6951e47d5ebc8be20a8e5"
+    },
+    "card/male/guohe": {
+      "key": "card/male/guohe",
+      "file": "audio/card/male/guohe.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/guohe.mp3",
+      "sourceGitBlob": "f8de1c8456689067f73fec7b4f9e14dcf5df9e1a",
+      "kind": "upstream-card-audio",
+      "bytes": 6319,
+      "sha256": "399f43254531858d88ee2c549ec0788c1789791e834a9f039d22d767d9ea028f"
+    },
+    "card/male/gz_guguoanbang": {
+      "key": "card/male/gz_guguoanbang",
+      "file": "audio/card/male/gz_guguoanbang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/gz_guguoanbang.mp3",
+      "sourceGitBlob": "c0039c2fb583428a40f2f27acba72af416009713",
+      "kind": "upstream-card-audio",
+      "bytes": 4320,
+      "sha256": "c1c60cdf5c1cc270d19a02ca537556f7b622fbbbc15bc3db5483672865821704"
+    },
+    "card/male/gz_haolingtianxia": {
+      "key": "card/male/gz_haolingtianxia",
+      "file": "audio/card/male/gz_haolingtianxia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/gz_haolingtianxia.mp3",
+      "sourceGitBlob": "292cbc0f8f22d9a9b1f76ade875817f38162e8bd",
+      "kind": "upstream-card-audio",
+      "bytes": 4176,
+      "sha256": "1e5a4999ff107cdf350218ced0f18d000b7133f45415f0660cca923a5bb37099"
+    },
+    "card/male/gz_kefuzhongyuan": {
+      "key": "card/male/gz_kefuzhongyuan",
+      "file": "audio/card/male/gz_kefuzhongyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/gz_kefuzhongyuan.mp3",
+      "sourceGitBlob": "3489e009a912793b8f9f9611cb9395a307fa7ce6",
+      "kind": "upstream-card-audio",
+      "bytes": 7073,
+      "sha256": "75e96062c4ba91910bc046c4392fd0fa3a0784fc95da358bea7e05c4f59caae7"
+    },
+    "card/male/gz_wenheluanwu": {
+      "key": "card/male/gz_wenheluanwu",
+      "file": "audio/card/male/gz_wenheluanwu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/gz_wenheluanwu.mp3",
+      "sourceGitBlob": "d6e8eccd4ab67ed5059cbbacf18962512d7d19f0",
+      "kind": "upstream-card-audio",
+      "bytes": 5184,
+      "sha256": "a7c2fc93e7396fe6524be1d13076d21b5973c657b4388ea7441c09ba0f387825"
+    },
+    "card/male/hanbing": {
+      "key": "card/male/hanbing",
+      "file": "audio/card/male/hanbing.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/hanbing.mp3",
+      "sourceGitBlob": "4997128ad3a1d56c665fbc419fb56b0e6f7dd6a4",
+      "kind": "upstream-card-audio",
+      "bytes": 8612,
+      "sha256": "c0c50e7b3152e16e21cff24d230f06a73e5200ded43d7e27222e41ea7d4595be"
+    },
+    "card/male/hualiu": {
+      "key": "card/male/hualiu",
+      "file": "audio/card/male/hualiu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/hualiu.mp3",
+      "sourceGitBlob": "7ebc18c0b19f1729a088fc78907fc8443ab14665",
+      "kind": "upstream-card-audio",
+      "bytes": 6522,
+      "sha256": "f700a978f28edf975a1e34338167e401c156327b69cfe5cfa2b4f6fc9fa6487b"
+    },
+    "card/male/huogong": {
+      "key": "card/male/huogong",
+      "file": "audio/card/male/huogong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/huogong.mp3",
+      "sourceGitBlob": "128aa9d21432eb445a84648d32e5bb45f51f4768",
+      "kind": "upstream-card-audio",
+      "bytes": 5487,
+      "sha256": "ae8bfbe22b6934d1bb66d408e3cbc3e12308ca574e0cba604fd4ce4953f648e5"
+    },
+    "card/male/huoshaolianying": {
+      "key": "card/male/huoshaolianying",
+      "file": "audio/card/male/huoshaolianying.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/huoshaolianying.mp3",
+      "sourceGitBlob": "fd2bfcafbf21be961d171cf45df7dab8ef1828ed",
+      "kind": "upstream-card-audio",
+      "bytes": 6507,
+      "sha256": "cfcd357b54893c797402d53a925f1587a649e6ee4c2b7804b79b63700729b55f"
+    },
+    "card/male/jiedao": {
+      "key": "card/male/jiedao",
+      "file": "audio/card/male/jiedao.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/jiedao.mp3",
+      "sourceGitBlob": "b4f2a46560bce7a52a18c9d004a42e47f6a4d399",
+      "kind": "upstream-card-audio",
+      "bytes": 6635,
+      "sha256": "dca64665cd76c8c853c2694412cd0a98411c874c065d73c89d0f5de9637b4e52"
+    },
+    "card/male/jinchan": {
+      "key": "card/male/jinchan",
+      "file": "audio/card/male/jinchan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/jinchan.mp3",
+      "sourceGitBlob": "dd3f6700081d6773aad9fcb6bef8d81fda399c46",
+      "kind": "upstream-card-audio",
+      "bytes": 7677,
+      "sha256": "ea410d58ee5bc28071c8610d1c2688ff0c9cedfb5dd884dd62e68bb96217ebc8"
+    },
+    "card/male/jiu": {
+      "key": "card/male/jiu",
+      "file": "audio/card/male/jiu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/jiu.mp3",
+      "sourceGitBlob": "7703fca17fbe3bccca99ae6a35a2a0bef262c05a",
+      "kind": "upstream-card-audio",
+      "bytes": 3622,
+      "sha256": "0b60dad8a36adab839fd483fb810c8c55f270b68e38db099db37e3e6c9946a2b"
+    },
+    "card/male/juedou": {
+      "key": "card/male/juedou",
+      "file": "audio/card/male/juedou.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/juedou.mp3",
+      "sourceGitBlob": "bcd9b7e31b728eec10be44d3496b0f24c3880ca8",
+      "kind": "upstream-card-audio",
+      "bytes": 3187,
+      "sha256": "079662661c9ad20fdca3636e7451fde46d696b522d06ca9b1770d9bbc5c40501"
+    },
+    "card/male/jueying": {
+      "key": "card/male/jueying",
+      "file": "audio/card/male/jueying.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/jueying.mp3",
+      "sourceGitBlob": "bf1c19ea815d22cf063bb386988955678a0cc60a",
+      "kind": "upstream-card-audio",
+      "bytes": 7149,
+      "sha256": "b9f18c73f60f3727376d17fa9a6b6ec04055ed7b92f0748bdb71897384d93430"
+    },
+    "card/male/kaihua": {
+      "key": "card/male/kaihua",
+      "file": "audio/card/male/kaihua.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/kaihua.mp3",
+      "sourceGitBlob": "3e8e2e0cab3b57c200a32a98e10b0cc8a8723cb8",
+      "kind": "upstream-card-audio",
+      "bytes": 6085,
+      "sha256": "4a7e84f0485d7027d0f9ef3b4db0726d5ee45fb5c10cbe15cdf1bd947dcf256f"
+    },
+    "card/male/lebu": {
+      "key": "card/male/lebu",
+      "file": "audio/card/male/lebu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/lebu.mp3",
+      "sourceGitBlob": "48822219ec8d86b219ab461ee9bdda727fad982c",
+      "kind": "upstream-card-audio",
+      "bytes": 5690,
+      "sha256": "91f9035c6c4776b1a5d7dbf8c83d2e2b3b2f0994d68d22aafd3373c463071488"
+    },
+    "card/male/lianjunshengyan": {
+      "key": "card/male/lianjunshengyan",
+      "file": "audio/card/male/lianjunshengyan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/lianjunshengyan.mp3",
+      "sourceGitBlob": "032749795933d3370c0dde86327262d0a8855113",
+      "kind": "upstream-card-audio",
+      "bytes": 6117,
+      "sha256": "8a24dbf7c57f034566ce3bde77b32337f2cfd110c0272550ba9c55fde752c5c1"
+    },
+    "card/male/lulitongxin": {
+      "key": "card/male/lulitongxin",
+      "file": "audio/card/male/lulitongxin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/lulitongxin.mp3",
+      "sourceGitBlob": "e2550f1568a1b03934842c2b4938fc984e5a705e",
+      "kind": "upstream-card-audio",
+      "bytes": 6117,
+      "sha256": "c39d6767218121fed2054630e7859c4e79ff0feffa7b6de3d6136222ce590974"
+    },
+    "card/male/muniu": {
+      "key": "card/male/muniu",
+      "file": "audio/card/male/muniu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/muniu.mp3",
+      "sourceGitBlob": "67fb52f0e091fdc3614757ddb0a9ad133941d4c1",
+      "kind": "upstream-card-audio",
+      "bytes": 9657,
+      "sha256": "29263bf90b922515dcb814381bc1fcba48f67431f870b83af99aade63c9b1e73"
+    },
+    "card/male/nanman": {
+      "key": "card/male/nanman",
+      "file": "audio/card/male/nanman.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/nanman.mp3",
+      "sourceGitBlob": "0cb5c2438eb052f2c998cdefbba3a71d17fe9bcf",
+      "kind": "upstream-card-audio",
+      "bytes": 5694,
+      "sha256": "e2f5a92229eaa91a9f8a0b6a6355001532732e87ebe0a1054dc5c7e3761d0a0a"
+    },
+    "card/male/qijia": {
+      "key": "card/male/qijia",
+      "file": "audio/card/male/qijia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/qijia.mp3",
+      "sourceGitBlob": "3a0e37545858115e3e3bcbd9d73fb3c6b6b82558",
+      "kind": "upstream-card-audio",
+      "bytes": 7287,
+      "sha256": "3da91dda80658124d58b6fa1bfe4ff589f397fb6c9a542812a9a11c4e6e5e91f"
+    },
+    "card/male/qilin": {
+      "key": "card/male/qilin",
+      "file": "audio/card/male/qilin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/qilin.mp3",
+      "sourceGitBlob": "90109946e035a84ff4eaaea81df4f7d9e9c2a8c0",
+      "kind": "upstream-card-audio",
+      "bytes": 7776,
+      "sha256": "d8b36c6f50b4de3367cb91155182a9b372ca126b0fde89e47dbee367b2bf2f80"
+    },
+    "card/male/qinggang": {
+      "key": "card/male/qinggang",
+      "file": "audio/card/male/qinggang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/qinggang.mp3",
+      "sourceGitBlob": "318e7ba90534a68ef16b91867863a977db193eb5",
+      "kind": "upstream-card-audio",
+      "bytes": 8194,
+      "sha256": "842c9fea3795be4832e47bbacbee856853dffcbeb17ad75d7b7b848a45ad95a6"
+    },
+    "card/male/qinglong": {
+      "key": "card/male/qinglong",
+      "file": "audio/card/male/qinglong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/qinglong.mp3",
+      "sourceGitBlob": "c67e244c2d1bbd5ace66690cbfade5ac970ee282",
+      "kind": "upstream-card-audio",
+      "bytes": 11955,
+      "sha256": "cdf3257bf3bb7b5d2eeec15000bf04fb9a1ebccaf8f1b1afa29c2abfa19218bb"
+    },
+    "card/male/qizhengxiangsheng": {
+      "key": "card/male/qizhengxiangsheng",
+      "file": "audio/card/male/qizhengxiangsheng.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/qizhengxiangsheng.mp3",
+      "sourceGitBlob": "5750a44b63c21a77c70be853d3820b0e83df9208",
+      "kind": "upstream-card-audio",
+      "bytes": 25045,
+      "sha256": "2fd61996562869cb08e58d04c83d42498ce389369b7920f3499181465e079f0d"
+    },
+    "card/male/renwang": {
+      "key": "card/male/renwang",
+      "file": "audio/card/male/renwang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/renwang.mp3",
+      "sourceGitBlob": "e9b05acf44b57423319691c8a7c657445b7b2807",
+      "kind": "upstream-card-audio",
+      "bytes": 9030,
+      "sha256": "7d856f66426e1255639fff8687091ab1c1847d36f0408543f137ebc958911f93"
+    },
+    "card/male/sanjian": {
+      "key": "card/male/sanjian",
+      "file": "audio/card/male/sanjian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sanjian.mp3",
+      "sourceGitBlob": "9a85261616b64cb34ff86c5fd8eb626a5b3a62d6",
+      "kind": "upstream-card-audio",
+      "bytes": 12373,
+      "sha256": "ca047a5b965a4686627f95683d78ee2fd500d523c587867893d366935b551c48"
+    },
+    "card/male/sha": {
+      "key": "card/male/sha",
+      "file": "audio/card/male/sha.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sha.mp3",
+      "sourceGitBlob": "820b68f7be55e88745cd64c0a13fbc61fc30faf9",
+      "kind": "upstream-card-audio",
+      "bytes": 3494,
+      "sha256": "ac6babcb2c76a704a0c218116b38801091926898d2bdcbf728709043e980d552"
+    },
+    "card/male/sha_fire": {
+      "key": "card/male/sha_fire",
+      "file": "audio/card/male/sha_fire.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sha_fire.mp3",
+      "sourceGitBlob": "929c2e8296533dbf9f7f82877a98cb25228357b5",
+      "kind": "upstream-card-audio",
+      "bytes": 3295,
+      "sha256": "1dc14eb9d53a3233655f8541a2184f1a31c49b7c844fc0c023325b5a9d6b77fe"
+    },
+    "card/male/sha_ice": {
+      "key": "card/male/sha_ice",
+      "file": "audio/card/male/sha_ice.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sha_ice.mp3",
+      "sourceGitBlob": "2385a9ea808eaaf0122ad85de7d36867db949742",
+      "kind": "upstream-card-audio",
+      "bytes": 12530,
+      "sha256": "5b0b5c06e10babbc848d48c4e0b937ee9e5bad2fcfde793de19604e00287f435"
+    },
+    "card/male/sha_stab": {
+      "key": "card/male/sha_stab",
+      "file": "audio/card/male/sha_stab.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sha_stab.mp3",
+      "sourceGitBlob": "a446276aadb51991575151d9b33f8d38691492a8",
+      "kind": "upstream-card-audio",
+      "bytes": 3925,
+      "sha256": "c5ff126cf0a997e81e5482e9299016632335c8bf302f0b69c05f99cb1ad68b3b"
+    },
+    "card/male/sha_thunder": {
+      "key": "card/male/sha_thunder",
+      "file": "audio/card/male/sha_thunder.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/sha_thunder.mp3",
+      "sourceGitBlob": "b27672361a176fe67d5a330626eb8d6b41d3ef01",
+      "kind": "upstream-card-audio",
+      "bytes": 3824,
+      "sha256": "62efe8df0b0d924bc1b0d7d3934b8b41d9cc962ae2ecdefeac0195debfebb5ab"
+    },
+    "card/male/shan": {
+      "key": "card/male/shan",
+      "file": "audio/card/male/shan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/shan.mp3",
+      "sourceGitBlob": "7ef380a7dd607af43981c969d4405698de4fab34",
+      "kind": "upstream-card-audio",
+      "bytes": 3601,
+      "sha256": "e9e3bf25b2135c952955e29fd186245b9001a6fc126349e2762cae702c500821"
+    },
+    "card/male/shandian": {
+      "key": "card/male/shandian",
+      "file": "audio/card/male/shandian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/shandian.mp3",
+      "sourceGitBlob": "069dc0046ed7a98e7ae9674103a2aff3c2c20c43",
+      "kind": "upstream-card-audio",
+      "bytes": 3922,
+      "sha256": "c5ad0c50d2ca7110501be7243db00ab82f8eb52fd08a5e306fe641fefbd2b7e4"
+    },
+    "card/male/shengdong": {
+      "key": "card/male/shengdong",
+      "file": "audio/card/male/shengdong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/shengdong.mp3",
+      "sourceGitBlob": "063c7cc9072d8cee1b6b53a3f23a4a092ac916cb",
+      "kind": "upstream-card-audio",
+      "bytes": 7937,
+      "sha256": "c2658c8257f8307e246204e9a8c99bdaee252f9bf248851a87047f306e9bc6a9"
+    },
+    "card/male/shuiyanqijunx": {
+      "key": "card/male/shuiyanqijunx",
+      "file": "audio/card/male/shuiyanqijunx.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/shuiyanqijunx.mp3",
+      "sourceGitBlob": "d2933125a82610ce03a4517f4b31e3e34b201c3c",
+      "kind": "upstream-card-audio",
+      "bytes": 6117,
+      "sha256": "dea961b05d5011c5d1ebad03c52a5cdf98adf2d7eafd3e513c8a9db5b4f13648"
+    },
+    "card/male/shunshou": {
+      "key": "card/male/shunshou",
+      "file": "audio/card/male/shunshou.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/shunshou.mp3",
+      "sourceGitBlob": "f6f5e8a3e42669febb2eb984789cc26735314a4e",
+      "kind": "upstream-card-audio",
+      "bytes": 6430,
+      "sha256": "9c37fc5f677bc6aad14194e49c2e0edce12bf9506212b6e886c4864d17df8e0e"
+    },
+    "card/male/suijiyingbian": {
+      "key": "card/male/suijiyingbian",
+      "file": "audio/card/male/suijiyingbian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/suijiyingbian.mp3",
+      "sourceGitBlob": "db487bfb11e24f94099765e412b6fd6f50d1ba5a",
+      "kind": "upstream-card-audio",
+      "bytes": 21308,
+      "sha256": "54a9eaf2c43b3333ddb2bdde6df79df443b28a00a855368c24e7e02687a11399"
+    },
+    "card/male/tao": {
+      "key": "card/male/tao",
+      "file": "audio/card/male/tao.mp3",
+      "kind": "system-speech",
+      "speech": {
+        "engine": "Windows System.Speech / SAPI",
+        "voice": "Microsoft Kangkang",
+        "locale": "zh-CN",
+        "text": "桃",
+        "rate": 0
+      },
+      "recipe": "scripts/sgs/prepare-peach-voice.ps1",
+      "note": "桃：本机中文系统语音补充，非官方真人配音；其余卡牌使用锁定上游录音。",
+      "bytes": 7388,
+      "sha256": "cb9d38bb9ebb5d62cf60f7e7c68da115e9f3fbfad7b7c10482753fa8b4ad2aff"
+    },
+    "card/male/taoyuan": {
+      "key": "card/male/taoyuan",
+      "file": "audio/card/male/taoyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/taoyuan.mp3",
+      "sourceGitBlob": "c57228d10d507d4b9d2c4367a134915f5902b0eb",
+      "kind": "upstream-card-audio",
+      "bytes": 6323,
+      "sha256": "c18cc192169abe4b94a0d8f8500c460ecc67933368beb6ba9bdfdcb2c9b0b1c9"
+    },
+    "card/male/tengjia": {
+      "key": "card/male/tengjia",
+      "file": "audio/card/male/tengjia.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/tengjia.mp3",
+      "sourceGitBlob": "9588ec41c237f49827b78b1d28e46c726b7add0b",
+      "kind": "upstream-card-audio",
+      "bytes": 6522,
+      "sha256": "d704c2f706a8bc604262f544be4af7e314d8ac250cd36b8702cc0980bdb0dbba"
+    },
+    "card/male/tiaojiyanmei": {
+      "key": "card/male/tiaojiyanmei",
+      "file": "audio/card/male/tiaojiyanmei.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/tiaojiyanmei.mp3",
+      "sourceGitBlob": "3c675d6daa8cebf7749091fefaf3388f13f1cd95",
+      "kind": "upstream-card-audio",
+      "bytes": 19644,
+      "sha256": "96484167641f55cd79551110107035931b8f21b3fb5ef1394ca19b6989a7e118"
+    },
+    "card/male/tiesuo": {
+      "key": "card/male/tiesuo",
+      "file": "audio/card/male/tiesuo.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/tiesuo.mp3",
+      "sourceGitBlob": "9dcb68fa6e9f1f738bcb30ad5442816153322eca",
+      "kind": "upstream-card-audio",
+      "bytes": 6321,
+      "sha256": "4dee9da05fa3142475cd5978b4cb9f6e98f8d1a06ffc50e72892f1b3206cd690"
+    },
+    "card/male/tuixinzhifu": {
+      "key": "card/male/tuixinzhifu",
+      "file": "audio/card/male/tuixinzhifu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/tuixinzhifu.mp3",
+      "sourceGitBlob": "d72bc43d8fc5dd09882a0d7b367a9cc932433fa6",
+      "kind": "upstream-card-audio",
+      "bytes": 6805,
+      "sha256": "5cdc0b69484a2e6f3952d73a47d00d7b6569d65a95db43b13a06934bcecb0f27"
+    },
+    "card/male/wanjian": {
+      "key": "card/male/wanjian",
+      "file": "audio/card/male/wanjian.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/wanjian.mp3",
+      "sourceGitBlob": "56e2d216087697c1c1b30937aad5bd9c483009ef",
+      "kind": "upstream-card-audio",
+      "bytes": 83636,
+      "sha256": "7e109b9e9dc6f95b5b599fa2c43530e2ac0e96501dfb6423f2b98d0097923641"
+    },
+    "card/male/wugu": {
+      "key": "card/male/wugu",
+      "file": "audio/card/male/wugu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/wugu.mp3",
+      "sourceGitBlob": "d346379773ec3db90e4d34d7c12bc6f6b6139beb",
+      "kind": "upstream-card-audio",
+      "bytes": 6863,
+      "sha256": "cae64f43e4d5eb02c9306e06e295a6e4bfd3a36c39c9f553f9a1a94c10b5e78f"
+    },
+    "card/male/wuliu": {
+      "key": "card/male/wuliu",
+      "file": "audio/card/male/wuliu.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/wuliu.mp3",
+      "sourceGitBlob": "0527636a0aa3cf7b93a9fa12c678a9b4251f3e73",
+      "kind": "upstream-card-audio",
+      "bytes": 7776,
+      "sha256": "159a2e59966ed75b83dfc79b69e40b410af95ed751c4b28b5c0568ecf7b2034a"
+    },
+    "card/male/wuxie": {
+      "key": "card/male/wuxie",
+      "file": "audio/card/male/wuxie.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/wuxie.mp3",
+      "sourceGitBlob": "0b7dccd99ec3f7aeef03031c2db8a6028a949056",
+      "kind": "upstream-card-audio",
+      "bytes": 6528,
+      "sha256": "54b5ddb024e4d19ee1b320e7f14ac3ba9386e6e974de8f7d50f6311a7464e390"
+    },
+    "card/male/wuzhong": {
+      "key": "card/male/wuzhong",
+      "file": "audio/card/male/wuzhong.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/wuzhong.mp3",
+      "sourceGitBlob": "86cc42afe54790ddedb4bb93e06b11fa7e2c1cfd",
+      "kind": "upstream-card-audio",
+      "bytes": 5592,
+      "sha256": "ea5da3904e41c1efc7de547707da7ac8917aa64d049fe3ebd1bb437f12498ace"
+    },
+    "card/male/xietianzi": {
+      "key": "card/male/xietianzi",
+      "file": "audio/card/male/xietianzi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/xietianzi.mp3",
+      "sourceGitBlob": "da7d85010f21c69d779dff32f863d386fa56e5c5",
+      "kind": "upstream-card-audio",
+      "bytes": 9497,
+      "sha256": "3dccc3a125dce8c9a474e3801d9b3185572bfb663d309234037a67fe92bfdb67"
+    },
+    "card/male/yiyi": {
+      "key": "card/male/yiyi",
+      "file": "audio/card/male/yiyi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/yiyi.mp3",
+      "sourceGitBlob": "de47ea900f26bc1843f80c32048fafb335a3dff3",
+      "kind": "upstream-card-audio",
+      "bytes": 5899,
+      "sha256": "e2bb8c34e81cb6d955a166d4fab81eefb8d6a93b14f814aaec59f620526bf50a"
+    },
+    "card/male/yuanjiao": {
+      "key": "card/male/yuanjiao",
+      "file": "audio/card/male/yuanjiao.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/yuanjiao.mp3",
+      "sourceGitBlob": "57fb3ada46a1eb24a4bab1f063a4961bb14fbe14",
+      "kind": "upstream-card-audio",
+      "bytes": 6325,
+      "sha256": "d988dec088c378ddb82d9b7a1ee3639b41a17805285b6bb26c96d2da9e797a48"
+    },
+    "card/male/zengbin": {
+      "key": "card/male/zengbin",
+      "file": "audio/card/male/zengbin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zengbin.mp3",
+      "sourceGitBlob": "9c6c9f8fb45f759e356fc6d7cd52a5add444d4ee",
+      "kind": "upstream-card-audio",
+      "bytes": 7937,
+      "sha256": "3c34edb386105c17b991ac28a2fa470be3097d9387a09b9bac7b9e511aed6ca1"
+    },
+    "card/male/zhangba": {
+      "key": "card/male/zhangba",
+      "file": "audio/card/male/zhangba.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhangba.mp3",
+      "sourceGitBlob": "544d966c836ba9704a5fe1a28880d888e3e0a386",
+      "kind": "upstream-card-audio",
+      "bytes": 10701,
+      "sha256": "4b7fce8abdae777b4e7548a9a20cfe5f899d4c13b8c15acbc9321ef9a5c31c2f"
+    },
+    "card/male/zhibi": {
+      "key": "card/male/zhibi",
+      "file": "audio/card/male/zhibi.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhibi.mp3",
+      "sourceGitBlob": "45e53059014d134c58af462b788defd0cadada5e",
+      "kind": "upstream-card-audio",
+      "bytes": 7051,
+      "sha256": "1eaf5490094aa33568177f027746aa046fbe2e7c3455ebd8a508b3726a72aa7f"
+    },
+    "card/male/zhuahuang": {
+      "key": "card/male/zhuahuang",
+      "file": "audio/card/male/zhuahuang.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhuahuang.mp3",
+      "sourceGitBlob": "5e3ead326af0ff014a610ce8730b307f0d57f818",
+      "kind": "upstream-card-audio",
+      "bytes": 10075,
+      "sha256": "cc9d7f500d1d6556a99ea5489391055ab5a48efbba2acccb49d39da97fda1a72"
+    },
+    "card/male/zhuge": {
+      "key": "card/male/zhuge",
+      "file": "audio/card/male/zhuge.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhuge.mp3",
+      "sourceGitBlob": "44ef13a347ed0ba59bbb2eebc78faa91bced49df",
+      "kind": "upstream-card-audio",
+      "bytes": 10910,
+      "sha256": "9e236cf2c9b47072da5b9ddc599618054bf8a031f46f5c45e6159fea78863cd1"
+    },
+    "card/male/zhujinqiyuan": {
+      "key": "card/male/zhujinqiyuan",
+      "file": "audio/card/male/zhujinqiyuan.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhujinqiyuan.mp3",
+      "sourceGitBlob": "bd94d19ed6c1db6208a13585e9b575fc5bab4a45",
+      "kind": "upstream-card-audio",
+      "bytes": 25487,
+      "sha256": "d92c3aa2e32d4f40c875a55b23065b4e4fbceebe4dc6fdadc6210867af1edf4d"
+    },
+    "card/male/zhuque": {
+      "key": "card/male/zhuque",
+      "file": "audio/card/male/zhuque.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zhuque.mp3",
+      "sourceGitBlob": "312d3d3d25a4ba81a090e2c9bf365e49da98d5e8",
+      "kind": "upstream-card-audio",
+      "bytes": 10284,
+      "sha256": "a918d0db16cd591cd3a849ea381fa7d21cade4f4b709bd9386ec5beacaff446d"
+    },
+    "card/male/zixin": {
+      "key": "card/male/zixin",
+      "file": "audio/card/male/zixin.mp3",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/card/male/zixin.mp3",
+      "sourceGitBlob": "36dbddc416dc6c3865117861c360db5a182b8cce",
+      "kind": "upstream-card-audio",
+      "bytes": 6731,
+      "sha256": "8f818a274be3bd050bf3514e46210b2e81874507b32b1ad977d604ce8704a027"
+    }
+  }
+}

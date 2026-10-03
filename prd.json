@@ -1,0 +1,289 @@
+{
+  "project": "三国杀十周年 · 单机研习版",
+  "branchName": "ralph/sgs-decade",
+  "description": "GPL 无名杀引擎 + 十周年筛选 + 原创单机入口 + 逐将逐技能覆盖核验",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "固定上游并建立可重复启动基础",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Filtered pnpm install succeeded; Vite 8081 serves / and /noname/entry.ts HTTP 200; node --check scripts/sgs/dev.mjs passed. Upstream and license retained."
+    },
+    {
+      "id": "US-002",
+      "title": "生成武将和技能覆盖清单",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Generated deterministic catalog and coverage report from 26 upstream packs: 2563 character entries, 451 in xianding/huicui/sp2, 9724 skill definition entries (9722 parsed without conflicts). Explicit version rules, source lines/hashes, cross-pack references and unresolved diagnostics retained. Node 22 node --check passed for all 3 new JS files; node scripts/sgs/build-catalog.mjs and node --test tests/sgs/*.test.mjs passed (9 tests, including byte-identical regeneration). 4 direct skill references and 44 declared dependencies remain explicitly unresolved; all behavior statuses unverified and official denominator unknown. No UI changes in this story. Local commit pending: git add blocked because sandbox cannot create .git/index.lock; parent must perform the scoped commit."
+    },
+    {
+      "id": "US-003",
+      "title": "原创单机选将界面",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "Desktop and 390px browser QA passed: search, version/faction filters, empty reset, favorites, real selection/start, accessible details."
+    },
+    {
+      "id": "US-004",
+      "title": "桥接真实身份局和单机设置",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "Real 8-player AI and 4-player chosen-lord games verified; return/cancel/restart retested after old browser modal closed; actual skill and AI event flow observed."
+    },
+    {
+      "id": "US-005",
+      "title": "核验代表技能和打包交付",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "14 focused tests pass; production build and browser game passed; Sun Quan Zhiheng and Mou Zhou Yu Yingmou/Ronghuo scenarios documented. Full skill verification remains US-006."
+    },
+    {
+      "id": "US-006",
+      "title": "官方全量武将与技能对账",
+      "description": "见 tasks/prd-sgs-decade.md 对应故事，用户目标为十周年全量武将技能的单机 AI 游戏",
+      "acceptanceCriteria": [
+        "满足 PRD 对应故事的全部逐项验收要求",
+        "Typecheck or syntax-check passes",
+        "Record validation evidence; no unverified completion claims"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "Official full roster/denominator and exhaustive behavior checks remain unfinished. Added dated Mou Zhou Yu official reference and partial scenario evidence, no full completion claim."
+    },
+    {
+      "id": "US-007",
+      "title": "手动确认出牌与轻量头像",
+      "description": "用户要求所有卡牌先选后确认，所有武将有现成网络头像；三位测试武将采用已确认的公开测试剪影并标注。",
+      "acceptanceCriteria": [
+        "手动确认与撤销经真实浏览器验证",
+        "全部源码武将ID有96×128本地WebP头像，每图不超过4KiB",
+        "网络图片来源与同人物/测试形象例外可追溯",
+        "构建和专项测试通过"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "17/17 tests; build and production browser validation passed. Equipment/attack/discard and Longdan conversion wait for explicit confirmation. 2563 IDs mapped to 2491 local 96x128 WebP portraits (5526122 bytes total), source and hashes checked; user-approved test silhouettes labeled. US-006 remains false."
+    },
+    {
+      "id": "US-008",
+      "title": "按参考图重做经典牌桌外观",
+      "description": "对照用户截图调整暖棕龙纹桌面、竖幅武将、右下本方信息、底部居中手牌与金色确认控件，复用真实引擎。",
+      "acceptanceCriteria": [
+        "满足PRD对应故事逐项验收",
+        "浏览器验证四人和八人布局与核心交互",
+        "既有测试、语法检查和构建通过"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Reference-inspired bronze table and matching lobby implemented in adapter only. Browser verified 4/8-player layouts at 1908x1064, 1360x850 and 1024x640; native Zhiheng selection, equipment, Wugu popup confirmation, AI picks, toolbar and return flows passed. Fixed popup/control overlap and horizontal viewport shift. 17 existing tests, syntax, diff checks and production build passed; US-006 remains false."
+    },
+    {
+      "id": "US-009",
+      "title": "四人固定队伍与卡牌语音",
+      "description": "四人原生2v2，一四对二三，玩家四号位；基础与军争卡牌在确认出牌和响应时播放本地语音。",
+      "acceptanceCriteria": [
+        "固定席位、队友标签、原生AI敌我与整队胜负一致",
+        "语音覆盖当前牌堆并支持技能转化、响应、去重和静音",
+        "本地素材来源可追溯，文件校验和解码通过",
+        "浏览器、专项测试和生产构建通过"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "27 tests passed, including actual upstream AI attitude and team death/victory functions. Production 2v2 Zhao Yun seat4/Lv Fan seat1 versus Cao Xing seat2/Chen Gui seat3 verified, with teammate Peach rescue, Longdan response, Fire Attack, equipment and mute/unmute audio; six-player identity regression passed. 160 clips, 1577317 bytes, full hashes and decoding checked; two Peach clips explicitly system speech. Desktop1360x850/1024x640 browser and full production build passed. US-006 remains false."
+    },
+    {
+      "id": "US-010",
+      "title": "红黑花色与攻击目标提示",
+      "description": "修正花色CSS，并直接呈现原生距离与目标合法性判定。",
+      "acceptanceCriteria": [
+        "红桃方块为红色，黑桃梅花为黑色",
+        "可选目标较深，不可选目标淡化，已选状态清晰",
+        "取消和出牌后清理提示，保持手动确认",
+        "测试、生产构建和浏览器验证通过"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "28 tests and production build passed. Browser verifies red heart/diamond and dark spade/club, six-player near/far target selection and rejected out-of-range click, cancel/commit cleanup, four-player defensive-horse restriction and Longdan conversion. Desktop1360x850 and1024x640 inspected. UI follows original engine selectable state; no rules changes. US-006 remains false."
+    },
+    {
+      "id": "US-011",
+      "title": "斗地主身份选择与界面整理",
+      "description": "原生三人斗地主支持地主/农民自选，飞扬跋扈与双刀；统一整理选将、牌桌、手牌和工具交互。",
+      "acceptanceCriteria": [
+        "身份选择、真实规则AI及胜负一致",
+        "地主准备阶段摸一与双刀、飞扬、体力加一生效",
+        "既有确认语音画像花色目标提示及禁牌不回退",
+        "桌面及较小窗口验证，测试和生产构建通过"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "35 tests pass including actual native doudizhu start/Feiyang/Bahu/attitude/victory functions. Browser landlord5HP/7 cards, two confirmed Slashes and third disabled; farmer4HP and normal response; production native skill details correct. Mode/role selection, toolbar, fold_card and compact gutters verified at390x844,1360x900,1024x640. Production2v2/8-player identity regression and build pass; US-006 remains false."
+    },
+    {
+      "id": "US-012",
+      "title": "队友手牌默认展示",
+      "description": "原生队友可见手牌常驻侧栏，并随真实对局更新。",
+      "acceptanceCriteria": [
+        "2v2和农民队友手牌默认展开并实时更新",
+        "牌名属性花色点数清晰，空手和死亡状态正确",
+        "沿用原生权限与规则，视图只读",
+        "浏览器、测试和生产构建通过"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "38 tests and production build pass. Native versus/doudizhu visibility filters tested. Farmer Guan Hai real hand changes reflected without clicks; production Kan Ze diamond5Shan agrees with Fire Attack reveal, panel removed after death.1280x720 and1024x640 visually checked; no browser warn/error. US-006 remains false."
+    },
+    {
+      "id": "US-013",
+      "title": "普通杀、雷杀、火杀外观区分",
+      "description": "复用上游素材，为三种杀提供不同图案与配色，同步队友手牌栏。",
+      "acceptanceCriteria": [
+        "三种杀图案和颜色明显不同，名称与花色点数清楚",
+        "手牌和明置副本一致，隐藏牌不泄露属性",
+        "只改展示，浏览器和回归测试通过，生产静态资源同步"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": "38 tests plus syntax/diff checks pass. Real production diamond4Fire Slash shows vermilion flame art; ordinary Slash and live teammate panel remain intact. Production-CSS native-markup fixture visually verifies all three faces, compact teammate cards and hidden back. Static presentation files synced without rebuilding unchanged engine. US-006 remains false."
+    },
+    {
+      "id": "US-014",
+      "title": "右下角整理手牌按钮",
+      "description": "在人物与手牌栏之间增加常驻整理按钮，复用原生排序。",
+      "acceptanceCriteria": [
+        "右下角常驻按钮不遮挡装备手牌和技能",
+        "沿用原生排序及技能限制，保留选择，不消耗牌",
+        "鼠标键盘和桌面紧凑布局通过浏览器验证，测试及资源同步完成"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "38 regression tests plus syntax/diff checks pass. Real seven-card Sun Quan landlord hand reorders with selected spade8Thunder Slash preserved and count unchanged. Enter works after deselecting.1280x800/1024x640 inspected, compact equipment gap9.6px, no console warn/error. Static runtime/CSS synced; engine unchanged. US-006 remains false."
+    },
+    {
+      "id": "US-015",
+      "title": "开局换牌",
+      "description": "发完起手牌后可反复重抽整手牌，满意后确认开始，统一三种玩法。",
+      "acceptanceCriteria": [
+        "开局显示换一手与开始对局，支持连续重抽和直接保留",
+        "人类手牌张数保持，AI手牌不变，4号位和地主时机正确",
+        "复用原生发牌及置换，保留特殊牌堆和标记，后续不再弹出",
+        "原生事件测试、三种玩法浏览器与生产构建通过"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "42 tests pass, including actual native gameDraw/replaceHandcards. Browser farmer4 rerolled3 times, landlord4->begin7,2v2 reroll5->5 with unchanged ally4/pile143, identity4->begin6. Original turns resume after confirmation;1280-wide/1024x640 inspected, no warn/error. Production build passes; caption-only final changes synced. US-006 remains false."
+    },
+    {
+      "id": "US-016",
+      "title": "单牌选择直接切换",
+      "description": "选中一张后可直接点击另一张合法手牌切换，保留手动确认和多选规则。",
+      "acceptanceCriteria": [
+        "普通单牌和简单响应/转化可直接换选",
+        "清除旧目标并重新检查，非法牌保留原选择",
+        "多选复杂自定义及AI行为不变，可切换牌保持明亮",
+        "原生流程测试、实战交互、视觉和生产构建通过"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": "48 tests pass including native check/uncheck/card-click/Check class. Browser thunderSha+target -> Guohe clears target with hand6; illegal Shan preserves selection; Zhiheng selects two. Sha->Bingliang explicit confirm spends only Bingliang6->5.1024x640 visual verified. Production build passed. US-006 remains false."
+    },
+    {
+      "id": "US-017",
+      "title": "手牌花色定位稳定",
+      "description": "将手牌花色和点数固定在牌面上方中央，消除出牌后的偏移和过渡。",
+      "acceptanceCriteria": [
+        "不同手牌数量与末张状态均固定居中",
+        "花色标签不再移动过渡，红黑点数和原生排列选择正常",
+        "真实出牌几何对比、整理及小窗口验证通过，生产样式同步"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": "Reproduced native7->6 info shift14.733px over0.5s. CSS fixes a centered48px label and overrides native/last-card transforms. Browser4/7/6 hands, equipment play, sort and1024x640: center error0px, max relative shift0px, transition0s; no warn/error.48 tests/diff pass, static CSS synced. US-006 remains false."
+    },
+    {
+      "id": "US-018",
+      "title": "威董卓技能与阵亡语音",
+      "description": "仅为威董卓加入犷勇、据陲和阵亡配音。",
+      "acceptanceCriteria": [
+        "五条锁定上游录音完整打包，来源及哈希可追溯",
+        "沿用原生触发和随机变体，与卡牌共用语音开关且不会互相去重",
+        "原生流程测试、完整解码、真实技能浏览器验证和生产构建通过"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": "52 tests pass; all165 audio files decode. Five hero clips407236bytes match pinned blobs and native Audio paths/text. Browser Qilin->Guangyong2 (played2), Tiesuo->confirmedJuchui1 (played4); mute preserves gameplay without new playback. Native death path tested, no real death-game claim. Production build passes; US-006 remains false."
+    },
+    {
+      "id": "US-019",
+      "title": "区分伤害的受击音效",
+      "description": "在真实命中时播放不同属性和强度的受击音效，区分普通杀、酒杀与属性伤害。",
+      "acceptanceCriteria": [
+        "14个锁定上游普通/重击/属性/护甲音效可追溯且完整",
+        "只响应最终真实正数伤害，酒杀2点重击，闪避零伤取消不误播",
+        "即时播放不被语音排队阻塞，声音开关统一控制并按受伤事件去重",
+        "原生流程测试、解码、真实普通/酒雷命中及闪避、视觉和生产构建通过"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": "58 tests pass using native damage step4, Wine content and natureAudio table.14 clips294843bytes verified; all179 sounds decode. Browser normalSha LiuLi3->2 playsdamage; dodged WineSha ChenGui3->3 leaves effect count2; second game WineThunderSha XuRong4->2 playsdamage_thunder2. No warn/error; full build passes. US-006 remains false."
+    },
+    {
+      "id": "US-020",
+      "title": "官方属性杀牌面与连续手牌",
+      "description": "使用官网经典火杀/雷杀图示及用户参考的固定牌面布局，修复出牌后的牌名跳动和刷新感。",
+      "acceptanceCriteria": [
+        "官网原图可追溯，替换错误天雷/烈火插画，真实点数花色独立显示",
+        "复用原节点，固定内部元素，整张牌平滑补位并避开装备栏",
+        "原生9→8同一布局旧版失败/新版通过，实战7→6及窄窗口验证通过",
+        "59项测试通过，来源文档与生产静态资源同步"
+      ],
+      "priority": 20,
+      "passes": true,
+      "notes": "Official guozhan.sanguosha.com fire/thunder scans32394bytes retained unmodified with SHA256. Identical600px native updatehl fixture: oldCSS743cd19 name shift-16px and no root motion; newCSS0px, same nodes/text,0.18s root transforms. Real SunQuan QInggang7->6: all face offsets0; preceding cards stationary, following cards-112px.1024x640 identity8 visual verified with43.8px hand/equipment gap. US-006 remains false."
+    },
+    {
+      "id": "US-021",
+      "title": "近期强力武将语音",
+      "description": "按后续用户要求，为八位2025—2026十周年武将增加默认技能、转换形态和阵亡语音，排除标包与界限突破。",
+      "acceptanceCriteria": [
+        "保留威董卓；八位新增武将有官方上新依据，准确版本ID不混淆",
+        "原生解析覆盖技能、子技能引用、转换形态及阵亡，58条锁定录音来源和体积可追溯",
+        "共享声音开关和原生触发，完整解码、原生流程测试、代表性实战浏览器验证及生产构建通过"
+      ],
+      "priority": 21,
+      "passes": true,
+      "notes": "53 new clips7147323bytes;58 total7554559bytes.61 tests pass, all232 sounds decode; full production build succeeds. Native resolver/methods cover all forms and aliases; reproducible preparation verified. Browser MouXunYu openingdcsbshimou1 then shadowdcsbshimou_dc_sb_xunyu_shadow1 (counts1/2), native discard7->4. NewGodSunQuan openingCangming reachesrunning audio/count2/dccangming2.1024x640 visual and clean logs verified. Browser input recovered using explicit left button. US-006 remainsfalse."
+    }
+  ]
+}

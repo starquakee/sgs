@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "officialBaseline": {
+    "status": "pending-official-reconciliation",
+    "date": null,
+    "totalCharacters": null,
+    "totalSkills": null,
+    "coveragePercent": null,
+    "note": "官方全量待逐项核验。以下为锁定源码的包级分类，不是官方名单或规则一致性结论。"
+  },
+  "categories": {
+    "decade": "十周年专属包（源码分类）",
+    "common": "通用经典包（具体版本待核验）",
+    "other": "其他版本／线下／社区",
+    "pending": "混合或待核验"
+  },
+  "rules": {
+    "decade-pack": {
+      "category": "decade",
+      "basis": "上游十周年分区及本项目已确认的三个目标包；不按 dc_ 前缀判断。sp2 位于上游通用分区，按已接受 PRD 纳入源码目标范围，仍待官方逐项对账。",
+      "sources": ["apps/core/game/package.js", "apps/core/character/xianding/sort.js", "apps/core/character/huicui/sort.js", "apps/core/character/sp2/sort.js", "tasks/prd-sgs-decade.md"]
+    },
+    "classic-pack": {
+      "category": "common",
+      "basis": "上游经典标包、神话再临、经典神将及一将成名；保留原 ID，不宣称每个技能与十周年现版一致。",
+      "sources": ["apps/core/game/package.js"]
+    },
+    "ol-pack": {
+      "category": "other",
+      "basis": "上游 OL 服分区，排除出十周年专属包统计。",
+      "sources": ["apps/core/game/package.js"]
+    },
+    "mobile-pack": {
+      "category": "other",
+      "basis": "上游移动服及外服分区，排除出十周年专属包统计。",
+      "sources": ["apps/core/game/package.js"]
+    },
+    "offline-pack": {
+      "category": "other",
+      "basis": "上游线下系列分区，不能等同十周年线上版本。",
+      "sources": ["apps/core/game/package.js"]
+    },
+    "community-pack": {
+      "category": "other",
+      "basis": "上游 DIY 系列分区。",
+      "sources": ["apps/core/game/package.js"]
+    },
+    "mixed-pack": {
+      "category": "pending",
+      "basis": "通用、界限突破、联动或怀旧包含版本混合；未逐项取得版本依据前不纳入十周年专属包统计。",
+      "sources": ["apps/core/game/package.js", "apps/core/character/refresh/sort.js"]
+    }
+  },
+  "packs": {
+    "bingshi": { "name": "兵势篇", "rule": "mobile-pack" },
+    "clan": { "name": "门阀士族", "rule": "ol-pack" },
+    "collab": { "name": "联动卡", "rule": "mixed-pack" },
+    "diy": { "name": "DIY", "rule": "community-pack" },
+    "extra": { "name": "经典神将", "rule": "classic-pack" },
+    "huicui": { "name": "群英荟萃", "rule": "decade-pack" },
+    "jsrg": { "name": "江山如故", "rule": "offline-pack" },
+    "key": { "name": "Key", "rule": "community-pack" },
+    "mobile": { "name": "移动版", "rule": "mobile-pack" },
+    "newjiang": { "name": "新一将成名", "rule": "mixed-pack" },
+    "offline": { "name": "线下武将", "rule": "offline-pack" },
+    "old": { "name": "怀旧", "rule": "mixed-pack" },
+    "onlyOL": { "name": "OL专属", "rule": "ol-pack" },
+    "refresh": { "name": "界限突破", "rule": "mixed-pack" },
+    "sb": { "name": "谋攻篇", "rule": "mobile-pack" },
+    "shenhua": { "name": "神话再临", "rule": "classic-pack" },
+    "shiji": { "name": "始计篇", "rule": "mobile-pack" },
+    "sixiang": { "name": "四象封印", "rule": "offline-pack" },
+    "sp": { "name": "璀璨星河", "rule": "mixed-pack" },
+    "sp2": { "name": "系列专属", "rule": "decade-pack" },
+    "standard": { "name": "标准", "rule": "classic-pack" },
+    "sxrm": { "name": "蚀心入魔", "rule": "offline-pack" },
+    "tw": { "name": "外服武将", "rule": "mobile-pack" },
+    "xianding": { "name": "限定专属", "rule": "decade-pack" },
+    "yijiang": { "name": "一将成名", "rule": "classic-pack" },
+    "yingbian": { "name": "文德武备", "rule": "ol-pack" }
+  },
+  "characterOverrides": {}
+}

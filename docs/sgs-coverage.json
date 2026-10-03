@@ -1,0 +1,1634 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repository": "https://github.com/libnoname/noname",
+    "commit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+    "license": "GPL-3.0-only",
+    "attribution": "无名杀 / libnoname/noname contributors"
+  },
+  "officialBaseline": {
+    "status": "pending-official-reconciliation",
+    "date": null,
+    "totalCharacters": null,
+    "totalSkills": null,
+    "coveragePercent": null,
+    "note": "官方全量待逐项核验。以下为锁定源码的包级分类，不是官方名单或规则一致性结论。"
+  },
+  "scope": {
+    "characters": "Exported character tables in apps/core/character; variants retain their original IDs and pack-qualified keys.",
+    "definitions": "Character-pack skill exports and first-level subSkill objects; offline eager glob included.",
+    "dependencies": "Static inherit/group/global references only. Runtime grants, generated skills, card/mode skills and dynamic expressions are not exhaustively resolved.",
+    "verification": "AST definition presence is not runtime behavior verification or official rules equivalence."
+  },
+  "totals": {
+    "packs": 26,
+    "sourcedCharacters": 2563,
+    "sourcedSkillDefinitions": 9724,
+    "parsedSkillDefinitions": 9722,
+    "characterSkillReferences": 5233,
+    "unresolvedCharacterSkillReferences": 4,
+    "unresolvedDeclaredDependencies": 44,
+    "behaviorVerifiedSkills": 0
+  },
+  "categories": [
+    {
+      "category": "decade",
+      "name": "十周年专属包（源码分类）",
+      "sourcedCharacters": 451,
+      "charactersWithResolvedSkills": 451,
+      "behaviorVerifiedSkills": 0
+    },
+    {
+      "category": "common",
+      "name": "通用经典包（具体版本待核验）",
+      "sourcedCharacters": 165,
+      "charactersWithResolvedSkills": 165,
+      "behaviorVerifiedSkills": 0
+    },
+    {
+      "category": "other",
+      "name": "其他版本／线下／社区",
+      "sourcedCharacters": 1395,
+      "charactersWithResolvedSkills": 1391,
+      "behaviorVerifiedSkills": 0
+    },
+    {
+      "category": "pending",
+      "name": "混合或待核验",
+      "sourcedCharacters": 552,
+      "charactersWithResolvedSkills": 552,
+      "behaviorVerifiedSkills": 0
+    }
+  ],
+  "packs": [
+    {
+      "id": "bingshi",
+      "name": "兵势篇",
+      "version": {
+        "category": "other",
+        "rule": "mobile-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 35,
+      "source": "apps/core/character/bingshi/index.js",
+      "skillSources": [
+        "apps/core/character/bingshi/skill.js"
+      ],
+      "parsedSkillDefinitions": 178
+    },
+    {
+      "id": "clan",
+      "name": "门阀士族",
+      "version": {
+        "category": "other",
+        "rule": "ol-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 41,
+      "source": "apps/core/character/clan/index.js",
+      "skillSources": [
+        "apps/core/character/clan/skill.js"
+      ],
+      "parsedSkillDefinitions": 157
+    },
+    {
+      "id": "collab",
+      "name": "联动卡",
+      "version": {
+        "category": "pending",
+        "rule": "mixed-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 88,
+      "source": "apps/core/character/collab/index.js",
+      "skillSources": [
+        "apps/core/character/collab/skill.js"
+      ],
+      "parsedSkillDefinitions": 236
+    },
+    {
+      "id": "diy",
+      "name": "DIY",
+      "version": {
+        "category": "other",
+        "rule": "community-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 66,
+      "source": "apps/core/character/diy/index.js",
+      "skillSources": [
+        "apps/core/character/diy/skill.js"
+      ],
+      "parsedSkillDefinitions": 210
+    },
+    {
+      "id": "extra",
+      "name": "经典神将",
+      "version": {
+        "category": "common",
+        "rule": "classic-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 12,
+      "source": "apps/core/character/extra/index.js",
+      "skillSources": [
+        "apps/core/character/extra/skill.js"
+      ],
+      "parsedSkillDefinitions": 87
+    },
+    {
+      "id": "huicui",
+      "name": "群英荟萃",
+      "version": {
+        "category": "decade",
+        "rule": "decade-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 119,
+      "source": "apps/core/character/huicui/index.js",
+      "skillSources": [
+        "apps/core/character/huicui/skill.js"
+      ],
+      "parsedSkillDefinitions": 457
+    },
+    {
+      "id": "jsrg",
+      "name": "江山如故",
+      "version": {
+        "category": "other",
+        "rule": "offline-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 76,
+      "source": "apps/core/character/jsrg/index.js",
+      "skillSources": [
+        "apps/core/character/jsrg/skill.js"
+      ],
+      "parsedSkillDefinitions": 316
+    },
+    {
+      "id": "key",
+      "name": "Key",
+      "version": {
+        "category": "other",
+        "rule": "community-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 88,
+      "source": "apps/core/character/key/index.js",
+      "skillSources": [
+        "apps/core/character/key/skill.js"
+      ],
+      "parsedSkillDefinitions": 310
+    },
+    {
+      "id": "mobile",
+      "name": "移动版",
+      "version": {
+        "category": "other",
+        "rule": "mobile-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 204,
+      "source": "apps/core/character/mobile/index.js",
+      "skillSources": [
+        "apps/core/character/mobile/skill.js"
+      ],
+      "parsedSkillDefinitions": 698
+    },
+    {
+      "id": "newjiang",
+      "name": "新一将成名",
+      "version": {
+        "category": "pending",
+        "rule": "mixed-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 42,
+      "source": "apps/core/character/newjiang/index.js",
+      "skillSources": [
+        "apps/core/character/newjiang/skill.js"
+      ],
+      "parsedSkillDefinitions": 182
+    },
+    {
+      "id": "offline",
+      "name": "线下武将",
+      "version": {
+        "category": "other",
+        "rule": "offline-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 384,
+      "source": "apps/core/character/offline/index.js",
+      "skillSources": [
+        "apps/core/character/offline/skill/extra_offline.js",
+        "apps/core/character/offline/skill/offline_Europe.js",
+        "apps/core/character/offline/skill/offline_changan.js",
+        "apps/core/character/offline/skill/offline_chunqiu.js",
+        "apps/core/character/offline/skill/offline_fengyun.js",
+        "apps/core/character/offline/skill/offline_guansuo.js",
+        "apps/core/character/offline/skill/offline_hanmo.js",
+        "apps/core/character/offline/skill/offline_jingxiang.js",
+        "apps/core/character/offline/skill/offline_jingyang.js",
+        "apps/core/character/offline/skill/offline_jiudin.js",
+        "apps/core/character/offline/skill/offline_juedai.js",
+        "apps/core/character/offline/skill/offline_longxuexuanhuang.js",
+        "apps/core/character/offline/skill/offline_longyutao.js",
+        "apps/core/character/offline/skill/offline_luanwu.js",
+        "apps/core/character/offline/skill/offline_piracyE.js",
+        "apps/core/character/offline/skill/offline_piracyE_hl.js",
+        "apps/core/character/offline/skill/offline_piracyE_jb.js",
+        "apps/core/character/offline/skill/offline_piracyE_shenmo.js",
+        "apps/core/character/offline/skill/offline_piracyE_xk.js",
+        "apps/core/character/offline/skill/offline_piracyE_zy.js",
+        "apps/core/character/offline/skill/offline_piracyK.js",
+        "apps/core/character/offline/skill/offline_piracyS.js",
+        "apps/core/character/offline/skill/offline_piracyS_shenmo.js",
+        "apps/core/character/offline/skill/offline_prettyDerby.js",
+        "apps/core/character/offline/skill/offline_qingshi.js",
+        "apps/core/character/offline/skill/offline_scl.js",
+        "apps/core/character/offline/skill/offline_shichangshi.js",
+        "apps/core/character/offline/skill/offline_shiningGrils.js",
+        "apps/core/character/offline/skill/offline_star.js",
+        "apps/core/character/offline/skill/offline_sticker.js",
+        "apps/core/character/offline/skill/offline_taoyuan.js",
+        "apps/core/character/offline/skill/offline_vtuber.js",
+        "apps/core/character/offline/skill/offline_weinan.js",
+        "apps/core/character/offline/skill/offline_wenxindiaolong.js",
+        "apps/core/character/offline/skill/offline_xy.js",
+        "apps/core/character/offline/skill/offline_yanling.js",
+        "apps/core/character/offline/skill/offline_yanyou.js",
+        "apps/core/character/offline/skill/offline_yongjian.js",
+        "apps/core/character/offline/skill/offline_zc26.js",
+        "apps/core/character/offline/skill/offline_zongheng.js"
+      ],
+      "parsedSkillDefinitions": 1310
+    },
+    {
+      "id": "old",
+      "name": "怀旧",
+      "version": {
+        "category": "pending",
+        "rule": "mixed-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 78,
+      "source": "apps/core/character/old/index.js",
+      "skillSources": [
+        "apps/core/character/old/skill.js"
+      ],
+      "parsedSkillDefinitions": 40
+    },
+    {
+      "id": "onlyOL",
+      "name": "OL专属",
+      "version": {
+        "category": "other",
+        "rule": "ol-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 83,
+      "source": "apps/core/character/onlyOL/index.js",
+      "skillSources": [
+        "apps/core/character/onlyOL/skill.js"
+      ],
+      "parsedSkillDefinitions": 375
+    },
+    {
+      "id": "refresh",
+      "name": "界限突破",
+      "version": {
+        "category": "pending",
+        "rule": "mixed-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 128,
+      "source": "apps/core/character/refresh/index.js",
+      "skillSources": [
+        "apps/core/character/refresh/skill.js"
+      ],
+      "parsedSkillDefinitions": 407
+    },
+    {
+      "id": "sb",
+      "name": "谋攻篇",
+      "version": {
+        "category": "other",
+        "rule": "mobile-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 54,
+      "source": "apps/core/character/sb/index.js",
+      "skillSources": [
+        "apps/core/character/sb/skill.js"
+      ],
+      "parsedSkillDefinitions": 275
+    },
+    {
+      "id": "shenhua",
+      "name": "神话再临",
+      "version": {
+        "category": "common",
+        "rule": "classic-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 48,
+      "source": "apps/core/character/shenhua/index.js",
+      "skillSources": [
+        "apps/core/character/shenhua/skill.js"
+      ],
+      "parsedSkillDefinitions": 215
+    },
+    {
+      "id": "shiji",
+      "name": "始计篇",
+      "version": {
+        "category": "other",
+        "rule": "mobile-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 48,
+      "source": "apps/core/character/shiji/index.js",
+      "skillSources": [
+        "apps/core/character/shiji/skill.js"
+      ],
+      "parsedSkillDefinitions": 279
+    },
+    {
+      "id": "sixiang",
+      "name": "四象封印",
+      "version": {
+        "category": "other",
+        "rule": "offline-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 101,
+      "source": "apps/core/character/sixiang/index.js",
+      "skillSources": [
+        "apps/core/character/sixiang/skill.js"
+      ],
+      "parsedSkillDefinitions": 211
+    },
+    {
+      "id": "sp",
+      "name": "璀璨星河",
+      "version": {
+        "category": "pending",
+        "rule": "mixed-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 216,
+      "source": "apps/core/character/sp/index.js",
+      "skillSources": [
+        "apps/core/character/sp/skill.js"
+      ],
+      "parsedSkillDefinitions": 1065
+    },
+    {
+      "id": "sp2",
+      "name": "系列专属",
+      "version": {
+        "category": "decade",
+        "rule": "decade-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 113,
+      "source": "apps/core/character/sp2/index.js",
+      "skillSources": [
+        "apps/core/character/sp2/skill.js"
+      ],
+      "parsedSkillDefinitions": 408
+    },
+    {
+      "id": "standard",
+      "name": "标准",
+      "version": {
+        "category": "common",
+        "rule": "classic-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 33,
+      "source": "apps/core/character/standard/index.js",
+      "skillSources": [
+        "apps/core/character/standard/skill.js"
+      ],
+      "parsedSkillDefinitions": 74
+    },
+    {
+      "id": "sxrm",
+      "name": "蚀心入魔",
+      "version": {
+        "category": "other",
+        "rule": "offline-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 27,
+      "source": "apps/core/character/sxrm/index.js",
+      "skillSources": [
+        "apps/core/character/sxrm/skill.js"
+      ],
+      "parsedSkillDefinitions": 88
+    },
+    {
+      "id": "tw",
+      "name": "外服武将",
+      "version": {
+        "category": "other",
+        "rule": "mobile-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 165,
+      "source": "apps/core/character/tw/index.js",
+      "skillSources": [
+        "apps/core/character/tw/skill.js"
+      ],
+      "parsedSkillDefinitions": 693
+    },
+    {
+      "id": "xianding",
+      "name": "限定专属",
+      "version": {
+        "category": "decade",
+        "rule": "decade-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 219,
+      "source": "apps/core/character/xianding/index.js",
+      "skillSources": [
+        "apps/core/character/xianding/skill.js"
+      ],
+      "parsedSkillDefinitions": 974
+    },
+    {
+      "id": "yijiang",
+      "name": "一将成名",
+      "version": {
+        "category": "common",
+        "rule": "classic-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 72,
+      "source": "apps/core/character/yijiang/index.js",
+      "skillSources": [
+        "apps/core/character/yijiang/skill.js"
+      ],
+      "parsedSkillDefinitions": 353
+    },
+    {
+      "id": "yingbian",
+      "name": "文德武备",
+      "version": {
+        "category": "other",
+        "rule": "ol-pack",
+        "officialStatus": "unverified"
+      },
+      "characterCount": 23,
+      "source": "apps/core/character/yingbian/index.js",
+      "skillSources": [
+        "apps/core/character/yingbian/skill.js"
+      ],
+      "parsedSkillDefinitions": 124
+    }
+  ],
+  "duplicateCharacterIds": [],
+  "duplicateSkillIds": [],
+  "unresolvedCharacterSkills": [
+    {
+      "character": "diy:ns_wenchou",
+      "id": "dualside",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "character": "diy:ns_yanliang",
+      "id": "dualside",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "character": "key:key_misa",
+      "id": "dualside",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "character": "key:key_yusa",
+      "id": "dualside",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    }
+  ],
+  "unresolvedDependencies": [
+    {
+      "skill": "collab:dcjuanlv",
+      "relation": "inherit",
+      "id": "cixiong_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "collab:natuyi_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "huicui:chijian_qinggang",
+      "relation": "inherit",
+      "id": "qinggang_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "huicui:dcbeini_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "huicui:dcbeini_fengyin2",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "huicui:dcyunzheng_block",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "jsrg:jsrgzhasi_undist",
+      "relation": "group",
+      "id": "undist",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "key:saya_nodis",
+      "relation": "group",
+      "id": "undist",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:mbcmfangzhu_baiban",
+      "relation": "inherit",
+      "id": "baiban",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:pothuanshi_damage",
+      "relation": "inherit",
+      "id": "zf_cardDamage",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_bagua_skill",
+      "relation": "inherit",
+      "id": "bagua_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_baiyin_skill",
+      "relation": "inherit",
+      "id": "baiyin_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_lanyinjia",
+      "relation": "inherit",
+      "id": "lanyinjia",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_minguangkai_cancel",
+      "relation": "inherit",
+      "id": "minguangkai_cancel",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_minguangkai_link",
+      "relation": "inherit",
+      "id": "minguangkai_link",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_renwang_skill",
+      "relation": "inherit",
+      "id": "renwang_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_tengjia1",
+      "relation": "inherit",
+      "id": "tengjia1",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_tengjia2",
+      "relation": "inherit",
+      "id": "tengjia2",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "mobile:rw_tengjia4",
+      "relation": "inherit",
+      "id": "tengjia3",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "offline:eu_ducai_block",
+      "relation": "inherit",
+      "id": "baiban",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "offline:jdjianxiong",
+      "relation": "group",
+      "id": "jdjianxiong_mark",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "offline:lxtingwei_baiban",
+      "relation": "inherit",
+      "id": "baiban",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "offline:pewuan_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "refresh:rewansha_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "sb:sbfangzhu_baiban",
+      "relation": "inherit",
+      "id": "baiban",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "sb:sbyangwei_effect",
+      "relation": "inherit",
+      "id": "qinggang_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "shenhua:bazhen_bagua",
+      "relation": "inherit",
+      "id": "bagua_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "shiji:tingwei_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "sp:linglong_bagua",
+      "relation": "inherit",
+      "id": "bagua_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "sp:oltongxin_limit",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "tw:twfangzhu_baiban",
+      "relation": "inherit",
+      "id": "baiban",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "tw:twgongsun_shadow",
+      "relation": "global",
+      "id": "twgongsun_shadow2",
+      "status": "unresolved",
+      "reason": "dynamic-definition",
+      "definitionKeys": [
+        "tw:twgongsun_shadow2"
+      ]
+    },
+    {
+      "skill": "tw:twhuajing_dao",
+      "relation": "inherit",
+      "id": "guding_skill",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "tw:twzhenglve",
+      "relation": "group",
+      "id": "twzhenglve_damage",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcsbjinhuo_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcsbwuwei_fengyin",
+      "relation": "inherit",
+      "id": "fengyin",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcsbxunshi_nocount",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcshouhu_nocount",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcxiaowu_effect",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:dcyuxi_effect",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:jiandao_effect",
+      "relation": "inherit",
+      "id": "zf_cardDamage",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:jiandao_nocount",
+      "relation": "inherit",
+      "id": "nocount",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "xianding:shencai_weapon",
+      "relation": "global",
+      "id": "shencai_weapon_ai",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    },
+    {
+      "skill": "yijiang:qingxian",
+      "relation": "group",
+      "id": "qingxian_dying",
+      "status": "unresolved",
+      "reason": "missing-definition",
+      "definitionKeys": []
+    }
+  ],
+  "unresolvedDefinitions": [
+    {
+      "key": "tw:twgongsun_shadow",
+      "source": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23271
+      }
+    },
+    {
+      "key": "tw:twgongsun_shadow2",
+      "source": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23330
+      }
+    }
+  ],
+  "dynamicDependencies": [],
+  "unresolvedCharacterNames": [
+    "sixiang:std_nanhualaoxian"
+  ],
+  "diagnostics": [
+    {
+      "kind": "dynamic-member",
+      "table": "collab:translations",
+      "source": {
+        "file": "apps/core/character/collab/translate.js",
+        "line": 493
+      }
+    },
+    {
+      "kind": "dynamic-member",
+      "table": "collab:translations",
+      "source": {
+        "file": "apps/core/character/collab/translate.js",
+        "line": 501
+      }
+    },
+    {
+      "kind": "duplicate-definition",
+      "id": "tw:twgongsun_shadow",
+      "previous": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23207
+      },
+      "effective": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23271
+      }
+    },
+    {
+      "kind": "duplicate-definition",
+      "id": "tw:twgongsun_shadow2",
+      "previous": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23220
+      },
+      "effective": {
+        "file": "apps/core/character/tw/skill.js",
+        "line": 23330
+      }
+    }
+  ],
+  "sources": [
+    {
+      "file": "apps/core/character/bingshi/character.js",
+      "sha256": "db81fe7bce0c458be229c2dd4fae033a24512fbecee7169866078007cc41a7f6"
+    },
+    {
+      "file": "apps/core/character/bingshi/index.js",
+      "sha256": "7e06f88e5ca36cbc85c585bc3926a0a8e91f04c820b2aa7df9902528ff30ff12"
+    },
+    {
+      "file": "apps/core/character/bingshi/skill.js",
+      "sha256": "e9ae98b94ce60e8b726423c4e7acb2a9cab7cfe37aee523598d40be9d401dfb9"
+    },
+    {
+      "file": "apps/core/character/bingshi/sort.js",
+      "sha256": "9deb565030f24d6e6373353747dd559543607c7398e1bec24a8f69470328e95b"
+    },
+    {
+      "file": "apps/core/character/bingshi/translate.js",
+      "sha256": "0b6c88504c7c34c240f8160ce319fbf81e64e575947ca5567fdfcc0f6cd6e9c1"
+    },
+    {
+      "file": "apps/core/character/clan/character.js",
+      "sha256": "a50766905be809d8348273a30c4a4e3a6a17dd7569f803463a675890b13e507a"
+    },
+    {
+      "file": "apps/core/character/clan/index.js",
+      "sha256": "a23ae9979843c90da39eefece76178d6d5bfed1d7db4f9c82c7bf3a7e0e69492"
+    },
+    {
+      "file": "apps/core/character/clan/skill.js",
+      "sha256": "35eab57ca601b28adb4b762c7497a751c7925b8bc57fa6dba2a49fea918cf9bf"
+    },
+    {
+      "file": "apps/core/character/clan/sort.js",
+      "sha256": "400435483fc9340e5da2d69356efd2cec5fa46ebfeee151aee1fb1dc8d8b175f"
+    },
+    {
+      "file": "apps/core/character/clan/translate.js",
+      "sha256": "d5deaa6e65e7167e564da03417d38ba27e89c8b15856e4f3fdf357ad5bd07b3b"
+    },
+    {
+      "file": "apps/core/character/collab/character.js",
+      "sha256": "5a12b4a465d6a985f2f370ff4dce69b3ddb3d38c09ec23a3dacecf707f293caf"
+    },
+    {
+      "file": "apps/core/character/collab/index.js",
+      "sha256": "d25333504464efa6d3f42d9f01ad02e98850fe2767addd9a502890da03684fb5"
+    },
+    {
+      "file": "apps/core/character/collab/skill.js",
+      "sha256": "db7cb1f06fb56bc1e0b2f17cf29c688ea6b4809d537cc17ea6184ab41d5abd36"
+    },
+    {
+      "file": "apps/core/character/collab/sort.js",
+      "sha256": "11fc7ae3b52d87e3a01ed673c67a75007a48df76dadcb62dc5b688ff77c00e92"
+    },
+    {
+      "file": "apps/core/character/collab/translate.js",
+      "sha256": "41b873e081c06da0b53e6eaff3f8cb3467ab826fd923a99871fc47e6008e4af9"
+    },
+    {
+      "file": "apps/core/character/diy/character.js",
+      "sha256": "9ae092bfbc1f9e6336f19e08c2edc327db1693b0b332a1c402f913cb11e8fbb1"
+    },
+    {
+      "file": "apps/core/character/diy/index.js",
+      "sha256": "7e43c1ffab98b989b5d9cedc52e1d2603b635a29d289445a8a085ad3710b5393"
+    },
+    {
+      "file": "apps/core/character/diy/skill.js",
+      "sha256": "b78ad0c6a311041d5bb95238faf927a0259c157895dd1eacc173ccd92619f0f0"
+    },
+    {
+      "file": "apps/core/character/diy/sort.js",
+      "sha256": "2413782e3a7c2e93a3f8df5beba77c732a69630395596af25dbd4d06a4de418a"
+    },
+    {
+      "file": "apps/core/character/diy/translate.js",
+      "sha256": "b244e92988cc2bb353d9f4e75ff79a95c4217da84cf83c85e69bbaee6b503884"
+    },
+    {
+      "file": "apps/core/character/extra/character.js",
+      "sha256": "6fe577b24bccaf778080547c56c57f474cc3261143ce4b18b8f7cff5137712d0"
+    },
+    {
+      "file": "apps/core/character/extra/index.js",
+      "sha256": "c3815069cfeb51154732dd0feb3c0ac6fe8c1fa49fe01304aae3726b98eed87a"
+    },
+    {
+      "file": "apps/core/character/extra/skill.js",
+      "sha256": "491e868a0c6bae64f09b092439a10f7f9cac811e670e4e122fdec7fc12f0c0c7"
+    },
+    {
+      "file": "apps/core/character/extra/sort.js",
+      "sha256": "21d6cd62a043dd917e708af43ad2424157434cf44ade7bce43e7ce3a286c7447"
+    },
+    {
+      "file": "apps/core/character/extra/translate.js",
+      "sha256": "8fe85f53e2103ac98fd529662d8acd85ce3fbdb89dec7d5dcc89d86569bbef5a"
+    },
+    {
+      "file": "apps/core/character/huicui/character.js",
+      "sha256": "b3c1f43c2605199956865de750cdeb121e18017eaa6d730ab6415f4df3a75754"
+    },
+    {
+      "file": "apps/core/character/huicui/index.js",
+      "sha256": "99a260ddf61e7b965022d0d96e469d1142f64d63f7b9ae8a0ce21a9495fbdf91"
+    },
+    {
+      "file": "apps/core/character/huicui/skill.js",
+      "sha256": "d18e67dab9d4ea56561dd377c75568c2e7d019f3773b7d9f21fd673f39a289d8"
+    },
+    {
+      "file": "apps/core/character/huicui/sort.js",
+      "sha256": "2fad9c5d745eecbf16966abd363ca6d00b01ceb56f8fdb17488d1ae3d6381167"
+    },
+    {
+      "file": "apps/core/character/huicui/translate.js",
+      "sha256": "b8d184789d2f1bd0bccbbc5c74b2ba1acf8dedd608ce15caf1bd74559592f260"
+    },
+    {
+      "file": "apps/core/character/jsrg/character.js",
+      "sha256": "4228684eb4ccd5bed256cfb27eff8168851992b02aab1bdb2120f4fb983f23d2"
+    },
+    {
+      "file": "apps/core/character/jsrg/index.js",
+      "sha256": "4cd18ef6c18206a9ec9dddfa24f2e7d8f25e36d8e248fc49ed21874b1a84cb35"
+    },
+    {
+      "file": "apps/core/character/jsrg/skill.js",
+      "sha256": "5af8463982506dbed23d14b286a78367a73f05453af5dc8103741c3bafed1b0f"
+    },
+    {
+      "file": "apps/core/character/jsrg/sort.js",
+      "sha256": "c8244bb35d959782be6021398a146869ef73e099711817a1d6fac24bc3b8d5a1"
+    },
+    {
+      "file": "apps/core/character/jsrg/translate.js",
+      "sha256": "9750ee914954113b55cf762812f15dea8495aeab597e960800a145d0b07b5d2e"
+    },
+    {
+      "file": "apps/core/character/key/character.js",
+      "sha256": "f45de71e7f0cbe17e57f94f1a34fab058b83a8fd882493556ca5415b9774701a"
+    },
+    {
+      "file": "apps/core/character/key/index.js",
+      "sha256": "f57003f411169f875acd03316585bbaa01a854fcc09b0d9a74f75f69cbf9c4e6"
+    },
+    {
+      "file": "apps/core/character/key/skill.js",
+      "sha256": "9161ce9ce6e6eb9adeec27df55f8fd5ad90fe1e064d4c11b90fef253df91b160"
+    },
+    {
+      "file": "apps/core/character/key/sort.js",
+      "sha256": "4ac6bf0d9d3e523bf9550c0bafb7ed885e0046fb53ae0ba5786d9ff8806fab6c"
+    },
+    {
+      "file": "apps/core/character/key/translate.js",
+      "sha256": "54f4db788695590eda46061b691b82436d3a8c45043bd9785d4f47914db7df2b"
+    },
+    {
+      "file": "apps/core/character/mobile/character.js",
+      "sha256": "85ff62fde9db77e0ee7e6a40df28c6005a47e945b7b8663cbe3e25cd2e699bab"
+    },
+    {
+      "file": "apps/core/character/mobile/index.js",
+      "sha256": "fe407832332f5e22d12e484fba994b870296f5a7adf63e723278d9803ae0c8bd"
+    },
+    {
+      "file": "apps/core/character/mobile/skill.js",
+      "sha256": "374e9d913afbfa09cb198288bb1ad3b08b82d284fdff5d08e022503c17ce7138"
+    },
+    {
+      "file": "apps/core/character/mobile/sort.js",
+      "sha256": "6b3095b87696c2cc5d03f82026a2203c8ff2acdea586737d2caa89bc117a7aa4"
+    },
+    {
+      "file": "apps/core/character/mobile/translate.js",
+      "sha256": "fea7da37b2e102a187d465a873fe22f0989a8f41f0c7f91844e149b277c3765e"
+    },
+    {
+      "file": "apps/core/character/newjiang/character.js",
+      "sha256": "3787c1e1c2cd38061135ca356802b2a9cc000c6a53c8120e28e37cdf69c7b5fc"
+    },
+    {
+      "file": "apps/core/character/newjiang/index.js",
+      "sha256": "d1480293ba3a4b92a5105fa9bda57cab44a42a43838f9ceefae37599b28491b1"
+    },
+    {
+      "file": "apps/core/character/newjiang/skill.js",
+      "sha256": "2adc43d9ed0f6d84bbc4afdb8e9af494652619f3be81baa3079bf0501559fc04"
+    },
+    {
+      "file": "apps/core/character/newjiang/sort.js",
+      "sha256": "4c838304bf4321b326f4df81b76c94f88346e7f43b75966d3574abef6e553702"
+    },
+    {
+      "file": "apps/core/character/newjiang/translate.js",
+      "sha256": "a07a8129afd71cd72fa72e2136cdc33b855339bfa44d886595d3e81eab2dc1e9"
+    },
+    {
+      "file": "apps/core/character/offline/character.js",
+      "sha256": "bd1d2845437a3a81509073f5a824458067a85f55eeb4a3cb29ae433ad734a4b5"
+    },
+    {
+      "file": "apps/core/character/offline/index.js",
+      "sha256": "74e38372a81dc911108320399d4eb952e11797ff5f358dd6f135495feba5e195"
+    },
+    {
+      "file": "apps/core/character/offline/skill/extra_offline.js",
+      "sha256": "a2a56afc2254a002f7a5d608c8abaa0d3e6ed4efb57fafd938b74d54bca291ae"
+    },
+    {
+      "file": "apps/core/character/offline/skill/index.ts",
+      "sha256": "87ed49082400fa2dd23d93674e3df001f94d354941d2ed097e75f1969ece1cf0"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_Europe.js",
+      "sha256": "1239b154f4a0e9239d80e5401f516b66cafc8acbd587e65cadcc9e24e63e7064"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_changan.js",
+      "sha256": "940d2c56f8835e8414ce4c7159ea243ce94b02d7621b9a42390785a0eee7faf9"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_chunqiu.js",
+      "sha256": "b5ade315cf1cd29d219810a0de185d03f50121e31ea3f40cc3b433988ceb5fc2"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_fengyun.js",
+      "sha256": "ba3e41ff4c05dfdcb52c8d9800545f0f433ff847feb4ff09e73334975adaf636"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_guansuo.js",
+      "sha256": "45879d1cd4904efe49ffa9cc4e9eaec4acf01003ada6c1ffcf317d659805092e"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_hanmo.js",
+      "sha256": "f244978924ed7f24fdc5de868e2e0dfa8c421eced08e62be45efbbaf976d42a5"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_jingxiang.js",
+      "sha256": "bbd6c5b016834a0480c31b712d58c48ae7d8a0b0c9ab2c09fcfd1f0872b63e7b"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_jingyang.js",
+      "sha256": "a829084f37d9499d2c467f2f40f30761a0150ba951e3800ec2952eb5c49aeeb6"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_jiudin.js",
+      "sha256": "25581d82caf699accf18d12c693bc217bc34b4820229551669e7c5de64b7e001"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_juedai.js",
+      "sha256": "037717a4ec07515b8ba27591cb72e1b2800910f4d3282b64f131047281cb0387"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_longxuexuanhuang.js",
+      "sha256": "54d73ca0bab08a1af4a60b5a068d0534fbe69d9f7b0cb0724164ff9121fa35d6"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_longyutao.js",
+      "sha256": "179a5dc89e57e107a6f446603deab3fc9191c63e67f5901dbe47b363519aa499"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_luanwu.js",
+      "sha256": "f3c2960de8546982b8fae6078a25976d8839f4afeb69c11359a49253e7bb66c7"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE.js",
+      "sha256": "1bac689bdf4c012af0669e566b91b45728239ffd8b7d12c5f8f46553024824ec"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE_hl.js",
+      "sha256": "db787e2585696c00c614790428b437de9225c81b7fc9c76e9a9cf7596d4160cd"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE_jb.js",
+      "sha256": "e4038f935a36dfcfe0cfbef59dee568f908d74de8e1dbb0bf8b773ad6f6f46cb"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE_shenmo.js",
+      "sha256": "2adc417ac09df1fbcd7f8c5a09f60ad2897f9c00c298d464ec9eab172154bf7b"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE_xk.js",
+      "sha256": "2b773a9c430e8e098ce0ee27ff6476a46fab227b1c44e8bbb0d4a9999ba11f19"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyE_zy.js",
+      "sha256": "6fc3a96541e5bbdab06d87470a08cdd62a8ebd98208b25064f7fa73a4f2ce25f"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyK.js",
+      "sha256": "2baedf831b4afd4dd76299b94ffac94fa334176cdb2e745c84b198a4f14316c4"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyS.js",
+      "sha256": "e4466b7d93a160bc679908da170a2ec4d85c806dd14dbe330889f35b4adf08d2"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_piracyS_shenmo.js",
+      "sha256": "8558cac401c06d961801b0496d755b188f98066505fe82d888b04b71e791815c"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_prettyDerby.js",
+      "sha256": "bf346fafffdf47df72c2e78d687a84666d6194c1e5d49961704ad2fc79129bfc"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_qingshi.js",
+      "sha256": "4c9b4e67e3edb67336d28901ab6eaadd919f3d7efb44fc4ba53c0e4b7cc35c0f"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_scl.js",
+      "sha256": "b7ac4a022ae50d079b1371204b00e35eb9f1b1d29812d9e3c0291c6ec9beb7ce"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_shichangshi.js",
+      "sha256": "48b5438e9bd0a4a1f42fbf62c49eb49cd022b9b7d4087a6ad98eda4824fb3db3"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_shiningGrils.js",
+      "sha256": "62ae773736515c7c0f0f65ae25eac35457a2de18775a4e066555a06648f27e70"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_star.js",
+      "sha256": "fb275bf68eae875d5113dc969a7e092c5e82c87871f49b78461562a3c316ae51"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_sticker.js",
+      "sha256": "00a4e537ec7dc9f5566251406aad9f9dab62451f9e7470d55554b56a1e2fa22a"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_taoyuan.js",
+      "sha256": "fa9d7b3c97dc91ff8c3ea7ca9c81ff87f88bac933b5339e2dd0f49c1f604668f"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_vtuber.js",
+      "sha256": "2b7a49a0137e8baebfa69ee6880b0c660e38e31f6a4beb98a9f52211c058a473"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_weinan.js",
+      "sha256": "3e1dd6dbf043b93b5b7b8808c1f24e5b385975dd6190696c92a0fabedb1cceae"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_wenxindiaolong.js",
+      "sha256": "3acd15edc3b59485c0a2cf81322cf101a0a6cdc785255f140a954db06a19a3ad"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_xy.js",
+      "sha256": "44242fdee60b5e1b244d8ab1285e4c2ce713a0bef8b8be3e336be0cec2a77707"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_yanling.js",
+      "sha256": "4361a3073556589f8245fb404365006abc62a89dc91e614b0ad49144853f5bbe"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_yanyou.js",
+      "sha256": "c355b5299506d8be69b813e1b9e7d8f77d36c7f492cc60058330d203c1386822"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_yongjian.js",
+      "sha256": "73717825ded2fb265c943c4b0790079e2aaf74d47423324ec6b5649e2f7738d7"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_zc26.js",
+      "sha256": "1ac4a5ed31d04ba52fc07505ca4044303be1204ad837195c6411b4b9232be776"
+    },
+    {
+      "file": "apps/core/character/offline/skill/offline_zongheng.js",
+      "sha256": "198c58ba1ceaecafbc59156f7f0e05d97b337c4800b682e0aef1d3e2fe108ebc"
+    },
+    {
+      "file": "apps/core/character/offline/sort.js",
+      "sha256": "a4d66a3d5cd51a4622ddbfffa626c1d6513da39e16bf37464e55f4c8929dc59f"
+    },
+    {
+      "file": "apps/core/character/offline/translate.js",
+      "sha256": "06d5c9d09d1eb588ac33fbc3ec85d64f40be222ac4e57e29d7fae286abe544e2"
+    },
+    {
+      "file": "apps/core/character/old/character.js",
+      "sha256": "48b3730eb525e829c62f0caa6fa23519744750f2a7e87fed7590aa78bc0675a2"
+    },
+    {
+      "file": "apps/core/character/old/index.js",
+      "sha256": "96060b035923e8836ce5c4bb856df12a07cafc94f6ef24d8c99a9ceb5543070a"
+    },
+    {
+      "file": "apps/core/character/old/skill.js",
+      "sha256": "304f6b95be532749142514ad38a0ef4c1c092bb77fb74e76c7b30d283a9a342e"
+    },
+    {
+      "file": "apps/core/character/old/sort.js",
+      "sha256": "a39c05eb204a27b8915f87fbd4937986d18d9c3de0ef55ab5ef47478c9f0a301"
+    },
+    {
+      "file": "apps/core/character/old/translate.js",
+      "sha256": "6ee99ee1c10434c122ada6850e5dca8225e31671a75533b6260cad4e5a29cfed"
+    },
+    {
+      "file": "apps/core/character/onlyOL/character.js",
+      "sha256": "35cce2b3f24607d74b61b39381a41a9fb3c35c5b0fc76d166af88edab1ed85ad"
+    },
+    {
+      "file": "apps/core/character/onlyOL/index.js",
+      "sha256": "0ea7b8dd4a0703149c54761bf85aeb1a545d734842612cdd64fa4abd1a90ab86"
+    },
+    {
+      "file": "apps/core/character/onlyOL/skill.js",
+      "sha256": "35c6548a372ac9f564628b0aaf4100586bc467a0a0b032742c38d78317cd4153"
+    },
+    {
+      "file": "apps/core/character/onlyOL/sort.js",
+      "sha256": "47d1a93579f2423f97cc68beec3466aae63e30cdc1916b9b71dc61f4fcd82719"
+    },
+    {
+      "file": "apps/core/character/onlyOL/translate.js",
+      "sha256": "1d6bbf285dd65f02f9b56e733b267565c0a7df594c84f7e6f96f15d5ff235c93"
+    },
+    {
+      "file": "apps/core/character/refresh/character.js",
+      "sha256": "b5c9778b251b89486b127732f8f41bf2b00f25e27d25df5a6e91069f32d0ac96"
+    },
+    {
+      "file": "apps/core/character/refresh/index.js",
+      "sha256": "c1be72118b980d2dd752b49e6fe69bda4f548edddab657be613e8f261d5eb0b0"
+    },
+    {
+      "file": "apps/core/character/refresh/skill.js",
+      "sha256": "125c2ffcfe479f411951f35200244d88c6c26463388780c389e9accc32110eab"
+    },
+    {
+      "file": "apps/core/character/refresh/sort.js",
+      "sha256": "bb61716549d7395c1779670a0a75435893967fdc78071c00db733785d74ce055"
+    },
+    {
+      "file": "apps/core/character/refresh/translate.js",
+      "sha256": "1f1f73899f9e1b19373d584364d12c31e358680bb04b7cbaa6f3e27af20305c2"
+    },
+    {
+      "file": "apps/core/character/sb/character.js",
+      "sha256": "5f912484a83f7b083a8ba5ff1b0759ba244a1e01f7e38f35cb26b9395efcd2d8"
+    },
+    {
+      "file": "apps/core/character/sb/index.js",
+      "sha256": "ff95667d21dd0d83aef2d2fd2ec886fa7c5553775d1b6f80060e00f8bcab0d86"
+    },
+    {
+      "file": "apps/core/character/sb/skill.js",
+      "sha256": "fca371bee8ce38272b14c57d3a9a37fe6679e61c1d1eeceb47c6074b7b30305c"
+    },
+    {
+      "file": "apps/core/character/sb/sort.js",
+      "sha256": "b72beef828a7aa6f8f4781fe7a7d1cc6983268edcedbf5de354b82f386c422ab"
+    },
+    {
+      "file": "apps/core/character/sb/translate.js",
+      "sha256": "5aecc6e764caa9b407b772098b645eda00c442a5bc6ea56f22b4300e80aff9fa"
+    },
+    {
+      "file": "apps/core/character/shenhua/character.js",
+      "sha256": "c9d186d9e1d343a670f431cfd377848caf1fa88cf566723c084c3998a1ac8548"
+    },
+    {
+      "file": "apps/core/character/shenhua/index.js",
+      "sha256": "ec6d11eaff3c810c1923031475551dfa09595f4cc1aa20c113281550cf7f8637"
+    },
+    {
+      "file": "apps/core/character/shenhua/skill.js",
+      "sha256": "727007a513746b9b134c36a6cc1290c1e7df63416ab5012f0bdf585cb4185394"
+    },
+    {
+      "file": "apps/core/character/shenhua/sort.js",
+      "sha256": "743e9c3eb03e39c0fdb8c7ff20c71544f3ae3af16962a845fd8984183de17e8b"
+    },
+    {
+      "file": "apps/core/character/shenhua/translate.js",
+      "sha256": "2293783162d620e5a696224b7f9c24bd1b26320df15597e508c819c6b69777f1"
+    },
+    {
+      "file": "apps/core/character/shiji/character.js",
+      "sha256": "4c5f2cbd7a56a63c46999a2aa361904c3d393fcd4596d91ebfbdb035dda3d1d8"
+    },
+    {
+      "file": "apps/core/character/shiji/index.js",
+      "sha256": "c72b2bb550635cfdcb09300918ad71cc5b674be3d6714ca9733d1574cf3e5498"
+    },
+    {
+      "file": "apps/core/character/shiji/skill.js",
+      "sha256": "24e95bbc2646ff15b05ce8c5e3485ead59225d6e5feb21e2ae52861612c173bd"
+    },
+    {
+      "file": "apps/core/character/shiji/sort.js",
+      "sha256": "d29624961ce529e58f573d33eb18b90537f6c6323f8d76351f4287c1ee87c6bf"
+    },
+    {
+      "file": "apps/core/character/shiji/translate.js",
+      "sha256": "7e0013f4df4c1991bec24d5d034cbd911bce3be0c47696db19d6ba0baf1126fd"
+    },
+    {
+      "file": "apps/core/character/sixiang/character.js",
+      "sha256": "767276c692bac3041beb4abc2917cdc7fe90725a71e78902718f9632885b3398"
+    },
+    {
+      "file": "apps/core/character/sixiang/index.js",
+      "sha256": "18e7db7d7df49dec4b6cbe31db603dcd88e0d8f271597239459e6f7e8304536e"
+    },
+    {
+      "file": "apps/core/character/sixiang/skill.js",
+      "sha256": "04a36d66c6d4bd2975705e3daab82a3b77ccae9aa6aa37307d6552aade585d9d"
+    },
+    {
+      "file": "apps/core/character/sixiang/sort.js",
+      "sha256": "63fbbafa322cb29748be5808bfd0f6141ec34423478cd5d84649d211a626a19d"
+    },
+    {
+      "file": "apps/core/character/sixiang/translate.js",
+      "sha256": "fcccff43bb782eba6a17cf87a344a24eba5f531efa391c35d676ca269ce189ff"
+    },
+    {
+      "file": "apps/core/character/sp/character.js",
+      "sha256": "4e45e83212c4227af3baf606d547f7c3867c1ad7089cc46b95cd969dd9ea6bcd"
+    },
+    {
+      "file": "apps/core/character/sp/index.js",
+      "sha256": "a791fda66d89c2e19194eb0c5916abc7b0e1a5c94e2784364a7f3c792acecb35"
+    },
+    {
+      "file": "apps/core/character/sp/skill.js",
+      "sha256": "68e66d78e4907e7666e5c530ad84978538078a6b4ac45154538fd3230c3bbb0c"
+    },
+    {
+      "file": "apps/core/character/sp/sort.js",
+      "sha256": "29376461df09d407c9c67d8e2bd21cc47d77347746aa9baeda7336a2450ea1c1"
+    },
+    {
+      "file": "apps/core/character/sp/translate.js",
+      "sha256": "72d57b897291e0281ca7319b79c7781e569046c4cae502a226e7d298f44ad90c"
+    },
+    {
+      "file": "apps/core/character/sp2/character.js",
+      "sha256": "3d0aac8f0935073329a9f3557c4da32fc94f28891a0e5b2f92de4e10044ecf9c"
+    },
+    {
+      "file": "apps/core/character/sp2/index.js",
+      "sha256": "02f5a0a3defae74eb9c5b678129505474c47c8fef483fddc0aa894a8314198b1"
+    },
+    {
+      "file": "apps/core/character/sp2/skill.js",
+      "sha256": "96f74f7c0f73cdf19e695a6ae7a3a3a7ad38b98593e4c9071cf1c7100db0bcd6"
+    },
+    {
+      "file": "apps/core/character/sp2/sort.js",
+      "sha256": "817708c977617cc19fcdabde4fe396f2939f82d9380cc66243286a6deb53c447"
+    },
+    {
+      "file": "apps/core/character/sp2/translate.js",
+      "sha256": "1529fd39f68ff3f32203174f2d4ebd77f052eb2e369a417da27392d5687e6c46"
+    },
+    {
+      "file": "apps/core/character/standard/character.js",
+      "sha256": "91e35da3bd1fd18b8864b661e5d1f0a340aa203b0534dc6db3d44459ccfa5e99"
+    },
+    {
+      "file": "apps/core/character/standard/index.js",
+      "sha256": "290cd02f2a3f797ceb150cf23ab022c889b9c322f6a492e81ae3d6b6a2c67b36"
+    },
+    {
+      "file": "apps/core/character/standard/skill.js",
+      "sha256": "ade8b84fcbdacfd9470a46d2973a35a6f3c3d2f351abdf7d94aa99b4e43a55e6"
+    },
+    {
+      "file": "apps/core/character/standard/sort.js",
+      "sha256": "c1f6519e0f4e37711bfb271e63287e37020dd620479032f8df2c57cbace98db2"
+    },
+    {
+      "file": "apps/core/character/standard/translate.js",
+      "sha256": "5e8e1e4848029d694d1de2c5c0340a96a38cb5c04d61d44b6341a6a63eff14cc"
+    },
+    {
+      "file": "apps/core/character/sxrm/character.js",
+      "sha256": "7aa2dad7b2a50f2de5690414c63c1873bc71dc9678553410acb7b344ac32b15c"
+    },
+    {
+      "file": "apps/core/character/sxrm/index.js",
+      "sha256": "0da68d55e72e5da900d030fb99a6f3c910bd7bcd8261f75fb56fc77f820f1d96"
+    },
+    {
+      "file": "apps/core/character/sxrm/skill.js",
+      "sha256": "8dedd1069d9517eedd1a87c1a0bbea7004f10c77eb5784a9183e0262766e91e9"
+    },
+    {
+      "file": "apps/core/character/sxrm/sort.js",
+      "sha256": "006df4e55e96b352a4b9d8a490a0d5f921f2a2c0f4531486446f5a88279958e8"
+    },
+    {
+      "file": "apps/core/character/sxrm/translate.js",
+      "sha256": "d9cfff32847eac987874ff4436221f7b5692d17d2c8ada3b2e568deac648b85d"
+    },
+    {
+      "file": "apps/core/character/tw/character.js",
+      "sha256": "331d32f678da2e7a1a6db6be56d6de70f21fb95c615cca9d3791bd921965191b"
+    },
+    {
+      "file": "apps/core/character/tw/index.js",
+      "sha256": "25879ffbd1c2217b5d5651b401951a4524889fe85089747ed25d8b758e0656b3"
+    },
+    {
+      "file": "apps/core/character/tw/skill.js",
+      "sha256": "c2591070cde632695e1ac8afb60f196f596052bb59a563976fbcba9a1d500539"
+    },
+    {
+      "file": "apps/core/character/tw/sort.js",
+      "sha256": "3e4eb74e71ca21d72ba5ac3a82a6c326eb7da6832d47f6c231d6fed57daf4e98"
+    },
+    {
+      "file": "apps/core/character/tw/translate.js",
+      "sha256": "3b530046f16f421644383597abf4f4f4f6b9d64555eef48cde7ab25de05d5685"
+    },
+    {
+      "file": "apps/core/character/xianding/character.js",
+      "sha256": "60feea3722ba10bf812b1cbdf3cce7d126d05fe6559d108e96637e1f4b999cfd"
+    },
+    {
+      "file": "apps/core/character/xianding/index.js",
+      "sha256": "d9e424c6c946660325c35f257746fe1a57215b60f750eee289ec00da8a8c812a"
+    },
+    {
+      "file": "apps/core/character/xianding/skill.js",
+      "sha256": "cf6a3ecbb27e26e2d260c226cb9f4936de77202ae5a024a5cce17d63ee3c238b"
+    },
+    {
+      "file": "apps/core/character/xianding/sort.js",
+      "sha256": "e80240f3b0f4ecff66b2dd9d595bd7971060189a4e3991cb33f584cc2edadb50"
+    },
+    {
+      "file": "apps/core/character/xianding/translate.js",
+      "sha256": "6c53a902972271d3a4c7839e8665d8dba840c921d3da4069ca5e394b3c10d671"
+    },
+    {
+      "file": "apps/core/character/yijiang/character.js",
+      "sha256": "a3faac261d3c2e65eef3327fb881220513133153b961816007fb32ce3df594dc"
+    },
+    {
+      "file": "apps/core/character/yijiang/index.js",
+      "sha256": "62fd6cec4ee9a365791b04b1463a8247718d2e268cbbeb6682467e5bd78d7941"
+    },
+    {
+      "file": "apps/core/character/yijiang/skill.js",
+      "sha256": "c890f63d8f19544c910a8227b6d402d7a61a94e3a6051c8674a36955120ec8b5"
+    },
+    {
+      "file": "apps/core/character/yijiang/sort.js",
+      "sha256": "fcd992d8d696b9265e89e5708490010c7ec2145799c98dc42d1df6d3f429f439"
+    },
+    {
+      "file": "apps/core/character/yijiang/translate.js",
+      "sha256": "064b6967cdf85d364e4bb2eccc483f11a831ac373e36ee8a02de0f20e1b7e812"
+    },
+    {
+      "file": "apps/core/character/yingbian/character.js",
+      "sha256": "ff2e311ba731472318027a12c83e0d5184b6ed61d0791f9f5e07a4c84c37299b"
+    },
+    {
+      "file": "apps/core/character/yingbian/index.js",
+      "sha256": "2c395005f3efe910422bf8af1cda57363f76063521fb7c6bd42418ff4c9b6e91"
+    },
+    {
+      "file": "apps/core/character/yingbian/skill.js",
+      "sha256": "fdffcbe4fb7e38c7395bf0e8a1b3cffee5e21065fb981ea21474e94d00e3ce97"
+    },
+    {
+      "file": "apps/core/character/yingbian/sort.js",
+      "sha256": "c4e2def94881ff932c23c48ed4cd80642dd5645608d6e36a838f55f463f41b5d"
+    },
+    {
+      "file": "apps/core/character/yingbian/translate.js",
+      "sha256": "e46ae3b1b88cdf31af7dcdf2a6852493da812c3ad14cbf27e5c1bec5aa7ecacf"
+    },
+    {
+      "file": "apps/core/game/package.js",
+      "sha256": "d01b0139456a7bc12eeea4d635ba9c48358939d30bf37d2c3507736614ea956b"
+    },
+    {
+      "file": "scripts/sgs/catalog-versions.json",
+      "sha256": "ab6697b1210c34bf9d8f43a4e082ff5478211da98de3d1f7d97dc8dc1d41c41d"
+    },
+    {
+      "file": "tasks/prd-sgs-decade.md",
+      "sha256": "47f3f462a5a0fb6e3e15e6246303ff54d0f5550a024ae40f6429aadfd5a449dc"
+    }
+  ]
+}

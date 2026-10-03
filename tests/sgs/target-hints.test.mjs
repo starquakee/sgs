@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { installTargetHints } from '../../apps/core/sgs/experience.mjs';
+
+test('target hints follow native selectable/selected states and clear on cancellation, responses and AI turns', () => {
+  const lib = { hooks: { checkBegin: [], checkTarget: [], uncheckBegin: [] } };
+  const player = (states = []) => ({dataset:{}, classList:{contains:name=>states.includes(name)}, querySelector(){return this.hint}});
+  const me = player(), near = player(['selectable']), far = player(), chosen = player(['selectable','selected']);
+  const ui = {create:{div(_class, target){return target.hint = {hidden:false,textContent:''}}}};
+  let card = {name:'sha'};
+  let cardReads = 0;
+  installTargetHints({lib,ui,get:{card:()=>{cardReads++;return card},info:value=>({notarget:value.name==='shan'}),select:value=>value || [1,1]}});
+  const event = {name:'chooseToUse',player:me,filterTarget(){},isMine:()=>true};
+  const check = target => lib.hooks.checkTarget.forEach(fn=>fn(target,event));
+  for(const target of [me,near,far,chosen]) check(target);
+  assert.equal(me.dataset.sgsTarget, undefined);
+  assert.equal(near.dataset.sgsTarget, 'available');
+  assert.equal(near.hint.textContent, '可杀');
+  assert.equal(far.dataset.sgsTarget, 'unavailable');
+  assert.equal(far.hint.textContent, '不可杀');
+  assert.equal(chosen.dataset.sgsTarget, 'selected');
+  assert.equal(chosen.hint.textContent, '已选中');
+  lib.hooks.uncheckBegin.forEach(fn=>fn(event,['card','target']));
+  for(const target of [near,far,chosen]) {assert.equal(target.dataset.sgsTarget,undefined);assert.equal(target.hint.hidden,true)}
+  card = {name:'huogong'}; check(near);
+  assert.equal(near.hint.textContent,'可选目标');
+  lib.hooks.checkBegin.forEach(fn=>fn(event));
+  const readsBeforeInactive = cardReads;
+  event.name='chooseToRespond';check(near);
+  assert.equal(near.dataset.sgsTarget,undefined);
+  event.name='chooseToUse';event.isMine=()=>false;check(near);
+  assert.equal(near.dataset.sgsTarget,undefined);
+  assert.equal(cardReads,readsBeforeInactive);
+  event.isMine=()=>true;card=undefined;check(near);
+  assert.equal(near.dataset.sgsTarget,undefined);
+  card={name:'shan'};check(near);
+  assert.equal(near.dataset.sgsTarget,undefined);
+  card={name:'tao'};event.selectTarget=[-1,-1];check(near);
+  assert.equal(near.dataset.sgsTarget,undefined);
+});

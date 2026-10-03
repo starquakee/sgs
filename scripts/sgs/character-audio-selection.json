@@ -1,0 +1,11 @@
+{
+  "v_dongzhuo": { "displayName": "威董卓", "releaseDate": "2025-04-04", "evidenceUrl": "https://x.sanguosha.com/news/20250402_8034_2010.html", "selectionReason": "保留用户指定的既有语音" },
+  "shen_pangtong": { "displayName": "神庞统", "releaseDate": "2025-01-28", "evidenceUrl": "https://x.sanguosha.com/news/20250122_5601_2110.html", "selectionReason": "官网新上SSS；鸾锁、凤燎与鹍浴的联动" },
+  "dc_sb_xunyu": { "displayName": "新杀谋荀彧", "releaseDate": "2025-05-01", "evidenceUrl": "https://x.sanguosha.com/news/20250428_6442_0316.html", "selectionReason": "官网新上SSS；势谋调整手牌与弼佐额外回合" },
+  "shen_zhonghui": { "displayName": "神钟会", "releaseDate": "2025-07-12", "evidenceUrl": "https://x.sanguosha.com/news/20250709_1072_1917.html", "selectionReason": "官网新上神将；凛界、独仗与降祸" },
+  "dc_sb_caoang": { "displayName": "新杀谋曹昂", "releaseDate": "2025-08-24", "evidenceUrl": "https://x.sanguosha.com/news/20250820_6340_5315.html", "selectionReason": "官网新上SSS；丰愍与质亡" },
+  "dc_sb_dengai": { "displayName": "新杀谋邓艾", "releaseDate": "2025-09-06", "evidenceUrl": "https://x.sanguosha.com/news/20250904_3910_3309.html", "selectionReason": "官网新上SSS；骤袭与恃矜" },
+  "dc_shen_sunquan": { "displayName": "新杀神孙权", "releaseDate": "2026-01-10", "evidenceUrl": "https://x.sanguosha.com/news/20260108_4235_1811.html", "selectionReason": "官网新上SSS；沧溟、筹汐与激潮" },
+  "v_gongsunzan": { "displayName": "威公孙瓒", "releaseDate": "2026-04-04", "evidenceUrl": "https://x.sanguosha.com/news/20260402_4576_3310.html", "selectionReason": "官网新上SSS；举袭与追讨" },
+  "v_mateng": { "displayName": "威马腾", "releaseDate": "2026-08-08", "evidenceUrl": "https://x.sanguosha.com/news/20260806_5173_3719.html", "selectionReason": "官网新上限定武将；合骑、挥锐与骁贲" }
+}
