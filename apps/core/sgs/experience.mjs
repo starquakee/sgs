@@ -26,6 +26,17 @@ export function applyPortraits(packs, portraits) {
         character.img = path;
       }
     }
+    // changeSkin builds temporary characters from this metadata. Keep the
+    // native form IDs and audio/hidden tags; only supply an existing local image.
+    for (const [id, substitutes] of Object.entries(pack.characterSubstitute || {})) {
+      for (const substitute of substitutes) {
+        const portrait = portraits[substitute[0]] || portraits[id];
+        if (!portrait) continue;
+        substitute[1] = (substitute[1] || []).filter(tag => typeof tag !== 'string' || !tag.startsWith('img:'));
+        // Native metadata can use the first tag for groupInGuozhan.
+        substitute[1].push(`img:sgs/portraits/${portrait.file}`);
+      }
+    }
   }
 }
 

@@ -1,13 +1,13 @@
-# Ralph iteration: SGS decade single-player
+# Ralph iteration: SGS client experience
 
-1. Read root AGENTS.md, tasks/prd-sgs-decade.md, prd.json and progress.txt.
-2. Work only on the lowest-priority unfinished story. This run uses ralph/sgs-decade.
-3. Inspect upstream code before adapting it; preserve LICENSE and all attribution. No network gameplay or publishing.
-4. Implement exactly ONE story per run. Do not change other stories or opportunistically refactor upstream.
-5. Run narrow meaningful validation. Mandatory for new JS: node --check. For catalog: node scripts/sgs/build-catalog.mjs and node --test tests/sgs/*.test.mjs.
-6. UI stories require a real browser check. If browser is unavailable, record pending validation; do not mark passes true.
-7. Update prd.json and append evidence/gotchas to progress.txt. Do not mark sourced skills behavior-verified.
-8. Commit validated changes locally with feat: US-XXX - title. NEVER PUSH: origin belongs to the third-party upstream, not the user.
-9. When and only when EVERY story passes with evidence, output the completion token specified by the Ralph runner on its own line.
-
-The parent agent supervises and may handle runtime setup and browser validation. Avoid redoing its work; check progress first. A blocker must be recorded honestly, not hidden by changing acceptance criteria.
+1. Read root AGENTS.md, tasks/prd-sgs-client-experience.md, prd.json, progress.txt. Branch ralph/sgs-client-experience. Original tasks/prd-sgs-decade.md carries constraints, not active priorities.
+2. Implement exactly the lowest-priority unfinished UX story. Do not implement subsequent stories. Inspect native source before adapting. Preserve all existing interactions, rules/AI, LICENSE/attribution.
+3. Use frontend-design skill at C:/Users/75228/.agents/skills/frontend-design/SKILL.md for UI. Design: desktop game client, dark lacquer/metal, bronze borders, vermilion primary controls, compact functional layout, readable text and restrained motion. Preserve existing art and fixed classic card internals. No new framework.
+4. Implement in SGS adapter, small new modules when they separate pause/preferences/results/loading from runtime. Do not opportunistically refactor upstream.
+5. Run node --check on changed JS; focused meaningful tests. Run all tests if logic changed. Do not add implementation-mirror tests for CSS-only edits. Production build may require parent permissions; report exact need rather than weakening sandbox.
+6. IMPORTANT: This CLI cannot use the desktop parent's browser. Leave passes=false and append implementation/test evidence plus exact remaining browser scenarios to progress.txt. Parent will inspect changes, visually verify the actual browser, mark accepted and commit. Do NOT commit before parent visual review and do NOT push. Do not claim browser QA from static inspection.
+7. Stop after this one story's code/tests. Explain changed behavior, validation, and pending browser work. Do not launch another agent or story. Do not emit COMPLETE while any story has passes=false.
+8. Parent runs one iteration each time and handles Git escalation/production build/browser. Existing dev8081 and production8083 are running; no new visible windows or public services. git status may show harmless ignore permission warnings.
+9. New programs use windowsHide:true. No --unsafe, no bypass permission flags. Do not alter audio/portrait manifests or original full-coverage story.
+10. Keep exploration targeted: do not enumerate the thousands of portrait/audio files or dump catalog/roster JSON, all tests, or whole upstream modules. Use rg with exclusions and bounded relevant source ranges. Read only current story acceptance criteria and applicable helpers. Existing source PRD is a constraint reference; avoid repeated whole-file reads. Keep command output below 5000 tokens.
+11. Parent verifies focused story behavior each iteration; the full multi-mode/multi-resolution acceptance matrix belongs to UX-09. Append to the existing validation document, do not replace parent evidence. Native engine CSS makes generic divs absolute: new HTML utility dialog children need explicitly normal flow (UX-01 fixed the leave-dialog action row).

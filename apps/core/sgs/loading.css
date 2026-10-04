@@ -1,0 +1,19 @@
+/* Normal flow is explicit: native engine CSS positions generic divs absolutely. */
+.sgs-loading, .sgs-load-notice { font: 15px/1.7 "Microsoft YaHei", sans-serif; color: #eee3ca; box-sizing: border-box; }
+.sgs-loading { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 20px; background: #121514; }
+.sgs-loading *, .sgs-load-notice * { position: static; box-sizing: border-box; float: none; }
+.sgs-loading-panel { width: min(560px, 100%); padding: 28px; border: 1px solid #8b7148; background: #20231f; box-shadow: 0 12px 36px #0008; }
+.sgs-loading h2 { margin: 0 0 20px; color: #e5c58b; font: 26px/1.4 "STKaiti", "KaiTi", serif; }
+.sgs-loading p { margin: 12px 0; overflow-wrap: anywhere; }
+.sgs-loading [data-warning] { color: #c5b792; font-size: 13px; }
+.sgs-loading-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+.sgs-loading button, .sgs-load-notice button { min-height: 50px; padding: 10px 22px; border: 1px solid #a68750; background: #302e27; color: #f5e8cf; font: inherit; cursor: pointer; }
+.sgs-loading [data-retry] { background: #923e30; }
+.sgs-loading-actions button { min-width: 126px; }
+.sgs-loading button:focus-visible, .sgs-load-notice button:focus-visible { outline: 2px solid #e5c58b; outline-offset: 3px; }
+.sgs-load-notice { position: fixed; top: 96px; left: 50%; transform: translateX(-50%); z-index: 10001; width: min(620px, calc(100% - 24px)); max-height: 40vh; overflow: auto; padding: 12px 18px; background: #29271ff5; border: 1px solid #9b8051; box-shadow: 0 6px 24px #0008; }
+.sgs-load-notice p { margin: 0 0 8px; }
+.sgs-load-notice button { min-height: 40px; padding: 5px 16px; }
+.sgs-loading[hidden], .sgs-load-notice[hidden], .sgs-loading [hidden] { display: none !important; }
+.lobby-storage-notice { margin: 0 0 14px; padding: 10px; border: 1px solid #8b7148; background: #29271f; font-size: 13px; line-height: 1.6; color: #e1c795; }
+.lobby-load-status { padding: 20px; color: #d8c29b; }

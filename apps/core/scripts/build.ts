@@ -6,6 +6,7 @@ import { existsSync, readdirSync, writeFileSync } from "fs";
 import { Target, viteStaticCopy } from "vite-plugin-static-copy";
 import generateImportMap from "./vite-plugin-importmap";
 import jit from "@noname/jit";
+import { guardSgsJit } from "../../../scripts/sgs/jit-guard.mjs";
 import type { BuildChannel, BuildInfo } from "../noname/util/meta";
 
 const root = join(import.meta.dirname, "..");
@@ -160,7 +161,7 @@ async function buildSelf(target: string | string[], importMap: Record<string, st
 				},
 			},
 		},
-		plugins: [viteStaticCopy({ targets: copies }), generateImportMap(importMap), jit()],
+		plugins: [viteStaticCopy({ targets: copies }), generateImportMap(importMap), guardSgsJit(jit())],
 	});
 }
 

@@ -3,35 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#171d1b">
+  <meta name="theme-color" content="#171715">
   <title>三国杀 · 十周年单机研习</title>
   <link rel="icon" type="image/svg+xml" href="./sgs/seal.svg">
   <link rel="stylesheet" href="./sgs/lobby.css">
+  <link rel="stylesheet" href="./sgs/lobby-layout.css">
+  <link rel="stylesheet" href="./sgs/records.css">
+  <link rel="stylesheet" href="./sgs/loading.css">
   <script type="module" src="./sgs/lobby.js"></script>
 </head>
-<body>
+<body class="lobby-client">
   <header class="masthead">
     <a class="brand" href="./sgs.html"><span class="seal">杀</span><span>三国杀<small>十周年 · 单机研习</small></span></a>
-    <nav aria-label="主要导航"><button class="nav-item active" id="all-generals">点将台</button><button class="nav-item" id="favorites">我的收藏 <span id="favorite-count">0</span></button><button class="nav-item" id="rules-button">对局须知</button></nav>
-    <span class="offline"><i></i>单机 AI · 无需登录</span>
+    <nav aria-label="主要导航"><button class="nav-item active" id="all-generals">点将台</button><button class="nav-item" id="favorites">我的收藏 <span id="favorite-count">0</span></button><button class="nav-item" id="recent-generals" aria-pressed="false">最近使用</button><button class="nav-item" id="rules-button">对局须知</button></nav>
+    <button class="nav-item" id="records-button">本地战绩</button>
   </header>
   <main class="lobby">
-    <section class="roster" aria-label="选择出战武将">
-      <div class="section-heading"><div><p class="eyebrow">群雄待命</p><h1>今日，谁与争锋？</h1></div><div class="roster-count"><strong id="total-count">—</strong><span>位武将已收录</span></div></div>
-      <div class="tools"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索武将、技能或关键词" aria-label="搜索武将或技能"><kbd>/</kbd></label><label class="version-select"><span class="sr-only">版本范围</span><select id="version"><option value="target">十周年与经典</option><option value="decade">十周年专属</option><option value="common">通用经典</option><option value="pending">混合版本 · 待核验</option><option value="other">其他版本 · 参考</option><option value="all">全部收录</option></select></label></div>
-      <div class="filters"><div class="factions" role="group" aria-label="按势力筛选"><button class="active" data-faction="all">全部</button><button data-faction="wei">魏</button><button data-faction="shu">蜀</button><button data-faction="wu">吴</button><button data-faction="qun">群</button><button data-faction="jin">晋</button><button data-faction="shen">神</button></div><label><span class="sr-only">武将包</span><select id="pack"><option value="all">全部武将包</option></select></label></div>
-      <div class="result-line"><span id="result-count" aria-live="polite">正在整理武将名册…</span><button id="clear-filters" class="text-button">重置筛选</button></div>
-      <div id="general-grid" class="general-grid" aria-live="polite"><p class="loading">正在载入武将与技能，请稍候。</p></div>
-      <div class="pagination"><button id="previous" aria-label="上一页">‹ 上一页</button><span id="page-number">—</span><button id="next" aria-label="下一页">下一页 ›</button></div>
-      <p class="coverage-note"><span>收录说明</span>武将沿用开源规则实现，官方全量与技能一致性正在逐项核验。<button id="coverage-button" class="text-button">查看覆盖情况 ↗</button></p>
-    </section>
-    <aside class="general-detail" aria-label="武将详情与对局设置">
-      <div class="detail-top"><span class="detail-label">出战武将</span><button id="favorite-toggle" class="favorite-toggle" aria-label="收藏当前武将" disabled>☆</button></div>
-      <div class="portrait" id="portrait"><img id="detail-image" class="detail-image" alt="" width="96" height="128"><span class="portrait-kingdom" id="detail-faction">魏</span><span class="portrait-rules" aria-hidden="true"></span><div class="portrait-title"><span id="detail-group">标准包</span><h2 id="detail-name">点将出征</h2></div><span class="portrait-seal" aria-hidden="true">将</span></div>
-      <p id="portrait-note" class="portrait-note" hidden></p>
-      <div class="detail-meta"><span id="detail-pack">请选择武将</span><span class="hp" id="detail-hp"></span></div>
-      <div id="skill-list" class="skills"><p>在左侧选择一位武将，查看技能。</p></div>
-      <div class="battle-settings">
+    <aside class="battle-settings" id="battle-settings" aria-label="对局设置">
+        <p id="storage-notice" class="lobby-storage-notice" role="status" hidden></p>
         <h3>选择玩法 <span id="mode-name">身份军争</span></h3>
         <div class="mode-choices" role="group" aria-label="对局模式">
           <button type="button" data-mode="doudizhu" aria-pressed="false"><strong>斗地主</strong><small>三人 · 一对二</small></button>
@@ -51,11 +40,31 @@
         <p id="mode-summary" class="mode-summary"></p>
         <details id="landlord-rules" class="mode-rules" hidden><summary>地主的飞扬与跋扈</summary><p><strong>飞扬</strong>　判定阶段开始时，可弃两张手牌，清空自己的判定区。</p><p><strong>跋扈</strong>　准备阶段摸一张牌；出牌阶段可多使用一次杀，即通常所说的“双刀”。</p><p>地主先手，体力及体力上限各加一。</p></details>
         <label class="speed-label">AI 行动速度<select id="speed"><option value="normal">适中</option><option value="fast">快速</option></select></label>
-        <button class="start-button" id="start-game" disabled><span id="start-label">整装出征</span><span aria-hidden="true">→</span></button>
-        <p class="settings-footnote">开局可反复换牌 · 确认后开始对局</p>
-      </div>
+    </aside>
+    <section class="roster" aria-label="选择出战武将">
+      <div class="section-heading"><div><p class="eyebrow">群雄待命</p><h1>今日，谁与争锋？</h1></div><div class="roster-count"><strong id="total-count">—</strong><span>位武将已收录</span></div></div>
+      <div class="tools"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索武将、技能或关键词" aria-label="搜索武将或技能"><kbd>/</kbd></label><label class="version-select"><span class="sr-only">版本范围</span><select id="version"><option value="target">十周年与经典</option><option value="decade">十周年专属</option><option value="common">通用经典</option><option value="pending">混合版本 · 待核验</option><option value="other">其他版本 · 参考</option><option value="all">全部收录</option></select></label></div>
+      <div class="filters"><div class="factions" role="group" aria-label="按势力筛选"><button class="active" data-faction="all">全部</button><button data-faction="wei">魏</button><button data-faction="shu">蜀</button><button data-faction="wu">吴</button><button data-faction="qun">群</button><button data-faction="jin">晋</button><button data-faction="shen">神</button></div><label><span class="sr-only">武将包</span><select id="pack"><option value="all">全部武将包</option></select></label></div>
+      <div class="result-line"><span id="result-count" aria-live="polite">正在整理武将名册…</span><button id="clear-filters" class="text-button">重置筛选</button></div>
+      <div id="general-grid" class="general-grid" tabindex="0" role="region" aria-label="武将列表，可独立滚动" aria-live="polite"><p class="loading">正在载入武将与技能，请稍候。</p></div>
+      <div class="pagination"><button id="previous" aria-label="上一页">‹ 上一页</button><span id="page-number">—</span><button id="next" aria-label="下一页">下一页 ›</button></div>
+      <p class="coverage-note">源码已收录，官方全量与技能一致性待核验。<button id="coverage-button" class="text-button">收录说明 ↗</button></p>
+    </section>
+    <aside class="general-detail" aria-label="武将技能详情">
+      <div class="detail-top"><span class="detail-label">出战武将</span><button id="favorite-toggle" class="favorite-toggle" aria-label="收藏当前武将" disabled>☆</button></div>
+      <div class="portrait" id="portrait"><img id="detail-image" class="detail-image" alt="" width="96" height="128"><span class="portrait-kingdom" id="detail-faction">魏</span><span class="portrait-rules" aria-hidden="true"></span><div class="portrait-title"><span id="detail-group">标准包</span><h2 id="detail-name">点将出征</h2></div><span class="portrait-seal" aria-hidden="true">将</span></div>
+      <p id="portrait-note" class="portrait-note" hidden></p>
+      <div class="detail-meta"><span id="detail-pack">请选择武将</span><span class="hp" id="detail-hp"></span></div>
+      <div id="skill-list" class="skills" tabindex="0" role="region" aria-label="武将技能，可独立滚动"><p>在左侧选择一位武将，查看技能。</p></div>
+
     </aside>
   </main>
+  <section class="launch-bar" aria-label="确认出战">
+    <div class="launch-selection"><span class="detail-label">出战武将</span><strong id="launch-general">请选择武将</strong><span id="launch-version"></span></div>
+    <div class="launch-config"><span id="launch-mode">身份军争</span><span class="settings-footnote">开局可反复换牌 · 确认后开始对局</span></div>
+    <button id="settings-link" class="settings-link">便捷设置</button>
+    <button class="start-button" id="start-game" disabled><span id="start-label">整装出征</span><span aria-hidden="true">→</span></button>
+  </section>
   <footer><span>三国杀单机研习 · 社区规则实现</span><span>引擎 <a href="https://github.com/libnoname/noname" target="_blank" rel="noreferrer">无名杀</a> · <a href="./sgs/LICENSE.txt" target="_blank">GPL-3.0</a> · 非官方产品</span></footer>
   <dialog id="info-dialog"><div class="dialog-heading"><h2 id="dialog-title"></h2><button id="close-dialog" aria-label="关闭弹窗">×</button></div><div id="dialog-content"></div></dialog>
   <div id="toast" role="status" hidden></div>

@@ -62,3 +62,46 @@ export function installCardSelectionSwitch({ lib, game, ui, get, _status }) {
     return nativeClick.apply(this, args);
   };
 }
+
+// Assist a newly selected single-target card. Native target clicks perform the actual
+// selection/recheck; confirmation and any later manual target edit stay human.
+export function installUniqueCardTarget({ game, ui, get, _status }) {
+  const nativeCardClick = ui.click.card;
+  ui.click.card = function (...args) {
+    const event = _status.event;
+    const previous = [...ui.selected.cards];
+    const eligibleClick = !_status.dragged && !_status.clicked && !ui.intro;
+    const result = nativeCardClick.apply(this, args);
+    // Qinglong uses complex selection to require the defender of the missed
+    // Slash first. Its ordinary one-target follow-up still has no target choice.
+    const qinglongFollowup = event?.logSkill === 'qinglong_skill' && event.targetRequired && event.sourcex;
+    if (!eligibleClick || _status.event !== event || !event?.isMine() || event.player !== game.me
+      || event.name !== 'chooseToUse' || typeof event.filterTarget !== 'function'
+      || event.complexCard || ((event.complexTarget || event.complexSelect) && !qinglongFollowup)
+      || event.custom?.replace?.card || event.custom?.add?.card
+      || event.custom?.replace?.target || event.custom?.add?.target
+      || ui.selected.targets.length || !ui.selected.cards.includes(this)
+      || (previous.length === ui.selected.cards.length && previous.every((card, index) => card === ui.selected.cards[index]))) return result;
+    // Active skills may expose their cost card through get.card(). Only normal
+    // one-card uses and simple one-card view-as choices receive this assistance.
+    if (ui.selected.cards.length !== 1 || get.select(event.selectCard).some(count => count !== 1)
+      || (event.skill && !get.info(event.skill)?.viewAs)) return result;
+    const card = get.card();
+    const info = card && get.info(card);
+    if (!card?.name || !info || info.notarget || info.multitarget) return result;
+    if (qinglongFollowup && card.name !== 'sha') return result;
+    const [min, max] = get.select(event.selectTarget);
+    if (min !== 1 || max !== 1) return result;
+    const players = [...game.players, ...(event.deadTarget || info?.deadTarget ? game.dead : [])];
+    // These classes already include native distance, equipment, skill and
+    // event restrictions. Do not substitute AI attitude or recalculate range.
+    const candidates = players.filter(target => target.classList.contains('selectable'));
+    if (candidates.length !== 1 || candidates[0] === game.me) return result;
+    if (qinglongFollowup && candidates[0] !== event.sourcex) return result;
+    const clicked = _status.clicked;
+    _status.clicked = false;
+    try { ui.click.target.call(candidates[0]); }
+    finally { _status.clicked = clicked; }
+    return result;
+  };
+}

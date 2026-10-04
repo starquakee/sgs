@@ -27,14 +27,17 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   const seenEvents = new WeakSet();
   const seenDamageEvents = new WeakSet();
   const buffers = new Map();
-  const playing = new Set();
-  const effects = new Set();
+  const playing = new Map();
+  const volumes = { card: 1, hero: 1, effect: 1 };
+  const jobs = new Set();
+  const voices = {
+    card: { nextStart: 0, queue: Promise.resolve(), last: null },
+    hero: { nextStart: 0, queue: Promise.resolve(), last: null },
+  };
   const state = { enabled: options.enabled !== false, played: 0, effectPlayed: 0, pending: 0, blocked: false, lastClip: null, lastLabel: null, lastEffect: null, lastEffectLabel: null, lastError: null };
   let context;
   let disposed = false;
-  let nextStart = 0;
   let generation = 0;
-  let queue = Promise.resolve();
   let cardEvent = null;
   let preload;
 
@@ -81,13 +84,18 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   }
   function stop() {
     generation++;
-    for (const source of playing) {
+    for (const source of playing.keys()) {
       try { source.stop(); } catch {}
     }
     playing.clear();
-    nextStart = 0;
+    for (const voice of Object.values(voices)) {
+      voice.nextStart = 0;
+      voice.queue = Promise.resolve();
+    }
   }
-  function play(clip, event, audioOptions = {}, immediate = false) {
+  function play(clip, event, audioOptions = {}, channel = 'card') {
+    const immediate = channel === 'effect';
+    const voice = voices[channel];
     const seen = immediate ? seenDamageEvents : seenEvents;
     if (!clip || !state.enabled || disposed || (event && seen.has(event))) return;
     const ctx = ensureContext();
@@ -99,8 +107,8 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     if (event) seen.add(event);
     const token = generation;
     state.pending++;
-    // Voices queue in invocation order. A committed impact starts immediately
-    // on the same unlocked context, independently of any long hero line.
+    // Each voice category preserves invocation order without waiting on the
+    // other's decoding or playback. Damage still starts immediately.
     const decoded = load(clip);
     decoded.catch(() => {});
     const schedule = async () => {
@@ -110,7 +118,8 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
         const source = ctx.createBufferSource();
         const gain = ctx.createGain();
         source.buffer = buffer;
-        gain.gain.value = Math.max(0, Math.min(1, Number(lib.config.volumn_audio ?? 6) / 8));
+        const baseGain = Math.max(0, Math.min(1, Number(lib.config.volumn_audio ?? 6) / 8));
+        gain.gain.value = baseGain * volumes[channel];
         source.connect(gain);
         gain.connect(ctx.destination);
         source.onended = event => {
@@ -119,10 +128,13 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
           gain.disconnect();
           audioOptions.onEnded?.(event);
         };
-        playing.add(source);
-        const start = immediate ? ctx.currentTime : Math.max(ctx.currentTime, nextStart);
+        playing.set(source, { gain, channel, baseGain });
+        const start = immediate ? ctx.currentTime : Math.max(ctx.currentTime, voice.nextStart);
         source.start(start);
-        if (!immediate) nextStart = start + buffer.duration + 0.04;
+        if (!immediate) {
+          voice.nextStart = start + buffer.duration + 0.04;
+          voice.last = { clip: clip.key, start, end: start + buffer.duration };
+        }
         state.played++;
         state.lastClip = clip.key;
         state.lastLabel = clip.label || null;
@@ -136,6 +148,8 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
         audioOptions.onCanPlay?.();
         audioOptions.onPlay?.();
       } catch (error) {
+        // A canceled load must not invoke the native fallback after unmuting.
+        if (disposed || token !== generation || !state.enabled) return;
         state.lastError = error.message;
         audioOptions.onError?.(error);
       } finally {
@@ -143,11 +157,9 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
         changed();
       }
     };
-    if (immediate) {
-      const job = schedule();
-      effects.add(job);
-      job.then(() => effects.delete(job), () => effects.delete(job));
-    } else queue = queue.catch(() => {}).then(schedule);
+    const job = immediate ? schedule() : (voice.queue = voice.queue.catch(() => {}).then(schedule));
+    jobs.add(job);
+    job.then(() => jobs.delete(job), () => jobs.delete(job));
   }
   function currentCardEvent() {
     const event = cardEvent || get.event?.();
@@ -157,14 +169,14 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     const audioOptions = args.length === 1 && args[0] && typeof args[0] === 'object'
       ? args[0] : { path: args.filter(arg => typeof arg === 'string' || typeof arg === 'number').join('/') };
     const clip = resolveCardAudio(audioOptions.path, manifest);
-    // Hero lines share the unlocked context and queue, but must not consume
-    // the card-event deduplication token when the same play triggers a skill.
+    // Hero lines have their own queue on the shared unlocked context, and do
+    // not consume card-event deduplication when the same play triggers a skill.
     if (clip) play(clip, currentCardEvent(), audioOptions);
     else {
       const damageEvent = get.event?.();
       const impact = resolveDamageAudio(audioOptions.path, options.damageManifest, damageEvent);
-      if (impact) play(impact, damageEvent, audioOptions, true);
-      else play(resolveCharacterAudio(audioOptions.path, options.characterManifest), null, audioOptions);
+      if (impact) play(impact, damageEvent, audioOptions, 'effect');
+      else play(resolveCharacterAudio(audioOptions.path, options.characterManifest), null, audioOptions, 'hero');
     }
   }
   function playCardAudio(...args) {
@@ -180,7 +192,20 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   }
   const gesture = () => { void unlock(); };
   const controller = {
-    status: () => ({ ...state, contextState: context?.state || 'uninitialized', loaded: buffers.size, scheduled: playing.size }),
+    status: () => ({ ...state, volumes: { ...volumes }, contextState: context?.state || 'uninitialized', loaded: buffers.size, scheduled: playing.size,
+      channels: Object.fromEntries(Object.entries(voices).map(([name, voice]) => [name, voice.last && { ...voice.last }])) }),
+    setVolume(channel, value) {
+      if (!Object.hasOwn(volumes, channel)) return undefined;
+      if (disposed || typeof value !== 'number' || !Number.isFinite(value)) return volumes[channel];
+      volumes[channel] = Math.max(0, Math.min(1, value));
+      // Update both sounding and future-scheduled sources without restarting
+      // them or moving either voice queue's clock. Pending loads read on play.
+      for (const source of playing.values()) {
+        if (source.channel === channel) source.gain.gain.value = source.baseGain * volumes[channel];
+      }
+      changed();
+      return volumes[channel];
+    },
     setEnabled(enabled) {
       state.enabled = Boolean(enabled);
       lib.config.background_audio = state.enabled;
@@ -194,7 +219,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     // Used only by the committed engine trigger, also exposed for deterministic
     // adapter tests. UI card selection must never call this method.
     playCommitted,
-    whenIdle: () => Promise.all([queue, ...effects, preload]),
+    whenIdle: () => Promise.all([...jobs, preload]),
     dispose() {
       if (disposed) return;
       disposed = true;

@@ -1,0 +1,49 @@
+@import url('./settings.css');
+/* Shared SGS client surfaces. Card faces and native rule states stay in table.css. */
+@font-face {
+  font-family: SGSKai;
+  src: url('../font/xinwei.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root {
+  --sgs-bg: #171715;
+  --sgs-panel: #22211e;
+  --sgs-panel-raised: #2c2923;
+  --sgs-control: #343027;
+  --sgs-control-hover: #443b2d;
+  --sgs-line: #62533d;
+  --sgs-bronze: #ac8c59;
+  --sgs-gold: #e0bd80;
+  --sgs-text: #eee4d1;
+  --sgs-muted: #c0b29b;
+  --sgs-primary: #a33d2e;
+  --sgs-primary-hover: #b84734;
+  --sgs-primary-edge: #d37e59;
+  --sgs-on-primary: #fff3df;
+  --sgs-focus: #f6d58b;
+  --sgs-backdrop: #0c0c0bd1;
+  --sgs-font-body: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  --sgs-font-title: SGSKai, 'STKaiti', 'KaiTi', serif;
+  --sgs-text-small: 12px;
+  --sgs-text-body: 14px;
+  --sgs-text-prompt: 16px;
+  --sgs-text-action: 20px;
+  --sgs-action-width: 126px;
+  --sgs-action-height: 50px;
+  --sgs-radius: 4px;
+  --sgs-shadow: 0 6px 20px #0006;
+  --sgs-control-shadow: inset 0 1px #eed5a41f, 0 2px 4px #0004;
+  --sgs-motion: 140ms ease-out;
+  --sgs-scene: linear-gradient(180deg, #171715b3, #171715e8), url('../image/background/ol_bg.jpg') center / cover;
+}
+
+/* Applies only to the two SGS entry points that import this sheet. */
+:root body :is(button, a, input, select, summary, [role='button']):focus-visible {
+  outline: 2px solid var(--sgs-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --sgs-motion: 0s; }
+}

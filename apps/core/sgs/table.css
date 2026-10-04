@@ -1,3 +1,7 @@
+@import url('./theme.css');
+@import url('./table-actions.css');
+@import url('./battle-feedback.css');
+@import url('./results.css');
 @font-face{font-family:SGSTableKai;src:url('../font/xinwei.woff2') format('woff2');font-display:swap}
 html.sgs-game{--table-ink:#332015;--table-gold:#dab47a;--table-cream:#f1dfb8;--table-line:#ad8250;--sgs-player-w:clamp(148px,12.5vw,238px);--sgs-player-h:calc(var(--sgs-player-w)*1.34);--sgs-hand-h:clamp(144px,17vh,184px);--sgs-edge:22px}
 html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-cream);font-family:SGSTableKai,'KaiTi',serif}
@@ -87,7 +91,7 @@ html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-crea
 .sgs-game #arena>.dialog .caption{font-family:SGSTableKai,'KaiTi',serif;font-size:23px}
 .sgs-game #arena>.dialog .buttons .button{color:inherit}
 .sgs-game .sgs-leave-dialog{max-width:390px;border:1px solid #b69258;background:#e7d5b3;color:#513822;padding:25px;box-shadow:0 20px 60px #21100799;font:16px/1.8 SGSTableKai,'KaiTi',serif}
-.sgs-leave-dialog::backdrop{background:#211409b8}.sgs-leave-dialog h2{font:27px SGSTableKai,'KaiTi',serif;margin:0 0 15px}.sgs-leave-dialog div{display:flex;justify-content:flex-end;gap:15px;margin-top:20px}.sgs-leave-dialog button{border:1px solid #a17a47;padding:7px 16px;background:transparent;color:#593c25;cursor:pointer;font:17px SGSTableKai,'KaiTi',serif}.sgs-leave-dialog button[data-leave]{background:#8c532a;color:#f6dfac;border-color:#8c532a}
+.sgs-leave-dialog::backdrop{background:#211409b8}.sgs-leave-dialog h2{font:27px SGSTableKai,'KaiTi',serif;margin:0 0 15px}.sgs-leave-dialog div{display:flex;justify-content:flex-end;gap:15px;margin-top:20px}.sgs-leave-dialog button{min-height:46px;min-width:112px;border:1px solid #a17a47;padding:10px 22px;background:transparent;color:#593c25;cursor:pointer;font:19px SGSTableKai,'KaiTi',serif}.sgs-leave-dialog button[data-leave]{background:#8c532a;color:#f6dfac;border-color:#8c532a}
 @media(max-width:1100px){html.sgs-game{--sgs-player-w:142px;--sgs-hand-h:138px;--sgs-edge:17px}.sgs-hud{gap:10px;padding:0 12px}.sgs-hud strong span,.sgs-hud .sgs-table-state{display:none}.sgs-hud #system>div>div{padding:4px 5px;font-size:13px}.sgs-game #arena #me,.sgs-game #arena #mebg,.sgs-game #arena #autonode,.sgs-game #arena #control{left:8%!important;right:calc(var(--sgs-player-w) + 160px)!important}.sgs-game #arena>.player[data-position='0']>.equips{width:124px!important;left:-139px!important}.sgs-game #arena #control>.control.sgs-skill-control{left:calc(100% + 160px - var(--sgs-edge))!important}}
 @media(max-height:680px){html.sgs-game{--sgs-player-w:140px;--sgs-hand-h:126px}.sgs-game #arena:is([data-number='7'],[data-number='8']){--sgs-player-w:110px}.sgs-game #arena:is([data-number='7'],[data-number='8'])>.player[data-position='1'],.sgs-game #arena[data-number='7']>.player[data-position='6'],.sgs-game #arena[data-number='8']>.player[data-position='7']{top:calc(var(--sgs-player-h) + 48px)!important}.sgs-game #arena>.dialog.nobutton{bottom:calc(var(--sgs-hand-h) + 94px)!important;font-size:17px}}
 @media(max-width:650px){.sgs-hud{gap:8px}.sgs-hud strong,.sgs-hud .sgs-table-clock{display:none}.sgs-hud #system{flex:1;overflow-x:auto;scrollbar-width:none}.sgs-game #arena>.player>.name{font-size:18px!important}.sgs-game #arena>.dialog:not(.nobutton){max-width:70%}.sgs-game #arena #control>.control>div{min-width:88px;font-size:19px!important}}
@@ -160,8 +164,9 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-game #arena #me .card[data-sgs-switchable='true']>:is(.background,.image,.name,.name2,.info,.range,.gaintag,.addinfo){opacity:1!important}
 .sgs-game #arena .handcards>.card[data-sgs-switchable='true']:hover{translate:0 -6px;box-shadow:0 7px 15px #14090585,0 0 0 1px #edcf92}
 .sgs-game #arena .handcards>.card.selected{translate:0 0;box-shadow:0 0 0 2px #f3d79a,0 7px 19px #1e100ca0!important}
-.sgs-game #arena #control{gap:10px;bottom:calc(var(--sgs-hand-h) + 46px)!important}
-.sgs-game #arena #control>.control:not(.sgs-skill-control)>div{clip-path:none;min-width:102px;min-height:39px;font-size:20px!important;letter-spacing:1px;padding:8px 24px;border-radius:5px!important;border-color:#b68e57!important;background:linear-gradient(#a7743e,#80502b)!important;box-shadow:inset 0 1px #e9c78955,0 3px 6px #1e0f0850!important;transition:translate .15s,background .15s,box-shadow .15s}
+.sgs-game #arena #control{gap:14px;bottom:calc(var(--sgs-hand-h) + 46px)!important}
+.sgs-game #arena #control>.control:not(.sgs-skill-control){gap:12px}
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div{clip-path:none;min-width:126px;min-height:50px;font-size:23px!important;letter-spacing:1px;padding:11px 30px;border-radius:5px!important;border-color:#b68e57!important;background:linear-gradient(#a7743e,#80502b)!important;box-shadow:inset 0 1px #e9c78955,0 3px 6px #1e0f0850!important;transition:translate .15s,background .15s,box-shadow .15s}
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div:active{translate:0 2px;box-shadow:inset 0 1px #e9c78930!important}
 .sgs-game #arena #control>.control>div[data-sgs-action='cancel']{background:#33241be8!important;color:#d4bd96!important;border-color:#92794f!important;box-shadow:inset 0 1px #b3966630!important}
 .sgs-game #arena #control>.control>div[data-sgs-action='ok']{background:linear-gradient(#d2a15d,#aa7539)!important;border-color:#e6be80!important;color:#fff5df!important}
@@ -234,9 +239,122 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-game #arena .card.fullskin[data-card-name='sha'].fire:not(.thunder):not(.infohidden):not(.equips>.card)>.name{background-size:201.681% 443.421%!important;background-position:76.86% 6.897%!important}
 .sgs-game #arena .card.fullskin[data-card-name='sha'].fire.thunder:not(.infohidden):not(.equips>.card)>.name{background:none!important;color:#171916!important;font-size:24px!important;line-height:23px!important}
 .sgs-game #arena #me .card[data-sgs-switchable='true']{opacity:1!important}
-.sgs-game #arena #me .handcards>.card.selected{box-shadow:0 0 0 2px #f3d79a,0 7px 19px #1e100ca0!important}
-.sgs-game #arena #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected):hover{box-shadow:0 7px 15px #14090585,0 0 0 1px #edcf92!important}
+/* Use the native choice state, including legal direct-switch candidates.
+   Keep the whole face opaque and shade its root so labels and artwork stay
+   together; idle/opening hands retain their normal appearance. */
+.sgs-game #arena.selecting:not(.video) #me .handcards>.card:not(.selectable):not(.selected):not([data-sgs-switchable='true']){opacity:1!important;filter:brightness(.48) saturate(.35)!important;border-color:#635a49!important;box-shadow:inset 0 0 0 1px #544734,0 1px 3px #130b08b8!important;cursor:not-allowed}
+.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected){opacity:1!important;filter:brightness(1.04)!important;border-color:#d4ba83!important;box-shadow:inset 0 0 0 1px #fff0ca,0 7px 13px #130a08b8!important}
+.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected):hover{filter:brightness(1.1)!important;box-shadow:inset 0 0 0 1px #fff5d7,0 10px 18px #100805c9,0 0 0 1px #e8c781!important}
+.sgs-game #arena #me .handcards>.card.selected{opacity:1!important;filter:brightness(1.08)!important;border-color:#ffdc82!important;box-shadow:inset 0 0 0 1px #fff1bd,0 0 0 3px #f2c765,0 9px 20px #160a05cc!important}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='fire']{background:#f3d7b9;border-color:#b36138;box-shadow:inset 0 -3px #b36138}.sgs-teammate-card[data-card-name='sha'][data-nature~='fire']>.sgs-teammate-card-name{color:#8c2c18}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']{background:#d7e5ec;border-color:#577d98;box-shadow:inset 0 -3px #577d98}.sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']>.sgs-teammate-card-name{color:#20445c}
 @media(max-width:1100px),(max-height:680px){.sgs-teammate-cards{max-height:142px}.sgs-teammate-card{min-height:58px}.sgs-game #arena>.sgs-teammate-hand{padding:8px;width:168px}}
 @media(max-width:650px){.sgs-game #arena>.sgs-teammate-hand{width:var(--sgs-player-w);right:var(--sgs-edge);top:calc(22% + var(--sgs-player-h) + 38px)}.sgs-game #arena[data-number='3']>.sgs-teammate-hand{top:calc(56px + var(--sgs-player-h) + 38px)}.sgs-game #arena>.sgs-teammate-hand[data-position='2']{left:var(--sgs-edge);right:auto}.sgs-teammate-cards{grid-template-columns:repeat(2,minmax(0,1fr));max-height:126px}}
+
+/* UX-01 surface theme. Do not target card roots, face internals or rule classes. */
+html.sgs-game {
+  --table-ink: var(--sgs-bg);
+  --table-gold: var(--sgs-gold);
+  --table-cream: var(--sgs-text);
+  --table-line: var(--sgs-bronze);
+}
+html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family: var(--sgs-font-body); }
+.sgs-game #window { background: var(--sgs-scene)!important; }
+.sgs-hud { background: var(--sgs-bg); border-color: var(--sgs-line); color: var(--sgs-muted); box-shadow: 0 2px 6px #0004; }
+.sgs-hud strong { color: var(--sgs-text); font-family: var(--sgs-font-title); }
+.sgs-hud strong span { color: var(--sgs-gold); border-color: var(--sgs-line); }
+.sgs-return, .sgs-table-state, .sgs-table-clock { color: var(--sgs-muted); }
+.sgs-return:hover { color: var(--sgs-gold); }
+.sgs-turn { font-family: var(--sgs-font-body); color: var(--sgs-text); border-color: var(--sgs-line); }
+.sgs-hud[data-your-turn='true'] .sgs-turn { color: var(--sgs-gold); background: var(--sgs-control); border-color: var(--sgs-bronze); }
+.sgs-audio, .sgs-restart, .sgs-tools>summary, .sgs-game #arena>.sgs-sort-hand {
+  background: var(--sgs-panel-raised);
+  color: var(--sgs-text);
+  border-color: var(--sgs-line);
+  border-radius: var(--sgs-radius);
+  font-family: var(--sgs-font-body);
+  box-shadow: var(--sgs-control-shadow);
+  transition: background var(--sgs-motion), border-color var(--sgs-motion);
+}
+.sgs-audio:hover, .sgs-restart:hover, .sgs-tools>summary:hover,
+.sgs-game #arena>.sgs-sort-hand:hover:not(:disabled) { background: var(--sgs-control-hover); border-color: var(--sgs-bronze); }
+.sgs-game #arena>.sgs-sort-hand:focus-visible { outline-color: var(--sgs-focus); }
+.sgs-audio[aria-pressed='false'], .sgs-tools>summary:after { color: var(--sgs-muted); }
+.sgs-hud .sgs-tools #system { background: var(--sgs-panel); border-color: var(--sgs-bronze); border-radius: var(--sgs-radius); box-shadow: var(--sgs-shadow); }
+.sgs-hud .sgs-tools #system>div>div { color: var(--sgs-text); }
+.sgs-hud .sgs-tools #system>div>div:hover { background: var(--sgs-control-hover)!important; }
+
+/* Native control children remain clickable divs; the adapter only supplies their labels. */
+.sgs-game #arena #control>.control>div {
+  background: var(--sgs-control)!important;
+  color: var(--sgs-text)!important;
+  border-color: var(--sgs-bronze)!important;
+  border-radius: var(--sgs-radius)!important;
+  box-shadow: var(--sgs-control-shadow)!important;
+  text-shadow: none!important;
+}
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div {
+  min-width: var(--sgs-action-width);
+  min-height: var(--sgs-action-height);
+  font: var(--sgs-text-action)/1.3 var(--sgs-font-body)!important;
+  background: var(--sgs-control)!important;
+  border-color: var(--sgs-bronze)!important;
+  border-radius: var(--sgs-radius)!important;
+  box-shadow: var(--sgs-control-shadow)!important;
+  transition: background var(--sgs-motion), box-shadow var(--sgs-motion);
+}
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-action='cancel'] { background: var(--sgs-panel)!important; color: var(--sgs-muted)!important; }
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div:is([data-sgs-action='ok'],[data-sgs-mulligan='start']) {
+  background: var(--sgs-primary)!important;
+  color: var(--sgs-on-primary)!important;
+  border-color: var(--sgs-primary-edge)!important;
+}
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-mulligan='replace'],
+.sgs-game #arena #control>.control.sgs-skill-control>div { background: var(--sgs-control)!important; color: var(--sgs-text)!important; border-color: var(--sgs-bronze)!important; box-shadow: var(--sgs-control-shadow)!important; }
+.sgs-game #arena #control>.control:not(.disabled)>div:hover { filter: brightness(1.12); }
+.sgs-game #arena #control>.control.disabled>div { filter: none; cursor: default; }
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div:active { translate: none; box-shadow: inset 0 2px 4px #0005!important; }
+.sgs-game #arena #control>.control>div:focus-visible { outline: 2px solid var(--sgs-focus); outline-offset: -4px; }
+
+.sgs-game #arena>.dialog:not(.nobutton),
+.sgs-game #window>.dialog.popped,
+.sgs-game .menu-container>.menu.dialog,
+.sgs-game .sgs-leave-dialog {
+  background: var(--sgs-panel)!important;
+  color: var(--sgs-text)!important;
+  border: 1px solid var(--sgs-bronze)!important;
+  border-radius: var(--sgs-radius)!important;
+  box-shadow: var(--sgs-shadow)!important;
+  text-shadow: none;
+  font-family: var(--sgs-font-body);
+}
+.sgs-game #arena>.dialog .caption,
+.sgs-game #arena>.dialog:not(.nobutton) .caption { color: var(--sgs-text); font-family: var(--sgs-font-title); }
+.sgs-game #arena>.dialog.nobutton { color: var(--sgs-text); background: linear-gradient(90deg, transparent, #171715e8 18%, #171715e8 82%, transparent); font-family: var(--sgs-font-body); }
+.sgs-game #arena>.dialog .caption>.sgs-opening-copy { color: var(--sgs-text); font-family: var(--sgs-font-body); }
+.sgs-game .dialog .caption>.text { font-family: var(--sgs-font-body); }
+.sgs-game .menu-container { background: var(--sgs-backdrop); }
+.sgs-game .menu .menu-tab-bar { background: var(--sgs-bronze)!important; }
+.sgs-game .menu .menu-tab>div.active { color: var(--sgs-gold); }
+.sgs-game .menu .menubutton.active { background: var(--sgs-control)!important; color: var(--sgs-gold)!important; box-shadow: inset 0 0 0 1px var(--sgs-bronze); }
+.sgs-game .menu .config.toggle.on>div { background: var(--sgs-primary)!important; }
+.sgs-game .sgs-leave-dialog { box-sizing: border-box; width: min(390px, calc(100vw - 32px)); font: var(--sgs-text-body)/1.8 var(--sgs-font-body); }
+.sgs-leave-dialog::backdrop { background: var(--sgs-backdrop); }
+.sgs-leave-dialog h2 { color: var(--sgs-gold); font-family: var(--sgs-font-title); }
+.sgs-leave-dialog div { position: static; inset: auto; flex-wrap: wrap; }
+.sgs-leave-dialog button {
+  min-width: var(--sgs-action-width);
+  min-height: var(--sgs-action-height);
+  padding: 10px 16px;
+  color: var(--sgs-text);
+  background: var(--sgs-control);
+  border-color: var(--sgs-bronze);
+  border-radius: var(--sgs-radius);
+  font: var(--sgs-text-prompt)/1.5 var(--sgs-font-body);
+  box-shadow: var(--sgs-control-shadow);
+}
+.sgs-leave-dialog button:hover { background: var(--sgs-control-hover); }
+.sgs-leave-dialog button[data-leave] { color: var(--sgs-on-primary); background: var(--sgs-primary); border-color: var(--sgs-primary-edge); }
+.sgs-leave-dialog button[data-leave]:hover { background: var(--sgs-primary-hover); }
+.sgs-game #arena>.sgs-teammate-hand { background: var(--sgs-panel); border-color: var(--sgs-bronze); border-radius: var(--sgs-radius); color: var(--sgs-text); box-shadow: var(--sgs-shadow); }
+.sgs-teammate-heading>span, .sgs-teammate-empty { color: var(--sgs-muted); }

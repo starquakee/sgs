@@ -1,0 +1,26 @@
+/* Independent overlays leave native player/card transforms and rule classes intact. */
+.sgs-game #arena > .player > :is(.sgs-battle-frame, .sgs-battle-flash) {
+  position: absolute; inset: -3px; z-index: 12; pointer-events: none;
+  border-radius: inherit; box-sizing: border-box;
+}
+.sgs-game #arena > .player[data-sgs-acting] > .sgs-battle-frame::after {
+  content: '行动中'; position: absolute; left: 30px; right: 64px; top: 8px;
+  padding: 2px 4px; border: 1px solid var(--sgs-bronze); text-align: center; white-space: nowrap;
+  color: var(--sgs-gold); background: var(--sgs-panel);
+  font: 12px/1.5 var(--sgs-font-body); letter-spacing: 1px;
+}
+.sgs-game #arena > .player[data-sgs-aim='legal'] > .sgs-battle-frame { border: 1px dashed var(--sgs-bronze); }
+.sgs-game #arena > .player[data-sgs-aim='selected'] > .sgs-battle-frame {
+  border: 2px solid var(--sgs-gold); box-shadow: 0 0 0 2px #171715, inset 0 0 10px #d8b57940;
+}
+.sgs-game .sgs-battle-flash { opacity: 0; }
+.sgs-game .sgs-battle-flash[data-kind] {
+  --sgs-flash-color: var(--sgs-gold); border: 2px solid var(--sgs-flash-color);
+  box-shadow: inset 0 0 20px var(--sgs-flash-color), 0 0 8px var(--sgs-flash-color);
+  animation: sgs-battle-pulse 240ms ease-out both;
+}
+.sgs-game .sgs-battle-flash[data-kind='hit'] { --sgs-flash-color: #c6533d; }
+.sgs-game .sgs-battle-flash[data-kind='death'] { --sgs-flash-color: #bcb5a6; }
+@keyframes sgs-battle-pulse { from { opacity: .85; } to { opacity: 0; } }
+html.sgs-reduced-motion .sgs-battle-flash { display: none; animation: none!important; }
+@media (prefers-reduced-motion: reduce) { .sgs-game .sgs-battle-flash { display: none; animation: none!important; } }

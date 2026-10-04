@@ -1,3 +1,4 @@
+import { sgsLoading } from "../sgs/entry-bootstrap.mjs";
 import { lib, game, get, _status, ui, ai } from "noname";
 import { boot } from "@/init/index.js";
 import { userAgentLowerCase, device } from "@/util/index.js";
@@ -32,7 +33,7 @@ import "vue/dist/vue.esm-browser.js";
 		lib.buildInfo = await loadBuildInfo(url => lib.init.promises.json(url));
 		if (new URLSearchParams(location.search).get("sgs") === "1") {
 			const { prepareSinglePlayer } = await import("../sgs/runtime.js");
-			await prepareSinglePlayer({ lib, game, ui, get, _status });
+			await prepareSinglePlayer({ lib, game, ui, get, _status }, sgsLoading);
 		}
 
 		// GPL确认
@@ -52,9 +53,15 @@ https://www.gnu.org/licenses/gpl-3.0.html
 			}
 		}
 
+		sgsLoading?.stage("正在载入原生规则与武将包");
+		sgsLoading?.watchNative(lib);
 		await boot();
 	} catch (e) {
 		console.error(e);
+		if (sgsLoading) {
+			sgsLoading.fail(e);
+			return;
+		}
 		alert(`《无名杀》加载内容失败
 浏览器UA信息: 
 ${userAgentLowerCase}

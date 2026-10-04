@@ -1,0 +1,56 @@
+/* Utility dialogs must not inherit the engine's absolute div positioning. */
+html body .sgs-client-dialog {
+  box-sizing: border-box; position: fixed; inset: 0; margin: auto;
+  width: min(460px, calc(100vw - 32px)); max-height: calc(100dvh - 32px);
+  overflow: auto; padding: 24px; border: 1px solid var(--sgs-bronze);
+  border-top: 3px solid var(--sgs-bronze); border-radius: var(--sgs-radius);
+  background: var(--sgs-panel); color: var(--sgs-text); box-shadow: var(--sgs-shadow);
+  font: 14px/1.7 var(--sgs-font-body); text-align: left;
+}
+.sgs-client-dialog::backdrop { background: var(--sgs-backdrop); }
+html body .sgs-client-dialog :is(div, p, h2, label, span, small, select, input, button, fieldset, legend, output) {
+  position: static; inset: auto; box-sizing: border-box; float: none;
+}
+.sgs-client-dialog h2 { margin: 0 0 10px; font: 28px/1.3 var(--sgs-font-title); color: var(--sgs-gold); }
+.sgs-client-dialog p { margin: 0 0 16px; }
+.sgs-client-dialog .sgs-dialog-note { color: var(--sgs-muted); }
+.sgs-client-dialog .sgs-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--sgs-line); cursor: pointer; }
+.sgs-setting-row span { min-width: 0; }
+.sgs-setting-row small { display: block; color: var(--sgs-muted); font-size: 12px; }
+.sgs-client-dialog select { width: 92px; min-height: 38px; padding: 4px 8px; background: var(--sgs-control); color: var(--sgs-text); border: 1px solid var(--sgs-bronze); font: inherit; }
+.sgs-client-dialog input[type='checkbox'] { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--sgs-primary); cursor: pointer; }
+.sgs-client-dialog .sgs-volume-settings { min-width: 0; margin: 0 0 12px; padding: 0 0 4px; border: 0; }
+.sgs-volume-settings legend { padding: 0; color: var(--sgs-muted); font-size: 12px; }
+.sgs-client-dialog .sgs-volume-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 42px; align-items: center; gap: 12px; min-height: 38px; font-size: 13px; }
+.sgs-volume-row input[type='range'] { width: 100%; min-width: 0; height: 28px; margin: 0; accent-color: var(--sgs-bronze); cursor: pointer; }
+.sgs-volume-row output { color: var(--sgs-gold); text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-height: 700px) {
+  .sgs-client-dialog[aria-labelledby='sgs-dialog-settings'] .sgs-setting-row { padding-block: 8px; }
+  .sgs-client-dialog[aria-labelledby='sgs-dialog-settings'] .sgs-volume-row { min-height: 34px; }
+  .sgs-client-dialog[aria-labelledby='sgs-dialog-settings'] .sgs-dialog-note { margin-bottom: 10px; }
+  .sgs-client-dialog[aria-labelledby='sgs-dialog-settings'] .sgs-dialog-actions { margin-top: 12px; }
+  .sgs-client-dialog[aria-labelledby='sgs-dialog-settings'] .sgs-save-status { margin-block: 4px; }
+}
+.sgs-client-dialog .sgs-save-status { min-height: 24px; margin: 8px 0; color: var(--sgs-gold); font-size: 12px; }
+.sgs-client-dialog .sgs-dialog-actions { display: flex; justify-content: flex-end; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+.sgs-client-dialog button { min-width: var(--sgs-action-width); min-height: var(--sgs-action-height); padding: 10px 18px; border: 1px solid var(--sgs-bronze); border-radius: var(--sgs-radius); color: var(--sgs-text); background: var(--sgs-control); font: 16px/1.4 var(--sgs-font-body); cursor: pointer; }
+.sgs-client-dialog button:hover { background: var(--sgs-control-hover); }
+.sgs-client-dialog button[data-primary] { background: var(--sgs-primary); border-color: var(--sgs-primary-edge); color: var(--sgs-on-primary); }
+.sgs-client-dialog button[data-primary]:hover { background: var(--sgs-primary-hover); }
+.sgs-game .sgs-hud { gap: 10px; }
+.sgs-game .sgs-session-button { flex: none; min-height: 32px; padding: 4px 9px; background: var(--sgs-panel-raised); border: 1px solid var(--sgs-line); border-radius: var(--sgs-radius); color: var(--sgs-text); font: 13px/1.5 var(--sgs-font-body); cursor: pointer; }
+.sgs-session-button:hover { border-color: var(--sgs-bronze); }
+.sgs-session-button:disabled { opacity: .5; cursor: default; }
+.sgs-session-button[aria-pressed='true'] { color: var(--sgs-gold); border-color: var(--sgs-bronze); }
+@media (max-width: 1280px) {
+  .sgs-game .sgs-hud .sgs-table-state, .sgs-game .sgs-hud strong span { display: none; }
+  .sgs-game .sgs-hud { gap: 7px; padding-inline: 12px; }
+}
+/* Keep a tiny nonzero duration so native transitionend handlers still fire.
+   No transforms, rule classes or card-face internals are changed. */
+html.sgs-reduced-motion { --sgs-motion: 0.001ms; }
+html.sgs-reduced-motion body *, html.sgs-reduced-motion body *::before, html.sgs-reduced-motion body *::after {
+  transition-duration: 0.001ms!important; transition-delay: 0s!important;
+  animation-duration: 0.001ms!important; animation-delay: 0s!important;
+  animation-iteration-count: 1!important;
+}

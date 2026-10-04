@@ -1,0 +1,26 @@
+/* The result sits above the untouched native detail dialog. */
+html body .sgs-client-dialog.sgs-result-dialog {
+  width: min(640px, calc(100vw - 32px)); padding: 28px;
+}
+.sgs-result-dialog h2 { font-size: 38px; margin-bottom: 14px; overflow-wrap: anywhere; }
+.sgs-result-dialog[data-outcome='loss'] h2 { color: var(--sgs-text); }
+.sgs-result-dialog .sgs-result-player { font-size: 18px; margin-bottom: 8px; }
+.sgs-result-dialog .sgs-result-context { color: var(--sgs-muted); font-size: 13px; }
+.sgs-result-dialog .sgs-result-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block: 1px solid var(--sgs-bronze); margin: 22px 0 14px; }
+.sgs-result-stats>div { display: flex; flex-direction: column; gap: 2px; padding: 14px 4px; text-align: center; }
+.sgs-result-stats>div+div { border-left: 1px solid var(--sgs-line); }
+html body .sgs-result-stats strong { position: static; inset: auto; color: var(--sgs-gold); font: 28px/1.25 var(--sgs-font-body); font-variant-numeric: tabular-nums; }
+.sgs-result-stats span { color: var(--sgs-muted); font-size: 13px; }
+.sgs-result-dialog .sgs-result-note { color: var(--sgs-muted); font-size: 12px; margin-bottom: 0; }
+.sgs-result-dialog [data-result-status] { color: var(--sgs-gold); font-size: 13px; margin: 10px 0 0; }
+.sgs-result-dialog [data-result-status]:empty { display: none; }
+.sgs-result-dialog .sgs-dialog-actions { margin-top: 24px; }
+@media (max-width: 540px), (max-height: 650px) {
+  html body .sgs-client-dialog.sgs-result-dialog { padding: 20px; }
+  .sgs-result-dialog h2 { font-size: 32px; }
+  .sgs-result-dialog .sgs-result-stats { margin-top: 14px; }
+}
+@media (max-width: 540px) {
+  .sgs-result-dialog .sgs-dialog-actions { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .sgs-result-dialog [data-replay] { grid-row: 1; }
+}

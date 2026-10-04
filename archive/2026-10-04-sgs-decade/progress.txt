@@ -1,0 +1,163 @@
+# Ralph Progress: 三国杀十周年单机研习版
+
+Started: 2026-10-03 Asia/Shanghai
+Source PRD: tasks/prd-sgs-decade.md
+
+## Codebase Patterns
+- Upstream source: https://github.com/libnoname/noname @ 7fcf23ed54d8a7ce2b49ae2c15a054123891a52a.
+- Core is apps/core; Vite uses port 8081 and aliases noname -> /noname.js.
+- character/{pack}/{character,skill,translate,sort}.js contains versioned definitions.
+- Exact decade packs include xianding, sp2 and huicui; do not mistake OL sp or mobile sb for decade.
+- Current sparse checkout excludes mobile, audio and character portraits. Need deliberate fallback.
+- No user-owned remote configured. NEVER push origin.
+
+## 2026-10-03 - Preflight
+- Empty workspace; user confirmed all-generals goal, offline AI only, GPL engine reuse.
+- Cloned upstream; initial sandbox read-only .git transition interrupted checkout. Recovered fresh checkout with scoped escalation, no user files existed.
+- Installing pnpm filtered core dependencies; no electron or mobile runtime needed.
+- Official total and per-skill behavior verification remain open; US-006 is a real unfinished requirement.
+
+## 2026-10-03 - US-001
+- Filtered core dependencies installed; dev Vite 8081 runs (parent exec session 21589).
+- HTTP / and /noname/entry.ts both 200. New dev.mjs syntax check passed.
+- Upstream .ts cannot be checked with node --check on Node 22.12; use tsx/Vite for TS.
+- Git Bash runner requires /usr/bin on PATH in this Windows host.
+
+## 2026-10-03 - US-002
+- Implemented only the source catalog story. Added static TypeScript-AST scanner, independently maintained version policy, generated apps/core/sgs/catalog.json and docs/sgs-coverage.json, usage/schema notes in docs/sgs-catalog.md, and 9 focused tests.
+- Inspected upstream character/skill/translate/sort/index exports, game/package.js classification, Character defaults, game.finishSkill inherit/subSkill behavior, and offline/skill/index.ts eager glob before adapting. Upstream game source and LICENSE were not edited by this iteration.
+- Node v22.12.0 validation: node --check scripts/sgs/catalog-source.mjs; node --check scripts/sgs/build-catalog.mjs; node --check tests/sgs/catalog.test.mjs; node scripts/sgs/build-catalog.mjs; node --test tests/sgs/*.test.mjs. All passed, 9/9 tests. The test rebuild matches both generated files byte-for-byte and verifies source hashes/locations.
+- Evidence: 26 packs, 2563 characters, 5233 direct character-skill references, 9724 definition entries including first-level subskills; 9722 parsed without definition collisions. Decade source packs: huicui 119, sp2 113, xianding 219, total 451. These are source counts, not official completeness claims; every behavior status remains unverified, verified count 0, official totals/date/percentage null.
+- Cross-pack evidence: standard:old_re_lidian uses refresh:xunxun and refresh:wangxi; offline:jdsbduanliang inherits sb:sbduanliang. Definitions are resolved independently of translation text; duplicates/ambiguities cannot silently resolve.
+- Gotchas: 4 direct dualside references and 44 static inherit/group/global dependencies are unresolved in the character-only scope; built-in/card/mode/runtime-generated skills are not exhaustively indexed. tw:twgongsun_shadow and shadow2 collide with generated subskill IDs; both locations retained, no runtime precedence assumed. collab has 2 dynamic translation spreads; sixiang:std_nanhualaoxian uses a name getter. key: key_umi2 legitimately omits skills, defaulting to [].
+- Version rules are pack-based with per-character overrides available, never inferred only from dc_. Standard/shenhua/extra/yijiang are common classics; mixed refresh/sp/newjiang/collab/old remain pending. sp2 is accepted as target by PRD although upstream package.js places it in the general section. Official per-entry reconciliation remains US-006.
+- No UI was changed, so this story needs no browser check. Runtime setup from US-001 was not repeated. Existing pnpm binary cannot start inside this sandbox (EPERM reading C:/Users/75228); installed pnpm-managed TypeScript dependency works through Node 22, so no install was needed.
+- Concurrent parent changes appeared in apps/core/noname/entry.ts, apps/core/vite.config.ts and scripts/sgs/local-files.mjs; preserved and excluded from this story's commit, along with the runner's untracked scripts/ralph/.last-branch.
+- COMMIT BLOCKER: git add of the 9 story files failed with "Unable to create .git/index.lock: Permission denied". Current runner cannot escalate; no sandbox bypass, commit or push was performed. passes=true records validated story acceptance, not a completed Git commit. Parent must stage only scripts/sgs/catalog-versions.json, scripts/sgs/catalog-source.mjs, scripts/sgs/build-catalog.mjs, apps/core/sgs/catalog.json, docs/sgs-coverage.json, docs/sgs-catalog.md, tests/sgs/catalog.test.mjs, prd.json and progress.txt, then commit locally as "feat: US-002 - 生成武将和技能覆盖清单". Do not include concurrent runtime changes or the runner marker. NEVER PUSH.
+
+
+## 2026-10-03 - US-003 / US-004 / US-005 parent integration
+- Added original lobby, compact 2.1MB roster, search/faction/version/pack filters, favorites, settings and skills.
+- Bridged actual Noname identity engine via isolated SGS IndexedDB settings; explicit AI choice counts; one-shot event identity hook; exact catalog-based AI pool; disabled non-identity modes and missing sound.
+- Added read-only local game resource bridge; tests forbid traversal/mutations. Production build/server and Windows launcher included.
+- Fixed upstream Node 22 build main guard; production built and played at 8083 with no runtime warnings/errors.
+- Browser validated desktop and 390px layouts, search by Ronghuo, 451 decade filter, empty reset and favorites.
+- Browser tested 8-player AI, 4-player selected lord; Zhiheng discards 2/draws 2 and once-per-phase control; Yingmou yang draws to target hand and virtual Fire Attack; Ronghuo adds faction damage (3 damage with 2 factions); dying rescue/death; discard and AI next turns.
+- Native browser exit confirm blocked the automation input channel. Replaced with DOM dialog. User closed old prompt; cancellation, return and restart all passed. Temporary probes removed.
+- 14/14 tests pass; new JS syntax checks and git diff --check pass. See docs/sgs-validation.md for scoped evidence.
+- US-006 intentionally remains false. Official per-character reconciliation began using 2026-03-12 source; complete official denominator and full skill coverage are still unknown.
+- Ralph CLI dry-run and one actual US-002 iteration executed. Parent completed integration and browser validation; no unsafe flags, no remote pushes.
+
+
+## 2026-10-03 - US-007
+- User requested explicit card confirmation and lightweight portraits for every character; then required existing network art rather than generated images. User accepted labeled public test silhouettes for dengwantang/liupanxi/luwenyi.
+- Adapter disables auto confirmation and drag-to-play. Wrapped only upstream autoConfirm hook for human use/respond/card selections so direct skills cannot bypass confirmation; other hooks, AI and rule resolution remain upstream.
+- Local WebP pipeline maps all 2563 IDs to 2491 images (96x128, <=4096 bytes each, 5526122 bytes total). 2520 upstream entries, 34 same-person variants, 9 externally sourced entries. Source URLs, identity evidence, hashes and bounded download/compression tooling retained. No generated images used in delivered assets.
+- Lobby and runtime share manifest; engine character image metadata redirects to local thumbnails without changing rules. Three test silhouettes and four historical/other-game same-person portraits have explicit detail notes. Lu Wenyi independent card art is unverified, labeled test-silhouette substitute.
+- Browser validated equipment select/cancel/confirm, targeted Fire Slash, discard, and production Longdan conversion: 6 cards remained before confirmation, then 5 and target HP4->3 after confirmation. Desktop/mobile portraits visually checked; mobile name clipping repaired and rechecked.
+- All 17 focused tests, new JS syntax, asset decode/hash/size checks, production build and diff checks passed. Production served on loopback8083. US-006 stays false; no upstream pushes.
+- Production AI advanced through God Liu Bei and Chen Gong; off-turn Wuxie response retained 4 cards until explicit confirmation, then 3. Final preview returned to lobby.
+
+## 2026-10-03 - US-008
+- User supplied a classic decade-table screenshot and asked for a similar frontend. Read PRD/state/progress; used frontend-design guidance and audited native layout/UI selectors plus bundled art.
+- Reworked SGS CSS into warm bronze dragon table; native player cards at rails/right-bottom, faction badges/name banners, official jade HP, centered native hand rail, original equipment placeholders, right-bottom skill buttons and golden confirmations. Reused ol_bg.jpg/card style, official HP icons and existing compressed portraits. Lobby and menus match the palette.
+- Kept rule/AI source intact. Reparented original engine toolbar into header; added live public deck/round/time and relative seat labels; ResizeObserver calls native hand layout on rail resize; mutation observer styles native controls; observers/timer cleaned on pagehide. No fake mulligans, rooms or fees.
+- Browser passed 1908x1064 four seats, 1360x850 four/eight seats and 1024x640 eight seats. Zhiheng discard/draw, select-all ignoring empty slots, actual Chitu equipment, Wugu eight-card choice and explicit confirmation/AI continuation, options and return all worked.
+- UI QA caught legacy !important hand geometry, empty name2 covering names, modal overlapping action bar and focus causing horizontal window scroll. Fixed and reverified with DOM/screenshot evidence; scrollLeft0 and modal/confirm gap14.5px on compact viewport.
+- 17 existing tests, JS syntax, diff checks and production build passed. Final production8083 four-seat Zhao Yun preview visually checked with explicit confirmation visible. US-006 stays false. Local commit only; no push.
+## 2026-10-03 - US-009 fixed 2v2 teams and local card voices
+- Fixed root cause: all counts previously selected identity mode. Four now routes to original versus/two; adapter only supplies fixed seats 1+4 / 2+3 and lobby general at seat4. Original first-seat turn loop, AI attitudes, fourth-seat protection and team death/victory retained. Other players remain AI; no teammate takeover.
+- Added explicit numbered ally/enemy labels, frame colors and lobby explanation; other counts keep identity setup. Browser verified 4-player team game and 6-player selected-lord regression, desktop1360x850 and1024x640.
+- Added 160 local clips,1577317bytes:158 pinned Noname originals plus2 clearly attributed local Windows Chinese spoken Peach supplements. Shared AudioContext unlock, committed use/respond supplement for transformed cards, event dedup, sound switch and persisted mute. Kept absent hero/music audio muted.
+- Actual browser checks: select/revoke Shan silent; confirm plays once; Longdan response, AI Fire Attack, Peach rescue of seat1 teammate, muted equipment and unmuted Chitu. Fixed Vite directory-URL rewriting that initially requested wrong audio root. Production/identity browser warn/error logs empty.
+- 27 tests passed including native versus attitude/death functions and native card voice resolver; all160 sound files fully decoded; syntax/diff checks and production build passed. PRD/attribution/readme updated. US-006 remains false. Local commit only, no upstream push.
+
+## 2026-10-03 - Remove Muniu from single-player games
+- User requested removal of 木牛流马. Set native identity_bannedcards and versus_bannedcards to muniu; no upstream rules/assets removed. Native pile creation excludes the card from both the physical deck and lib.inpile.
+- Executed the actual upstream ui.create.cards method with both full source card lists and launch settings for 4/5/6/7/8 players: each deck161->160, no muniu card or inpile entry. All27 existing tests and syntax/diff checks pass.
+- Updated source policy/catalog metadata/readme and synced the static SGS launch configuration into production8083. Browser launched a fresh 2v2 game; native 军争 card menu shows 木牛流马 as the only banned card, with gray rendering and no warn/error logs. Change takes effect on a new game. Local commit only.
+
+## 2026-10-03 - US-010 card suits and legal-target contrast
+- Reproduced red diamond rendering with the same computed dark color as black suits. Root cause: adapter matched .card.red instead of the native .info.red node. Fixed red heart/diamond suit and rank display in hands and on the table.
+- Added presentation hooks after native checkTarget: legal choices stay saturated/dark with labels, unavailable choices pale, selected targets distinct. Uses original distance/weapon/horse/skill legality; no replacement rules. Clears on recheck/cancel/commit and avoids AI/response events.
+- Browser verified six-player base range1 near/far targets, rejected distant click, explicit confirm and cleanup; production four-player defensive-horse effect, Longdan view-as Slash, red heart/diamond and black spade/club, 1360x850/1024x640 layouts. Native production emitted two nonblocking temporary-skill warnings, no errors.
+- 28 tests, syntax/diff checks and production build passed; final guard-only change retested and static module synchronized. README, PRD and validation evidence updated. US-006 remains false; local commit only.
+
+## 2026-10-03 - US-011 Doudizhu and interface refinement
+- Added explicit identity/versus/doudizhu mode normalization, legacy four-player preference migration and landlord/farmer selection. Native normal doudizhu owns play, AI, hp exceptions, dcfeiyang/bahu, draw/turns and victory; adapter only hands off the selected general and fixed public seats. Banned Muniu and disabled optional opening mulligans in this mode.
+- Browser landlord Sun Quan5HP/7 opening-phase cards, two confirmed Slashes in one phase and third disabled; farmer Sun Quan4HP, AI landlord first, Shan response; production Zhao Yun includes native Feiyang/Bahu in player details. New tests execute actual upstream skills, costs, start, attitudes and death/win paths.
+- Added mode/role cards and compact rules on lobby; refined bronze/paper palette, spacing, hover and action buttons. Native toolbar is a keyboard-accessible dropdown with auto-close; added current-turn text. Original confirmation, card voices, portraits and target hints preserved; no-target responses no longer dim all targets.
+- Enabled native hand folding and fixed compact right gutter so cards avoid equipment. Verified390x844 lobby,1360x900 table and1024x640 compact table. Original 2v2 and8-player identity routes/layouts passed production regression; native tool menu still opens options. Fixed initial resize/portrait-load race discovered by browser QA.
+- 35 tests, syntax/diff checks and production build passed. Final production regression warn/error logs empty. No upstream rule files changed, no assets generated, no push. US-006 remains false.
+
+## 2026-10-03 - US-012 always-visible teammate hand
+- Added a compact read-only hand panel beside the allied portrait for2v2 and farmer Doudizhu. Native viewHandcard permission gates access; identity/landlord/observer views do not expose this panel. Native cards, AI and rule execution are unchanged.
+- Actual hand DOM changes trigger refresh, with the existing700ms decoration loop as fallback. Physical card names/natures/suits/ranks, red/black colors, hand count, empty state and scrolling are shown; death/permission changes and page teardown remove the panel/observer.
+- Browser farmer Guan Hai hand4->5 after real AI play verified automatic contents update. Production2v2 Kan Ze diamond5Shan matched native Fire Attack disclosure, then disappeared with teammate death.1280x720 and1024x640 layout checked; both browser logs have no warn/error.
+-38 tests passed, including actual upstream teammate permission filters; syntax/diff checks and full production build passed. Updated README/PRD/evidence. US-006 remains false; local commit only, no push.
+
+## 2026-10-03 - US-013 distinguish Slash card natures
+- Ordinary Slash retains the blade image; Thunder Slash uses blue-gray framing and upstream tianlei art; Fire Slash uses vermilion framing and upstream liehuo art. Native card-name/nature classes drive CSS for visible physical cards and clones; infohidden cards are excluded. Suit/rank red-black colors stay intact.
+- Read-only teammate hand items carry actual physical nature attributes and matching colors. No rule/AI/voice changes, no generated assets, no changes to upstream source.
+- Browser production Zhao Yun diamond4Fire Slash shows new art/frame; developer ordinary Slash and teammate sidebar continue rendering. A temporary native-markup visual fixture with production CSS verifies all three large/small samples and the hidden-card back.38 regression tests, syntax/diff checks pass. Static files synchronized to production; no full engine rebuild needed for this presentation-only update. US-006 remains false.
+
+## 2026-10-03 - US-014 right-side hand sorting button
+- Added a persistent native HTML button between the hand rail and own portrait, below equipment. Calls the same sortHandcardOL(tempHandcardSort) action as the original toolbar, preserving skill restrictions and keyboard access; disabled when not applicable.
+- Production Sun Quan landlord seven-card hand reordered by name/type using the new button. Selected spade8Thunder Slash stayed selected and card count stayed7; deselection and Enter activation also worked.1280x800 and1024x640 screenshots verify placement; compact equipment/button vertical gap9.6px, no overlap. No browser warn/error.
+-38 regression tests, runtime syntax and diff checks pass. Updated production static runtime/CSS and documentation; unchanged engine not rebuilt. Local commit only. US-006 remains false.
+
+## 2026-10-03 - US-015 opening hand mulligans
+- One-shot gameDraw wrapper runs the original dealing content, then repeats the original replaceHandcards event for the human until Begin is chosen. Preserves native special piles, starting tags, original starting counts and turn sequencing. No duplicated swap implementation; upstream source/content functions untouched. Native independent change_card prompts remain disabled to prevent duplicates.
+- Scoped native choice handler provides 换一手/开始对局 and count, then unregisters. Unlimited full-hand retries occur only before turn one; old cards return to the pile via native discard(false), AI hands are untouched. Opening can be accepted immediately; auto/online/no initial deal skip safely.
+- Browser farmer4 cards rerolled3 times with ally hand unchanged; landlord4 rerolled then confirmed to normal7;2v2 human5 stayed5 with teammate4/pile143 unchanged; identity human4 rerolled then normal6. Confirmation closes the opening controls and original phases/AI resume.1280-wide and1024x640 inspected, caption alignment refined; no warn/error logs.
+-42 tests pass, including actual native deal/replacement functions and special-pile/tag/cleanup paths. Syntax/diff and full production build pass; final caption-only changes synchronized after build. PRD/README/AGENTS/evidence updated; US-006 remains false. Local commit only.
+
+## 2026-10-03 - US-016 direct single-card switching
+- Records native legal hand-card candidates before a single choice fills up. Another legal card click uses native uncheck/check/card-click to replace selection and clear old targets; changed legality restores the old selection. Manual confirmation, multi-card skills/discards, complex/custom selectors and AI are preserved.
+- Added display-only switchable markers/hover/brightness without changing native selectable flags. Markers clear on recheck/cancel/resolution; simple single-card view-as and responses retain their event context.
+- Browser Sun Quan: selected thunderSha+target directly switches to Guohe with targets cleared and6 cards; invalid Shan preserves Guohe+target. Zhiheng selects two together without switching. Sha->Bingliang, select target and explicit confirm consumes only Bingliang, hand6->5.1024x640 visual check shows legal switchable cards bright and unusable Shan dim; original audio/target hints remain active.
+-48 tests pass, including six tests executing native check/uncheck/card-click/Check class. Syntax/diff and full production build pass. No upstream changes; local commit only. US-006 remains false.
+
+## 2026-10-03 - US-017 stabilize suit/rank positions
+- Reproduced real7->6-card play: native info translateX changes-26.3333->-11.6, moving the same diamond4Shan label14.733px over0.5s; last-card transform:none adds a different endpoint. Browser DOM geometry and computed styles provide the regression loop.
+- CSS pins hand suit/rank labels to top center with a fixed48px box, overrides native/last-card transforms and disables label transitions/animation. Spacing spans stay inline. Native whole-card layout and game logic remain unchanged.
+- Verified4/7/6-card hands, actual equipment play, sorting/new-last-card and1024x640. All horizontal center errors0px, maximum post-play relative shift0px, transitions0s, readable red/black labels; no console warn/error.48 existing tests/diff checks pass. Static CSS synchronized to production without rebuilding the unchanged engine. US-006 remains false; local commit only.
+
+## 2026-10-03 - US-018 Wei Dong Zhuo voice pack
+- Packed only five original pinned recordings: two Guangyong, two Juchui, one death;407236bytes, upstream blob/SHA256/URLs/transcripts recorded. Reproducible narrow downloader; no upstream audio tree restored.
+- Exact hero/skill wrappers preserve native Audio resolution, trigger timing/direct/global guards and variant selection. Shared card AudioContext/queue/mute, separate card-event deduplication, no missing hero requests. Native global speech setting restored synchronously.
+-52 tests pass with actual native Audio TS class and tryAudio/trySkillAudio/tryDieAudio. All165 local audio files fully decoded. Browser actual Qilin equipment -> Guangyong2 (count2), Tiesuo and confirmed Juchui -> Juchui1 (count4), mute -> later Guangyong resolves without increasing playback; restored voice on. No warn/error logs. Death path unit tested; no real death-game claim.
+- Full production build, syntax/diff passed. Attribution/README/PRD/validation updated; US-006 remains false. Local commit only.
+
+## 2026-10-03 - US-019 typed impact audio
+- Packed14 original native ordinary/heavy, fire/thunder/ice and armor impacts,294843bytes, pinned blob/SHA256/source metadata. Downloader uses existing hidden system curl to honor HTTPS proxy after Node22 fetch failed; no source/audio tree changes.
+- Reuses native damage step4 audio-path selection after modifications/prevention. Adapter admits only real positive non-cancelled damage; zero/unreal/arbitrary previews, dodges and loseHp remain silent. Native Wine2+ usesheavy; reduced1 usesnormal. Each victim damage event deduplicates independently.
+- Impacts share AudioContext/cache/mute but schedule immediately, bypassing pending/long voice queue. Silent first-gesture warmup; mute cancels live and pending effects without backlog. HUD uses Sounds label and reports latest impact; card/WeiDong voices preserved.
+-58 tests pass with actual native damage/Wine/natureAudio, fourteen paths, pending voice/effect races, guards, mute/gesture and file errors.179 files fully decode. Production build/syntax/diff pass. Browser ordinarySha LiuLi3->2 effect/damage; WineSha dodged byChenGui keeps3HP andeffects2; secondgame WineThunderSha XuRong4->2 effect/damage_thunder2,voices coexist. Screenshot and logs clean. US-006 remains false; local commit only.
+
+## 2026-10-03 - US-020 official elemental Slash art and continuous cards
+- Corrected prior spell-art substitution using two unmodified official classic fire/thunder Slash JPGs (32394bytes), source pages/URLs andSHA256 recorded. Fixed CSS crops use authentic warrior/title motifs without the printed example ranks/suits; actual card DOM supplies all gameplay labels. No generated/redrawn media.
+- Reproduced same-node9->8 name shift-16px from native density transforms and last-card exception; root transform animation had been excluded. New classic face fixes rank/suit upper-left, name upper-right, art below; all internal transforms/fades off, root0.18s movement only. Native selection and nodes remain. Hand rail anchors left and reserves equipment space.
+- Browser actual native updatehl fixture with identical600px rail: old743cd19CSS fails, currentCSS passes with same nodes/text and0px relative motion. Real SunQuan7->6 Qinggang play leaves preceding cards unmoved, following cards shift-112px, every internal offset0; selection gold outline and sort work.1024x640 eight-player screenshot clear, hand right703.6/equipmentleft747.4. Logs clean.
+-59 tests pass; source/README/AGENTS/PRD/validation updated. Production static CSS and assets synchronized without rebuilding unchanged engine. US-006 remains false; local commit only.
+
+## 2026-10-04 - US-021 recent general voice collection
+- Expanded scope per the later explicit user request, retaining Wei Dong Zhuo and adding eight decade generals with official2025–2026 release evidence; no standard/refresh/older same-name versions.53 new clips7147323bytes,58 total7554559bytes, all original pinned blobs.
+- Reproducible source reader uses actual native Audio resolver plus selected character/skill/subskill/skin metadata. Includes Xun Yu conversion voices/death and audible child aliases without duplicate files. Runtime uses manifest-scoped native skill/death calls and shared voice queue/mute; impact playback and real rules/AI unchanged.
+-61 tests pass, all232 local sounds decode; complete Node22/pnpm production build passed. Sources, bytes, transcripts, Git blobs and SHA256 documented; narrow preparer rerun succeeds using local verified files.
+- Browser input restored by explicitly specifying left mouse button. Real MouXunYu landlord with MuShun/ZhangWen: opening conversion playsdcsbshimou1(count1), active skill onself in shadow state playsdcsbshimou_dc_sb_xunyu_shadow1(count2), native discard7->4 proceeds. NewGodSunQuan landlord with GodGanNing/DongGuiren: confirmed opening triggersCangming, native round flow reaches9-card hand withaudio running,played2,lastClipdccangming2. Both logs clean;1024x640 full table visually checked. No injected game state or subjective audio-quality claim. US-021true;US-006false. Local commit only; no upstream source changes or push.
+
+## 2026-10-04 - US-022 independent card and hero voice queues
+- Reproduced shared playback cursor5/5.84 and shared Promise load blocking through actual native card/skill/death calls. Separate card/hero timelines remove duration blocking; separate queues remove decode blocking. Shared AudioContext/cache/mute remain; impacts stay immediate and per-card deduplication unchanged.
+- Mute resets both queues/cursors and stops all sources. Generation checks suppress stale load errors and native fallbacks after unmute, so new ready clips are not held by canceled loads. Added3 regression tests;64 total passed. No source audio changes, full production build passed.
+- Browser real Baiyin29.730667–30.751563 and Guangyong30.24–35.497458 overlap0.511563s. Selectionplayed0;confirm2. Muted Wuzhong and native draw finish withhand9/played2;unmute no replay.1280x720 screenshot and clean console verified. Documentation/PRD/AGENTS updated;US-022true,US-006false. Local commit only.
+
+## 2026-10-04 - US-023 stronger playable-hand contrast
+- Scoped CSS to native human selection state: legal/direct-switch cards staybright with stronger shadow, unavailablecardsbrightness0.48/saturation0.35, selectedcards3pxgold frame. Root-only shading preserves fixed card faces, smooth whole-card movement, and native eligibility/click logic. Opening/idle hands remainnormal.
+- Browser SunQuan lord: fullHP Peachdim; FireSlash->Guohe switchingbright andillegalPeach preservesselection; Zhiheng makesPeachbright andpermits2gold selections; cancellationrestoresdim. RealWine7->6 makesremainingWine dim bynative usecount.1280x720 and1024x640 screenshots checked; logs clean.
+-64 existing tests pass; no tests added for this reversibleCSS-only change. Production CSS synced; unchanged engine not rebuilt. PRD/README/AGENTS/evidence updated;US-023true,US-006false. Local commit only.
+
+## 2026-10-04 - US-024 larger primary buttons and sole Slash target
+- Enlarged main confirm/cancel/start/mulligan controls126x50 minimum, lobby start60high and leave buttons46high. Skill controls retain their portrait-area sizing.
+- New helper wraps the native card click after direct-switch logic. Reads effective Slash and native selectable targets, calls native target click only for a fresh exactly-one-target choice withone legal opponent. Preserves manual confirmation/deselection, custom and complex choices, AI and normal non-Slash interactions.
+-5 new native integration tests;69 total passed. Full build/syntax/diff passed. Browser2-target case staysmanual; native Control damage creates1-enemy endgame; normal/Thunder Slash auto-select, cancel+illegalShan stayclear, Tiesuo staysmanual, explicitconfirm7->6.1280x720/1024x640 buttons and selected-target screenshots verified;logs clean. Local commit only;US-024true,US-006false.

@@ -20,8 +20,8 @@
 
 收集脚本解析实际武将技能、带声音的子技能和转换形态，调用锁定引擎的原生Audio解析类确定路径与台词。每个技能的两组默认台词、阵亡台词均包含；谋荀彧额外包含转换形态的四条技能台词和一条阵亡台词。`kunyu_debuff`、`dclinjie_effect`、`dccangming_draw`、`dcsbshimou_change`等子技能沿用原生引用关系，不额外复制相同文件。
 
-运行时按清单中的准确武将/技能ID调用原生 `trySkillAudio` / `tryDieAudio`，保留原生触发时机、直接/全局技能限制及随机变体。只在同步原生解析期间开启 `background_speak`，随后立即恢复；其他缺失声音保持静音。全部语音共用卡牌的AudioContext、缓存、串行队列及声音开关。武将台词不使用卡牌事件去重，因此同一张牌引发多个武将技能时，各自可正常发声；受击音效仍即时独立播放。
+运行时按清单中的准确武将/技能ID调用原生 `trySkillAudio` / `tryDieAudio`，保留原生触发时机、直接/全局技能限制及随机变体。只在同步原生解析期间开启 `background_speak`，随后立即恢复；其他缺失声音保持静音。卡牌与武将共用AudioContext、缓存和声音开关，但各自使用独立队列及播放时间轴：卡牌报音和武将台词可以重叠，一类的加载/解码也不会挡住另一类。阵亡台词排入武将队列；每类内部保持原先的顺序。静音停止所有声音并清除两类待播时序，恢复后不补播已取消的任务或其错误回退。武将台词不使用卡牌事件去重；受击音效仍即时独立播放。
 
 重建：`node scripts/sgs/prepare-character-audio.mjs`。选择配置位于 `scripts/sgs/character-audio-selection.json`，收集器只下载原生解析得到的58条文件并校验锁定Git blob，已有正确文件直接复用。常规构建打包本地文件，游玩不需要联网。
 
-验证：`node --test tests/sgs/audio.test.mjs` 执行实际原生Audio类及tryAudio/trySkillAudio/tryDieAudio，覆盖全部58条录音、子技能引用、转换形态、错误版本禁播、共享队列、静音和失败回退。`node scripts/sgs/verify-card-audio.mjs` 完整解码全部232条本地声音。浏览器实战记录另见 `docs/sgs-validation.md`；资源与原生音频路径验证不代表全部技能组合、玩法强度或主观听感均已核验。
+验证：`node --test tests/sgs/audio.test.mjs` 执行实际原生Audio类及tryAudio/trySkillAudio/tryDieAudio，覆盖全部58条录音、子技能引用、转换形态、错误版本禁播、跨类别重叠、双向加载独立、静音和失败回退。`node scripts/sgs/verify-card-audio.mjs` 完整解码全部232条本地声音。浏览器实战记录另见 `docs/sgs-validation.md`；资源与原生音频路径验证不代表全部技能组合、玩法强度或主观听感均已核验。

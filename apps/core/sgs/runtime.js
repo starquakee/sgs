@@ -1,4 +1,4 @@
-import { launchKey, normalizeLaunch, engineSettings, attachInitialIdentity } from './launch-config.mjs';
+import { normalizeLaunch, engineSettings, attachInitialIdentity } from './launch-config.mjs';
 import { installManualConfirmation, applyPortraits, installTargetHints } from './experience.mjs';
 import { installTwoPlayerTeamMode } from './team-mode.mjs';
 import { installDoudizhuMode } from './doudizhu-mode.mjs';
@@ -6,59 +6,43 @@ import { installCardAudio } from './card-audio.mjs';
 import { installCharacterAudio } from './character-audio.mjs';
 import { installTeammateHand } from './teammate-hand.mjs';
 import { installOpeningHand } from './opening-hand.mjs';
-import { installCardSelectionSwitch } from './card-selection.mjs';
+import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
+import { installTableActions, visiblePlayerName } from './table-actions.mjs';
+import { createPreferences } from './preferences.mjs';
+import { installTableSession } from './table-session.mjs';
+import { installBattleFeedback } from './battle-feedback.mjs';
+import { installBattleResults } from './results.mjs';
+import { consumeRecordReplay } from './battle-records.mjs';
+import { readLaunch, retainLaunch } from './launch-handoff.mjs';
+import { persistentStorage, saveNativeSettings, storageNotice } from './storage.mjs';
+import { loadRosterAssets, loadAudioAssets } from './loading.mjs';
 
-async function saveSettings(prefix, settings) {
-  const db = await new Promise((resolve, reject) => {
-    const request = indexedDB.open(`${prefix}data`, 4);
-    request.onupgradeneeded = () => {
-      for (const name of ['video', 'image', 'audio', 'config', 'data']) {
-        if (!request.result.objectStoreNames.contains(name)) request.result.createObjectStore(name, name === 'video' ? { keyPath: 'time' } : undefined);
-      }
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-  await new Promise((resolve, reject) => {
-    const tx = db.transaction('config', 'readwrite');
-    for (const [key, value] of Object.entries(settings)) tx.objectStore('config').put(value, key);
-    tx.oncomplete = resolve;
-    tx.onerror = () => reject(tx.error);
-  });
-  db.close();
-}
-
-export async function prepareSinglePlayer({ lib, game, ui, get, _status }) {
-  let saved;
-  try { saved = JSON.parse(sessionStorage.getItem(launchKey) || '{}'); } catch { saved = {}; }
+export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loading) {
+  const saved = readLaunch();
   const launch = normalizeLaunch(saved);
-  const response = await fetch('./sgs/roster.json');
-  if (!response.ok) throw new Error('武将名册载入失败，请返回选将。');
-  const roster = await response.json();
-  const portraitResponse = await fetch('./sgs/portraits.json');
-  if (!portraitResponse.ok) throw new Error('武将头像载入失败，请返回选将。');
-  const { portraits } = await portraitResponse.json();
-  const audioResponse = await fetch('./sgs/card-audio.json');
-  if (!audioResponse.ok) throw new Error('卡牌语音载入失败，请返回选将。');
-  const audioManifest = await audioResponse.json();
-  const characterAudioResponse = await fetch('./sgs/character-audio.json');
-  if (!characterAudioResponse.ok) throw new Error('武将语音载入失败，请返回选将。');
-  const characterAudioManifest = await characterAudioResponse.json();
-  const damageAudioResponse = await fetch('./sgs/damage-audio.json');
-  if (!damageAudioResponse.ok) throw new Error('受击音效载入失败，请返回选将。');
-  const damageAudioManifest = await damageAudioResponse.json();
+  const preferences = createPreferences(persistentStorage, launch);
+  if (saved.preferences) preferences.set(saved.preferences);
+  consumeRecordReplay(saved, preferences);
+  launch.speed = preferences.get().speed;
+  retainLaunch(launch, preferences.get());
+  const keepLaunch = preferences.subscribe(value => retainLaunch({ ...launch, speed: value.speed }, value));
+  window.addEventListener('pagehide', keepLaunch, { once: true });
+  const { catalog: roster, portraits } = await loadRosterAssets(loading);
+  const { audioManifest, characterAudioManifest, damageAudioManifest } = await loadAudioAssets(loading);
   const selected = roster.characters.find(c => c.id === launch.generalId && c.pack === launch.pack && !c.isUnseen);
   if (!selected) throw new Error('武将配置无效，请返回选将。');
   const allowed = new Set(roster.characters.filter(c => ['decade', 'common'].includes(c.version.category) && !c.isUnseen).map(c => c.id));
   allowed.add(selected.id);
   lib.configprefix = 'sgs_local_v1_';
-  await saveSettings(lib.configprefix, engineSettings(launch));
+  loading?.stage('正在准备本局配置');
+  if (!await saveNativeSettings(lib.configprefix, engineSettings(launch))) loading?.warn(storageNotice);
   localStorage.setItem(`${lib.configprefix}directstart`, 'true');
   localStorage.setItem(`${lib.configprefix}loadtime`, '60000');
   document.title = '三国杀 · 单机对局';
   document.documentElement.classList.add('sgs-game');
   installManualConfirmation(lib, ui);
   installCardSelectionSwitch({ lib, game, ui, get, _status });
+  installUniqueCardTarget({ game, ui, get, _status });
   installTargetHints({ lib, ui, get });
   const style = document.createElement('link');
   style.rel = 'stylesheet'; style.href = './sgs/table.css'; document.head.append(style);
@@ -85,27 +69,13 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }) {
     hud.innerHTML = `<a href="./sgs.html" class="sgs-return">‹ 点将台</a><strong>三国杀 <span>${landlord ? '斗地主' : teams ? '双人对抗 · 2v2' : '身份军争'}</span></strong><span class="sgs-table-state">单机 AI 对局</span><span class="sgs-turn" aria-live="polite">准备开局</span><span class="sgs-table-clock" aria-label="对局进度"></span><button type="button" class="sgs-audio">语音：开</button><details class="sgs-tools"><summary>牌桌工具</summary></details><button type="button" class="sgs-restart">重新开局</button>`;
     document.documentElement.classList.toggle('sgs-teams', teams || landlord);
     document.documentElement.classList.toggle('sgs-landlord', landlord);
-    const startedAt = Date.now();
     const label = (node, value) => { if (node.textContent !== value) node.textContent = value; };
-    const askLeave = (restart = false) => {
-      const dialog = document.createElement('dialog');
-      dialog.className = 'sgs-leave-dialog';
-      dialog.innerHTML = `<h2>${restart ? '重新开局' : '返回点将台'}</h2><p>当前对局的进度将结束。${restart ? '使用相同的武将和设置开启新对局。' : '你可以重新选择武将与对局设置。'}</p><div><button type="button" data-stay>继续对局</button><button type="button" data-leave>${restart ? '确认重开' : '返回选将'}</button></div>`;
-      document.body.append(dialog);
-      dialog.querySelector('[data-stay]').onclick = () => dialog.close();
-      dialog.querySelector('[data-leave]').onclick = () => {
-        window.onbeforeunload = null;
-        if (restart) location.reload(); else location.href = './sgs.html';
-      };
-      dialog.addEventListener('close', () => dialog.remove(), {once:true});
-      dialog.showModal();
-    };
-    hud.querySelector('a').addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); askLeave(); }, true);
-    hud.querySelector('.sgs-restart').addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); askLeave(true); }, true);
     document.body.append(hud);
+    const tableActions = installTableActions({ lib, game, ui, get, _status });
     const audioButton = hud.querySelector('.sgs-audio');
-    let audioEnabled = localStorage.getItem('sgs.card-audio.enabled') !== 'false';
+    const audioEnabled = preferences.get().sound;
     const updateAudio = status => {
+      if (status.lastError) loading?.warn('部分声音暂时无法播放，已跳过；不影响出牌与结算。可重新开局重试声音。');
       label(audioButton, status.enabled ? status.blocked ? '点击开启声音' : '声音：开' : '声音：关');
       audioButton.setAttribute('aria-pressed', String(status.enabled));
       audioButton.title = status.lastError || (status.lastClip ? `最近播放：${status.lastLabel || get.translation(status.lastClip.split('/').at(-1))}` : '卡牌、已收录武将语音及受击音效');
@@ -115,6 +85,12 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }) {
       audioButton.dataset.effects = status.effectPlayed;
       audioButton.dataset.lastEffect = status.lastEffect || '';
       audioButton.dataset.lastEffectLabel = status.lastEffectLabel || '';
+      for (const channel of ['card', 'hero']) {
+        const last = status.channels[channel];
+        audioButton.dataset[`${channel}Clip`] = last?.clip || '';
+        audioButton.dataset[`${channel}Start`] = last?.start ?? '';
+        audioButton.dataset[`${channel}End`] = last?.end ?? '';
+      }
     };
     const cardAudio = installCardAudio({ lib, game, get }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
     installCharacterAudio({ lib, game }, characterAudioManifest);
@@ -125,9 +101,13 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }) {
     audioButton.addEventListener('keydown', rememberAudioIntent);
     audioButton.addEventListener('click', () => {
       if (unlockClick || cardAudio.status().blocked) { unlockClick = false; void cardAudio.unlock(); return; }
-      audioEnabled = cardAudio.setEnabled(!cardAudio.status().enabled);
-      localStorage.setItem('sgs.card-audio.enabled', String(audioEnabled));
+      preferences.set({ sound: !cardAudio.status().enabled });
     });
+    const session = installTableSession({ lib, game, ui, _status, hud, preferences, audio: cardAudio });
+    const results = installBattleResults({ lib, game, get, _status, launch, preferences,
+      retainReplay: config => retainLaunch(config, preferences.get()),
+      elapsedMs: session.elapsedMs, navigate: session.navigate, onReady: session.setResultActions });
+    const battleFeedback = installBattleFeedback({ lib, game, ui, get, _status, preferences });
     // Reuse the real engine toolbar, including its menus and click handlers.
     const toolMenu = hud.querySelector('.sgs-tools');
     if (ui.system) toolMenu.append(ui.system);
@@ -225,17 +205,20 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }) {
       const active = _status.currentPhase;
       const yourTurn = active === game.me && !_status.over;
       hud.dataset.yourTurn = String(yourTurn);
-      label(hud.querySelector('.sgs-turn'), _status.over ? '对局结束' : _status.event?.sgsOpeningHandChoice ? '开局换牌' : yourTurn ? '你的回合' : active?.name ? `${get.translation(active.name).replace(/<[^>]*>/g, '')}的回合` : '准备开局');
-      const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+      label(hud.querySelector('.sgs-turn'), _status.over ? '对局结束' : _status.event?.sgsOpeningHandChoice ? '开局换牌' : yourTurn ? '你的回合' : active?.name ? `${visiblePlayerName(active, get)}的回合` : '准备开局');
+      session.refresh();
+      const elapsed = Math.floor(session.elapsedMs() / 1000);
       const clock = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
       label(hud.querySelector('.sgs-table-clock'), `牌堆 ${ui.cardPile?.childElementCount ?? 0} · 第${game.roundNumber || 1}轮 ${clock}`);
       decorateControls();
       teammateHand.refresh();
+      battleFeedback.refresh();
       sortHandButton.disabled = !game.me?.name || _status.over || !game.me.isAlive()
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handResizeObserver.disconnect(); teammateHand.dispose(); document.removeEventListener('pointerdown',closeTools); }, { once: true });
+    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handResizeObserver.disconnect(); teammateHand.dispose(); tableActions.dispose(); battleFeedback.dispose(); results.dispose(); session.dispose(); document.removeEventListener('pointerdown',closeTools); }, { once: true });
     decorate();
+    loading?.ready();
   });
 }

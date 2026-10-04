@@ -1,0 +1,46 @@
+/* Compact ledger: normal-flow content, fixed dialog actions, scrollable rows. */
+.lobby-client #records-button { margin-left: auto; flex: none; min-height: 44px; align-self: center; }
+@media (max-width: 999px) {
+  .lobby-client .masthead .brand { order: 1; }
+  .lobby-client #records-button { order: 2; }
+  .lobby-client .masthead nav { order: 3; width: 100%; }
+}
+html body .sgs-client-dialog.sgs-record-dialog {
+  width: min(760px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+}
+.sgs-record-dialog[open] { display: flex; flex-direction: column; }
+.sgs-record-dialog > * { flex-shrink: 0; }
+.sgs-record-dialog .sgs-record-content {
+  flex: 0 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) transparent;
+  border-block: 1px solid var(--sgs-bronze); padding: 6px 0;
+}
+.sgs-record-dialog [data-record-status] { color: var(--sgs-gold); font-size: 13px; overflow-wrap: anywhere; }
+.sgs-record-dialog [data-record-status]:empty { display: none; }
+.sgs-record-dialog button.sgs-record-row {
+  display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 3px 14px;
+  width: 100%; padding: 14px 12px; border: 0; border-bottom: 1px solid var(--sgs-line);
+  border-radius: 0; text-align: left; background: transparent; font-size: 15px;
+}
+.sgs-record-row > * { min-width: 0; overflow-wrap: anywhere; }
+.sgs-record-row strong { font-weight: 500; color: var(--sgs-gold); }
+.sgs-record-row[data-outcome='loss'] strong { color: var(--sgs-muted); }
+.sgs-record-row .sgs-record-meta { grid-column: 2; }
+.sgs-record-dialog button.sgs-record-row:hover { background: var(--sgs-control-hover); }
+.sgs-record-dialog .sgs-record-outcome { margin: 12px 0 8px; font: 32px/1.3 var(--sgs-font-title); color: var(--sgs-gold); overflow-wrap: anywhere; }
+.sgs-record-dialog .sgs-record-general { font-size: 18px; }
+.sgs-record-dialog .sgs-record-meta { color: var(--sgs-muted); font-size: 12px; overflow-wrap: anywhere; }
+.sgs-record-dialog .sgs-record-empty { margin: 24px 0 8px; font-size: 18px; }
+.sgs-record-dialog .sgs-record-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 16px 0; border-block: 1px solid var(--sgs-line); }
+.sgs-record-stats > div { display: flex; flex-direction: column; padding: 12px 2px; text-align: center; }
+.sgs-record-stats strong { color: var(--sgs-gold); font: 26px/1.3 var(--sgs-font-body); }
+.sgs-record-stats span { color: var(--sgs-muted); font-size: 12px; }
+.sgs-record-dialog [hidden] { display: none!important; }
+@media (max-width: 540px) {
+  html body .sgs-client-dialog.sgs-record-dialog { padding: 18px; }
+  .sgs-record-dialog button.sgs-record-row { grid-template-columns: 90px minmax(0, 1fr); gap: 4px 8px; padding-inline: 2px; }
+  .sgs-record-dialog .sgs-dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .sgs-record-dialog [data-launch] { grid-column: 1 / -1; grid-row: 1; }
+  .sgs-record-dialog .sgs-dialog-actions button { padding-inline: 8px; }
+}
