@@ -14,11 +14,11 @@
 .sgs-action-rail :is(div,nav,p,details,summary,strong,span,button) {
   position: static; inset: auto; box-sizing: border-box;
 }
-.sgs-action-state { display: flex; gap: 14px; align-items: baseline; min-width: 0; flex: 1; }
+.sgs-action-state { display: grid; grid-template-columns: max-content 1fr; column-gap: 12px; row-gap: 0; align-items: baseline; min-width: 0; flex: 1; }
 .sgs-action-state strong { flex: none; font-size: 14px; color: var(--sgs-gold); }
 .sgs-action-counts { flex: none; color: var(--sgs-text); font-variant-numeric: tabular-nums; }
 .sgs-action-counts[hidden] { display: none; }
-.sgs-action-detail { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--sgs-muted); }
+.sgs-action-detail { grid-column: 1 / -1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--sgs-muted); font-size: 12px; line-height: 15px; }
 .sgs-action-rail nav { display: flex; align-items: center; gap: 6px; flex: none; }
 .sgs-action-rail :is(button,summary) {
   display: inline-flex; align-items: center; justify-content: center;
@@ -46,8 +46,7 @@
 .sgs-card-help-list button { min-height: 36px; white-space: normal; text-align: left; }
 @media (max-width: 1100px) {
   .sgs-game .sgs-action-rail { padding: 0 15px; gap: 10px; }
-  .sgs-action-state { gap: 10px; }
-  .sgs-action-detail { display: none; }
+  .sgs-action-state { column-gap: 10px; }
 }
 @media (max-width: 650px) {
   :root.sgs-game { --sgs-toolbar-h: 120px; }

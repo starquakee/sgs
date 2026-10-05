@@ -2,6 +2,8 @@
 @import url('./table-actions.css');
 @import url('./battle-feedback.css');
 @import url('./results.css');
+@import url('./table-reference.css');
+@import url('./problem-report.css');
 @font-face{font-family:SGSTableKai;src:url('../font/xinwei.woff2') format('woff2');font-display:swap}
 html.sgs-game{--table-ink:#332015;--table-gold:#dab47a;--table-cream:#f1dfb8;--table-line:#ad8250;--sgs-player-w:clamp(148px,12.5vw,238px);--sgs-player-h:calc(var(--sgs-player-w)*1.34);--sgs-hand-h:clamp(144px,17vh,184px);--sgs-edge:22px}
 html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-cream);font-family:SGSTableKai,'KaiTi',serif}

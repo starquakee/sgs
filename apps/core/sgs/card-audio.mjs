@@ -2,6 +2,7 @@
 // committed use/respond timing, while serving only local, allowlisted audio.
 import { resolveCharacterAudio } from './character-audio.mjs';
 import { resolveDamageAudio } from './damage-audio.mjs';
+import { createAudioLoader } from './audio-loads.mjs';
 export function resolveCardAudio(path, manifest) {
   const key = String(path).replace(/^audio\//, '').replace(/\.(mp3|ogg)$/i, '');
   if (!/^card\/(male|female|shared)\/[a-z0-9_]+$/i.test(key)) return null;
@@ -26,7 +27,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   const skillName = '_sgs_local_card_audio';
   const seenEvents = new WeakSet();
   const seenDamageEvents = new WeakSet();
-  const buffers = new Map();
+  const buffers = createAudioLoader({ fetcher: fetchAudio, baseURL: audioRoot, timeout: options.loadTimeout ?? 8000, timers: options.timers || globalThis });
   const playing = new Map();
   const volumes = { card: 1, hero: 1, effect: 1 };
   const jobs = new Set();
@@ -74,16 +75,11 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     });
   }
   function load(clip) {
-    if (!buffers.has(clip.file)) {
-      buffers.set(clip.file, fetchAudio(new URL(clip.file, audioRoot)).then(async response => {
-        if (!response.ok) throw new Error(`声音载入失败：${response.status}`);
-        return context.decodeAudioData(await response.arrayBuffer());
-      }).catch(error => { buffers.delete(clip.file); throw error; }));
-    }
-    return buffers.get(clip.file);
+    return buffers.load(clip.file, context);
   }
   function stop() {
     generation++;
+    buffers.cancel();
     for (const source of playing.keys()) {
       try { source.stop(); } catch {}
     }
@@ -151,7 +147,9 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
         // A canceled load must not invoke the native fallback after unmuting.
         if (disposed || token !== generation || !state.enabled) return;
         state.lastError = error.message;
-        audioOptions.onError?.(error);
+        // Native tryAudio can retry another variant from onError. A deadline
+        // skips this utterance entirely instead of starting another wait.
+        if (error.name !== 'TimeoutError') audioOptions.onError?.(error);
       } finally {
         state.pending--;
         changed();
@@ -224,6 +222,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
       if (disposed) return;
       disposed = true;
       stop();
+      buffers.dispose();
       surface?.removeEventListener('pointerdown', gesture, true);
       surface?.removeEventListener('keydown', gesture, true);
       host.removeEventListener?.('pagehide', controller.dispose);

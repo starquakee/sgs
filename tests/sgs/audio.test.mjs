@@ -82,7 +82,7 @@ test('local card recordings are attributable, intact, and cover both voices for 
   assert.equal(resolveCardAudio('skill/longdan1', manifest), null);
 });
 
-function harness({ running = true, fetchFail = false, characterAudio = false, damageAudio = false, fetchAudio } = {}) {
+function harness({ running = true, fetchFail = false, characterAudio = false, damageAudio = false, fetchAudio, audioOptions = {} } = {}) {
   let current;
   const fetched = [];
   const starts = [];
@@ -139,7 +139,8 @@ function harness({ running = true, fetchFail = false, characterAudio = false, da
   const original = game.playCardAudio;
   const controller = installCardAudio({ lib, game, get }, manifest, {
     surface, host: {}, createContext: () => ctx, baseURL: new URL('http://localhost/sgs/'), characterManifest: characterAudio ? characterManifest : undefined, damageManifest: damageAudio ? damageManifest : undefined,
-    fetch: async url => { fetched.push(String(url)); return fetchAudio ? fetchAudio(url) : { ok: !fetchFail, status: fetchFail ? 404 : 200, arrayBuffer: async () => new ArrayBuffer(12) }; },
+    ...audioOptions,
+    fetch: async (url, request) => { fetched.push(String(url)); return fetchAudio ? fetchAudio(url, request) : { ok: !fetchFail, status: fetchFail ? 404 : 200, arrayBuffer: async () => new ArrayBuffer(12) }; },
   });
   const nativeSkill = game.trySkillAudio;
   const hero = characterAudio ? installCharacterAudio({ lib, game }, characterManifest, { host: {} }) : null;
@@ -385,6 +386,45 @@ test('mute stops both voice channels and canceled loads cannot stall or revive a
       assert.equal(h.controller.status().lastError, null);
     } finally { releases.forEach(release => release()); h.hero.dispose(); h.controller.dispose(); }
   }
+});
+
+test('timed-out card and hero loads release their own queues while the other voice category keeps playing', async () => {
+  for (const blocked of ['card', 'hero']) {
+    const tasks = new Map(); let timer = 0, signal, release;
+    const timers = {setTimeout(fn,ms){assert.equal(ms,8000);tasks.set(++timer,fn);return timer;},clearTimeout(id){tasks.delete(id);}};
+    const response = {ok:true,arrayBuffer:async()=>new ArrayBuffer(12)};
+    const h = harness({characterAudio:true,audioOptions:{timers},fetchAudio:(url,request)=>{
+      if (String(url).includes(blocked==='card'?'bagua':'dcguangyong')) {signal=request.signal;return new Promise(resolve=>release=resolve);}
+      return response;
+    }});
+    try {
+      if(blocked==='card') {
+        h.controller.playCommitted({name:'useCard',card:{name:'bagua'},player:{sex:'male'}});
+        h.controller.playCommitted({name:'respond',card:{name:'shan'},player:{sex:'male'}});
+        h.game.trySkillAudio('dcjuchui','v_dongzhuo');
+      } else {
+        h.game.trySkillAudio('dcguangyong','v_dongzhuo');h.game.trySkillAudio('dcjuchui','v_dongzhuo');
+        h.controller.playCommitted({name:'respond',card:{name:'shan'},player:{sex:'male'}});
+      }
+      await new Promise(r=>setImmediate(r));assert.equal(h.starts.length,1);
+      for(const fn of [...tasks.values()])fn();await h.controller.whenIdle();
+      assert.equal(signal.aborted,true);assert.equal(h.starts.length,2);assert.equal(h.controller.status().pending,0);
+      release(response);await new Promise(r=>setImmediate(r));assert.equal(h.starts.length,2,'late request cannot replay');
+    }finally{h.hero.dispose();h.controller.dispose();}
+  }
+});
+
+test('a late decoder cannot sound after timeout or block the next confirmed card',async()=>{
+  const tasks=new Map();let timer=0,decode=0,release;
+  const h=harness({audioOptions:{timers:{setTimeout(fn){tasks.set(++timer,fn);return timer;},clearTimeout(id){tasks.delete(id);}}}});
+  h.ctx.decodeAudioData=()=>++decode===1?new Promise(resolve=>release=resolve):Promise.resolve({duration:0.8});
+  try {
+    h.controller.playCommitted({name:'useCard',card:{name:'bagua'},player:{sex:'male'}});
+    h.controller.playCommitted({name:'respond',card:{name:'shan'},player:{sex:'male'}});
+    await new Promise(r=>setImmediate(r));assert.equal(h.starts.length,0);
+    for(const fn of [...tasks.values()])fn();await h.controller.whenIdle();assert.equal(h.starts.length,1);
+    release({duration:0.8});await new Promise(r=>setImmediate(r));assert.equal(h.starts.length,1);
+  }finally{h.controller.dispose();}
 });
 
 test('native hero variants and death keep their own queue without consuming card deduplication', async () => {

@@ -8,6 +8,9 @@ import { installTeammateHand } from './teammate-hand.mjs';
 import { installOpeningHand } from './opening-hand.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
 import { installTableActions, visiblePlayerName } from './table-actions.mjs';
+import { installPublicStates, publicBattleLog } from './table-reference.mjs';
+import { createProblemReports, installProblemReportUI } from './problem-report.mjs';
+import { installRuntimeErrors } from './runtime-errors.mjs';
 import { createPreferences } from './preferences.mjs';
 import { installTableSession } from './table-session.mjs';
 import { installBattleFeedback } from './battle-feedback.mjs';
@@ -71,7 +74,6 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     document.documentElement.classList.toggle('sgs-landlord', landlord);
     const label = (node, value) => { if (node.textContent !== value) node.textContent = value; };
     document.body.append(hud);
-    const tableActions = installTableActions({ lib, game, ui, get, _status });
     const audioButton = hud.querySelector('.sgs-audio');
     const audioEnabled = preferences.get().sound;
     const updateAudio = status => {
@@ -104,6 +106,8 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       preferences.set({ sound: !cardAudio.status().enabled });
     });
     const session = installTableSession({ lib, game, ui, _status, hud, preferences, audio: cardAudio });
+    const tableActions = installTableActions({ lib, game, ui, get, _status }, { dialogs: session.dialogs, mode: launch.mode });
+    const publicStates = installPublicStates({ game, ui });
     const results = installBattleResults({ lib, game, get, _status, launch, preferences,
       retainReplay: config => retainLaunch(config, preferences.get()),
       elapsedMs: session.elapsedMs, navigate: session.navigate, onReady: session.setResultActions });
@@ -111,6 +115,10 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     // Reuse the real engine toolbar, including its menus and click handlers.
     const toolMenu = hud.querySelector('.sgs-tools');
     if (ui.system) toolMenu.append(ui.system);
+    const reports = createProblemReports({ upstream: roster.upstream, engineVersion: lib.version, build: lib.buildInfo, launch,
+      readAction: () => document.querySelector('.sgs-action-state')?.textContent || '', readLog: () => publicBattleLog(ui) });
+    const reportUI = installProblemReportUI({ reports, dialogs: session.dialogs, menu: ui.system || toolMenu, returnFocus: toolMenu.querySelector('summary'), closeMenu: () => { toolMenu.open = false; } });
+    const runtimeErrors = installRuntimeErrors({ session, reports, reportUI });
     toolMenu.addEventListener('click', event => {
       if (event.target.closest('[data-sgs-tool]')) queueMicrotask(() => { toolMenu.open = false; });
     }, true);
@@ -213,11 +221,12 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       decorateControls();
       teammateHand.refresh();
       battleFeedback.refresh();
+      publicStates.refresh();
       sortHandButton.disabled = !game.me?.name || _status.over || !game.me.isAlive()
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handResizeObserver.disconnect(); teammateHand.dispose(); tableActions.dispose(); battleFeedback.dispose(); results.dispose(); session.dispose(); document.removeEventListener('pointerdown',closeTools); }, { once: true });
+    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handResizeObserver.disconnect(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); document.removeEventListener('pointerdown',closeTools); }, { once: true });
     decorate();
     loading?.ready();
   });

@@ -68,7 +68,7 @@ test('complex, custom and button choices defer to the native dialog without exec
     f.event.dialog = { innerHTML: '<private card dialog>' };
     const action = readTableAction(f);
     assert.equal(action.kind, 'choice');
-    assert.equal(action.detail, '请按牌桌对话框操作');
+    assert.equal(action.detail, '请按牌桌中央提示完成选择');
     assert.equal(f.event.dialog.innerHTML, '<private card dialog>');
   }
 });
@@ -78,7 +78,7 @@ test('AI and settled events never show stale human selections or reveal hidden n
   f.ui.selected.cards.push(...f.cards);
   f.event.player = f.enemy;
   f.enemy.classList.add('unseen');
-  assert.deepEqual(readTableAction(f), { kind: 'waiting', title: 'AI 行动', detail: '未知武将 · 等待原生流程', counts: '' });
+  assert.deepEqual(readTableAction(f), { kind: 'waiting', title: 'AI 行动', detail: '未知武将 · 正在结算', counts: '' });
   assert.equal(visiblePlayerName(f.enemy, f.get), '未知武将');
   f.event.player = f.game.me;
   f.event.finished = true;
@@ -92,7 +92,7 @@ test('AI and settled events never show stale human selections or reveal hidden n
   assert.equal(readTableAction(f).title, '准备开局');
 });
 
-test('descriptions only forward current owned visible nodes to native intro and do not change selections', () => {
+test('descriptions allow public characters and current owned cards without accessing hidden identity or enemy hands', () => {
   const f = fixture();
   const calls = [];
   f._status.clicked = false;
@@ -102,6 +102,8 @@ test('descriptions only forward current owned visible nodes to native intro and 
   assert.deepEqual(ownDescriptionCards(f.game), f.cards);
   assert.equal(openNativeDescription(f, f.game.me, pointer), true);
   assert.equal(openNativeDescription(f, f.cards[0], pointer), true);
+  assert.equal(openNativeDescription(f, f.enemy, pointer), true);
+  f.enemy.classList.add('unseen');
   assert.equal(openNativeDescription(f, f.enemy, pointer), false);
   const moved = f.cards.shift();
   assert.equal(openNativeDescription(f, moved, pointer), false);
@@ -113,7 +115,7 @@ test('descriptions only forward current owned visible nodes to native intro and 
     assert.equal(openNativeDescription(f, f.game.me, pointer), false);
     delete f._status[key];
   }
-  assert.deepEqual(calls, [{ node: f.game.me, pointer }, { node: moved, pointer }]);
+  assert.deepEqual(calls, [{ node: f.game.me, pointer }, { node: moved, pointer }, { node: f.enemy, pointer }]);
   assert.deepEqual(f.ui.selected.cards, [moved]);
   assert.equal(f._status.clicked, false);
 });
@@ -224,5 +226,30 @@ test('card reference menu stays in sync, preserves focus, rejects moved cards an
   f.cardsMenu.emit('toggle');
   assert.equal(list.children.length, 0);
   assert.equal(f.menu.children[2].hidden, false);
+  f.api.dispose();
+});
+
+test('public character menu exposes visible players only and preserves selections while opening native skills', () => {
+  const f = mounted(), opened = [];
+  f.ui.selected.cards.push(f.cards[0]);
+  f.ui.click.intro = function () { opened.push(this); };
+  f.general.open = true; f.general.emit('toggle');
+  const list = f.general.children[1].children[1];
+  assert.deepEqual(list.children.map(n => n.textContent), ['liubei · 我', 'caocao']);
+  list.children[1].emit('click'); assert.deepEqual(opened, [f.enemy]);
+  assert.deepEqual(f.ui.selected.cards, [f.cards[0]]);
+  f.enemy.classList.add('unseen'); f.general.open = true; f.general.emit('toggle');
+  assert.equal(list.children.length, 1);
+  f.document.emit('keydown', { key: 'Escape' }); assert.equal(f.general.open, false);
+  f.api.dispose();
+});
+
+test('ready-to-confirm guidance reads the native confirmation without recomputing card rules', () => {
+  const f = mounted();
+  f.ui.selected.cards.push(f.cards[0]); f.enemy.classList.add('selectable');
+  f.api.refresh(); assert.equal(f.state.children[2].textContent, '请点击亮起的角色，选好后再确定');
+  f.ui.confirm = { parentNode: {}, children: [{ link: 'ok' }] };
+  f.api.refresh(); assert.equal(f.state.children[2].textContent, '选择已就绪，点击“确定”继续');
+  f.event.finished = true; f.api.refresh(); assert.doesNotMatch(f.state.children[2].textContent, /已就绪/);
   f.api.dispose();
 });

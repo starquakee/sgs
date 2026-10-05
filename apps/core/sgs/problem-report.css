@@ -1,0 +1,13 @@
+.sgs-hud .sgs-tools #system > .sgs-report-tool {
+  position: static; pointer-events: auto; grid-column: 1 / -1; width: 100%; min-height: 44px; margin-top: 5px;
+  padding: 9px 10px; border: 1px solid var(--sgs-bronze); border-radius: var(--sgs-radius);
+  background: var(--sgs-control); color: var(--sgs-gold); text-align: left;
+  font: 13px/1.5 var(--sgs-font-body); cursor: pointer;
+}
+.sgs-hud .sgs-tools #system > .sgs-report-tool:hover { background: var(--sgs-control-hover); }
+html body .sgs-client-dialog.sgs-report-dialog { width: min(560px, calc(100vw - 32px)); }
+.sgs-report-dialog .sgs-report-status { min-height: 24px; color: var(--sgs-gold); font-size: 13px; overflow-wrap: anywhere; }
+html body .sgs-client-dialog.sgs-fault-dialog { width: min(620px, calc(100vw - 32px)); }
+.sgs-fault-details { position: static; margin: 12px 0; font: 13px/1.7 var(--sgs-font-body); }
+.sgs-fault-details summary { min-height: 38px; padding: 7px 0; cursor: pointer; color: var(--sgs-gold); }
+.sgs-fault-details p, .sgs-fault-dialog [data-fault-status] { overflow-wrap: anywhere; font-size: 13px; color: var(--sgs-muted); }

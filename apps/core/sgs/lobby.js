@@ -7,6 +7,10 @@ import { openBattleRecords } from './records-dialog.mjs';
 import { createLaunchHandoff } from './launch-handoff.mjs';
 import { loadRosterAssets } from './loading.mjs';
 import { canPersist, storageNotice } from './storage.mjs';
+import { browsePackName, isOldGeneral, hasUnknownYear, releaseLabel, inBrowseScope, compareBrowseCharacters } from './roster-filters.mjs';
+import { ratingScopes, ratingScopeName, ratingValue, compareOfficialRatings, normalizeRatingPreference } from './official-rating.mjs';
+import { skillReadingHTML, closeReadingDetails } from './skill-reading.mjs';
+import { reconcileKeyedHTML, installComposedSearch, focusAfterFilterRemoval } from './lobby-continuity.mjs';
 
 const $ = id => document.getElementById(id);
 const preferences = createPreferences();
@@ -25,7 +29,12 @@ const factionNames = { wei: '魏', shu: '蜀', wu: '吴', qun: '群', jin: '晋'
 const text = value => String(value ?? '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
 const displayName = value => text(value).replace(/^新杀/, '');
 const escape = value => text(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let catalog, portraits, selected, recent, currentPage = 1, faction = 'all', collection = 'all';
+let catalog, portraits, selected, recent, currentPage = 1, faction = 'all', collection = 'all', searchQuery = '', lastPageSize;
+let browsePack = 'all', hideOld = false;
+try { hideOld = localStorage.getItem('sgs.hide-old-generals.v1') === 'true'; } catch { /* Use the session default. */ }
+let ratingPreference = normalizeRatingPreference();
+try { ratingPreference = normalizeRatingPreference(JSON.parse(localStorage.getItem('sgs.roster-sort.v1') || 'null')); } catch { /* Keep the default order. */ }
+$('sort-order').value = ratingPreference.order; $('rating-scope').value = ratingPreference.scope;
 let activeMode = 'identity';
 let favorites;
 try { favorites = new Set(JSON.parse(localStorage.getItem('sgs.favorites.v1') || '[]')); } catch { favorites = new Set(); }
@@ -38,24 +47,49 @@ function showInfo(title, html) {
 }
 function toast(message) { $('toast').textContent = message; $('toast').hidden = false; setTimeout(() => $('toast').hidden = true, 2200); }
 function eligible(character) {
-  const version = $('version').value;
-  const category = character.version.category;
-  return !character.isUnseen && (version === 'all' || (version === 'target' ? ['decade','common'].includes(category) : category === version));
+  return inBrowseScope(character, $('version').value) && (!hideOld || !isOldGeneral(character));
 }
 function list() {
-  const query = $('search').value.trim().toLocaleLowerCase();
+  const query = searchQuery.trim().toLocaleLowerCase();
   const recentKeys = recent.keys();
   const source = collection === 'recent' ? recentKeys.map(key => catalog.characters.find(c => c.key === key)) : catalog.characters;
-  return source.filter(c => eligible(c) && (collection !== 'favorites' || favorites.has(c.key)) && (faction === 'all' || c.faction === faction || c.factions.includes(faction)) && ($('pack').value === 'all' || c.pack === $('pack').value) && (!query || c.searchText.includes(query)));
+  return source.filter(c => eligible(c) && (browsePack === 'all' || c.browsePack === browsePack) && (collection !== 'favorites' || favorites.has(c.key)) && (faction === 'all' || c.faction === faction || c.factions.includes(faction)) && ($('pack').value === 'all' || c.pack === $('pack').value) && (!query || c.searchText.includes(query)))
+    .sort((a, b) => compareOfficialRatings(a, b, ratingPreference.scope, ratingPreference.order));
 }
 function render(resetScroll = false) {
   if (!catalog || !portraits) return;
   const scrollTop = $('general-grid').scrollTop;
   const results = list(), size = pageSize(), pages = Math.max(1, Math.ceil(results.length / size));
+  const focusedKey = document.activeElement?.closest?.('.general-card')?.dataset.key;
+  if (size !== lastPageSize && focusedKey) {
+    const index = results.findIndex(character => character.key === focusedKey);
+    if (index >= 0) currentPage = Math.floor(index / size) + 1;
+  }
+  lastPageSize = size;
   currentPage = Math.min(currentPage, pages);
   const rows = results.slice((currentPage - 1) * size, currentPage * size);
+  const filters = [];
+  if (browsePack !== 'all') filters.push(['browse', browsePackName(browsePack)]);
+  if (hideOld) filters.push(['age', '隐藏2020年及以前']);
+  if (searchQuery.trim()) filters.push(['search', `搜索：${searchQuery.trim()}`]);
+  if (faction !== 'all') filters.push(['faction', `${factionNames[faction]}势力`]);
+  if ($('pack').value !== 'all') filters.push(['pack', packName($('pack').value)]);
+  if ($('version').value !== 'target') filters.push(['version', ({ all: '全部版本', decade: '十周年专属', common: '通用经典', pending: '混合版本', other: '其他版本' })[$('version').value]]);
+  $('active-filters').hidden = !filters.length;
+  reconcileKeyedHTML($('active-filters'), filters.map(([key, label]) => `<button type="button" data-filter="${key}" aria-label="清除${escape(label)}">${escape(label)} <span aria-hidden="true">×</span></button>`).join(''), 'data-filter', document);
+  const selectionHidden = selected && !results.some(character => character.key === selected.key);
+  $('selected-filter-note').hidden = !selectionHidden;
+  $('selected-filter-note').textContent = selectionHidden ? `出战武将仍为${displayName(selected.name)}，不在当前筛选结果中。` : '';
+  $('hide-old').setAttribute('aria-pressed', String(hideOld));
+  $('age-filter-note').hidden = !hideOld;
+  const unknownYears = results.filter(hasUnknownYear).length;
+  $('age-filter-note').textContent = hideOld ? `保留2021年起的新将与新版本${unknownYears ? `；另有 ${unknownYears} 位年份待核实，暂时保留。` : '。'}` : '';
   $('result-count').textContent = `${collection === 'recent' ? '最近使用' : collection === 'favorites' ? '已收藏' : '可选武将'} ${results.length} 位${faction !== 'all' ? ` · ${factionNames[faction]}势力` : ''}`;
-  $('general-grid').innerHTML = rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="96" height="128" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}<span class="card-pack">${escape(c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>';
+  $('sort-order').setAttribute('title', `按${ratingScopeName(ratingPreference.scope)}官方评分排序；未收录的排在最后`);
+  const selectedScore = ratingValue(selected, ratingPreference.scope);
+  $('rating-detail').textContent = selectedScore === null ? '此版本评分待收录 · 查看说明 ↗' : `${ratingScopeName(ratingPreference.scope)} ${selectedScore} / 10 · 查看分项 ↗`;
+  $('rating-source-date').textContent = catalog.ratingSource ? `官方客户端评分 · ${catalog.ratingSource.versionTime.slice(0,10)}` : '暂无官方评分数据';
+  reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}${hideOld && hasUnknownYear(c) ? '，年份待核实' : ''}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="96" height="128" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}${hideOld && hasUnknownYear(c) ? '<span class="card-year">年份待核实</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
   $('previous').disabled = currentPage === 1; $('next').disabled = currentPage === pages;
   $('page-number').textContent = `${currentPage} / ${pages}`;
   $('favorite-count').textContent = favorites.size;
@@ -73,24 +107,29 @@ function select(character) {
   $('portrait-note').hidden = !portraits[character.id]?.note;
   $('detail-name').textContent = displayName(character.name);
   $('detail-faction').textContent = factionNames[character.faction] || '将';
-  $('detail-group').textContent = text(character.groups[0]?.name || packName(character.pack));
-  $('detail-pack').textContent = `${factionNames[character.faction] || character.faction} · ${packName(character.pack)}`;
+  $('detail-group').textContent = character.browsePack ? browsePackName(character.browsePack) : text(character.groups[0]?.name || packName(character.pack));
+  $('detail-pack').textContent = `${factionNames[character.faction] || character.faction} · ${character.browsePack ? browsePackName(character.browsePack) : packName(character.pack)}`;
+  $('release-status').textContent = releaseLabel(character);
   $('detail-hp').textContent = character.maxHp <= 8 ? '●'.repeat(Math.max(0, Math.floor(character.hp))) + '○'.repeat(Math.max(0, Math.floor(character.maxHp-character.hp))) : `${character.hp}/${character.maxHp}`;
   $('detail-hp').setAttribute('aria-label', `体力 ${character.hp}，体力上限 ${character.maxHp}`);
-  $('skill-list').innerHTML = character.skills.length ? character.skills.map(skill => `<section class="skill"><h3>${escape(skill.name)}</h3><p>${escape(skill.description || '此技能为动态描述，请在对局中查看完整说明。')}</p>${skill.status === 'unresolved' ? '<small>静态依赖待核验，沿用引擎实现</small>' : ''}</section>`).join('') : '<section class="skill"><p>此武将无初始技能。</p></section>';
+  $('skill-list').innerHTML = skillReadingHTML(character.skills, catalog);
+  $('read-skills').disabled = false;
   $('skill-list').scrollTop = 0;
   $('favorite-toggle').disabled = false;
   $('favorite-toggle').textContent = favorites.has(character.key) ? '★' : '☆';
   $('favorite-toggle').setAttribute('aria-label', `${favorites.has(character.key) ? '取消收藏' : '收藏'}${text(character.name)}`);
   $('start-game').disabled = false;
   $('launch-general').textContent = displayName(character.name);
-  $('launch-version').textContent = text(character.groups[0]?.name || packName(character.pack));
+  $('launch-version').textContent = character.browsePack ? browsePackName(character.browsePack) : text(character.groups[0]?.name || packName(character.pack));
   try { localStorage.setItem('sgs.selected.v1', character.key); } catch { warnStorage(); }
   render();
   $('general-grid').scrollTop = listScroll;
 }
-function reset() { $('search').value = ''; $('pack').value = 'all'; $('version').value = 'target'; faction = 'all'; collection = 'all'; currentPage = 1; syncTabs(); render(true); }
+function saveAgeFilter() { try { localStorage.setItem('sgs.hide-old-generals.v1', String(hideOld)); } catch { warnStorage(); } }
+function saveRatingPreference() { try { localStorage.setItem('sgs.roster-sort.v1', JSON.stringify(ratingPreference)); } catch { warnStorage(); } }
+function reset() { $('search').value = ''; searchQuery = ''; $('pack').value = 'all'; $('version').value = 'target'; faction = 'all'; browsePack = 'all'; hideOld = false; saveAgeFilter(); collection = 'all'; currentPage = 1; syncTabs(); render(true); }
 function syncTabs() {
+  document.querySelectorAll('[data-browse]').forEach(button => { const active = button.dataset.browse === browsePack; button.setAttribute('aria-pressed', String(active)); });
   document.querySelectorAll('.factions button').forEach(button => { const active = button.dataset.faction === faction; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
   for (const [id, value] of [['all-generals', 'all'], ['favorites', 'favorites'], ['recent-generals', 'recent']]) {
     const active = collection === value;
@@ -100,8 +139,50 @@ function syncTabs() {
 }
 $('general-grid').addEventListener('click', event => { const button = event.target.closest('[data-key]'); if (button) { select(catalog.characters.find(c => c.key === button.dataset.key)); if (innerWidth < 1000) document.querySelector('.general-detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}); } });
 document.querySelectorAll('.factions button').forEach(button => button.onclick = () => { faction = button.dataset.faction; currentPage = 1; syncTabs(); render(true); });
-for (const id of ['search','version','pack']) $(id).addEventListener(id === 'search' ? 'input' : 'change', () => { currentPage = 1; render(true); });
+document.querySelectorAll('[data-browse]').forEach(button => button.onclick = () => { browsePack = button.dataset.browse; currentPage = 1; syncTabs(); render(true); });
+$('hide-old').onclick = () => { hideOld = !hideOld; saveAgeFilter(); currentPage = 1; render(true); };
+for (const id of ['sort-order', 'rating-scope']) $(id).addEventListener('change', () => {
+  if (!catalog || !portraits) return;
+  ratingPreference = normalizeRatingPreference({ order: $('sort-order').value, scope: $('rating-scope').value });
+  saveRatingPreference(); currentPage = 1; render(true);
+});
+$('rating-detail').onclick = () => {
+  if (!selected) return;
+  const rating = selected.officialRating, matched = rating?.status === 'matched', date = catalog.ratingSource?.versionTime?.slice(0,10);
+  showInfo(`${displayName(selected.name)} · 官方评分`, `<p>${matched ? `对应官服版本：${escape(rating.officialName)}。以下为官方客户端的十分制评分。` : '尚未匹配到此版本的十周年官方评分，暂时保留空缺，不借用同名武将或其他版本的分数。'}</p>${matched ? `<dl class="rating-breakdown">${ratingScopes.map(([key, label]) => `<div><dt>${escape(label)}</dt><dd>${ratingValue(selected, key) ?? '—'}<small> / 10</small></dd></div>`).join('')}</dl>` : ''}<p>综合分直接采用官方提供的综合评分。可在“更多筛选 → 评分口径”中切换分项，再按分数排序；未收录分数的武将始终排在后面。</p><p>${date ? `数据版本：${escape(date)}。` : ''}评分会随官服版本调整；本地保存此日期的快照，并非实时更新。<a href="https://x.sanguosha.com/" target="_blank" rel="noreferrer">官方来源 ↗</a></p>`);
+};
+$('roster-policy').onclick = () => {
+  let evidence = '';
+  if (selected) {
+    const release = selected.release;
+    const source = catalog.releasePolicy?.evidence?.[release?.evidence];
+    const historical = catalog.releasePolicy?.historicalSources?.find(item => item.pack === release?.sourcePack);
+    const url = release?.url || source?.url || historical?.url;
+    const basis = release?.basis === 'historical-source' ? '该版本在2020年底的历史源码中已存在；后续平衡调整不自动计为新版本。这不是官方首次上线日期。'
+      : release?.basis === 'source-edition' ? '依据原始武将包标注的版本年份；不等同于官方首次上架日期。'
+      : release?.basis === 'series-debut' ? '该系列在2020年之后推出；此武将的具体首次上线年份仍未单独确认。'
+      : source?.note || (release?.basis === 'official-announcement' ? '依据对应版本的官方上新公告。' : '尚无足够的年份依据，开启筛选时继续保留。');
+    evidence = `<h3>当前武将：${escape(displayName(selected.name))}</h3><p>${escape(releaseLabel(selected))}。${escape(basis)}${url ? ` <a href="${escape(url)}" target="_blank" rel="noreferrer">查看年份依据 ↗</a>` : ''}</p>`;
+  }
+  showInfo('武将包与年份', `<p>主要按<strong>一将成名、限定专属、群英荟萃、星河璀璨、谋包、威包</strong>浏览，一将成名排在前面。</p><p>神将、祈福将、王朗、刘徽和武庙将归入限定专属；许绍归入群英荟萃；星曹仁、星袁术等归入新的星河璀璨。谋将、威将各自独立。</p><p>“全部”也保留经典与界限突破。其他版本可在“更多筛选”中切换范围和原始包；原有收藏、出战武将和技能版本保持独立。</p><h3>隐藏老武将</h3><p>隐藏已有依据属于2020年及以前的版本，保留2021年起的新将和新版本。年份未核实的条目继续保留并标注，不按姓名、强度或“界”字判断年份。</p>${evidence}`);
+};
+const stopSearch = installComposedSearch($('search'), value => { if (searchQuery === value) return; searchQuery = value; currentPage = 1; render(true); });
+window.addEventListener('pagehide', stopSearch, { once: true });
+for (const id of ['version','pack']) $(id).addEventListener('change', () => { currentPage = 1; render(true); });
 $('clear-filters').onclick = reset;
+$('active-filters').addEventListener('click', event => {
+  const button = event.target.closest('[data-filter]');
+  const key = button?.dataset.filter;
+  const focusIndex = Array.from($('active-filters').children).indexOf(button);
+  if (!['search', 'faction', 'pack', 'version', 'browse', 'age'].includes(key)) return;
+  if (key === 'faction') faction = 'all';
+  else if (key === 'browse') browsePack = 'all';
+  else if (key === 'age') { hideOld = false; saveAgeFilter(); }
+  else $(key).value = key === 'version' ? 'target' : key === 'pack' ? 'all' : '';
+  if (key === 'search') searchQuery = '';
+  currentPage = 1; syncTabs(); render(true);
+  focusAfterFilterRemoval($('active-filters'), focusIndex, $('search'));
+});
 $('previous').onclick = () => { currentPage--; render(true); };
 $('next').onclick = () => { currentPage++; render(true); };
 $('favorites').onclick = () => { collection = 'favorites'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
@@ -167,12 +248,22 @@ function startMatch(config) {
     return '未能进入牌局，请重试或重新载入页面。';
   }
 }
-document.addEventListener('keydown', event => { if(event.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName) && !$('info-dialog').open && !settingsDialogs.has('records') && !settingsDialogs.has('settings')) { event.preventDefault(); $('search').focus(); } });
+$('skill-list').addEventListener('keydown', closeReadingDetails);
+$('read-skills').onclick = () => {
+  if (!selected) return;
+  settingsDialogs.open('skill-reading', `<h2>${escape(displayName(selected.name))} · 初始技能</h2><p class="sgs-dialog-note">${escape(selected.browsePack ? browsePackName(selected.browsePack) : packName(selected.pack))} · 展开术语可查看细则</p><div class="skill-reading-content" tabindex="0" role="region" aria-label="完整技能说明">${skillReadingHTML(selected.skills, catalog)}</div><div class="sgs-dialog-actions"><button type="button" data-close data-primary>返回选将</button></div>`, (dialog, close) => {
+    dialog.classList.add('skill-reading-dialog');
+    dialog.querySelector('.skill-reading-content').addEventListener('keydown', closeReadingDetails);
+    dialog.querySelector('[data-close]').onclick = close;
+  });
+};
+document.addEventListener('keydown', event => { if(event.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName) && !$('info-dialog').open && !settingsDialogs.has('records') && !settingsDialogs.has('settings') && !settingsDialogs.has('skill-reading')) { event.preventDefault(); $('search').focus(); } });
 window.addEventListener('resize', () => render());
 function init() {
   if (catalogRequest) return catalogRequest;
   catalogState = 'loading'; catalog = undefined; portraits = undefined;
   $('start-game').disabled = true;
+  $('sort-order').disabled = true; $('rating-scope').disabled = true;
   notifyCatalog();
   catalogRequest = (async () => { try {
     const assets = await loadRosterAssets({ stage(message) {
@@ -181,10 +272,10 @@ function init() {
     } });
     catalog = assets.catalog; portraits = assets.portraits;
     recent = createRecentGenerals(catalog.characters);
-    catalog.characters.forEach(c => c.searchText = text([c.name,c.id,...c.skills.flatMap(s => [s.name,s.description])].join(' ')).toLocaleLowerCase());
-    catalog.characters.sort((a,b) => { const rank = c => {const i=preferred.indexOf(c.id);return i<0?999:i}; return rank(a)-rank(b) || text(a.name).localeCompare(text(b.name),'zh-CN'); });
+    catalog.characters.forEach(c => c.searchText = text([c.name,c.id,...(c.searchAliases || []),...c.skills.flatMap(s => [s.name,s.help?.text || s.description,...(s.help?.terms || []).map(t => t.name)])].join(' ')).toLocaleLowerCase());
+    catalog.characters.sort((a,b) => { const rank = c => {const i=preferred.indexOf(c.id);return i<0?999:i}; return compareBrowseCharacters(a,b) || rank(a)-rank(b) || text(a.name).localeCompare(text(b.name),'zh-CN'); });
     $('total-count').textContent = catalog.characters.length.toLocaleString('zh-CN');
-    $('pack').innerHTML = '<option value="all">全部武将包</option>' + catalog.packs.map(p => `<option value="${escape(p.id)}">${escape(p.name)} · ${p.characterCount}</option>`).join('');
+    $('pack').innerHTML = '<option value="all">全部原始包</option>' + catalog.packs.map(p => `<option value="${escape(p.id)}">${escape(p.name)} · ${p.characterCount}</option>`).join('');
     let saved, chosen;
     try { saved=JSON.parse(localStorage.getItem('sgs.settings.v1')||'{}'); chosen=localStorage.getItem('sgs.selected.v1'); } catch { saved={}; }
     if (!saved || typeof saved !== 'object' || Array.isArray(saved)) saved = {};
@@ -194,6 +285,7 @@ function init() {
     select(catalog.characters.find(c=>c.key===chosen) || catalog.characters.find(c=>c.id==='caocao') || catalog.characters[0]);
     syncTabs();
     catalogState = 'ready';
+    $('sort-order').disabled = false; $('rating-scope').disabled = false;
   } catch (error) {
     catalogState = 'failed'; catalog = undefined; portraits = undefined;
     $('result-count').textContent = '武将名册未能载入';

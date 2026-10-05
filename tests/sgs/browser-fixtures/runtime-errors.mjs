@@ -1,0 +1,18 @@
+import {installOwnedPause} from '/sgs/pause.mjs';
+import {createClientDialogs} from '/sgs/settings.mjs';
+import {createProblemReports,installProblemReportUI,downloadProblemReport} from '/sgs/problem-report.mjs';
+import {installRuntimeErrors} from '/sgs/runtime-errors.mjs';
+const state={paused2:false};const game={pause2(){state.paused2=true;},resume2(){state.paused2=false;}};
+const pause=installOwnedPause({game,_status:state});const dialogs=createClientDialogs({document,pause});
+const reports=createProblemReports({launch:{mode:'identity',playerCount:8,pack:'fixture',generalId:'fixture'},readAction:()=> '隔离测试夹具',readLog:()=>['测试公开记录（非真实对局）']});
+const status=()=>{document.querySelector('#fixture-status').textContent=`测试暂停门：${state.paused2?'暂停':'运行'} · 已记录错误 ${reports.snapshot().errors.length} 条 · 当前弹窗 ${document.querySelectorAll('dialog[open]').length} 个`;};
+const timer=setInterval(status,100);
+const session={dialogs,acquirePause:pause.acquire,setFaultActions(actions){if(actions)dialogs.closeAll();},navigate(restart){document.querySelector('#destination').textContent=restart?'已收到同配置重开请求（测试桩）':'已收到返回点将台请求（测试桩）';errors.dispose();dialogs.closeAll();status();}};
+let attempts=0;
+const reportUI=installProblemReportUI({reports,dialogs,menu:document.querySelector('main'),document,download(report,options){if(!attempts++)throw Error('isolated download failure');return downloadProblemReport(report,options);}});
+const errors=installRuntimeErrors({session,reports,reportUI});
+const fail=()=>{const error=new TypeError('隔离测试：原生处理未完成');setTimeout(()=>Promise.reject(error),30);setTimeout(()=>Promise.reject(new TypeError('隔离测试：原生处理未完成')),60);throw error;};
+document.querySelector('#script').onclick=fail;
+document.querySelector('#promise').onclick=()=>Promise.reject(new RangeError('隔离测试：异步处理失败'));
+document.querySelector('#nested').onclick=()=>{game.pause2();dialogs.open('fixture-settings','<h2>已有暂停</h2><p>此暂停在异常发生前已存在。</p><button data-fail>在已有暂停下触发异常</button>',dialog=>{dialog.querySelector('[data-fail]').onclick=fail;});};
+window.addEventListener('pagehide',()=>{clearInterval(timer);errors.dispose();reportUI.dispose();dialogs.dispose();reports.dispose();pause.dispose();},{once:true});status();

@@ -43,18 +43,34 @@
     </aside>
     <section class="roster" aria-label="选择出战武将">
       <div class="section-heading"><div><p class="eyebrow">群雄待命</p><h1>今日，谁与争锋？</h1></div><div class="roster-count"><strong id="total-count">—</strong><span>位武将已收录</span></div></div>
-      <div class="tools"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索武将、技能或关键词" aria-label="搜索武将或技能"><kbd>/</kbd></label><label class="version-select"><span class="sr-only">版本范围</span><select id="version"><option value="target">十周年与经典</option><option value="decade">十周年专属</option><option value="common">通用经典</option><option value="pending">混合版本 · 待核验</option><option value="other">其他版本 · 参考</option><option value="all">全部收录</option></select></label></div>
-      <div class="filters"><div class="factions" role="group" aria-label="按势力筛选"><button class="active" data-faction="all">全部</button><button data-faction="wei">魏</button><button data-faction="shu">蜀</button><button data-faction="wu">吴</button><button data-faction="qun">群</button><button data-faction="jin">晋</button><button data-faction="shen">神</button></div><label><span class="sr-only">武将包</span><select id="pack"><option value="all">全部武将包</option></select></label></div>
-      <div class="result-line"><span id="result-count" aria-live="polite">正在整理武将名册…</span><button id="clear-filters" class="text-button">重置筛选</button></div>
+      <div class="tools"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索武将、技能或关键词" aria-label="搜索武将或技能"><kbd>/</kbd></label><button type="button" id="hide-old" class="age-toggle" aria-pressed="false" aria-describedby="age-filter-note"><span aria-hidden="true">✓</span> 隐藏老武将</button></div>
+      <div class="pack-tabs" role="group" aria-label="按武将包浏览">
+        <button type="button" data-browse="all" aria-pressed="true">全部</button><button type="button" data-browse="yijiang" aria-pressed="false">一将成名</button><button type="button" data-browse="limited" aria-pressed="false">限定专属</button><button type="button" data-browse="huicui" aria-pressed="false">群英荟萃</button><button type="button" data-browse="xinghe" aria-pressed="false">星河璀璨</button><button type="button" data-browse="mou" aria-pressed="false">谋包</button><button type="button" data-browse="wei" aria-pressed="false">威包</button>
+      </div>
+      <p id="age-filter-note" class="age-filter-note" hidden></p>
+      <div class="result-line"><span id="result-count" aria-live="polite">正在整理武将名册…</span><div id="active-filters" class="active-filters" aria-label="当前筛选条件" hidden></div><label class="sort-select"><span class="sr-only">武将排序</span><select id="sort-order" disabled><option value="default">默认顺序</option><option value="high">评分从高到低</option><option value="low">评分从低到高</option></select></label><button id="clear-filters" class="text-button">重置筛选</button></div>
       <div id="general-grid" class="general-grid" tabindex="0" role="region" aria-label="武将列表，可独立滚动" aria-live="polite"><p class="loading">正在载入武将与技能，请稍候。</p></div>
       <div class="pagination"><button id="previous" aria-label="上一页">‹ 上一页</button><span id="page-number">—</span><button id="next" aria-label="下一页">下一页 ›</button></div>
-      <p class="coverage-note">源码已收录，官方全量与技能一致性待核验。<button id="coverage-button" class="text-button">收录说明 ↗</button></p>
+      <div class="filters roster-footer">
+        <button type="button" id="roster-policy" class="text-button">分包与年份说明</button>
+        <button id="coverage-button" class="text-button">收录说明 ↗</button>
+        <details class="more-filters"><summary>更多筛选</summary><div class="secondary-filters">
+          <label>版本范围<select id="version"><option value="target">常用武将包</option><option value="decade">十周年专属源码</option><option value="common">通用经典源码</option><option value="pending">混合版本 · 待核验</option><option value="other">其他版本 · 参考</option><option value="all">全部收录</option></select></label>
+          <label>原始武将包<select id="pack"><option value="all">全部原始包</option></select></label>
+          <label class="rating-scope-label">评分口径<select id="rating-scope" disabled><option value="overall">综合评分</option><option value="landlord">斗地主·地主</option><option value="farmer">斗地主·农民</option><option value="first">2v2·先手（1、4位）</option><option value="second">2v2·后手（2、3位）</option><option value="lord">身份·主公</option><option value="loyalist">身份·忠臣</option><option value="rebel">身份·反贼</option><option value="spy">身份·内奸</option></select></label>
+          <div class="factions" role="group" aria-label="按势力筛选"><button class="active" data-faction="all">全部势力</button><button data-faction="wei">魏</button><button data-faction="shu">蜀</button><button data-faction="wu">吴</button><button data-faction="qun">群</button><button data-faction="jin">晋</button><button data-faction="shen">神</button></div>
+        </div></details>
+      </div>
     </section>
     <aside class="general-detail" aria-label="武将技能详情">
       <div class="detail-top"><span class="detail-label">出战武将</span><button id="favorite-toggle" class="favorite-toggle" aria-label="收藏当前武将" disabled>☆</button></div>
       <div class="portrait" id="portrait"><img id="detail-image" class="detail-image" alt="" width="96" height="128"><span class="portrait-kingdom" id="detail-faction">魏</span><span class="portrait-rules" aria-hidden="true"></span><div class="portrait-title"><span id="detail-group">标准包</span><h2 id="detail-name">点将出征</h2></div><span class="portrait-seal" aria-hidden="true">将</span></div>
       <p id="portrait-note" class="portrait-note" hidden></p>
       <div class="detail-meta"><span id="detail-pack">请选择武将</span><span class="hp" id="detail-hp"></span></div>
+      <p class="release-status" id="release-status"></p>
+      <div class="rating-summary"><button type="button" id="rating-detail">官方评分待收录</button><small id="rating-source-date"></small></div>
+      <p id="selected-filter-note" class="selected-filter-note" hidden></p>
+      <button type="button" id="read-skills" class="read-skills" disabled>完整阅读技能 ↗</button>
       <div id="skill-list" class="skills" tabindex="0" role="region" aria-label="武将技能，可独立滚动"><p>在左侧选择一位武将，查看技能。</p></div>
 
     </aside>

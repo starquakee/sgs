@@ -52,7 +52,7 @@ export function openBattleRecords(dialogs, records, { characters, getCatalog = (
       for (const [key, caption] of Object.entries({ damage: '伤害', damaged: '受伤', gain: '摸牌', cards: '出牌', kill: '杀敌' })) {
         const cell = node('div'); cell.append(node('strong', record.stats[key]), node('span', caption)); stats.append(cell);
       }
-      content.append(stats, node('p', '统计保存自本局原生结算。按此配置开局会重新发牌、生成对手。', 'sgs-record-meta'));
+      content.append(stats, node('p', '统计来自本局结算。按此配置开局会重新发牌、生成对手。', 'sgs-record-meta'));
       start.onclick = () => {
         const config = recordLaunch(record, getCatalog().characters);
         if (!config || start.disabled || getCatalog().status !== 'ready') return;

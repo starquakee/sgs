@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "sourcePacks": ["standard", "shenhua", "extra", "yijiang", "newjiang", "refresh", "sp2", "huicui", "xianding"],
+  "excludedVersions": {
+    "extra:shen_guanyu": { "note": "旧武神带不可响应、旧武魂只因受伤加梦魇；官服201为红桃杀伤后摸牌且造成/受到伤害均加梦魇，对应dc_shen_guanyu。" },
+    "yijiang:xinxianying": { "note": "旧忠鉴为展示手牌、旧才识为手牌上限/回复；官服528为伤害增益与摸牌花色判定，对应re_xinxianying。" }
+  },
+  "overrides": {
+    "xianding:dc_shen_guanyu": { "officialId": 201, "note": "核对官服武神3645/武魂3646描述：红桃杀伤后摸牌、造成/受到伤害加梦魇；排除技能同名但效果不同的旧神关羽。" },
+    "xianding:re_xinxianying": { "officialId": 528, "note": "核对官服忠鉴776/才识777描述：伤害触发弃牌/摸牌、按摸牌花色调整忠鉴或回复；排除技能同名的旧版。" },
+    "huicui:dc_jiben": { "officialId": 563, "note": "同一吉氏人物：源码吉本、官服吉平；询疠/指誓/烈医一致。" },
+    "huicui:yue_caiwenji": { "officialId": 1330, "note": "乐蔡琰与乐蔡文姬为同一版本；霜笳/悲愤一致。" },
+    "shenhua:caiwenji": { "officialId": 58, "note": "蔡琰与蔡文姬为同一版本；保留与界版的区别。" },
+    "shenhua:sp_zhugeliang": { "officialId": 38, "note": "源码卧龙、官服卧龙诸葛；八阵/火计/看破一致。" },
+    "standard:zhenji": { "officialId": 22, "note": "甄宓与甄姬同一标版。" },
+    "refresh:re_zhenji": { "officialId": 81, "note": "界甄宓与界甄姬同一界版，不能借用标版分数。" },
+    "xianding:sp_zhenji": { "officialId": 580, "note": "SP甄宓与SP甄姬同一版本；己诫/惠济一致。" },
+    "yijiang:fuhuanghou": { "officialId": 319, "note": "伏寿与伏皇后同一原版。" },
+    "refresh:re_fuhuanghou": { "officialId": 921, "note": "界伏寿与界伏皇后同一界版。" },
+    "xianding:luyi": { "officialId": 566, "additionalGrantedSkills": ["手谈"], "note": "官服邀弈描述明确授予手谈；本地将这项授予技列为初始技能，其余邀弈/复学一致。" }
+  }
+}

@@ -12,7 +12,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
   const buttons = [];
   const listeners = [];
   const listen = (node, name, handler) => { node.addEventListener(name, handler); listeners.push(() => node.removeEventListener(name, handler)); };
-  let manual, background, resultActions;
+  let manual, background, resultActions, faultActions;
   function button(label, className, handler) {
     const node = document.createElement('button');
     node.type = 'button'; node.textContent = label; node.className = className;
@@ -22,6 +22,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
     return node;
   }
   function showPause() {
+    if (faultActions) { faultActions.show(); return; }
     dialogs.open('pause', `<h2>对局已暂停</h2><p class="sgs-pause-reason"></p><div class="sgs-dialog-actions"><button type="button" data-settings>便捷设置</button><button type="button" data-continue data-primary>继续对局</button></div>`, (dialog, close) => {
       dialog.querySelector('.sgs-pause-reason').textContent = background ? '离开页面后已暂停，准备好后继续。' : '牌局等待继续，当前选择会保留。';
       dialog.querySelector('[data-settings]').onclick = () => openClientSettings(dialogs, preferences);
@@ -32,6 +33,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
     });
   }
   const pauseButton = button('暂停', 'sgs-session-button', () => {
+    if (faultActions) { faultActions.show(); return; }
     if (resultActions) { resultActions.show(); return; }
     manual ||= pause.acquire('manual');
     showPause(); refresh();
@@ -44,6 +46,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
   });
   button('设置', 'sgs-session-button', () => openClientSettings(dialogs, preferences));
   function askLeave(restart) {
+    if (faultActions) { faultActions.show(); return; }
     if (resultActions) { resultActions[restart ? 'replay' : 'leave'](); return; }
     dialogs.open(restart ? 'restart' : 'leave', `<h2>${restart ? '重新开局' : '返回点将台'}</h2><p>当前对局的进度将结束。${restart ? '使用相同的武将和设置开启新对局。' : '你可以重新选择武将与对局设置。'}</p><div class="sgs-dialog-actions"><button type="button" data-stay>继续对局</button><button type="button" data-leave data-primary>${restart ? '确认重开' : '返回选将'}</button></div>`, (dialog, close) => {
       dialog.querySelector('[data-stay]').onclick = close;
@@ -69,15 +72,19 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
   }
   function refresh() {
     pause.elapsedMs();
-    pauseButton.textContent = resultActions ? '结算' : manual || background ? '继续' : '暂停';
-    pauseButton.disabled = !!_status.over && !resultActions;
+    pauseButton.textContent = faultActions ? '异常已暂停' : resultActions ? '结算' : manual || background ? '继续' : '暂停';
+    pauseButton.disabled = !!_status.over && !resultActions && !faultActions;
     autoButton.textContent = _status.auto ? '取消托管' : '托管';
     autoButton.setAttribute('aria-pressed', String(!!_status.auto));
-    autoButton.disabled = !!_status.over || !!_status.paused2 || !ui.auto || ui.auto.classList.contains('hidden');
+    autoButton.disabled = !!faultActions || !!_status.over || !!_status.paused2 || !ui.auto || ui.auto.classList.contains('hidden');
   }
   listen(document, 'visibilitychange', visibility);
   visibility();
-  return { refresh, elapsedMs: pause.elapsedMs, navigate, setResultActions(actions) {
+  return { refresh, dialogs, elapsedMs: pause.elapsedMs, navigate, acquirePause: pause.acquire, setFaultActions(actions) {
+    faultActions = actions;
+    if (actions) dialogs.closeAll();
+    refresh();
+  }, setResultActions(actions) {
     resultActions = actions;
     hud.querySelector('.sgs-restart').textContent = '再来一局';
     refresh();

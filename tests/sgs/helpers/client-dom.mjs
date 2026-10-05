@@ -9,7 +9,7 @@ export class Node {
   }
   set innerHTML(html) {
     this.children = [];
-    for (const [, tag, attrs] of html.matchAll(/<(div|h2|p|button|select|input|output)\b([^>]*)>/g)) {
+    for (const [, tag, attrs] of html.matchAll(/<(div|h2|p|button|select|input|output|ol|li|section|h3|label)\b([^>]*)>/g)) {
       const node = new Node(tag);
       for (const [, key, value] of attrs.matchAll(/([\w-]+)(?:="([^"]*)")?/g)) { node.attrs[key] = value ?? ''; if (key === 'name') node.name = value; if (key === 'class') node.className = value; }
       this.append(node);
@@ -18,8 +18,9 @@ export class Node {
   setAttribute(key, value) { this.attrs[key] = value; }
   get parentNode() { return this.parent; }
   append(...nodes) { for (const node of nodes) { node.parent = this; this.children.push(node); } }
+  replaceChildren(...nodes) { for (const child of this.children) child.parent = null; this.children = []; this.append(...nodes); }
   insertBefore(node, before) { node.parent = this; this.children.splice(this.children.indexOf(before), 0, node); }
-  remove() { if (this.parent) this.parent.children = this.parent.children.filter(child => child !== this); }
+  remove() { if (this.parent) this.parent.children = this.parent.children.filter(child => child !== this); this.parent = null; }
   querySelectorAll(selector) {
     return this.children.filter(node => selector.split(',').some(part => {
       if (part.startsWith('.')) return node.classList.contains(part.slice(1));
@@ -30,7 +31,7 @@ export class Node {
   querySelector(selector) { return this.querySelectorAll(selector)[0]; }
   addEventListener(name, callback) { if (!this.listeners.has(name)) this.listeners.set(name, new Set()); this.listeners.get(name).add(callback); }
   removeEventListener(name, callback) { this.listeners.get(name)?.delete(callback); }
-  emit(name) { const event = { preventDefault() {}, stopPropagation() {} }; for (const callback of this.listeners.get(name) || []) callback(event); this[`on${name}`]?.(event); }
+  emit(name, properties = {}) { const event = { preventDefault() {}, stopPropagation() {}, ...properties }; for (const callback of this.listeners.get(name) || []) callback(event); this[`on${name}`]?.(event); }
   showModal() { this.open = true; }
   focus() { this.focused = true; }
   close() { this.open = false; queueMicrotask(() => this.emit('close')); }

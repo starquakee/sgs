@@ -1,0 +1,37 @@
+html body .sgs-client-dialog.sgs-reference-dialog { width: min(680px, calc(100vw - 32px)); }
+html body .sgs-reference-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
+.sgs-reference-dialog > :not(.sgs-log-list):not(.sgs-guide-content) { flex-shrink: 0; }
+.sgs-reference-dialog :is(ol,li,section,h3,label,input) { position: static; inset: auto; box-sizing: border-box; }
+.sgs-log-search { display: grid; gap: 8px; margin: 14px 0 8px; color: var(--sgs-muted); }
+.sgs-log-search input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--sgs-line); border-radius: 4px; background: var(--sgs-bg); color: var(--sgs-text); font: 15px var(--sgs-font-body); }
+.sgs-log-count { min-height: 20px; color: var(--sgs-muted); }
+.sgs-log-list { list-style: none; padding: 0; margin: 0; overflow: auto; min-height: 40px; flex: 1 1 auto; max-height: min(46vh, 430px); overscroll-behavior: contain; }
+.sgs-log-list li { padding: 11px 0; border-bottom: 1px solid var(--sgs-line); line-height: 1.8; overflow-wrap: anywhere; }
+.sgs-log-list li:first-child { color: var(--sgs-gold); }
+.sgs-guide-content { max-height: 58vh; min-height: 0; overflow: auto; overscroll-behavior: contain; padding-right: 8px; }
+.sgs-guide-content section + section { border-top: 1px solid var(--sgs-line); margin-top: 16px; padding-top: 8px; }
+.sgs-guide-content h3 { color: var(--sgs-gold); font: 600 16px var(--sgs-font-body); margin: 14px 0 8px; }
+.sgs-guide-content p { line-height: 1.8; }
+.sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content) { scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) var(--sgs-bg); }
+.sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar { width: 6px; }
+.sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar-thumb { background: var(--sgs-bronze); border-radius: 3px; }
+.sgs-game #arena > .player > .sgs-public-states { position: absolute; z-index: 6; left: 30px; right: 23px; top: 36px; display: flex; flex-wrap: wrap; gap: 3px; pointer-events: none; }
+.sgs-game #arena > .player > .sgs-public-states[hidden] { display: none; }
+.sgs-public-states span { position: static; padding: 2px 5px; border: 1px solid var(--sgs-bronze); border-radius: 3px; background: #171715ed; color: var(--sgs-gold); font: 12px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; }
+.sgs-game #arena > .player.turnedover > .sgs-public-states { opacity: 1; }
+.sgs-game #window > .dialog.sgs-readable-intro {
+  position: fixed!important; bottom: auto!important; right: auto!important;
+  width: min(480px, calc(100vw - 32px))!important; height: auto!important;
+  left: max(16px, calc(50% - 240px))!important; top: calc(var(--sgs-toolbar-h) + 8px)!important;
+  max-height: calc(100dvh - var(--sgs-toolbar-h) - 24px); box-sizing: border-box;
+  padding: 10px!important; overflow: hidden;
+}
+.sgs-readable-intro > .content-container { position: relative!important; inset: auto!important; width: 100%!important; height: auto!important; max-height: calc(100dvh - var(--sgs-toolbar-h) - 48px); overflow: auto; scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) var(--sgs-bg); }
+.sgs-readable-intro .content { position: relative!important; width: 100%!important; height: auto!important; }
+.sgs-readable-intro .caption { padding: 8px 4px!important; margin: 0!important; font: 14px/1.75 var(--sgs-font-body)!important; }
+.sgs-readable-intro .caption:first-child { font: 23px/1.5 var(--sgs-font-title)!important; }
+.sgs-readable-intro .caption > div:has(> .skill) { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; text-align: left; }
+.sgs-readable-intro .caption > div > .skill, .sgs-readable-intro .caption > div > .skill + div { position: static!important; width: auto!important; float: none!important; }
+.sgs-readable-intro .caption > div > .skill { color: var(--sgs-gold); }
+.sgs-readable-intro .bar { display: none; }
+@media (max-width: 650px) { .sgs-reference-dialog { width: calc(100vw - 28px); } .sgs-log-list { max-height: 46vh; } }

@@ -77,7 +77,7 @@ export function installBattleResults({ lib, game, get, _status, launch, preferen
     return dialogs.open('result', `<h2></h2>
       <p class="sgs-result-player"></p><p class="sgs-result-context"></p>
       <div class="sgs-result-stats" aria-label="你的本局统计"></div>
-      <p class="sgs-result-note">统计沿用本局结算；摸牌包括获得的牌，出牌按原生计数。</p>
+      <p class="sgs-result-note">摸牌包含通过技能或其他角色获得的牌。</p>
       <p data-result-status role="status"></p>
       <div class="sgs-dialog-actions"><button type="button" data-details>本局详情</button><button type="button" data-return>返回点将台</button><button type="button" data-replay data-primary>再来一局</button></div>`, (dialog, close) => {
       dialog.classList.add('sgs-result-dialog');

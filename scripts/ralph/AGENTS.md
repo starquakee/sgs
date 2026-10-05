@@ -1,7 +1,7 @@
-# Ralph iteration: SGS client experience
+# Ralph iteration: SGS reliability
 
-1. Read root AGENTS.md, tasks/prd-sgs-client-experience.md, prd.json, progress.txt. Branch ralph/sgs-client-experience. Original tasks/prd-sgs-decade.md carries constraints, not active priorities.
-2. Implement exactly the lowest-priority unfinished UX story. Do not implement subsequent stories. Inspect native source before adapting. Preserve all existing interactions, rules/AI, LICENSE/attribution.
+1. Read root AGENTS.md, tasks/prd-sgs-reliability.md, prd.json, progress.txt. Branch codex/sgs-reliability. Original tasks/prd-sgs-decade.md carries constraints, not active priorities.
+2. Implement exactly the lowest-priority unfinished MAT story. Do not implement subsequent stories. Inspect native source before adapting. Preserve all existing interactions, rules/AI, LICENSE/attribution.
 3. Use frontend-design skill at C:/Users/75228/.agents/skills/frontend-design/SKILL.md for UI. Design: desktop game client, dark lacquer/metal, bronze borders, vermilion primary controls, compact functional layout, readable text and restrained motion. Preserve existing art and fixed classic card internals. No new framework.
 4. Implement in SGS adapter, small new modules when they separate pause/preferences/results/loading from runtime. Do not opportunistically refactor upstream.
 5. Run node --check on changed JS; focused meaningful tests. Run all tests if logic changed. Do not add implementation-mirror tests for CSS-only edits. Production build may require parent permissions; report exact need rather than weakening sandbox.
@@ -10,4 +10,8 @@
 8. Parent runs one iteration each time and handles Git escalation/production build/browser. Existing dev8081 and production8083 are running; no new visible windows or public services. git status may show harmless ignore permission warnings.
 9. New programs use windowsHide:true. No --unsafe, no bypass permission flags. Do not alter audio/portrait manifests or original full-coverage story.
 10. Keep exploration targeted: do not enumerate the thousands of portrait/audio files or dump catalog/roster JSON, all tests, or whole upstream modules. Use rg with exclusions and bounded relevant source ranges. Read only current story acceptance criteria and applicable helpers. Existing source PRD is a constraint reference; avoid repeated whole-file reads. Keep command output below 5000 tokens.
-11. Parent verifies focused story behavior each iteration; the full multi-mode/multi-resolution acceptance matrix belongs to UX-09. Append to the existing validation document, do not replace parent evidence. Native engine CSS makes generic divs absolute: new HTML utility dialog children need explicitly normal flow (UX-01 fixed the leave-dialog action row).
+11. Parent verifies focused story behavior each iteration; the full multi-mode/multi-resolution acceptance matrix belongs to MAT-07. Append to the existing validation document, do not replace parent evidence. Native engine CSS makes generic divs absolute: new HTML utility dialog children need explicitly normal flow (UX-01 fixed the leave-dialog action row).
+
+12. Descriptions are statically extracted at lobby build time; never execute upstream character modules/getters. Preserve catalog evidence and official ratings.
+13. Fault validation uses isolated adapter fixtures, never injected real game state. Reports are bounded local errors/public logs, never hidden identities, hands, piles or native event dumps; no upload.
+14. Archived UX-09 real background transition needs actual document.hidden=true>=5s with AI frozen until manual Continue. Unit events cannot close it. Older US-006 remains incomplete and outside this run.

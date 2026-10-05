@@ -1,0 +1,149 @@
+{
+  "project": "三国杀单机版客户端体验升级",
+  "branchName": "ralph/sgs-client-experience",
+  "description": "完整游玩流程、客户端式布局、原生规则与AI保持不变",
+  "userStories": [
+    {
+      "id": "UX-01",
+      "title": "统一视觉基础",
+      "description": "统一大厅、牌桌、弹窗的颜色、字号、按钮和焦点状态，采用深色牌桌、铜金边框、朱红主要操作。",
+      "acceptanceCriteria": [
+        "建立共享视觉变量并接入大厅与牌桌，正文可读、标题书法字体，保留画像与经典卡面",
+        "保留主要按钮至少126×50及既有手牌可用性明暗；不实施后续故事的功能",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "22 focused tests plus the 69-test baseline pass. Parent inspected production1280x720 lobby/rules and actual DongZhuo landlord opening/selection at1024x640: legal brightness1.04, unavailable0.48, selected gold, confirm126x50. Found native absolute-position action row clipping leave-dialog heading; fixed scoped position:static/inset:auto, reloaded and verified heading plus both126x50 buttons at1024 and390, keyboard gold focus and screenshots.390 lobby inspected; console empty. Static theme/lobby/table/HTML synchronized. No rule/JS changes; broad mode/size matrix remains UX-09."
+    },
+    {
+      "id": "UX-02",
+      "title": "重构对战大厅",
+      "description": "模式选择、武将列表、技能详情分区，固定出战入口，添加最近使用武将。",
+      "acceptanceCriteria": [
+        "1024×640及更大桌面出战按钮无需整页滚动即可见；长技能独立滚动",
+        "保留搜索、版本/势力/包筛选、收藏；最近使用8名按pack:id去重，确认开局才记录",
+        "390px大厅无横向溢出，设置与出战入口可达",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "76 total tests passed; 7 new lobby/recent tests cover exact pack:id, newest8, malformed/unwritable storage, no record on browsing, filters/favorites and all three launch configurations. Parent production QA: all four desktop sizes have page height exactly viewport and visible60px launch button (1024 bottom600,1280 bottom680);390 no horizontal overflow with persistent action. Search by skill, original CaoCao favorite, mode/role summaries and independent406/192px skill scroll verified. Initial recent empty after browsing MouLusu; actual DongZhuo 2v2 launch reaches human seat4/5cards and ally4cards; return recent contains only DongZhuo. Fixed selection resetting list scroll; measured124.8 before/after. Screenshots saved including images fully loaded; console empty. Production static launcher resources synchronized."
+    },
+    {
+      "id": "UX-03",
+      "title": "整理牌桌操作区",
+      "description": "固定回合、原生操作提示、确认、手牌和装备位置，开放说明与对局记录入口。",
+      "acceptanceCriteria": [
+        "显示真实当前操作及已选数量，区分开局、出牌、响应、目标选择、弃牌与AI行动",
+        "不重复或覆盖复杂技能的原生对话框，不泄露隐藏身份或敌方手牌",
+        "保留直接换牌、唯一杀目标预选、手动确认、多选和队友手牌；提供明确的武将/卡牌说明与记录入口",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "83 tests pass plus parent rechecked7 focused tests after native-discard regression fix. Real production GuanYu landlord at1024 and1280: opening,7-card play,Slash selected1/target0->1/manual cancellation, direct switch to Duel, Wusheng red-equipment conversion and manual confirm, two-card discard and two separate Shan responses to LvBu Wushuang. Found native discard custom callbacks mislabeled generic choice; moved explicit discard label before custom branch and added regression assertions. Reload confirmed discard0->2 with native2/2 and no auto-confirm. General/card native descriptions show correct public/own content; close then first card click works. Native record opens/closes with selection retained and arena.paused false.2v2 at1024 has human5cards/ally4cards; action rail48..88, confirm126x50, ally panel672..840 does not overlap controls274..558. Screenshots saved; console empty. One browser-debugger sync timeout recovered through existing tab API; game itself had started normally. Source/raw production modules synchronized; broad final matrix remains UX-09."
+    },
+    {
+      "id": "UX-04",
+      "title": "暂停与便捷设置",
+      "description": "提供暂停/继续、托管、设置；菜单及后台通过原生接口暂停，并记住偏好。",
+      "acceptanceCriteria": [
+        "用原生pause2/resume2及明确的暂停归属；设置、返回、重开弹窗暂停，关闭不丢失选择，不解除别的原生暂停",
+        "后台自动暂停默认开启，可关闭；返回页面手动继续；局时扣除暂停",
+        "统一设置包含原有AI速度、声音开关、后台暂停和减少动态效果；存储失败不阻断游玩",
+        "为暂停归属/嵌套/时钟及安全偏好存储增加测试",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "98 full tests pass,15 new tests execute locked native pause2/resume2/PauseManager and auto, including nested/native/background ownership, same-turn deferred handoff, clock, malformed/denied storage and preferences. Parent production390 settings fits341x534 with126x50 completion; speed/mute/motion changed, persisted through reload, restored to normal/on/off. GuanYu landlord1280/1024: settings held selectedSha+Zhang/Hua target; timer01:04 froze and Escape restored selection. Manual pause plus settings retains pause after closing settings. Native record plus settings/leave cancellation retains arena.paused=true and selection; close native record resumes. Real auto AI was held with identical hand,HP,pile and05:22 clock across observations and progressed only after closing settings; auto cancelled natively. Restart dialog held state and cancel resumed. Final Deferred fix synced/reloaded; repeated nested pause frozen00:42 and native-record ownership frozen00:50 passed. Console empty/screenshots saved. IAB reportsdocument.hidden=false even when hidden or switched, Edge connector unavailable; automatic background visibility transition is covered by native-gate event tests but actual browser tab-hide remains an explicit UX-09 environment check, not claimed here. No rules changed."
+    },
+    {
+      "id": "UX-05",
+      "title": "声音与战斗反馈",
+      "description": "提供三类独立音量并强化适度战斗反馈。",
+      "acceptanceCriteria": [
+        "音频控制器setVolume(channel,value)支持card/hero/effect，范围0..1，即刻影响已播放与后续源，默认响度不变",
+        "保持卡牌/武将独立队列可重叠，受击即时，统一静音取消正在及等待声音",
+        "当前行动角色、合法/选中目标、真实命中及阵亡短反馈150–300ms，不阻塞或伪造结算；减少动态效果可关闭",
+        "原生音频回归与音量/静音并发回归通过",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "107 full tests and44 focused pass,9 new regressions execute native damage/death/audio flows,3-channel live/scheduled/pending gain updates,overlap,mute bounds and cleanup. Parent set sliders40/70/20, reloaded and entered realgame with values retained, then restored100/100/100.390 dialog341x684 completebottom739 visible. Found1024x640 complete initiallybottom675 outside608pxdialog; added scoped short-height spacing, reloaded measured603/603scroll nooverflow, complete126x50bottom598. DongZhuo native Jiu andGuangyong overlap: card34..34.888,hero34.291..39.520; Sha80.872..81.734,hero81.181..86.439. Real wine-Sha2damage Gaolan4->2 andeffectdamage2. NewmatchnormalSha WangShuang8->7 caught .sgs-battle-flash hit with native screenshot using waitFor before confirm;240ms native-tested. Acting/target screenshot, fixed action label overlapping identity(left30/right64), reloaded verified separate labels. Reducedmotion hides all3flash overlays andanimationnone whileguidance remains; restoredoff. Two natural AI matches reached native victory,dead2 andacting/aim/pulse counts0; transientdeath pulse covered by actualnativefixture, finaldeadstate visuallyverified. Muted immediately afterequipvoice; native skillcompleted whileplayed stayed1 andheroclip empty;unmute producedno backlog. Soundon/normal speed/defaultvolumes restored,consoleempty,sourceproduction synced. Screenshotproofs saved; noaudio-listening claim or changedrule."
+    },
+    {
+      "id": "UX-06",
+      "title": "完善结算与再战",
+      "description": "复用原生结算并提供同配置再战、返回、详情入口。",
+      "acceptanceCriteria": [
+        "通过lib.onover读取胜负/原生结果、武将身份、轮数、局时及原生stat统计；非布尔结果不默认平局",
+        "只添加展示，不改各模式胜负；提供同配置再来一局、返回点将台、原生本局详情",
+        "再战保持人类武将、模式、角色、速度但重新生成牌局；支持玩家阵亡后队伍获胜",
+        "结算结果、原生统计与再战配置回归通过",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "116 full tests and26 focused pass;9 added regressions run complete locked game.over and native three-mode win/death checks, nonboolean captions, multi-turn/dead-player stat parity, snapshot freeze, details,replay and denied storage. Parent real production DongZhuo landlord vsLiuBa/WangJun auto naturally won round5 at01:59: new result6damage/0received/30gain/22cards/2kills exactly matches all five native detail columns. Result640x372 at1024, all3buttons126x50 fully visible. Native details opened unchanged; headerSettlement reopened same frozen values/01:59. Replay clicked once: fresh round1/7HP4openingcards, sameDongZhuo landlord, AIchangedtoBoLingYun/DuanWei, newhandGud ing/ThunderSha/Guohe/Shan and no residual result or auto state. Source/prod5files identical. ScreenshotUX06-result-1024 saved; native-mode tests explicitly include dead human teammate-win and nonboolean titles, additional full browser mode/death/return matrix remains UX-09. No native game.over rewrite; full production build remains UX-09."
+    },
+    {
+      "id": "UX-07",
+      "title": "本地战绩",
+      "description": "保留最近50场真实完成对局并支持详情和复用配置。",
+      "acceptanceCriteria": [
+        "本地版本化存储，sessionId去重，每局只记录一次，提前离开不记失败",
+        "大厅可打开战绩、真实空状态、查看详情、按相同配置新开局",
+        "原收藏/静音/速度/武将ID兼容；损坏或不可写存储仍能游玩并提示未保存",
+        "记录边界、去重、序列化、坏存储及配置复用测试通过",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "129 full and46 focused tests passed; parent18 lobby/records tests passed after selection-sync fix. True empty records inspected first. Real CaoCao2v2 (allyLuYusheng,enemiesJianYong/MaLingli) naturally reached allydying; declinedPeach rescue then nativeinheritanceDraw1. Allydeath removed teammate-hand panel entirely; continuednativeAI endedloss round3/03:30,ownstats2/5/10/8/0 anddeadlabel; resultsaid saved. Returnresult directlytolobbyworked;exactlyonehistoryrow,detailsmatchallstats,standard:caocao,normal speed. ChangedlobbytoSunQuan/Doudizhu/fast;historylaunchedfreshCaoCao2v2/5openingcards/newAI,settingsnormal. Earlyexitkeptonehistoryrow. Foundlobbyselectedhero stayedSunQuan afterhistoricalCao launch whilemodewasupdated; nowhistorylaunchsaves exactselectedkeytoo, added regression assertion. ResyncedlatestfromBattleRecord consumer andreranUI: replayCao,earlyreturnselectedCao,historycountstill1.390details341x651 all3buttonsvisible,height50,nohorizontaloverflow. FavoritesCao1/muteon/vol100 preserved;consoleempty,screenshots saved.50limit/corruption/dedup anddeny cases testedwithoutfabricatedbrowserrecords. No push."
+    },
+    {
+      "id": "UX-08",
+      "title": "加载与异常处理",
+      "description": "真实加载阶段、重复启动保护及资源/存储失败恢复。",
+      "acceptanceCriteria": [
+        "显示实际加载阶段而非伪造进度，重复启动只发起一次导航",
+        "关键名册失败提供重试/返回；声音清单或文件失败允许静音进入并解释",
+        "存储无法使用仍可用当前选择开局，明确提醒偏好/战绩未保存",
+        "只扩展SGS入口异常分支，原普通入口不变；失败重试清理重复监听/UI",
+        "为加载降级、关键失败与存储缺失开局增加有意义测试",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "142 full tests pass including 3 parent native JIT regressions; Node22/pnpm production builds succeeded. Real production faults: removed roster produced lobby HTTP404 with disabled launch; records stayed readable, identified catalog failure, and same-dialog retry re-enabled exact CaoCao2v2 launch. Engine roster404 showed actual stage/retry/return; restore+retry reached native4-player deal with one HUD/rail. Missing card-audio manifest entered a real match with explicit category mute. Missing male Jiu MP3 showed404 warning while native Jiu/Guangyong completed and hero audio continued. Isolated HTML fault fixture denied localStorage writes and sessionStorage/IndexedDB getters. Found optional native JIT accessed session before SGS bootstrap; added SGS-only build-plugin guard, preserving ordinary healthy initializer and upstream source. Rebuilt: no new error/dialog, native DongZhuo landlord7HP4opening/7turncards and fast speed retained. Natural AI victory round2/02:04 stats4/1/21/15/2 correctly said record unsaved. Replay retained Dong landlord fast with new enemies SP MengHuo/LiuPanXi and new4carddeal; history remained2oldrecords. 390 storage notice and176x50launch bottom834 fit; portrait404 recovery doc390x844 and both126x50buttons bottom512.7 visible; return reached healthy lobby. All renamed resources and injected HTML restored byte-identical; temporary tab closed. Screenshots saved. Browser-wide hidden transition remains UX09 environment limitation."
+    },
+    {
+      "id": "UX-09",
+      "title": "整体验收",
+      "description": "聚合回归、真实生产浏览器及文档收尾。",
+      "acceptanceCriteria": [
+        "全部既有69测试及新增测试通过，Node22/pnpm生产构建通过",
+        "斗地主地主/农民、2v2、8人身份：出牌/响应/转化/多选/取消/队友死亡/托管/结果再战验证",
+        "1920×1080、1366×768、1280×720、1024×640牌桌，390px大厅与设置无遮挡；保存关键截图",
+        "暂停AI、保持选择、后台回来手动继续、声音重叠/音量/静音、失败恢复及战绩真实验证",
+        "说明/验证证据齐全，无阻断console错误；不把旧US-006标完成",
+        "New JavaScript syntax/type checks pass; focused meaningful tests pass",
+        "Real browser verification by desktop parent passes (CLI must leave pending if unavailable)"
+      ],
+      "priority": 9,
+      "passes": false,
+      "notes": "144/144 tests pass; Node22.12.0/pnpm10.11.0 final production build succeeds. Parent verified native MouZhouYu identity8: opening change to Yin keeps local portrait, actual thunderSlash then native complex two-target Yingmou manually confirmed, native automatic card sequence finishes, original skill intro confirms return to Yang and local portrait remains. All8 avatars visible, console empty. Final table1024/1280/1366/1920 geometry matches viewport, confirmation126x50, selected card+target preserved across all4; final390 settings341x684 and completion126x50 visible with document width375. Final1920 lobby all13 images loaded and launch238x60 bottom1040. Ordinary non-SGS index reaches original tutorial with SGS HUD/loading absent and no console errors. Prior landlord/farmer/2v2/dead-human win, pause/audio/results/history/fault evidence carried forward. Durable screenshots under docs/sgs-client-screenshots. All temporary faults restored, temporary tabs closed, browser viewport reset. ONLY actual hidden-tab background transition remains unverified: IAB always reports document.hidden=false and Edge extension is disconnected; native unit tests pass, no user waiver received. Keep UX09 passes=false; archived US006 remainsfalse. No push."
+    }
+  ]
+}

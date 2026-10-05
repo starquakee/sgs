@@ -1,5 +1,6 @@
 // Presentation only: native events, selected arrays and checked target classes
 // remain the authority. Never run a filter, skill prompt or selection callback.
+import { openBattleLog, openPlayGuide } from './table-reference.mjs';
 const choices = new Set(['chooseToUse', 'chooseToRespond', 'chooseToDiscard',
   'chooseCard', 'chooseTarget', 'chooseCardTarget', 'chooseButton', 'chooseBool',
   'chooseControl', 'choosePlayerCard', 'discardPlayerCard', 'gainPlayerCard']);
@@ -21,7 +22,7 @@ export function readTableAction({ game, ui, get, _status }) {
       return { kind: 'opening', title: '准备开局', detail: '等待原生发牌与开局选择', counts: '' };
     }
     return { kind: 'waiting', title: _status.auto ? '托管中' : actor && actor !== game.me ? 'AI 行动' : '结算中',
-      detail: actor ? `${visiblePlayerName(actor, get)} · 等待原生流程` : '等待原生流程', counts: '' };
+      detail: actor ? `${visiblePlayerName(actor, get)} · 正在结算` : '正在结算，请稍候', counts: '' };
   }
   if (event.sgsOpeningHandChoice) {
     return { kind: 'opening', title: '开局换牌', detail: '可反复换一手，满意后点击开始对局', counts: '' };
@@ -38,7 +39,7 @@ export function readTableAction({ game, ui, get, _status }) {
     Object.values(event.custom[type] || {}).some(value => typeof value === 'function'));
   if (custom || event.complexCard || event.complexTarget || event.complexSelect
     || !['chooseToUse', 'chooseToRespond', 'chooseToDiscard', 'chooseCard', 'chooseTarget', 'chooseCardTarget'].includes(event.name)) {
-    return { kind: 'choice', title: '原生选择', detail: '请按牌桌对话框操作', counts: selected };
+    return { kind: 'choice', title: '选择中', detail: '请按牌桌中央提示完成选择', counts: selected };
   }
   const targets = event.filterTarget && (ui.selected.targets.length > 0
     || [...game.players, ...(event.deadTarget ? game.dead : [])].some(player => player.classList.contains('selectable')));
@@ -55,15 +56,19 @@ export function ownDescriptionCards(game) {
   return (game.me?.getCards('he') || []).filter(card => !card._nointro && !card.classList.contains('infohidden'));
 }
 
+export function visibleDescriptionPlayers(game) {
+  return [...game.players, ...game.dead].filter(player => player.name && !player._nointro && !player.classList.contains('unseen'));
+}
+
 export function openNativeDescription({ game, ui, _status }, node, pointer) {
   if (!node || _status.paused2 || _status.dragged || _status.removePop) return false;
-  if (node === game.me) {
+  if (node === game.me || visibleDescriptionPlayers(game).includes(node)) {
     if (!node.name || node._nointro || node.classList.contains('unseen')) return false;
   } else if (!ownDescriptionCards(game).includes(node)) return false;
   // These buttons live outside ui.window, whose bubbling click handler normally
   // clears this flag. Preserve it here so the next native card click still works.
   const clicked = _status.clicked;
-  try { ui.click.intro.call(node, pointer); }
+  try { ui.click.intro.call(node, pointer)?.classList.add('sgs-readable-intro'); }
   finally { _status.clicked = clicked; }
   return true;
 }
@@ -75,7 +80,7 @@ export function canOpenNativeRecord({ ui, _status, lib }) {
 
 export function installTableActions(context, { document = globalThis.document,
   setInterval = globalThis.setInterval, clearInterval = globalThis.clearInterval,
-  queueMicrotask = globalThis.queueMicrotask } = {}) {
+  queueMicrotask = globalThis.queueMicrotask, dialogs, mode } = {}) {
   const { game, ui, lib, _status, get } = context;
   const rail = document.createElement('section');
   rail.className = 'sgs-action-rail';
@@ -95,7 +100,7 @@ export function installTableActions(context, { document = globalThis.document,
     const node = document.createElement('button');
     node.type = 'button';
     node.textContent = text;
-    node.addEventListener('click', listener);
+    node.addEventListener('click', event => { node.focus(); listener(event); });
     parent.append(node);
     return node;
   };
@@ -105,12 +110,12 @@ export function installTableActions(context, { document = globalThis.document,
     const rect = anchor.getBoundingClientRect();
     return { clientX: event.clientX || rect.left, clientY: event.clientY || rect.bottom };
   };
-  const general = button('武将说明', actions, event => {
-    event.stopPropagation();
-    cards.open = false;
-    openNativeDescription(context, game.me, position(event, general));
-  });
-  general.title = '查看我的武将与技能；其他明置武将可右键查看';
+  const general = document.createElement('details'); general.className = 'sgs-card-help';
+  const generalSummary = document.createElement('summary'); generalSummary.textContent = '武将说明';
+  const generalMenu = document.createElement('div'); generalMenu.className = 'sgs-card-help-menu';
+  const generalHint = document.createElement('p'); generalHint.textContent = '查看场上明置武将的技能与状态。';
+  const generalList = document.createElement('div'); generalList.className = 'sgs-card-help-list';
+  generalMenu.append(generalHint, generalList); general.append(generalSummary, generalMenu); actions.append(general);
   const cards = document.createElement('details');
   cards.className = 'sgs-card-help';
   const summary = document.createElement('summary');
@@ -129,13 +134,19 @@ export function installTableActions(context, { document = globalThis.document,
   const record = button('对局记录', actions, event => {
     event.stopPropagation();
     cards.open = false;
-    if (canOpenNativeRecord(context)) ui.click.pause();
+    general.open = false;
+    if (!canOpenNativeRecord(context)) return;
+    if (dialogs) openBattleLog(dialogs, ui, document); else ui.click.pause();
   });
-  record.title = '打开原生本局记录；在原生记录界面点击空白处返回';
+  record.title = '查找本局已公开的技能、卡牌和伤害记录';
+  const help = dialogs ? button('操作帮助', actions, event => {
+    event.stopPropagation(); cards.open = general.open = false;
+    openPlayGuide(dialogs, mode, document);
+  }) : null;
   rail.append(state, actions);
   document.body.append(rail);
   const label = (node, text) => { if (node.textContent !== text) node.textContent = text; };
-  let entries = null;
+  let entries = null, generalEntries = null;
   let disposed = false;
   const refresh = () => {
     if (disposed) return;
@@ -145,8 +156,28 @@ export function installTableActions(context, { document = globalThis.document,
     label(counts, action.counts);
     counts.hidden = !action.counts;
     label(detail, action.detail);
-    general.disabled = !game.me?.name || game.me.classList.contains('unseen') || !!_status.paused2;
-    record.disabled = !canOpenNativeRecord(context);
+    const ready = action.counts && ui.confirm?.parentNode && Array.from(ui.confirm.children).some(node => node.link === 'ok');
+    if (ready) label(detail, '选择已就绪，点击“确定”继续');
+    else if (action.kind === 'target' && ui.selected.cards.length && !ui.selected.targets.length) label(detail, '请点击亮起的角色，选好后再确定');
+    // Modal content already makes the table inert. Keep its opener focusable so
+    // focus can return before the asynchronous native pause gate is released.
+    record.disabled = !canOpenNativeRecord(context) && !dialogs?.has('battle-log');
+    if (help) help.disabled = !!_status.paused2 && !dialogs.has('play-guide');
+    if (general.open) {
+      const players = visibleDescriptionPlayers(game);
+      const labels = players.map(player => `${visiblePlayerName(player, get)}${player === game.me ? ' · 我' : ''}${player.classList.contains('dead') ? ' · 已阵亡' : ''}`);
+      if (!generalEntries || players.length !== generalEntries.length || generalEntries.some((entry, index) => entry.player !== players[index] || entry.label !== labels[index])) {
+        generalList.replaceChildren();
+        generalEntries = players.map((player, index) => {
+          const entry = button(labels[index], generalList, event => {
+            event.stopPropagation(); general.open = false;
+            openNativeDescription(context, player, position(event, generalSummary));
+          });
+          entry.disabled = !!_status.paused2;
+          return { player, label: labels[index] };
+        });
+      }
+    }
     if (!cards.open) return;
     const owned = ownDescriptionCards(game);
     // Preserve focus and nodes while the menu remains unchanged.
@@ -165,12 +196,15 @@ export function installTableActions(context, { document = globalThis.document,
     });
     empty.hidden = owned.length > 0;
   };
-  const toggle = () => { if (cards.open) { entries = null; refresh(); } };
-  const outside = event => { if (!cards.contains(event.target)) cards.open = false; };
+  const toggle = () => { if (cards.open) { general.open = false; entries = null; refresh(); } };
+  const generalToggle = () => { if (general.open) { cards.open = false; generalEntries = null; refresh(); } };
+  const outside = event => { if (!cards.contains(event.target)) cards.open = false; if (!general.contains(event.target)) general.open = false; };
   const escape = event => {
     if (event.key === 'Escape' && cards.open) { cards.open = false; summary.focus(); }
+    if (event.key === 'Escape' && general.open) { general.open = false; generalSummary.focus(); }
   };
   cards.addEventListener('toggle', toggle);
+  general.addEventListener('toggle', generalToggle);
   document.addEventListener('pointerdown', outside);
   document.addEventListener('keydown', escape);
   // Run after the native check/clear has settled; never alter its return value.
@@ -188,6 +222,7 @@ export function installTableActions(context, { document = globalThis.document,
       if (index >= 0) hooks.splice(index, 1);
     }
     cards.removeEventListener('toggle', toggle);
+    general.removeEventListener('toggle', generalToggle);
     document.removeEventListener('pointerdown', outside);
     document.removeEventListener('keydown', escape);
     rail.remove();

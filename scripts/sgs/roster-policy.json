@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "cutoffYear": 2021,
+  "unknownBehavior": "keep-and-label",
+  "browsePacks": [
+    { "id": "yijiang", "name": "一将成名" },
+    { "id": "limited", "name": "限定专属" },
+    { "id": "huicui", "name": "群英荟萃" },
+    { "id": "xinghe", "name": "星河璀璨" },
+    { "id": "mou", "name": "谋包" },
+    { "id": "wei", "name": "威包" },
+    { "id": "classic", "name": "经典与界限" },
+    { "id": "other", "name": "其他版本" }
+  ],
+  "sourcePacks": { "yijiang": "yijiang", "newjiang": "yijiang", "xianding": "limited", "extra": "limited", "huicui": "huicui", "sp2": "huicui", "standard": "classic", "shenhua": "classic", "refresh": "classic" },
+  "groupOverrides": {
+    "sp2:sp2_tianshu": "xinghe", "sp2:sp2_yuheng": "xinghe", "sp2:sp2_kaiyang": "xinghe", "sp2:sp2_yaoguang": "xinghe", "sp2:sp2_tianxuan": "xinghe",
+    "xianding:sp2_mouding": "mou", "xianding:sp2_zhonghu": "mou", "xianding:sp2_zijing": "mou", "xianding:sp2_dushi": "mou", "xianding:sp2_zhoulang": "mou", "xianding:sp2_qizuo": "mou", "xianding:sp2_wangzuo": "mou", "xianding:sp2_youlin": "mou", "xianding:sp2_boyan": "mou", "xianding:sp2_fengchu": "mou", "xianding:sp2_wuhou": "mou",
+    "xianding:sp2_weizhen": "wei", "xianding:sp2_junwei": "wei", "xianding:sp2_pianyu": "wei",
+    "refresh:refresh_yijiang1": "yijiang", "refresh:refresh_yijiang2": "yijiang", "refresh:refresh_yijiang3": "yijiang", "refresh:refresh_yijiang4": "yijiang", "refresh:refresh_yijiang5": "yijiang", "refresh:refresh_yijiang6": "yijiang"
+  },
+  "characterOverrides": { "newjiang:v_sunce": "wei", "newjiang:yj_sb_guojia": "mou" },
+  "searchAliases": { "sp2:xushao": ["许绍"], "xianding:dc_zhaoxiang": ["赵香"], "xianding:xin_baosanniang": ["包三娘"], "xianding:zhouyi": ["周仪"], "xianding:luyi": ["卢奕"], "xianding:dc_ruiji": ["如姬"] },
+  "datedSourcePacks": ["standard", "yijiang", "newjiang"],
+  "evidence": {
+    "wei-debut": { "url": "https://x.sanguosha.com/news/20241205_1124_1313.html", "note": "2024年12月7日威系列开山武将威张辽；该系列晚于2020年。" },
+    "sunce-2026": { "url": "https://x.sanguosha.com/news/20260213_2684_4717.html", "note": "威孙策于2026年2月15日上线；官方证据优先于源码一将2025的分组标签。" },
+    "caozhi-2023": { "url": "https://www.sanguosha.com/news/20230315_1617_2220", "note": "十周年2023年3月23日新界曹植，对应dc_caozhi，而非手游re_caozhi。" },
+    "star-debut": { "url": "https://www.sanguosha.com/news/20231030_6821_2320", "note": "2023年11月星河璀璨新品星曹仁、星袁术；该新系列晚于2020年。" },
+    "xushu-2022": { "url": "https://www.sanguosha.com/news/20220511_9158_4609", "note": "十周年2022年5月19日新界徐庶；诛害可转杀或过河拆桥，对应dc_xushu。" },
+    "bulianshi-2022": { "url": "https://sanguosha.com/news/20220614_5307_3917", "note": "十周年2022年6月24日新界步练师，对应dc_bulianshi。" },
+    "caorui-2023": { "url": "https://backend.sanguosha.com/news/20231204_6793_5816", "note": "十周年2023年12月7日新界曹叡，对应re_caorui。" },
+    "guohuanghou-2022": { "url": "https://sanguosha.com/news/20220331_6365_2811", "note": "十周年2022年4月1日界郭皇后上新，对应re_guohuanghou。" },
+    "gaoshun-2020": { "url": "https://www.sanguosha.com/news/20200414_9057_3409", "note": "十周年2020年4月15日界高顺；后续平衡调整不构造新的上线年份。" }
+  },
+  "releaseOverrides": {
+    "newjiang:v_sunce": { "era": "recent", "year": 2026, "evidence": "sunce-2026" },
+    "refresh:dc_caozhi": { "era": "recent", "year": 2023, "evidence": "caozhi-2023" },
+    "refresh:dc_xushu": { "era": "recent", "year": 2022, "evidence": "xushu-2022" },
+    "refresh:dc_bulianshi": { "era": "recent", "year": 2022, "evidence": "bulianshi-2022" },
+    "refresh:re_caorui": { "era": "recent", "year": 2023, "evidence": "caorui-2023" },
+    "refresh:re_guohuanghou": { "era": "recent", "year": 2022, "evidence": "guohuanghou-2022" },
+    "refresh:xin_gaoshun": { "era": "old", "year": 2020, "evidence": "gaoshun-2020" }
+  },
+  "recentSeries": { "xinghe": "star-debut", "wei": "wei-debut" }
+}

@@ -7,6 +7,8 @@ import { installOwnedPause } from '../../apps/core/sgs/pause.mjs';
 import { createPreferences, preferencesKey } from '../../apps/core/sgs/preferences.mjs';
 import { createClientDialogs } from '../../apps/core/sgs/settings.mjs';
 import { installTableSession } from '../../apps/core/sgs/table-session.mjs';
+import { installRuntimeErrors } from '../../apps/core/sgs/runtime-errors.mjs';
+import { createProblemReports } from '../../apps/core/sgs/problem-report.mjs';
 
 const source = path => readFileSync(new URL(`../../apps/core/noname/${path}`, import.meta.url), 'utf8');
 const gameSource = source('game/index.js');
@@ -186,6 +188,22 @@ test('background defaults on, repeated hidden events are idempotent, visible req
   f.dialog().querySelector('[data-continue]').emit('click'); await settle(); assert.equal(f._status.paused2, false);
   f.preferences.set({ backgroundPause: false }); f.document.hidden = true; f.document.emit('visibilitychange'); await settle(); assert.equal(f._status.paused2, false);
   f.session.dispose(); assert.equal(f.document.listeners.get('visibilitychange').size, 0);
+});
+
+test('runtime fault keeps the real native pause gate held through settings closure, native resume and background return', async () => {
+  const f=table(), host={};const cards=f.ui.selected.cards,targets=f.ui.selected.targets,event=f._status.event;
+  const reports=createProblemReports({launch:{mode:'identity',pack:'standard',generalId:'caocao',playerCount:8}});
+  f.game.pause2();f.settingsButton.emit('click');
+  const errors=installRuntimeErrors({host,session:f.session,reports,reportUI:{open(){}}});
+  host.onerror('fault','http://localhost/sgs/runtime.js',10,2,new Error('fault'));
+  let advanced=false;f._status.pauseManager.waitPause().then(()=>{advanced=true;});
+  f.game.resume2();await settle();assert.equal(advanced,false);assert.equal(f._status.paused2,true);
+  f.document.hidden=true;f.document.emit('visibilitychange');f.document.hidden=false;f.document.emit('visibilitychange');
+  f.pauseButton.emit('click');f.session.refresh();assert.equal(f.document.body.children.length,1);
+  assert.equal(f.pauseButton.textContent,'异常已暂停');assert.equal(f.autoButton.disabled,true);
+  f.dialog().emit('keydown',{key:'Escape'});await settle();assert.equal(f._status.paused2,true);
+  assert.equal(f.ui.selected.cards,cards);assert.equal(f.ui.selected.targets,targets);assert.equal(f._status.event,event);assert.equal(f._status.over,undefined);
+  errors.dispose();f.session.dispose();await settle();assert.equal(advanced,true);assert.equal(f._status.paused2,false);
 });
 
 test('background and native pauses survive closing settings; disabling background does not silently release a held pause', async () => {

@@ -1,0 +1,7 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SGS 异常界面隔离验收</title>
+<link rel="stylesheet" href="/sgs/theme.css"><link rel="stylesheet" href="/sgs/settings.css"><link rel="stylesheet" href="/sgs/problem-report.css">
+<style>body{background:var(--sgs-bg);color:var(--sgs-text);font:16px/1.8 var(--sgs-font-body);padding:24px}main{max-width:720px}button{padding:10px 18px;margin:8px 8px 8px 0;font:inherit}#fixture-status{padding:12px;border:1px solid var(--sgs-bronze)}</style>
+<main><h1>异常界面隔离验收</h1><p>这是适配层测试夹具，没有真实牌局、手牌或胜负。测试事件不会进入实际对局。</p><p id="fixture-status" role="status"></p>
+<button id="script">触发脚本异常与重复事件</button><button id="promise">触发 Promise 异常</button><button id="nested">先打开已有暂停</button><p id="destination"></p></main>
+<script type="module" src="/reliability-runtime-errors.mjs"></script></html>

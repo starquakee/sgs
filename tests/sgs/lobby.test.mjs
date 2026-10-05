@@ -13,6 +13,10 @@ import { completedBattle } from './helpers/battle-record.mjs';
 import { createLaunchHandoff, readLaunch } from '../../apps/core/sgs/launch-handoff.mjs';
 import { loadRosterAssets } from '../../apps/core/sgs/loading.mjs';
 import { canPersist, storageNotice } from '../../apps/core/sgs/storage.mjs';
+import { browsePackName, isOldGeneral, hasUnknownYear, releaseLabel, inBrowseScope, compareBrowseCharacters } from '../../apps/core/sgs/roster-filters.mjs';
+import { ratingScopes, ratingScopeName, ratingValue, compareOfficialRatings, normalizeRatingPreference } from '../../apps/core/sgs/official-rating.mjs';
+import { skillReadingHTML, closeReadingDetails } from '../../apps/core/sgs/skill-reading.mjs';
+import { installComposedSearch } from '../../apps/core/sgs/lobby-continuity.mjs';
 
 const recentKey = 'sgs.recent-generals.v1';
 const character = (pack, id, category = 'common') => ({
@@ -76,26 +80,27 @@ const source = (await readFile(new URL('../../apps/core/sgs/lobby.js', import.me
 class Element {
   constructor() {
     this.value = ''; this.innerHTML = ''; this.textContent = ''; this.dataset = {}; this.attrs = {};
-    this.listeners = {}; this.scrollTop = 0; this.tagName = 'BUTTON';
+    this.listeners = {}; this.scrollTop = 0; this.tagName = 'BUTTON'; this.children = [];
     this.classList = {toggle() {}};
   }
   setAttribute(name, value) { this.attrs[name] = value; }
   addEventListener(name, callback) { this.listeners[name] = callback; }
-  emit(name, event) { this.listeners[name]?.(event); }
+  emit(name, event = {}) { this.listeners[name]?.(event); }
   focus() { this.focused = true; }
   scrollIntoView() { this.scrolled = true; }
 }
-async function lobby({local = storage(), session = storage(), fetcher, pending = false} = {}) {
+async function lobby({local = storage(), session = storage(), fetcher, pending = false, roster = characters} = {}) {
   const elements = Object.fromEntries([...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, new Element()]));
   for (const [id, value] of Object.entries({version: 'target', pack: 'all', 'player-count': '8', identity: 'random', speed: 'normal'})) elements[id].value = value;
   const modes = ['identity', 'versus', 'doudizhu'].map(mode => Object.assign(new Element(), {dataset: {mode}}));
   const factions = ['all', 'wei', 'shu'].map(faction => Object.assign(new Element(), {dataset: {faction}}));
+  const browse = ['all', 'yijiang', 'limited', 'huicui', 'xinghe', 'mou', 'wei'].map(browse => Object.assign(new Element(), {dataset: {browse}}));
   const roles = ['landlord', 'farmer'].map(value => Object.assign(new Element(), {value, checked: value === 'landlord'}));
   const document = {
     ...dom(),
     documentElement: new Element(),
     getElementById: id => elements[id] ??= new Element(),
-    querySelectorAll: selector => ({'[data-mode]': modes, '.factions button': factions, '[name="landlord-role"]': roles}[selector] ?? []),
+    querySelectorAll: selector => ({'[data-mode]': modes, '.factions button': factions, '[data-browse]': browse, '[name="landlord-role"]': roles}[selector] ?? []),
     querySelector(selector) {
       if (selector === '[name="landlord-role"]:checked') return roles.find(r => r.checked);
       if (selector.startsWith('[name="landlord-role"][value=')) return roles.find(r => selector.includes(`"${r.value}"`));
@@ -107,7 +112,7 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
   };
   const location = {href: ''}, navigations = [];
   const fetch = fetcher || (async url => ({ok: true, json: async () => url.includes('portraits') ? {portraits: {}} : {
-    characters: structuredClone(characters), packs: ['standard', 'refresh', 'xianding'].map(id => ({id, name: id})),
+    characters: structuredClone(roster), packs: ['standard', 'refresh', 'xianding'].map(id => ({id, name: id})),
   }}));
   vm.runInNewContext(source, {
     document, localStorage: local, sessionStorage: session, location, innerWidth: 1024,
@@ -117,13 +122,19 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
     createLaunchHandoff: () => createLaunchHandoff({ session: () => session, navigate(url) { navigations.push(url); location.href = url; } }),
     loadRosterAssets: options => loadRosterAssets({ ...options, fetcher: fetch }),
     canPersist: () => canPersist({ localStorage: local }), storageNotice,
+    browsePackName, isOldGeneral, hasUnknownYear, releaseLabel, inBrowseScope, compareBrowseCharacters,
+    ratingScopes, ratingScopeName, ratingValue, compareOfficialRatings, normalizeRatingPreference, skillReadingHTML, closeReadingDetails,
+    // This older harness checks lobby data/event wiring only. Real keyed DOM
+    // retention and focus are exercised separately in lobby-continuity tests/CUA.
+    reconcileKeyedHTML: (node, html) => { node.innerHTML = html; },
+    installComposedSearch, focusAfterFilterRemoval: (_node, _index, fallback) => fallback.focus(),
     window: {addEventListener() {}}, setTimeout() {},
     fetch,
   });
   await new Promise(resolve => setImmediate(resolve));
-  if (!pending) assert.equal(elements['detail-name'].textContent, 'caocao', 'real lobby init should finish');
+  if (!pending) assert.equal(elements['detail-name'].textContent, roster.find(c => c.id === 'caocao').name, 'real lobby init should finish');
   return {
-    elements, local, session, location, modes, factions, roles, document, navigations,
+    elements, local, session, location, modes, factions, browse, roles, document, navigations,
     carrier: () => readLaunch({ location: { hash: new URL(location.href, 'http://localhost').hash } }),
     select(key) { elements['general-grid'].emit('click', {target: {closest: () => ({dataset: {key}})}}); },
     visible() { return [...elements['general-grid'].innerHTML.matchAll(/data-key="([^"]+)"/g)].map(([, key]) => key); },
@@ -153,6 +164,33 @@ test('browsing, favorites and combined filters preserve behavior without recordi
   e['recent-generals'].onclick();
   assert.match(e['general-grid'].innerHTML, /还没有出战记录/);
   assert.equal(app.location.href, '');
+});
+
+test('lobby search keeps the committed query throughout IME and searches only the final text', async () => {
+  const app = await lobby(), e = app.elements;
+  e.search.value = 'caocao'; e.search.emit('input');
+  const previous = app.visible();
+  e.search.emit('compositionstart'); e.search.value = 're'; e.search.emit('input', {isComposing:true});
+  assert.deepEqual(app.visible(), previous);
+  assert.ok(e['active-filters'].innerHTML.includes('caocao'));
+  e.search.value = 'recent'; e.search.emit('compositionend');
+  assert.deepEqual(app.visible(), ['xianding:recent']);
+  assert.equal(e['detail-name'].textContent, 'caocao');
+});
+
+test('active filters clear individually while retaining the selected general and launch settings', async () => {
+  const app = await lobby(), e = app.elements;
+  app.select('xianding:recent'); e.pack.value = 'standard'; e.pack.emit('change');
+  app.factions.find(f => f.dataset.faction === 'shu').onclick();
+  assert.match(e['active-filters'].innerHTML, /data-filter="pack"/);
+  assert.equal(e['selected-filter-note'].hidden, false);
+  e['active-filters'].emit('click', { target: { closest: () => ({ dataset: { filter: 'faction' } }) } });
+  assert.equal(e.pack.value, 'standard'); assert.ok(app.visible().length > 0);
+  assert.equal(e['launch-general'].textContent, 'recent');
+  e['active-filters'].emit('click', { target: { closest: () => ({ dataset: { filter: 'pack' } }) } });
+  assert.equal(e.pack.value, 'all'); assert.equal(e['selected-filter-note'].hidden, true);
+  assert.equal(e['launch-general'].textContent, 'recent');
+  assert.equal(app.local.getItem(recentKey), null);
 });
 
 test('recent tab keeps confirmed order and permits selecting a saved version outside the default filter', async () => {
@@ -302,4 +340,155 @@ test('history distinguishes loading, failed and removed catalog versions and rec
   assert.equal(app.document.body.children.length, 1, 'retry must preserve the open details without duplicating dialogs');
   dialog.querySelector('[data-launch]').emit('click');
   assert.equal(app.carrier().fromBattleRecord, true);
+});
+
+const realRoster = JSON.parse(await readFile(new URL('../../apps/core/sgs/roster.json', import.meta.url), 'utf8')).characters;
+test('real roster defaults to pack ordering and all six tabs filter exact catalog versions', async () => {
+  const app = await lobby({roster: realRoster}), e = app.elements;
+  const byKey = new Map(realRoster.map(c => [c.key, c]));
+  assert.ok(app.visible().every(key => byKey.get(key).browsePack === 'yijiang'), 'Yijiang leads the default all-pack list');
+  for (const [group, key] of [['yijiang', 'newjiang:lukai'], ['limited', 'xianding:luyi'], ['huicui', 'sp2:xushao'], ['xinghe', 'sp2:star_caoren'], ['mou', 'xianding:dc_jiangji'], ['wei', 'newjiang:v_sunce']]) {
+    app.browse.find(b => b.dataset.browse === group).onclick();
+    e.search.value = key.split(':')[1]; e.search.emit('input');
+    assert.ok(app.visible().includes(key), key);
+    assert.ok(app.visible().every(visible => byKey.get(visible).browsePack === group), group);
+    assert.equal(app.browse.find(b => b.dataset.browse === group).attrs['aria-pressed'], 'true');
+  }
+  assert.equal(app.local.getItem(recentKey), null);
+  app.browse.find(b => b.dataset.browse === 'huicui').onclick();
+  e.search.value = '许绍'; e.search.emit('input');
+  assert.ok(app.visible().includes('sp2:xushao'), 'common homophone search finds 许劭 without renaming the general');
+});
+
+test('hide-old button excludes confirmed old editions but retains modern standard/refresh editions and labels unknown years', async () => {
+  const app = await lobby({roster: realRoster}), e = app.elements;
+  e['hide-old'].onclick();
+  assert.equal(e['hide-old'].attrs['aria-pressed'], 'true');
+  for (const [key, visible] of [['standard:caocao', false], ['refresh:re_caocao', false], ['refresh:xin_gaoshun', false], ['newjiang:yj_zhanghe', false], ['standard:std_panfeng', true], ['refresh:dc_caozhi', true], ['refresh:dc_bulianshi', true], ['xianding:liuhui', true]]) {
+    e.search.value = key.split(':')[1]; e.search.emit('input');
+    assert.equal(app.visible().includes(key), visible, key);
+  }
+  assert.match(e['general-grid'].innerHTML, /年份待核实/);
+  assert.match(e['age-filter-note'].textContent, /年份待核实，暂时保留/);
+  e['hide-old'].onclick(); e.search.value = 're_caocao'; e.search.emit('input');
+  assert.ok(app.visible().includes('refresh:re_caocao'), 'toggle only hides, never deletes a catalog entry');
+});
+
+test('pack/year/search filters clear independently, persist only age preference and preserve exact native launch', async () => {
+  const app = await lobby({roster: realRoster}), e = app.elements;
+  app.select('newjiang:v_sunce');
+  app.browse.find(b => b.dataset.browse === 'wei').onclick();
+  e['hide-old'].onclick(); e.search.value = 'v_sunce'; e.search.emit('input');
+  e['active-filters'].emit('click', {target: {closest: () => ({dataset: {filter: 'browse'}})}});
+  assert.equal(e['hide-old'].attrs['aria-pressed'], 'true');
+  assert.equal(e.search.value, 'v_sunce');
+  e['active-filters'].emit('click', {target: {closest: () => ({dataset: {filter: 'search'}})}});
+  assert.equal(e['launch-general'].textContent, '威孙策');
+  assert.equal(e['selected-filter-note'].hidden, true);
+  const local = storage({'sgs.hide-old-generals.v1': app.local.getItem('sgs.hide-old-generals.v1')});
+  const reloaded = await lobby({roster: realRoster, local});
+  assert.equal(reloaded.elements['hide-old'].attrs['aria-pressed'], 'true');
+  app.modes.find(m => m.dataset.mode === 'doudizhu').emit('click');
+  e['start-game'].onclick();
+  assert.equal(app.carrier().generalId, 'v_sunce'); assert.equal(app.carrier().pack, 'newjiang');
+  assert.equal(app.carrier().mode, 'doudizhu');
+  assert.deepEqual(JSON.parse(app.local.getItem(recentKey)).keys, ['newjiang:v_sunce']);
+});
+
+test('year filtering tolerates denied preference storage and retains a selected old hero outside results', async () => {
+  const local = storage(), save = local.setItem;
+  local.setItem = (key, value) => { if (key === 'sgs.hide-old-generals.v1') throw Error('quota'); save(key, value); };
+  const app = await lobby({roster: realRoster, local}), e = app.elements;
+  e['hide-old'].onclick(); e.search.value = 'caocao'; e.search.emit('input');
+  assert.equal(e['storage-notice'].hidden, false);
+  assert.equal(e['selected-filter-note'].hidden, false);
+  assert.equal(e['launch-general'].textContent, '曹操');
+  assert.ok(!app.visible().includes('standard:caocao'));
+  e['active-filters'].emit('click', {target: {closest: () => ({dataset: {filter: 'age'}})}});
+  assert.ok(app.visible().includes('standard:caocao'));
+  assert.equal(e.search.value, 'caocao');
+});
+
+const ratedSample = ['standard:caocao', 'refresh:re_caocao', 'newjiang:v_sunce', 'newjiang:yj_hanbing', 'xianding:shen_huangzhong']
+  .map(key => realRoster.find(c => c.key === key));
+
+test('slow roster loading preserves the saved rating scope before enabling the sort controls', async () => {
+  const local = storage({'sgs.roster-sort.v1':JSON.stringify({order:'high',scope:'landlord'})});
+  let release;
+  const app = await lobby({roster:ratedSample, local, pending:true, fetcher: async url => {
+    if (url.includes('portraits')) return {ok:true,json:async()=>({portraits:{}})};
+    return new Promise(resolve => { release = () => resolve({ok:true,json:async()=>({characters:structuredClone(ratedSample),packs:[]})}); });
+  }});
+  const e = app.elements;
+  assert.equal(e['sort-order'].value, 'high'); assert.equal(e['rating-scope'].value, 'landlord');
+  assert.equal(e['sort-order'].disabled, true); assert.equal(e['rating-scope'].disabled, true);
+  e['sort-order'].emit('change');
+  release(); await new Promise(resolve => setImmediate(resolve));
+  assert.equal(e['sort-order'].disabled, false); assert.equal(e['rating-scope'].disabled, false);
+  assert.equal(e['rating-scope'].value, 'landlord');
+  assert.equal(app.visible()[0], 'xianding:shen_huangzhong');
+});
+
+test('actual rating controls sort numbers, keep unknowns last in both directions and preserve exact native launch', async () => {
+  const app = await lobby({roster: ratedSample}), e = app.elements;
+  app.select('refresh:re_caocao');
+  for (const [order, scores] of [['high', [9,9,6,5,null]], ['low', [5,6,9,9,null]]]) {
+    e['sort-order'].value = order; e['sort-order'].emit('change');
+    assert.deepEqual(app.visible().map(key => ratingValue(ratedSample.find(c => c.key === key))), scores);
+    assert.equal(e['launch-general'].textContent, '界曹操');
+    assert.match(e['rating-detail'].textContent, /综合 6 \/ 10/);
+    assert.equal(app.local.getItem(recentKey), null);
+  }
+  e.search.value = 'caocao'; e.search.emit('input');
+  assert.deepEqual(app.visible(), ['standard:caocao', 'refresh:re_caocao']);
+  e['start-game'].onclick();
+  assert.equal(app.carrier().pack, 'refresh'); assert.equal(app.carrier().generalId, 're_caocao');
+});
+
+test('changing the official rating scope updates sorting and details while keeping filters and selection', async () => {
+  const app = await lobby({roster: realRoster}), e = app.elements;
+  app.select('xianding:shen_huangzhong');
+  app.browse.find(b => b.dataset.browse === 'limited').onclick();
+  e['sort-order'].value = 'high'; e['sort-order'].emit('change');
+  e.next.onclick(); assert.match(e['page-number'].textContent, /^2 \/ /);
+  e['rating-scope'].value = 'landlord'; e['rating-scope'].emit('change');
+  assert.match(e['page-number'].textContent, /^1 \/ /);
+  assert.equal(app.browse.find(b => b.dataset.browse === 'limited').attrs['aria-pressed'], 'true');
+  assert.match(e['rating-detail'].textContent, /斗地主·地主 10 \/ 10/);
+  const rows = app.visible().map(key => realRoster.find(c => c.key === key));
+  assert.ok(rows.every(c => c.browsePack === 'limited'));
+  assert.ok(rows.every((c,i) => !i || ratingValue(rows[i-1], 'landlord') >= ratingValue(c, 'landlord')));
+  assert.equal(e['launch-general'].textContent, '神黄忠');
+  e['rating-scope'].value = 'farmer'; e['rating-scope'].emit('change');
+  assert.match(e['rating-detail'].textContent, /斗地主·农民 9 \/ 10/);
+});
+
+test('recent order returns intact after explicit score sorting and ratings persist independently of filters', async () => {
+  const keys = ['standard:caocao', 'newjiang:yj_hanbing', 'newjiang:v_sunce'];
+  const local = storage({[recentKey]: JSON.stringify({version:1, keys})});
+  const app = await lobby({roster:ratedSample, local}), e = app.elements;
+  e['recent-generals'].onclick(); assert.deepEqual(app.visible(), keys);
+  e['sort-order'].value = 'high'; e['sort-order'].emit('change');
+  assert.deepEqual(app.visible(), ['newjiang:v_sunce', 'standard:caocao', 'newjiang:yj_hanbing']);
+  e['sort-order'].value = 'default'; e['sort-order'].emit('change');
+  assert.deepEqual(app.visible(), keys);
+  e['sort-order'].value = 'low'; e['rating-scope'].value = 'landlord'; e['rating-scope'].emit('change');
+  e['clear-filters'].onclick();
+  const reloaded = await lobby({roster:ratedSample, local});
+  assert.equal(reloaded.elements['sort-order'].value, 'low');
+  assert.equal(reloaded.elements['rating-scope'].value, 'landlord');
+  assert.deepEqual(JSON.parse(local.getItem(recentKey)).keys, keys);
+});
+
+test('malformed and unwritable rating preferences do not prevent numeric sorting or launching', async () => {
+  const local = storage({'sgs.roster-sort.v1':'{broken'}), save = local.setItem;
+  local.setItem = (key,value) => { if (key === 'sgs.roster-sort.v1') throw Error('quota'); save(key,value); };
+  const app = await lobby({roster:ratedSample, local}), e = app.elements;
+  assert.equal(e['sort-order'].value, 'default'); assert.equal(e['rating-scope'].value, 'overall');
+  e['sort-order'].value = 'high'; e['sort-order'].emit('change');
+  assert.equal(e['storage-notice'].hidden, false);
+  assert.equal(ratingValue(ratedSample.find(c => c.key === app.visible()[0])), 9);
+  app.select('newjiang:yj_hanbing');
+  assert.match(e['rating-detail'].textContent, /评分待收录/);
+  e['start-game'].onclick(); assert.equal(app.carrier().generalId, 'yj_hanbing');
 });

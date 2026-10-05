@@ -1,0 +1,3973 @@
+{
+  "schemaVersion": 1,
+  "commit": "906755306df269df50ddb146c5608af56b400fb6",
+  "sourceDate": "2020-12-31",
+  "note": "同一原生pack:id于2020年底已存在，技能平衡调整不自动变成新版本；跨包迁移需初始技能ID集合一致。不推断首次上线日期，不把未收录视为新武将。明确新版与官方上新证据优先。",
+  "sources": [
+    {
+      "pack": "standard",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/standard.js",
+      "sha256": "5da95db4343506f3d4b76ed0ab019466b47ee4ff5ffe2f6cbd2073fb33090ecf"
+    },
+    {
+      "pack": "refresh",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/refresh.js",
+      "sha256": "1d75b6bb02dd16824cd5591015f722567269bb45db5ca83631b410f315658c09"
+    },
+    {
+      "pack": "shenhua",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/shenhua.js",
+      "sha256": "2498a9154e01f186ff4382f230b94f731b1cdb4d69ab6852b0cf084e3aeffbf4"
+    },
+    {
+      "pack": "yijiang",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/yijiang.js",
+      "sha256": "c7a0722f985c0e04df72b58f5e089d18fe297b7db2913bb229231844a969e676"
+    },
+    {
+      "pack": "extra",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/extra.js",
+      "sha256": "b0dbf761328760300444c1654c9bc1dbb4c9a66252188f38e2608c43d9f841e3"
+    },
+    {
+      "pack": "sp",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/sp.js",
+      "sha256": "a5600e720313550c4733a0af79bc8da8f24e65452955e4e7efe7a63592eabddc"
+    },
+    {
+      "pack": "sp2",
+      "url": "https://raw.githubusercontent.com/libnoname/noname/906755306df269df50ddb146c5608af56b400fb6/character/sp2.js",
+      "sha256": "7d51b63f250efbd67a9edc1e17aa1d3700b5b1960d40e120d5c51e85cefc0676"
+    }
+  ],
+  "characters": [
+    {
+      "id": "baosanniang",
+      "pack": "sp",
+      "skills": [
+        "xinfu_wuniang",
+        "xinfu_xushen"
+      ],
+      "line": 42
+    },
+    {
+      "id": "beimihu",
+      "pack": "sp2",
+      "skills": [
+        "zongkui",
+        "guju",
+        "baijia"
+      ],
+      "line": 39
+    },
+    {
+      "id": "bianfuren",
+      "pack": "sp",
+      "skills": [
+        "wanwei",
+        "yuejian"
+      ],
+      "line": 132
+    },
+    {
+      "id": "bulianshi",
+      "pack": "yijiang",
+      "skills": [
+        "old_anxu",
+        "zhuiyi"
+      ],
+      "line": 37
+    },
+    {
+      "id": "buzhi",
+      "pack": "sp",
+      "skills": [
+        "hongde",
+        "dingpan"
+      ],
+      "line": 107
+    },
+    {
+      "id": "caifuren",
+      "pack": "yijiang",
+      "skills": [
+        "qieting",
+        "xianzhou"
+      ],
+      "line": 48
+    },
+    {
+      "id": "caiwenji",
+      "pack": "shenhua",
+      "skills": [
+        "beige",
+        "duanchang"
+      ],
+      "line": 53
+    },
+    {
+      "id": "caiyang",
+      "pack": "sp",
+      "skills": [
+        "yinka"
+      ],
+      "line": 24
+    },
+    {
+      "id": "caiyong",
+      "pack": "yijiang",
+      "skills": [
+        "bizhuan",
+        "tongbo"
+      ],
+      "line": 92
+    },
+    {
+      "id": "caoang",
+      "pack": "sp",
+      "skills": [
+        "kaikang"
+      ],
+      "line": 63
+    },
+    {
+      "id": "caobuxing",
+      "pack": "sp2",
+      "skills": [
+        "moying",
+        "juanhui"
+      ],
+      "line": 24
+    },
+    {
+      "id": "caocao",
+      "pack": "standard",
+      "skills": [
+        "jianxiong",
+        "hujia"
+      ],
+      "line": 14
+    },
+    {
+      "id": "caochong",
+      "pack": "yijiang",
+      "skills": [
+        "chengxiang",
+        "renxin"
+      ],
+      "line": 26
+    },
+    {
+      "id": "caochun",
+      "pack": "sp",
+      "skills": [
+        "xinshanjia"
+      ],
+      "line": 110
+    },
+    {
+      "id": "caohong",
+      "pack": "sp",
+      "skills": [
+        "yuanhu"
+      ],
+      "line": 49
+    },
+    {
+      "id": "caojie",
+      "pack": "yijiang",
+      "skills": [
+        "shouxi",
+        "huimin"
+      ],
+      "line": 90
+    },
+    {
+      "id": "caopi",
+      "pack": "shenhua",
+      "skills": [
+        "xingshang",
+        "fangzhu",
+        "songwei"
+      ],
+      "line": 41
+    },
+    {
+      "id": "caoren",
+      "pack": "refresh",
+      "skills": [
+        "xinjushou",
+        "xinjiewei"
+      ],
+      "line": 90
+    },
+    {
+      "id": "caorui",
+      "pack": "yijiang",
+      "skills": [
+        "huituo",
+        "mingjian",
+        "xingshuai"
+      ],
+      "line": 64
+    },
+    {
+      "id": "caoshuang",
+      "pack": "sp",
+      "skills": [
+        "retuogu",
+        "shanzhuan"
+      ],
+      "line": 21
+    },
+    {
+      "id": "caoxing",
+      "pack": "sp2",
+      "skills": [
+        "cxliushi",
+        "zhanwan"
+      ],
+      "line": 21
+    },
+    {
+      "id": "caoxiu",
+      "pack": "yijiang",
+      "skills": [
+        "qianju",
+        "qingxi"
+      ],
+      "line": 65
+    },
+    {
+      "id": "caoying",
+      "pack": "sp",
+      "skills": [
+        "xinfu_lingren",
+        "xinfu_fujian"
+      ],
+      "line": 40
+    },
+    {
+      "id": "caozhang",
+      "pack": "yijiang",
+      "skills": [
+        "jiangchi"
+      ],
+      "line": 22
+    },
+    {
+      "id": "caozhen",
+      "pack": "yijiang",
+      "skills": [
+        "xinsidi"
+      ],
+      "line": 60
+    },
+    {
+      "id": "caozhi",
+      "pack": "yijiang",
+      "skills": [
+        "luoying",
+        "jiushi"
+      ],
+      "line": 25
+    },
+    {
+      "id": "cenhun",
+      "pack": "yijiang",
+      "skills": [
+        "jishe",
+        "lianhuo"
+      ],
+      "line": 82
+    },
+    {
+      "id": "chendao",
+      "pack": "shenhua",
+      "skills": [
+        "drlt_wanglie"
+      ],
+      "line": 71
+    },
+    {
+      "id": "chendong",
+      "pack": "sp",
+      "skills": [
+        "duanxie",
+        "fenming"
+      ],
+      "line": 125
+    },
+    {
+      "id": "chengong",
+      "pack": "yijiang",
+      "skills": [
+        "mingce",
+        "zhichi"
+      ],
+      "line": 36
+    },
+    {
+      "id": "chengpu",
+      "pack": "yijiang",
+      "skills": [
+        "lihuo",
+        "chunlao"
+      ],
+      "line": 58
+    },
+    {
+      "id": "chengyu",
+      "pack": "sp",
+      "skills": [
+        "shefu",
+        "benyu"
+      ],
+      "line": 99
+    },
+    {
+      "id": "chenlin",
+      "pack": "sp",
+      "skills": [
+        "bifa",
+        "songci"
+      ],
+      "line": 48
+    },
+    {
+      "id": "chenqun",
+      "pack": "yijiang",
+      "skills": [
+        "pindi",
+        "faen"
+      ],
+      "line": 45
+    },
+    {
+      "id": "chunyuqiong",
+      "pack": "sp2",
+      "skills": [
+        "cangchu",
+        "sushou",
+        "liangying"
+      ],
+      "line": 61
+    },
+    {
+      "id": "cuimao",
+      "pack": "sp",
+      "skills": [
+        "zhengbi",
+        "fengying"
+      ],
+      "line": 136
+    },
+    {
+      "id": "cuiyan",
+      "pack": "sp",
+      "skills": [
+        "yawang",
+        "xunzhi"
+      ],
+      "line": 82
+    },
+    {
+      "id": "daqiao",
+      "pack": "standard",
+      "skills": [
+        "guose",
+        "liuli"
+      ],
+      "line": 33
+    },
+    {
+      "id": "daxiaoqiao",
+      "pack": "sp",
+      "skills": [
+        "new_xingwu",
+        "new_luoyan"
+      ],
+      "line": 90
+    },
+    {
+      "id": "dengai",
+      "pack": "shenhua",
+      "skills": [
+        "tuntian",
+        "zaoxian"
+      ],
+      "line": 50
+    },
+    {
+      "id": "dianwei",
+      "pack": "shenhua",
+      "skills": [
+        "qiangxix"
+      ],
+      "line": 34
+    },
+    {
+      "id": "diaochan",
+      "pack": "standard",
+      "skills": [
+        "lijian",
+        "biyue"
+      ],
+      "line": 38
+    },
+    {
+      "id": "dingfeng",
+      "pack": "sp",
+      "skills": [
+        "fenxun",
+        "duanbing"
+      ],
+      "line": 131
+    },
+    {
+      "id": "dongbai",
+      "pack": "sp",
+      "skills": [
+        "lianzhu",
+        "xiehui"
+      ],
+      "line": 112
+    },
+    {
+      "id": "dongxie",
+      "pack": "sp2",
+      "skills": [
+        "juntun",
+        "jiaojie"
+      ],
+      "line": 11
+    },
+    {
+      "id": "dongyun",
+      "pack": "sp",
+      "skills": [
+        "bingzheng",
+        "sheyan"
+      ],
+      "line": 116
+    },
+    {
+      "id": "dongzhuo",
+      "pack": "shenhua",
+      "skills": [
+        "jiuchi",
+        "roulin",
+        "benghuai",
+        "baonue"
+      ],
+      "line": 44
+    },
+    {
+      "id": "fanchou",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_xingluan"
+      ],
+      "line": 34
+    },
+    {
+      "id": "fazheng",
+      "pack": "yijiang",
+      "skills": [
+        "enyuan",
+        "xuanhuo"
+      ],
+      "line": 19
+    },
+    {
+      "id": "fuhuanghou",
+      "pack": "yijiang",
+      "skills": [
+        "qiuyuan",
+        "zhuikong"
+      ],
+      "line": 39
+    },
+    {
+      "id": "fuwan",
+      "pack": "sp",
+      "skills": [
+        "moukui"
+      ],
+      "line": 61
+    },
+    {
+      "id": "ganfuren",
+      "pack": "sp",
+      "skills": [
+        "shushen",
+        "shenzhi"
+      ],
+      "line": 120
+    },
+    {
+      "id": "ganning",
+      "pack": "standard",
+      "skills": [
+        "qixi"
+      ],
+      "line": 29
+    },
+    {
+      "id": "gaolan",
+      "pack": "sp2",
+      "skills": [
+        "xiying"
+      ],
+      "line": 56
+    },
+    {
+      "id": "gaoshun",
+      "pack": "yijiang",
+      "skills": [
+        "xinxianzhen",
+        "jinjiu"
+      ],
+      "line": 59
+    },
+    {
+      "id": "gexuan",
+      "pack": "sp2",
+      "skills": [
+        "gxlianhua",
+        "zhafu"
+      ],
+      "line": 52
+    },
+    {
+      "id": "gongsunyuan",
+      "pack": "yijiang",
+      "skills": [
+        "huaiyi"
+      ],
+      "line": 72
+    },
+    {
+      "id": "gongsunzan",
+      "pack": "standard",
+      "skills": [
+        "reyicong"
+      ],
+      "line": 40
+    },
+    {
+      "id": "guanlu",
+      "pack": "sp2",
+      "skills": [
+        "tuiyan",
+        "busuan",
+        "mingjie"
+      ],
+      "line": 51
+    },
+    {
+      "id": "guanping",
+      "pack": "yijiang",
+      "skills": [
+        "longyin"
+      ],
+      "line": 56
+    },
+    {
+      "id": "guanqiujian",
+      "pack": "shenhua",
+      "skills": [
+        "zhengrong",
+        "hongju"
+      ],
+      "line": 65
+    },
+    {
+      "id": "guansuo",
+      "pack": "sp",
+      "skills": [
+        "xinzhengnan",
+        "xiefang"
+      ],
+      "line": 96
+    },
+    {
+      "id": "guanyinping",
+      "pack": "sp",
+      "skills": [
+        "huxiao",
+        "xueji",
+        "wuji"
+      ],
+      "line": 58
+    },
+    {
+      "id": "guanyu",
+      "pack": "standard",
+      "skills": [
+        "wusheng"
+      ],
+      "line": 22
+    },
+    {
+      "id": "guanzhang",
+      "pack": "refresh",
+      "skills": [
+        "fuhun"
+      ],
+      "line": 36
+    },
+    {
+      "id": "guohuai",
+      "pack": "yijiang",
+      "skills": [
+        "rejingce"
+      ],
+      "line": 23
+    },
+    {
+      "id": "guohuanghou",
+      "pack": "yijiang",
+      "skills": [
+        "jiaozhao",
+        "danxin"
+      ],
+      "line": 77
+    },
+    {
+      "id": "guojia",
+      "pack": "standard",
+      "skills": [
+        "tiandu",
+        "yiji"
+      ],
+      "line": 19
+    },
+    {
+      "id": "guosi",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_tanbei",
+        "xinfu_sidao"
+      ],
+      "line": 35
+    },
+    {
+      "id": "guotufengji",
+      "pack": "yijiang",
+      "skills": [
+        "jigong",
+        "shifei"
+      ],
+      "line": 73
+    },
+    {
+      "id": "guyong",
+      "pack": "yijiang",
+      "skills": [
+        "shenxing",
+        "bingyi"
+      ],
+      "line": 47
+    },
+    {
+      "id": "hanba",
+      "pack": "sp",
+      "skills": [
+        "fentian",
+        "zhiri"
+      ],
+      "line": 87
+    },
+    {
+      "id": "handang",
+      "pack": "yijiang",
+      "skills": [
+        "gongji",
+        "jiefan"
+      ],
+      "line": 38
+    },
+    {
+      "id": "hanfu",
+      "pack": "sp2",
+      "skills": [
+        "hfjieying",
+        "weipo"
+      ],
+      "line": 9
+    },
+    {
+      "id": "hanhaoshihuan",
+      "pack": "yijiang",
+      "skills": [
+        "shenduan",
+        "yonglve"
+      ],
+      "line": 62
+    },
+    {
+      "id": "haozhao",
+      "pack": "shenhua",
+      "skills": [
+        "drlt_zhenggu"
+      ],
+      "line": 66
+    },
+    {
+      "id": "heqi",
+      "pack": "sp",
+      "skills": [
+        "qizhou",
+        "shanxi"
+      ],
+      "line": 118
+    },
+    {
+      "id": "hetaihou",
+      "pack": "sp",
+      "skills": [
+        "zhendu",
+        "qiluan"
+      ],
+      "line": 129
+    },
+    {
+      "id": "huaman",
+      "pack": "sp2",
+      "skills": [
+        "hmmanyi",
+        "mansi",
+        "souying",
+        "zhanyuan"
+      ],
+      "line": 29
+    },
+    {
+      "id": "huangfusong",
+      "pack": "sp",
+      "skills": [
+        "xinfenyue"
+      ],
+      "line": 33
+    },
+    {
+      "id": "huanggai",
+      "pack": "standard",
+      "skills": [
+        "kurou"
+      ],
+      "line": 31
+    },
+    {
+      "id": "huanghao",
+      "pack": "yijiang",
+      "skills": [
+        "qinqing",
+        "huisheng"
+      ],
+      "line": 83
+    },
+    {
+      "id": "huangjinleishi",
+      "pack": "sp",
+      "skills": [
+        "fulu",
+        "fuji"
+      ],
+      "line": 66
+    },
+    {
+      "id": "huangyueying",
+      "pack": "standard",
+      "skills": [
+        "jizhi",
+        "qicai"
+      ],
+      "line": 27
+    },
+    {
+      "id": "huangzhong",
+      "pack": "shenhua",
+      "skills": [
+        "liegong"
+      ],
+      "line": 23
+    },
+    {
+      "id": "huatuo",
+      "pack": "standard",
+      "skills": [
+        "qingnang",
+        "jijiu"
+      ],
+      "line": 36
+    },
+    {
+      "id": "huaxiong",
+      "pack": "standard",
+      "skills": [
+        "yaowu"
+      ],
+      "line": 39
+    },
+    {
+      "id": "jiangfei",
+      "pack": "sp",
+      "skills": [
+        "shengxi",
+        "shoucheng"
+      ],
+      "line": 127
+    },
+    {
+      "id": "jianggan",
+      "pack": "sp",
+      "skills": [
+        "weicheng",
+        "daoshu"
+      ],
+      "line": 38
+    },
+    {
+      "id": "jiangqing",
+      "pack": "sp",
+      "skills": [
+        "shangyi",
+        "zniaoxiang"
+      ],
+      "line": 128
+    },
+    {
+      "id": "jiangwei",
+      "pack": "shenhua",
+      "skills": [
+        "tiaoxin",
+        "zhiji"
+      ],
+      "line": 47
+    },
+    {
+      "id": "jianyong",
+      "pack": "yijiang",
+      "skills": [
+        "qiaoshui",
+        "jyzongshi"
+      ],
+      "line": 41
+    },
+    {
+      "id": "jiaxu",
+      "pack": "shenhua",
+      "skills": [
+        "luanwu",
+        "wansha",
+        "weimu"
+      ],
+      "line": 45
+    },
+    {
+      "id": "jikang",
+      "pack": "yijiang",
+      "skills": [
+        "qingxian",
+        "juexiang"
+      ],
+      "line": 93
+    },
+    {
+      "id": "jiling",
+      "pack": "sp",
+      "skills": [
+        "shuangren"
+      ],
+      "line": 138
+    },
+    {
+      "id": "jin_simayi",
+      "pack": "sp2",
+      "skills": [
+        "buchen",
+        "smyyingshi",
+        "xiongzhi",
+        "quanbian"
+      ],
+      "line": 8
+    },
+    {
+      "id": "jin_zhangchunhua",
+      "pack": "sp2",
+      "skills": [
+        "huishi",
+        "qingleng",
+        "xuanmu"
+      ],
+      "line": 7
+    },
+    {
+      "id": "jsp_guanyu",
+      "pack": "sp",
+      "skills": [
+        "new_rewusheng",
+        "danji"
+      ],
+      "line": 84
+    },
+    {
+      "id": "jsp_huangyueying",
+      "pack": "sp",
+      "skills": [
+        "jiqiao",
+        "linglong"
+      ],
+      "line": 85
+    },
+    {
+      "id": "jsp_zhaoyun",
+      "pack": "sp",
+      "skills": [
+        "chixin",
+        "reyicong",
+        "suiren"
+      ],
+      "line": 54
+    },
+    {
+      "id": "kanze",
+      "pack": "sp",
+      "skills": [
+        "xiashu",
+        "kuanshi"
+      ],
+      "line": 117
+    },
+    {
+      "id": "key_hina",
+      "pack": "extra",
+      "skills": [
+        "hina_shenxian",
+        "hina_mashu",
+        "hina_tieji"
+      ],
+      "line": 24
+    },
+    {
+      "id": "key_kagari",
+      "pack": "extra",
+      "skills": [
+        "kagari_zongsi"
+      ],
+      "line": 22
+    },
+    {
+      "id": "key_shiki",
+      "pack": "extra",
+      "skills": [
+        "shiki_omusubi"
+      ],
+      "line": 23
+    },
+    {
+      "id": "kongrong",
+      "pack": "sp",
+      "skills": [
+        "lirang",
+        "mingshi"
+      ],
+      "line": 130
+    },
+    {
+      "id": "kuailiangkuaiyue",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_jianxiang",
+        "nzry_shenshi"
+      ],
+      "line": 63
+    },
+    {
+      "id": "leitong",
+      "pack": "sp2",
+      "skills": [
+        "kuiji"
+      ],
+      "line": 63
+    },
+    {
+      "id": "liaohua",
+      "pack": "yijiang",
+      "skills": [
+        "dangxian",
+        "fuli"
+      ],
+      "line": 57
+    },
+    {
+      "id": "lijue",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_langxi",
+        "xinfu_yisuan"
+      ],
+      "line": 32
+    },
+    {
+      "id": "lingju",
+      "pack": "sp",
+      "skills": [
+        "jieyuan",
+        "fenxin"
+      ],
+      "line": 80
+    },
+    {
+      "id": "lingtong",
+      "pack": "yijiang",
+      "skills": [
+        "xuanfeng"
+      ],
+      "line": 33
+    },
+    {
+      "id": "liqueguosi",
+      "pack": "sp",
+      "skills": [
+        "xiongsuan"
+      ],
+      "line": 134
+    },
+    {
+      "id": "lisu",
+      "pack": "sp2",
+      "skills": [
+        "lslixun",
+        "lskuizhu"
+      ],
+      "line": 49
+    },
+    {
+      "id": "litong",
+      "pack": "sp",
+      "skills": [
+        "tuifeng"
+      ],
+      "line": 105
+    },
+    {
+      "id": "liubei",
+      "pack": "standard",
+      "skills": [
+        "rende",
+        "jijiang"
+      ],
+      "line": 21
+    },
+    {
+      "id": "liubian",
+      "pack": "sp2",
+      "skills": [
+        "shiyuan",
+        "dushi",
+        "yuwei"
+      ],
+      "line": 15
+    },
+    {
+      "id": "liubiao",
+      "pack": "yijiang",
+      "skills": [
+        "rezishou",
+        "zongshi"
+      ],
+      "line": 34
+    },
+    {
+      "id": "liuchen",
+      "pack": "yijiang",
+      "skills": [
+        "zhanjue",
+        "qinwang"
+      ],
+      "line": 67
+    },
+    {
+      "id": "liufeng",
+      "pack": "yijiang",
+      "skills": [
+        "xiansi"
+      ],
+      "line": 43
+    },
+    {
+      "id": "liuhong",
+      "pack": "sp2",
+      "skills": [
+        "yujue",
+        "tuxing"
+      ],
+      "line": 19
+    },
+    {
+      "id": "liushan",
+      "pack": "shenhua",
+      "skills": [
+        "xiangle",
+        "fangquan",
+        "ruoyu"
+      ],
+      "line": 48
+    },
+    {
+      "id": "liuxie",
+      "pack": "sp",
+      "skills": [
+        "tianming",
+        "mizhao"
+      ],
+      "line": 55
+    },
+    {
+      "id": "liuyu",
+      "pack": "yijiang",
+      "skills": [
+        "xinzhige",
+        "xinzongzuo"
+      ],
+      "line": 78
+    },
+    {
+      "id": "liyan",
+      "pack": "yijiang",
+      "skills": [
+        "duliang",
+        "fulin"
+      ],
+      "line": 79
+    },
+    {
+      "id": "luji",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_huaiju",
+        "nzry_yili",
+        "nzry_zhenglun"
+      ],
+      "line": 59
+    },
+    {
+      "id": "lukang",
+      "pack": "shenhua",
+      "skills": [
+        "drlt_qianjie",
+        "drlt_jueyan",
+        "drlt_poshi"
+      ],
+      "line": 68
+    },
+    {
+      "id": "luxun",
+      "pack": "standard",
+      "skills": [
+        "qianxun",
+        "lianying"
+      ],
+      "line": 34
+    },
+    {
+      "id": "luzhi",
+      "pack": "sp",
+      "skills": [
+        "qingzhongx",
+        "weijing"
+      ],
+      "line": 148
+    },
+    {
+      "id": "lvbu",
+      "pack": "standard",
+      "skills": [
+        "wushuang"
+      ],
+      "line": 37
+    },
+    {
+      "id": "lvfan",
+      "pack": "sp",
+      "skills": [
+        "diaodu",
+        "diancai"
+      ],
+      "line": 135
+    },
+    {
+      "id": "lvkai",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_tunan",
+        "xinfu_bijing"
+      ],
+      "line": 36
+    },
+    {
+      "id": "lvkuanglvxiang",
+      "pack": "sp2",
+      "skills": [
+        "liehou",
+        "qigong"
+      ],
+      "line": 62
+    },
+    {
+      "id": "lvmeng",
+      "pack": "standard",
+      "skills": [
+        "keji"
+      ],
+      "line": 30
+    },
+    {
+      "id": "machao",
+      "pack": "standard",
+      "skills": [
+        "mashu",
+        "tieji"
+      ],
+      "line": 26
+    },
+    {
+      "id": "madai",
+      "pack": "yijiang",
+      "skills": [
+        "mashu",
+        "oldqianxi"
+      ],
+      "line": 42
+    },
+    {
+      "id": "maliang",
+      "pack": "sp",
+      "skills": [
+        "zishu",
+        "xinyingyuan"
+      ],
+      "line": 67
+    },
+    {
+      "id": "manchong",
+      "pack": "yijiang",
+      "skills": [
+        "junxing",
+        "yuce"
+      ],
+      "line": 44
+    },
+    {
+      "id": "mangyachang",
+      "pack": "sp2",
+      "skills": [
+        "spjiedao"
+      ],
+      "line": 53
+    },
+    {
+      "id": "mateng",
+      "pack": "sp",
+      "skills": [
+        "xiongyi",
+        "mashu"
+      ],
+      "line": 122
+    },
+    {
+      "id": "mayunlu",
+      "pack": "sp",
+      "skills": [
+        "fengpo",
+        "mashu"
+      ],
+      "line": 74
+    },
+    {
+      "id": "mazhong",
+      "pack": "sp",
+      "skills": [
+        "fuman"
+      ],
+      "line": 115
+    },
+    {
+      "id": "menghuo",
+      "pack": "shenhua",
+      "skills": [
+        "huoshou",
+        "zaiqixx"
+      ],
+      "line": 39
+    },
+    {
+      "id": "mifuren",
+      "pack": "sp",
+      "skills": [
+        "guixiu",
+        "cunsi"
+      ],
+      "line": 121
+    },
+    {
+      "id": "mini_diaochan",
+      "pack": "sp2",
+      "skills": [
+        "minilijian",
+        "rebiyue"
+      ],
+      "line": 74
+    },
+    {
+      "id": "mini_jiangwei",
+      "pack": "sp2",
+      "skills": [
+        "minitiaoxin",
+        "zhiji"
+      ],
+      "line": 73
+    },
+    {
+      "id": "mini_lvbu",
+      "pack": "extra",
+      "skills": [
+        "miniwuqian",
+        "minishenfen"
+      ],
+      "line": 45
+    },
+    {
+      "id": "mini_sunquan",
+      "pack": "sp2",
+      "skills": [
+        "minizhiheng",
+        "jiuyuan"
+      ],
+      "line": 71
+    },
+    {
+      "id": "mini_zhangchunhua",
+      "pack": "sp2",
+      "skills": [
+        "jueqing",
+        "minishangshi"
+      ],
+      "line": 75
+    },
+    {
+      "id": "mini_zhugeliang",
+      "pack": "extra",
+      "skills": [
+        "qixing",
+        "minikuangfeng",
+        "minidawu"
+      ],
+      "line": 44
+    },
+    {
+      "id": "mini_zuoci",
+      "pack": "sp2",
+      "skills": [
+        "minishendao",
+        "minixinsheng"
+      ],
+      "line": 72
+    },
+    {
+      "id": "mizhu",
+      "pack": "sp",
+      "skills": [
+        "ziyuan",
+        "jugu"
+      ],
+      "line": 106
+    },
+    {
+      "id": "niujin",
+      "pack": "sp",
+      "skills": [
+        "cuorui",
+        "liewei"
+      ],
+      "line": 37
+    },
+    {
+      "id": "ns_chendao",
+      "pack": "sp2",
+      "skills": [
+        "nsjianglie"
+      ],
+      "line": 69
+    },
+    {
+      "id": "ns_fanchou",
+      "pack": "sp2",
+      "skills": [
+        "nsyangwu"
+      ],
+      "line": 67
+    },
+    {
+      "id": "ns_jiaxu",
+      "pack": "sp2",
+      "skills": [
+        "nsyice",
+        "luanwu"
+      ],
+      "line": 68
+    },
+    {
+      "id": "ns_lijue",
+      "pack": "sp2",
+      "skills": [
+        "nsfeixiong",
+        "nscesuan"
+      ],
+      "line": 65
+    },
+    {
+      "id": "ns_zhangji",
+      "pack": "sp2",
+      "skills": [
+        "nslulve"
+      ],
+      "line": 66
+    },
+    {
+      "id": "ol_dengai",
+      "pack": "refresh",
+      "skills": [
+        "oltuntian",
+        "olzaoxian"
+      ],
+      "line": 25
+    },
+    {
+      "id": "ol_dingyuan",
+      "pack": "sp2",
+      "skills": [
+        "cixiao",
+        "xianshuai"
+      ],
+      "line": 14
+    },
+    {
+      "id": "ol_dongzhuo",
+      "pack": "refresh",
+      "skills": [
+        "oljiuchi",
+        "roulin",
+        "benghuai",
+        "olbaonue"
+      ],
+      "line": 104
+    },
+    {
+      "id": "ol_liushan",
+      "pack": "refresh",
+      "skills": [
+        "xiangle",
+        "olfangquan",
+        "olruoyu"
+      ],
+      "line": 110
+    },
+    {
+      "id": "ol_pangde",
+      "pack": "refresh",
+      "skills": [
+        "mashu",
+        "rejianchu"
+      ],
+      "line": 95
+    },
+    {
+      "id": "ol_pangtong",
+      "pack": "refresh",
+      "skills": [
+        "ollianhuan",
+        "olniepan"
+      ],
+      "line": 52
+    },
+    {
+      "id": "ol_sp_zhugeliang",
+      "pack": "refresh",
+      "skills": [
+        "bazhen",
+        "rehuoji",
+        "rekanpo",
+        "cangzhuo"
+      ],
+      "line": 97
+    },
+    {
+      "id": "ol_sunjian",
+      "pack": "refresh",
+      "skills": [
+        "gzyinghun",
+        "wulie"
+      ],
+      "line": 105
+    },
+    {
+      "id": "ol_weiyan",
+      "pack": "refresh",
+      "skills": [
+        "xinkuanggu",
+        "reqimou"
+      ],
+      "line": 92
+    },
+    {
+      "id": "ol_xiahouyuan",
+      "pack": "refresh",
+      "skills": [
+        "xinshensu",
+        "shebian"
+      ],
+      "line": 89
+    },
+    {
+      "id": "ol_xiaoqiao",
+      "pack": "refresh",
+      "skills": [
+        "oltianxiang",
+        "olhongyan",
+        "piaoling"
+      ],
+      "line": 93
+    },
+    {
+      "id": "ol_yuanshao",
+      "pack": "refresh",
+      "skills": [
+        "olluanji",
+        "olxueyi"
+      ],
+      "line": 101
+    },
+    {
+      "id": "ol_yujin",
+      "pack": "sp2",
+      "skills": [
+        "rezhenjun"
+      ],
+      "line": 23
+    },
+    {
+      "id": "ol_zhangchangpu",
+      "pack": "sp",
+      "skills": [
+        "yanjiao",
+        "olxingshen"
+      ],
+      "line": 22
+    },
+    {
+      "id": "ol_zhangliao",
+      "pack": "extra",
+      "skills": [
+        "olduorui",
+        "olzhiti"
+      ],
+      "line": 40
+    },
+    {
+      "id": "old_caoren",
+      "pack": "shenhua",
+      "skills": [
+        "moon_jushou",
+        "jiewei"
+      ],
+      "line": 19
+    },
+    {
+      "id": "old_guanzhang",
+      "pack": "yijiang",
+      "skills": [
+        "old_fuhun"
+      ],
+      "line": 20
+    },
+    {
+      "id": "old_huaxiong",
+      "pack": "yijiang",
+      "skills": [
+        "shiyong"
+      ],
+      "line": 97
+    },
+    {
+      "id": "old_madai",
+      "pack": "refresh",
+      "skills": [
+        "mashu",
+        "qianxi"
+      ],
+      "line": 35
+    },
+    {
+      "id": "old_wangyi",
+      "pack": "yijiang",
+      "skills": [
+        "oldzhenlie",
+        "oldmiji"
+      ],
+      "line": 21
+    },
+    {
+      "id": "old_zhoutai",
+      "pack": "shenhua",
+      "skills": [
+        "buqu",
+        "new_fenji"
+      ],
+      "line": 18
+    },
+    {
+      "id": "panfeng",
+      "pack": "sp",
+      "skills": [
+        "kuangfu"
+      ],
+      "line": 25
+    },
+    {
+      "id": "pangtong",
+      "pack": "shenhua",
+      "skills": [
+        "lianhuan",
+        "oldniepan"
+      ],
+      "line": 32
+    },
+    {
+      "id": "panzhangmazhong",
+      "pack": "yijiang",
+      "skills": [
+        "duodao",
+        "anjian"
+      ],
+      "line": 54
+    },
+    {
+      "id": "puyuan",
+      "pack": "sp2",
+      "skills": [
+        "pytianjiang",
+        "pyzhuren"
+      ],
+      "line": 47
+    },
+    {
+      "id": "qinmi",
+      "pack": "yijiang",
+      "skills": [
+        "jianzheng",
+        "zhuandui",
+        "tianbian"
+      ],
+      "line": 94
+    },
+    {
+      "id": "quancong",
+      "pack": "yijiang",
+      "skills": [
+        "yaoming"
+      ],
+      "line": 71
+    },
+    {
+      "id": "quyi",
+      "pack": "sp",
+      "skills": [
+        "fuqi",
+        "jiaozi"
+      ],
+      "line": 146
+    },
+    {
+      "id": "re_bulianshi",
+      "pack": "refresh",
+      "skills": [
+        "reanxu",
+        "zhuiyi"
+      ],
+      "line": 30
+    },
+    {
+      "id": "re_caiwenji",
+      "pack": "refresh",
+      "skills": [
+        "rebeige",
+        "duanchang"
+      ],
+      "line": 109
+    },
+    {
+      "id": "re_caocao",
+      "pack": "refresh",
+      "skills": [
+        "new_rejianxiong",
+        "hujia"
+      ],
+      "line": 56
+    },
+    {
+      "id": "re_caopi",
+      "pack": "refresh",
+      "skills": [
+        "rexingshang",
+        "refangzhu",
+        "songwei"
+      ],
+      "line": 106
+    },
+    {
+      "id": "re_caoxiu",
+      "pack": "refresh",
+      "skills": [
+        "qianju",
+        "reqingxi"
+      ],
+      "line": 23
+    },
+    {
+      "id": "re_caozhang",
+      "pack": "refresh",
+      "skills": [
+        "new_jiangchi"
+      ],
+      "line": 44
+    },
+    {
+      "id": "re_caozhi",
+      "pack": "refresh",
+      "skills": [
+        "reluoying",
+        "rejiushi",
+        "chengzhang"
+      ],
+      "line": 51
+    },
+    {
+      "id": "re_chengpu",
+      "pack": "refresh",
+      "skills": [
+        "decadelihuo",
+        "decadechunlao"
+      ],
+      "line": 45
+    },
+    {
+      "id": "re_daqiao",
+      "pack": "refresh",
+      "skills": [
+        "reguose",
+        "liuli"
+      ],
+      "line": 72
+    },
+    {
+      "id": "re_dengai",
+      "pack": "refresh",
+      "skills": [
+        "retuntian",
+        "zaoxian"
+      ],
+      "line": 107
+    },
+    {
+      "id": "re_dianwei",
+      "pack": "refresh",
+      "skills": [
+        "reqiangxi"
+      ],
+      "line": 99
+    },
+    {
+      "id": "re_diaochan",
+      "pack": "refresh",
+      "skills": [
+        "lijian",
+        "rebiyue"
+      ],
+      "line": 77
+    },
+    {
+      "id": "re_ganning",
+      "pack": "refresh",
+      "skills": [
+        "qixi",
+        "fenwei"
+      ],
+      "line": 70
+    },
+    {
+      "id": "re_gaoshun",
+      "pack": "refresh",
+      "skills": [
+        "rexianzhen",
+        "rejinjiu"
+      ],
+      "line": 55
+    },
+    {
+      "id": "re_gongsunzan",
+      "pack": "refresh",
+      "skills": [
+        "reqiaomeng",
+        "reyicong"
+      ],
+      "line": 26
+    },
+    {
+      "id": "re_guanyu",
+      "pack": "refresh",
+      "skills": [
+        "new_rewusheng",
+        "new_yijue"
+      ],
+      "line": 65
+    },
+    {
+      "id": "re_guohuai",
+      "pack": "refresh",
+      "skills": [
+        "xinjingce"
+      ],
+      "line": 48
+    },
+    {
+      "id": "re_guojia",
+      "pack": "refresh",
+      "skills": [
+        "tiandu",
+        "new_reyiji"
+      ],
+      "line": 58
+    },
+    {
+      "id": "re_handang",
+      "pack": "refresh",
+      "skills": [
+        "regongji",
+        "jiefan"
+      ],
+      "line": 42
+    },
+    {
+      "id": "re_hanhaoshihuan",
+      "pack": "refresh",
+      "skills": [
+        "reshenduan",
+        "reyonglve"
+      ],
+      "line": 31
+    },
+    {
+      "id": "re_hansui",
+      "pack": "sp2",
+      "skills": [
+        "spniluan",
+        "spweiwu"
+      ],
+      "line": 18
+    },
+    {
+      "id": "re_hejin",
+      "pack": "sp2",
+      "skills": [
+        "spmouzhu"
+      ],
+      "line": 17
+    },
+    {
+      "id": "re_huanggai",
+      "pack": "refresh",
+      "skills": [
+        "rekurou",
+        "zhaxiang"
+      ],
+      "line": 73
+    },
+    {
+      "id": "re_huangyueying",
+      "pack": "refresh",
+      "skills": [
+        "rejizhi",
+        "reqicai"
+      ],
+      "line": 78
+    },
+    {
+      "id": "re_huangzhong",
+      "pack": "refresh",
+      "skills": [
+        "xinliegong"
+      ],
+      "line": 91
+    },
+    {
+      "id": "re_huatuo",
+      "pack": "refresh",
+      "skills": [
+        "jijiu",
+        "new_reqingnang"
+      ],
+      "line": 75
+    },
+    {
+      "id": "re_huaxiong",
+      "pack": "refresh",
+      "skills": [
+        "reyaowu"
+      ],
+      "line": 83
+    },
+    {
+      "id": "re_jiangwei",
+      "pack": "refresh",
+      "skills": [
+        "retiaoxin",
+        "zhiji"
+      ],
+      "line": 108
+    },
+    {
+      "id": "re_jianyong",
+      "pack": "refresh",
+      "skills": [
+        "reqiaoshui",
+        "jyzongshi"
+      ],
+      "line": 114
+    },
+    {
+      "id": "re_liaohua",
+      "pack": "refresh",
+      "skills": [
+        "xindangxian",
+        "xinfuli"
+      ],
+      "line": 47
+    },
+    {
+      "id": "re_lidian",
+      "pack": "refresh",
+      "skills": [
+        "xunxun",
+        "wangxi"
+      ],
+      "line": 59
+    },
+    {
+      "id": "re_liru",
+      "pack": "refresh",
+      "skills": [
+        "rejuece",
+        "remieji",
+        "xinfencheng"
+      ],
+      "line": 28
+    },
+    {
+      "id": "re_liubei",
+      "pack": "refresh",
+      "skills": [
+        "rerende",
+        "jijiang"
+      ],
+      "line": 76
+    },
+    {
+      "id": "re_liuzan",
+      "pack": "sp2",
+      "skills": [
+        "refenyin",
+        "liji"
+      ],
+      "line": 26
+    },
+    {
+      "id": "re_lusu",
+      "pack": "shenhua",
+      "skills": [
+        "haoshi",
+        "dimeng"
+      ],
+      "line": 42
+    },
+    {
+      "id": "re_luxun",
+      "pack": "refresh",
+      "skills": [
+        "reqianxun",
+        "relianying"
+      ],
+      "line": 71
+    },
+    {
+      "id": "re_lvbu",
+      "pack": "refresh",
+      "skills": [
+        "wushuang",
+        "new_liyu"
+      ],
+      "line": 74
+    },
+    {
+      "id": "re_lvmeng",
+      "pack": "refresh",
+      "skills": [
+        "keji",
+        "qinxue",
+        "botu"
+      ],
+      "line": 69
+    },
+    {
+      "id": "re_machao",
+      "pack": "refresh",
+      "skills": [
+        "mashu",
+        "retieji"
+      ],
+      "line": 66
+    },
+    {
+      "id": "re_maliang",
+      "pack": "sp2",
+      "skills": [
+        "rexiemu",
+        "heli"
+      ],
+      "line": 22
+    },
+    {
+      "id": "re_manchong",
+      "pack": "refresh",
+      "skills": [
+        "rejunxing",
+        "yuce"
+      ],
+      "line": 27
+    },
+    {
+      "id": "re_masu",
+      "pack": "refresh",
+      "skills": [
+        "resanyao",
+        "rezhiman"
+      ],
+      "line": 39
+    },
+    {
+      "id": "re_menghuo",
+      "pack": "refresh",
+      "skills": [
+        "huoshou",
+        "rezaiqi"
+      ],
+      "line": 103
+    },
+    {
+      "id": "re_panfeng",
+      "pack": "sp2",
+      "skills": [
+        "xinkuangfu"
+      ],
+      "line": 30
+    },
+    {
+      "id": "re_pangde",
+      "pack": "shenhua",
+      "skills": [
+        "mashu",
+        "jianchu"
+      ],
+      "line": 21
+    },
+    {
+      "id": "re_panzhangmazhong",
+      "pack": "refresh",
+      "skills": [
+        "reduodao",
+        "reanjian"
+      ],
+      "line": 32
+    },
+    {
+      "id": "re_quancong",
+      "pack": "refresh",
+      "skills": [
+        "xinyaoming"
+      ],
+      "line": 46
+    },
+    {
+      "id": "re_quyi",
+      "pack": "sp2",
+      "skills": [
+        "refuqi",
+        "jiaozi"
+      ],
+      "line": 10
+    },
+    {
+      "id": "re_simayi",
+      "pack": "refresh",
+      "skills": [
+        "refankui",
+        "reguicai"
+      ],
+      "line": 57
+    },
+    {
+      "id": "re_sunce",
+      "pack": "refresh",
+      "skills": [
+        "jiang",
+        "olhunzi",
+        "olzhiba"
+      ],
+      "line": 113
+    },
+    {
+      "id": "re_sunluban",
+      "pack": "refresh",
+      "skills": [
+        "rechanhui",
+        "rejiaojin"
+      ],
+      "line": 40
+    },
+    {
+      "id": "re_sunluyu",
+      "pack": "sp2",
+      "skills": [
+        "remeibu",
+        "remumu"
+      ],
+      "line": 25
+    },
+    {
+      "id": "re_sunquan",
+      "pack": "refresh",
+      "skills": [
+        "rezhiheng",
+        "rejiuyuan"
+      ],
+      "line": 79
+    },
+    {
+      "id": "re_sunshangxiang",
+      "pack": "refresh",
+      "skills": [
+        "xiaoji",
+        "rejieyin"
+      ],
+      "line": 80
+    },
+    {
+      "id": "re_sunxiu",
+      "pack": "refresh",
+      "skills": [
+        "reyanzhu",
+        "rexingxue",
+        "zhaofu"
+      ],
+      "line": 24
+    },
+    {
+      "id": "re_taishici",
+      "pack": "refresh",
+      "skills": [
+        "tianyi",
+        "hanzhan"
+      ],
+      "line": 38
+    },
+    {
+      "id": "re_weiyan",
+      "pack": "shenhua",
+      "skills": [
+        "xinkuanggu",
+        "qimou"
+      ],
+      "line": 24
+    },
+    {
+      "id": "re_wuguotai",
+      "pack": "refresh",
+      "skills": [
+        "reganlu",
+        "buyi"
+      ],
+      "line": 54
+    },
+    {
+      "id": "re_wuyi",
+      "pack": "refresh",
+      "skills": [
+        "xinbenxi"
+      ],
+      "line": 49
+    },
+    {
+      "id": "re_xiahoudun",
+      "pack": "refresh",
+      "skills": [
+        "reganglie",
+        "new_qingjian"
+      ],
+      "line": 62
+    },
+    {
+      "id": "re_xiahouyuan",
+      "pack": "shenhua",
+      "skills": [
+        "xinshensu"
+      ],
+      "line": 22
+    },
+    {
+      "id": "re_xiaoqiao",
+      "pack": "shenhua",
+      "skills": [
+        "retianxiang",
+        "hongyan"
+      ],
+      "line": 25
+    },
+    {
+      "id": "re_xinxianying",
+      "pack": "sp2",
+      "skills": [
+        "rezhongjian",
+        "recaishi"
+      ],
+      "line": 12
+    },
+    {
+      "id": "re_xuhuang",
+      "pack": "refresh",
+      "skills": [
+        "duanliang",
+        "jiezi"
+      ],
+      "line": 96
+    },
+    {
+      "id": "re_xunyu",
+      "pack": "refresh",
+      "skills": [
+        "quhu",
+        "rejieming"
+      ],
+      "line": 98
+    },
+    {
+      "id": "re_xushu",
+      "pack": "refresh",
+      "skills": [
+        "zhuhai",
+        "qianxin"
+      ],
+      "line": 67
+    },
+    {
+      "id": "re_xuzhu",
+      "pack": "refresh",
+      "skills": [
+        "new_reluoyi"
+      ],
+      "line": 61
+    },
+    {
+      "id": "re_yanwen",
+      "pack": "refresh",
+      "skills": [
+        "reshuangxiong"
+      ],
+      "line": 100
+    },
+    {
+      "id": "re_yuanshao",
+      "pack": "shenhua",
+      "skills": [
+        "luanji",
+        "xueyi"
+      ],
+      "line": 37
+    },
+    {
+      "id": "re_yuanshu",
+      "pack": "standard",
+      "skills": [
+        "rewangzun",
+        "retongji"
+      ],
+      "line": 43
+    },
+    {
+      "id": "re_yufan",
+      "pack": "refresh",
+      "skills": [
+        "zhiyan",
+        "rezongxuan"
+      ],
+      "line": 29
+    },
+    {
+      "id": "re_yuji",
+      "pack": "shenhua",
+      "skills": [
+        "xinfu_guhuo"
+      ],
+      "line": 27
+    },
+    {
+      "id": "re_yujin",
+      "pack": "yijiang",
+      "skills": [
+        "xinzhenjun"
+      ],
+      "line": 99
+    },
+    {
+      "id": "re_zhangfei",
+      "pack": "refresh",
+      "skills": [
+        "olpaoxiao",
+        "oltishen"
+      ],
+      "line": 63
+    },
+    {
+      "id": "re_zhangjiao",
+      "pack": "refresh",
+      "skills": [
+        "xinleiji",
+        "xinguidao",
+        "huangtian"
+      ],
+      "line": 85
+    },
+    {
+      "id": "re_zhangliao",
+      "pack": "refresh",
+      "skills": [
+        "new_retuxi"
+      ],
+      "line": 60
+    },
+    {
+      "id": "re_zhangyi",
+      "pack": "refresh",
+      "skills": [
+        "rewurong",
+        "shizhi"
+      ],
+      "line": 53
+    },
+    {
+      "id": "re_zhangzhang",
+      "pack": "refresh",
+      "skills": [
+        "rezhijian",
+        "guzheng"
+      ],
+      "line": 111
+    },
+    {
+      "id": "re_zhaoyun",
+      "pack": "refresh",
+      "skills": [
+        "ollongdan",
+        "olyajiao"
+      ],
+      "line": 64
+    },
+    {
+      "id": "re_zhenji",
+      "pack": "refresh",
+      "skills": [
+        "reluoshen",
+        "reqingguo"
+      ],
+      "line": 81
+    },
+    {
+      "id": "re_zhonghui",
+      "pack": "refresh",
+      "skills": [
+        "requanji",
+        "zili"
+      ],
+      "line": 41
+    },
+    {
+      "id": "re_zhouyu",
+      "pack": "refresh",
+      "skills": [
+        "reyingzi",
+        "refanjian"
+      ],
+      "line": 68
+    },
+    {
+      "id": "re_zhugeliang",
+      "pack": "refresh",
+      "skills": [
+        "reguanxing",
+        "kongcheng"
+      ],
+      "line": 82
+    },
+    {
+      "id": "re_zhuran",
+      "pack": "refresh",
+      "skills": [
+        "xindanshou"
+      ],
+      "line": 50
+    },
+    {
+      "id": "re_zhurong",
+      "pack": "refresh",
+      "skills": [
+        "juxiang",
+        "relieren"
+      ],
+      "line": 102
+    },
+    {
+      "id": "re_zuoci",
+      "pack": "refresh",
+      "skills": [
+        "rehuashen",
+        "rexinsheng"
+      ],
+      "line": 87
+    },
+    {
+      "id": "shamoke",
+      "pack": "sp",
+      "skills": [
+        "gzjili"
+      ],
+      "line": 133
+    },
+    {
+      "id": "shen_caocao",
+      "pack": "extra",
+      "skills": [
+        "new_guixin",
+        "feiying"
+      ],
+      "line": 33
+    },
+    {
+      "id": "shen_caopi",
+      "pack": "extra",
+      "skills": [
+        "chuyuan",
+        "dengji"
+      ],
+      "line": 41
+    },
+    {
+      "id": "shen_diaochan",
+      "pack": "extra",
+      "skills": [
+        "meihun",
+        "huoxin"
+      ],
+      "line": 26
+    },
+    {
+      "id": "shen_ganning",
+      "pack": "extra",
+      "skills": [
+        "drlt_poxi",
+        "drlt_jieying"
+      ],
+      "line": 39
+    },
+    {
+      "id": "shen_guanyu",
+      "pack": "extra",
+      "skills": [
+        "new_wuhun",
+        "wushen"
+      ],
+      "line": 27
+    },
+    {
+      "id": "shen_liubei",
+      "pack": "extra",
+      "skills": [
+        "nzry_longnu",
+        "nzry_jieying"
+      ],
+      "line": 36
+    },
+    {
+      "id": "shen_luxun",
+      "pack": "extra",
+      "skills": [
+        "nzry_junlve",
+        "nzry_cuike",
+        "nzry_dinghuo"
+      ],
+      "line": 37
+    },
+    {
+      "id": "shen_lvbu",
+      "pack": "extra",
+      "skills": [
+        "baonu",
+        "wumou",
+        "ol_wuqian",
+        "ol_shenfen"
+      ],
+      "line": 34
+    },
+    {
+      "id": "shen_lvmeng",
+      "pack": "extra",
+      "skills": [
+        "shelie",
+        "gongxin"
+      ],
+      "line": 30
+    },
+    {
+      "id": "shen_simayi",
+      "pack": "extra",
+      "skills": [
+        "renjie",
+        "sbaiyin",
+        "lianpo"
+      ],
+      "line": 32
+    },
+    {
+      "id": "shen_zhangliao",
+      "pack": "extra",
+      "skills": [
+        "drlt_duorui",
+        "drlt_zhiti"
+      ],
+      "line": 38
+    },
+    {
+      "id": "shen_zhaoyun",
+      "pack": "extra",
+      "skills": [
+        "xinjuejing",
+        "relonghun"
+      ],
+      "line": 28
+    },
+    {
+      "id": "shen_zhenji",
+      "pack": "extra",
+      "skills": [
+        "shenfu",
+        "qixian"
+      ],
+      "line": 42
+    },
+    {
+      "id": "shen_zhouyu",
+      "pack": "extra",
+      "skills": [
+        "yeyan",
+        "qinyin"
+      ],
+      "line": 31
+    },
+    {
+      "id": "shen_zhugeliang",
+      "pack": "extra",
+      "skills": [
+        "qixing",
+        "kuangfeng",
+        "dawu"
+      ],
+      "line": 29
+    },
+    {
+      "id": "shixie",
+      "pack": "sp",
+      "skills": [
+        "rebiluan",
+        "relixia"
+      ],
+      "line": 73
+    },
+    {
+      "id": "simahui",
+      "pack": "sp",
+      "skills": [
+        "xinfu_jianjie",
+        "xinfu_chenghao",
+        "xinfu_yinshi"
+      ],
+      "line": 41
+    },
+    {
+      "id": "simalang",
+      "pack": "sp",
+      "skills": [
+        "junbing",
+        "quji"
+      ],
+      "line": 59
+    },
+    {
+      "id": "simayi",
+      "pack": "standard",
+      "skills": [
+        "fankui",
+        "guicai"
+      ],
+      "line": 15
+    },
+    {
+      "id": "sp_caiwenji",
+      "pack": "sp",
+      "skills": [
+        "chenqing",
+        "mozhi"
+      ],
+      "line": 77
+    },
+    {
+      "id": "sp_caoren",
+      "pack": "sp",
+      "skills": [
+        "weikui",
+        "lizhan"
+      ],
+      "line": 64
+    },
+    {
+      "id": "sp_daqiao",
+      "pack": "sp",
+      "skills": [
+        "yanxiao",
+        "anxian"
+      ],
+      "line": 91
+    },
+    {
+      "id": "sp_diaochan",
+      "pack": "sp",
+      "skills": [
+        "lihun",
+        "rebiyue"
+      ],
+      "line": 52
+    },
+    {
+      "id": "sp_dongzhuo",
+      "pack": "sp",
+      "skills": [
+        "hengzheng"
+      ],
+      "line": 126
+    },
+    {
+      "id": "sp_ganning",
+      "pack": "sp",
+      "skills": [
+        "yinling",
+        "junwei"
+      ],
+      "line": 92
+    },
+    {
+      "id": "sp_gongsunzan",
+      "pack": "sp",
+      "skills": [
+        "spyicong",
+        "sptuji"
+      ],
+      "line": 27
+    },
+    {
+      "id": "sp_jiangwei",
+      "pack": "sp",
+      "skills": [
+        "kunfen",
+        "fengliang"
+      ],
+      "line": 70
+    },
+    {
+      "id": "sp_jiaxu",
+      "pack": "sp",
+      "skills": [
+        "zhenlue",
+        "jianshu",
+        "yongdi"
+      ],
+      "line": 103
+    },
+    {
+      "id": "sp_liubei",
+      "pack": "sp",
+      "skills": [
+        "zhaolie",
+        "shichou"
+      ],
+      "line": 109
+    },
+    {
+      "id": "sp_liuqi",
+      "pack": "sp2",
+      "skills": [
+        "spwenji",
+        "sptunjiang"
+      ],
+      "line": 42
+    },
+    {
+      "id": "sp_liuxie",
+      "pack": "sp",
+      "skills": [
+        "sphuangen",
+        "sphantong"
+      ],
+      "line": 31
+    },
+    {
+      "id": "sp_lvmeng",
+      "pack": "sp",
+      "skills": [
+        "tanhu",
+        "mouduan"
+      ],
+      "line": 94
+    },
+    {
+      "id": "sp_machao",
+      "pack": "sp",
+      "skills": [
+        "zhuiji",
+        "ol_shichou"
+      ],
+      "line": 71
+    },
+    {
+      "id": "sp_pangde",
+      "pack": "sp",
+      "skills": [
+        "mashu",
+        "juesi"
+      ],
+      "line": 102
+    },
+    {
+      "id": "sp_pangtong",
+      "pack": "sp",
+      "skills": [
+        "xinmanjuan",
+        "zuixiang"
+      ],
+      "line": 68
+    },
+    {
+      "id": "sp_shenpei",
+      "pack": "sp2",
+      "skills": [
+        "gangzhi",
+        "beizhan"
+      ],
+      "line": 57
+    },
+    {
+      "id": "sp_simazhao",
+      "pack": "sp",
+      "skills": [
+        "spzhaoxin",
+        "splanggu"
+      ],
+      "line": 28
+    },
+    {
+      "id": "sp_sunshangxiang",
+      "pack": "sp",
+      "skills": [
+        "liangzhu",
+        "fanxiang"
+      ],
+      "line": 62
+    },
+    {
+      "id": "sp_wangyuanji",
+      "pack": "sp",
+      "skills": [
+        "spfuluan",
+        "spshude"
+      ],
+      "line": 29
+    },
+    {
+      "id": "sp_xiahoudun",
+      "pack": "sp",
+      "skills": [
+        "fenyong",
+        "xuehen"
+      ],
+      "line": 93
+    },
+    {
+      "id": "sp_xiahoushi",
+      "pack": "sp",
+      "skills": [
+        "xinfu_yanyu",
+        "xinfu_xiaode"
+      ],
+      "line": 44
+    },
+    {
+      "id": "sp_xinxianying",
+      "pack": "sp",
+      "skills": [
+        "spmingjian",
+        "spyinzhi"
+      ],
+      "line": 30
+    },
+    {
+      "id": "sp_xuyou",
+      "pack": "sp2",
+      "skills": [
+        "spshicai",
+        "spfushi"
+      ],
+      "line": 60
+    },
+    {
+      "id": "sp_zhangfei",
+      "pack": "sp",
+      "skills": [
+        "jie",
+        "dahe"
+      ],
+      "line": 83
+    },
+    {
+      "id": "sp_zhanghe",
+      "pack": "sp2",
+      "skills": [
+        "yuanlve"
+      ],
+      "line": 59
+    },
+    {
+      "id": "sp_zhangjiao",
+      "pack": "shenhua",
+      "skills": [
+        "releiji",
+        "guidao",
+        "huangtian"
+      ],
+      "line": 26
+    },
+    {
+      "id": "sp_zhangliao",
+      "pack": "sp",
+      "skills": [
+        "mubing",
+        "ziqu",
+        "diaoling"
+      ],
+      "line": 20
+    },
+    {
+      "id": "sp_zhaoyun",
+      "pack": "sp",
+      "skills": [
+        "ollongdan",
+        "chongzhen"
+      ],
+      "line": 53
+    },
+    {
+      "id": "sp_zhugeliang",
+      "pack": "shenhua",
+      "skills": [
+        "huoji",
+        "bazhen",
+        "kanpo"
+      ],
+      "line": 31
+    },
+    {
+      "id": "sunce",
+      "pack": "shenhua",
+      "skills": [
+        "jiang",
+        "hunzi",
+        "zhiba"
+      ],
+      "line": 51
+    },
+    {
+      "id": "sundeng",
+      "pack": "yijiang",
+      "skills": [
+        "kuangbi"
+      ],
+      "line": 80
+    },
+    {
+      "id": "sunhao",
+      "pack": "sp",
+      "skills": [
+        "recanshi",
+        "rechouhai",
+        "guiming"
+      ],
+      "line": 72
+    },
+    {
+      "id": "sunjian",
+      "pack": "shenhua",
+      "skills": [
+        "gzyinghun"
+      ],
+      "line": 43
+    },
+    {
+      "id": "sunliang",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_kuizhu",
+        "nzry_zhizheng",
+        "nzry_lijun"
+      ],
+      "line": 60
+    },
+    {
+      "id": "sunluban",
+      "pack": "yijiang",
+      "skills": [
+        "chanhui",
+        "jiaojin"
+      ],
+      "line": 46
+    },
+    {
+      "id": "sunluyu",
+      "pack": "sp",
+      "skills": [
+        "new_meibu",
+        "new_mumu"
+      ],
+      "line": 86
+    },
+    {
+      "id": "sunqian",
+      "pack": "sp",
+      "skills": [
+        "qianya",
+        "shuimeng"
+      ],
+      "line": 144
+    },
+    {
+      "id": "sunquan",
+      "pack": "standard",
+      "skills": [
+        "zhiheng",
+        "jiuyuan"
+      ],
+      "line": 28
+    },
+    {
+      "id": "sunshangxiang",
+      "pack": "standard",
+      "skills": [
+        "xiaoji",
+        "jieyin"
+      ],
+      "line": 35
+    },
+    {
+      "id": "sunshao",
+      "pack": "sp",
+      "skills": [
+        "bizheng",
+        "yidian"
+      ],
+      "line": 26
+    },
+    {
+      "id": "sunxiu",
+      "pack": "yijiang",
+      "skills": [
+        "yanzhu",
+        "xingxue",
+        "zhaofu"
+      ],
+      "line": 69
+    },
+    {
+      "id": "sunziliufang",
+      "pack": "yijiang",
+      "skills": [
+        "guizao",
+        "jiyu"
+      ],
+      "line": 85
+    },
+    {
+      "id": "tadun",
+      "pack": "sp",
+      "skills": [
+        "luanzhan"
+      ],
+      "line": 97
+    },
+    {
+      "id": "taishici",
+      "pack": "shenhua",
+      "skills": [
+        "tianyi"
+      ],
+      "line": 35
+    },
+    {
+      "id": "tianfeng",
+      "pack": "sp",
+      "skills": [
+        "sijian",
+        "suishi"
+      ],
+      "line": 123
+    },
+    {
+      "id": "wangji",
+      "pack": "shenhua",
+      "skills": [
+        "qizhi",
+        "jinqu"
+      ],
+      "line": 56
+    },
+    {
+      "id": "wanglang",
+      "pack": "sp",
+      "skills": [
+        "gushe",
+        "jici"
+      ],
+      "line": 101
+    },
+    {
+      "id": "wangping",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_feijun",
+        "nzry_binglve"
+      ],
+      "line": 58
+    },
+    {
+      "id": "wangrong",
+      "pack": "sp2",
+      "skills": [
+        "minsi",
+        "jijing",
+        "zhuide"
+      ],
+      "line": 13
+    },
+    {
+      "id": "wangshuang",
+      "pack": "sp2",
+      "skills": [
+        "spzhuilie"
+      ],
+      "line": 28
+    },
+    {
+      "id": "wangyi",
+      "pack": "refresh",
+      "skills": [
+        "zhenlie",
+        "miji"
+      ],
+      "line": 34
+    },
+    {
+      "id": "wangyun",
+      "pack": "sp",
+      "skills": [
+        "xinlianji",
+        "xinmoucheng"
+      ],
+      "line": 143
+    },
+    {
+      "id": "weiwenzhugezhi",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_fuhai"
+      ],
+      "line": 38
+    },
+    {
+      "id": "wenpin",
+      "pack": "sp",
+      "skills": [
+        "zhenwei"
+      ],
+      "line": 89
+    },
+    {
+      "id": "wenyang",
+      "pack": "sp2",
+      "skills": [
+        "xinlvli",
+        "choujue"
+      ],
+      "line": 27
+    },
+    {
+      "id": "wuguotai",
+      "pack": "yijiang",
+      "skills": [
+        "ganlu",
+        "buyi"
+      ],
+      "line": 32
+    },
+    {
+      "id": "wulan",
+      "pack": "sp2",
+      "skills": [
+        "wlcuorui"
+      ],
+      "line": 64
+    },
+    {
+      "id": "wutugu",
+      "pack": "sp",
+      "skills": [
+        "ranshang",
+        "hanyong"
+      ],
+      "line": 76
+    },
+    {
+      "id": "wuxian",
+      "pack": "yijiang",
+      "skills": [
+        "fumian",
+        "daiyan"
+      ],
+      "line": 88
+    },
+    {
+      "id": "wuyi",
+      "pack": "yijiang",
+      "skills": [
+        "benxi"
+      ],
+      "line": 61
+    },
+    {
+      "id": "xf_huangquan",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_dianhu",
+        "xinfu_jianji"
+      ],
+      "line": 44
+    },
+    {
+      "id": "xf_sufei",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_lianpian"
+      ],
+      "line": 45
+    },
+    {
+      "id": "xf_tangzi",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_xingzhao"
+      ],
+      "line": 43
+    },
+    {
+      "id": "xf_yiji",
+      "pack": "standard",
+      "skills": [
+        "xinfu_jijie",
+        "xinfu_jiyuan"
+      ],
+      "line": 42
+    },
+    {
+      "id": "xiahouba",
+      "pack": "sp",
+      "skills": [
+        "baobian"
+      ],
+      "line": 50
+    },
+    {
+      "id": "xiahoudun",
+      "pack": "standard",
+      "skills": [
+        "ganglie"
+      ],
+      "line": 16
+    },
+    {
+      "id": "xiahoushi",
+      "pack": "yijiang",
+      "skills": [
+        "qiaoshi",
+        "yanyu"
+      ],
+      "line": 52
+    },
+    {
+      "id": "xin_baosanniang",
+      "pack": "sp2",
+      "skills": [
+        "decadewuniang",
+        "decadexushen"
+      ],
+      "line": 16
+    },
+    {
+      "id": "xin_fazheng",
+      "pack": "refresh",
+      "skills": [
+        "xinenyuan",
+        "xinxuanhuo"
+      ],
+      "line": 33
+    },
+    {
+      "id": "xin_lingtong",
+      "pack": "refresh",
+      "skills": [
+        "decadexuanfeng",
+        "yongjin"
+      ],
+      "line": 21
+    },
+    {
+      "id": "xin_liru",
+      "pack": "yijiang",
+      "skills": [
+        "xinjuece",
+        "xinmieji",
+        "xinfencheng"
+      ],
+      "line": 75
+    },
+    {
+      "id": "xin_liubiao",
+      "pack": "refresh",
+      "skills": [
+        "decadezishou",
+        "decadezongshi"
+      ],
+      "line": 22
+    },
+    {
+      "id": "xin_masu",
+      "pack": "yijiang",
+      "skills": [
+        "olsanyao",
+        "rezhiman"
+      ],
+      "line": 29
+    },
+    {
+      "id": "xin_xusheng",
+      "pack": "refresh",
+      "skills": [
+        "decadepojun"
+      ],
+      "line": 37
+    },
+    {
+      "id": "xin_xushu",
+      "pack": "yijiang",
+      "skills": [
+        "xinwuyan",
+        "xinjujian"
+      ],
+      "line": 28
+    },
+    {
+      "id": "xin_yuji",
+      "pack": "refresh",
+      "skills": [
+        "reguhuo"
+      ],
+      "line": 86
+    },
+    {
+      "id": "xingdaorong",
+      "pack": "sp2",
+      "skills": [
+        "xuxie"
+      ],
+      "line": 31
+    },
+    {
+      "id": "xinpi",
+      "pack": "sp2",
+      "skills": [
+        "xpchijie",
+        "yinju"
+      ],
+      "line": 48
+    },
+    {
+      "id": "xinxianying",
+      "pack": "yijiang",
+      "skills": [
+        "xinzhongjian",
+        "xincaishi"
+      ],
+      "line": 87
+    },
+    {
+      "id": "xizhicai",
+      "pack": "sp",
+      "skills": [
+        "tiandu",
+        "xianfu",
+        "chouce"
+      ],
+      "line": 145
+    },
+    {
+      "id": "xuezong",
+      "pack": "yijiang",
+      "skills": [
+        "funan",
+        "jiexun"
+      ],
+      "line": 95
+    },
+    {
+      "id": "xugong",
+      "pack": "sp2",
+      "skills": [
+        "biaozhao",
+        "yechou"
+      ],
+      "line": 54
+    },
+    {
+      "id": "xuhuang",
+      "pack": "shenhua",
+      "skills": [
+        "gzduanliang"
+      ],
+      "line": 20
+    },
+    {
+      "id": "xujing",
+      "pack": "sp",
+      "skills": [
+        "yuxu",
+        "xjshijian"
+      ],
+      "line": 35
+    },
+    {
+      "id": "xunchen",
+      "pack": "sp2",
+      "skills": [
+        "fenglve",
+        "mouzhi"
+      ],
+      "line": 58
+    },
+    {
+      "id": "xunyou",
+      "pack": "yijiang",
+      "skills": [
+        "qice",
+        "zhiyu"
+      ],
+      "line": 27
+    },
+    {
+      "id": "xunyu",
+      "pack": "shenhua",
+      "skills": [
+        "quhu",
+        "jieming"
+      ],
+      "line": 33
+    },
+    {
+      "id": "xurong",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_xionghuo",
+        "xinfu_shajue"
+      ],
+      "line": 40
+    },
+    {
+      "id": "xushao",
+      "pack": "sp2",
+      "skills": [
+        "pingjian"
+      ],
+      "line": 46
+    },
+    {
+      "id": "xusheng",
+      "pack": "yijiang",
+      "skills": [
+        "xinpojun"
+      ],
+      "line": 31
+    },
+    {
+      "id": "xushi",
+      "pack": "yijiang",
+      "skills": [
+        "wengua",
+        "fuzhu"
+      ],
+      "line": 89
+    },
+    {
+      "id": "xuyou",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_chenglve",
+        "nzry_shicai",
+        "nzry_cunmu"
+      ],
+      "line": 61
+    },
+    {
+      "id": "xuzhu",
+      "pack": "standard",
+      "skills": [
+        "luoyi"
+      ],
+      "line": 18
+    },
+    {
+      "id": "yanbaihu",
+      "pack": "sp",
+      "skills": [
+        "zhidao",
+        "jili"
+      ],
+      "line": 98
+    },
+    {
+      "id": "yangxiu",
+      "pack": "sp",
+      "skills": [
+        "jilei",
+        "danlao"
+      ],
+      "line": 47
+    },
+    {
+      "id": "yanwen",
+      "pack": "shenhua",
+      "skills": [
+        "shuangxiong"
+      ],
+      "line": 36
+    },
+    {
+      "id": "yanyan",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_juzhan"
+      ],
+      "line": 57
+    },
+    {
+      "id": "yj_caoang",
+      "pack": "sp2",
+      "skills": [
+        "yjxuepin"
+      ],
+      "line": 70
+    },
+    {
+      "id": "yj_jushou",
+      "pack": "yijiang",
+      "skills": [
+        "jianying",
+        "shibei"
+      ],
+      "line": 49
+    },
+    {
+      "id": "yl_luzhi",
+      "pack": "shenhua",
+      "skills": [
+        "nzry_mingren",
+        "nzry_zhenliang"
+      ],
+      "line": 62
+    },
+    {
+      "id": "yl_yuanshu",
+      "pack": "shenhua",
+      "skills": [
+        "drlt_yongsi",
+        "drlt_weidi"
+      ],
+      "line": 69
+    },
+    {
+      "id": "yuanshu",
+      "pack": "sp",
+      "skills": [
+        "yongsi",
+        "weidi"
+      ],
+      "line": 51
+    },
+    {
+      "id": "yuantanyuanshang",
+      "pack": "sp",
+      "skills": [
+        "neifa"
+      ],
+      "line": 34
+    },
+    {
+      "id": "yuejin",
+      "pack": "sp",
+      "skills": [
+        "xiaoguo"
+      ],
+      "line": 124
+    },
+    {
+      "id": "yufan",
+      "pack": "yijiang",
+      "skills": [
+        "zhiyan",
+        "zongxuan"
+      ],
+      "line": 35
+    },
+    {
+      "id": "yujin_yujin",
+      "pack": "refresh",
+      "skills": [
+        "rejieyue"
+      ],
+      "line": 43
+    },
+    {
+      "id": "zangba",
+      "pack": "sp",
+      "skills": [
+        "rehengjiang"
+      ],
+      "line": 139
+    },
+    {
+      "id": "zhangbao",
+      "pack": "sp",
+      "skills": [
+        "rezhoufu",
+        "reyingbing"
+      ],
+      "line": 65
+    },
+    {
+      "id": "zhangchangpu",
+      "pack": "sp2",
+      "skills": [
+        "yanjiao",
+        "xingshen"
+      ],
+      "line": 55
+    },
+    {
+      "id": "zhangchunhua",
+      "pack": "yijiang",
+      "skills": [
+        "rejueqing",
+        "reshangshi"
+      ],
+      "line": 24
+    },
+    {
+      "id": "zhangfei",
+      "pack": "standard",
+      "skills": [
+        "paoxiao"
+      ],
+      "line": 23
+    },
+    {
+      "id": "zhanggong",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_zhenxing",
+        "xinfu_qianxin"
+      ],
+      "line": 37
+    },
+    {
+      "id": "zhanghe",
+      "pack": "shenhua",
+      "skills": [
+        "qiaobian"
+      ],
+      "line": 49
+    },
+    {
+      "id": "zhangji",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_lveming",
+        "xinfu_tunjun"
+      ],
+      "line": 33
+    },
+    {
+      "id": "zhangliao",
+      "pack": "standard",
+      "skills": [
+        "tuxi"
+      ],
+      "line": 17
+    },
+    {
+      "id": "zhangling",
+      "pack": "sp",
+      "skills": [
+        "zlhuji",
+        "zlshoufu"
+      ],
+      "line": 23
+    },
+    {
+      "id": "zhanglu",
+      "pack": "sp",
+      "skills": [
+        "yishe",
+        "bushi",
+        "midao"
+      ],
+      "line": 75
+    },
+    {
+      "id": "zhangqiying",
+      "pack": "sp2",
+      "skills": [
+        "xinfu_falu",
+        "xinfu_dianhua",
+        "xinfu_zhenyi"
+      ],
+      "line": 41
+    },
+    {
+      "id": "zhangrang",
+      "pack": "yijiang",
+      "skills": [
+        "taoluan"
+      ],
+      "line": 84
+    },
+    {
+      "id": "zhangren",
+      "pack": "sp",
+      "skills": [
+        "chuanxin",
+        "zfengshi"
+      ],
+      "line": 140
+    },
+    {
+      "id": "zhangsong",
+      "pack": "yijiang",
+      "skills": [
+        "qiangzhi",
+        "xiantu"
+      ],
+      "line": 50
+    },
+    {
+      "id": "zhangwen",
+      "pack": "sp2",
+      "skills": [
+        "songshu",
+        "sibian"
+      ],
+      "line": 50
+    },
+    {
+      "id": "zhangxingcai",
+      "pack": "sp",
+      "skills": [
+        "shenxian",
+        "qiangwu"
+      ],
+      "line": 60
+    },
+    {
+      "id": "zhangxiu",
+      "pack": "shenhua",
+      "skills": [
+        "drlt_xiongluan",
+        "drlt_congjian"
+      ],
+      "line": 70
+    },
+    {
+      "id": "zhangyi",
+      "pack": "yijiang",
+      "skills": [
+        "wurong",
+        "shizhi"
+      ],
+      "line": 68
+    },
+    {
+      "id": "zhangzhang",
+      "pack": "shenhua",
+      "skills": [
+        "zhijian",
+        "guzheng"
+      ],
+      "line": 52
+    },
+    {
+      "id": "zhaoxiang",
+      "pack": "sp",
+      "skills": [
+        "refanghun",
+        "refuhan"
+      ],
+      "line": 114
+    },
+    {
+      "id": "zhaoyun",
+      "pack": "standard",
+      "skills": [
+        "longdan"
+      ],
+      "line": 25
+    },
+    {
+      "id": "zhenji",
+      "pack": "standard",
+      "skills": [
+        "luoshen",
+        "qingguo"
+      ],
+      "line": 20
+    },
+    {
+      "id": "zhonghui",
+      "pack": "yijiang",
+      "skills": [
+        "quanji",
+        "zili"
+      ],
+      "line": 40
+    },
+    {
+      "id": "zhongyao",
+      "pack": "yijiang",
+      "skills": [
+        "huomo",
+        "zuoding"
+      ],
+      "line": 66
+    },
+    {
+      "id": "zhoucang",
+      "pack": "yijiang",
+      "skills": [
+        "xinzhongyong"
+      ],
+      "line": 55
+    },
+    {
+      "id": "zhoufei",
+      "pack": "shenhua",
+      "skills": [
+        "liangyin",
+        "kongsheng"
+      ],
+      "line": 72
+    },
+    {
+      "id": "zhoutai",
+      "pack": "refresh",
+      "skills": [
+        "buqu",
+        "fenji"
+      ],
+      "line": 94
+    },
+    {
+      "id": "zhouyu",
+      "pack": "standard",
+      "skills": [
+        "yingzi",
+        "fanjian"
+      ],
+      "line": 32
+    },
+    {
+      "id": "zhugedan",
+      "pack": "sp",
+      "skills": [
+        "gongao",
+        "juyi"
+      ],
+      "line": 69
+    },
+    {
+      "id": "zhugeguo",
+      "pack": "sp",
+      "skills": [
+        "yuhua",
+        "qirang"
+      ],
+      "line": 78
+    },
+    {
+      "id": "zhugejin",
+      "pack": "sp",
+      "skills": [
+        "hongyuan",
+        "huanshi",
+        "mingzhe"
+      ],
+      "line": 56
+    },
+    {
+      "id": "zhugeke",
+      "pack": "sp",
+      "skills": [
+        "aocai",
+        "duwu"
+      ],
+      "line": 57
+    },
+    {
+      "id": "zhugeliang",
+      "pack": "standard",
+      "skills": [
+        "guanxing",
+        "kongcheng"
+      ],
+      "line": 24
+    },
+    {
+      "id": "zhugezhan",
+      "pack": "shenhua",
+      "skills": [
+        "xinfu_zuilun",
+        "xinfu_fuyin"
+      ],
+      "line": 67
+    },
+    {
+      "id": "zhuhuan",
+      "pack": "yijiang",
+      "skills": [
+        "fenli",
+        "pingkou"
+      ],
+      "line": 51
+    },
+    {
+      "id": "zhujun",
+      "pack": "sp2",
+      "skills": [
+        "gongjian",
+        "kuimang"
+      ],
+      "line": 20
+    },
+    {
+      "id": "zhuran",
+      "pack": "yijiang",
+      "skills": [
+        "danshou"
+      ],
+      "line": 30
+    },
+    {
+      "id": "zhurong",
+      "pack": "shenhua",
+      "skills": [
+        "juxiang",
+        "lieren"
+      ],
+      "line": 40
+    },
+    {
+      "id": "zhuzhi",
+      "pack": "yijiang",
+      "skills": [
+        "xinanguo"
+      ],
+      "line": 70
+    },
+    {
+      "id": "zoushi",
+      "pack": "sp",
+      "skills": [
+        "zhuoshui",
+        "zqingcheng"
+      ],
+      "line": 141
+    },
+    {
+      "id": "zumao",
+      "pack": "sp",
+      "skills": [
+        "yinbing",
+        "juedi"
+      ],
+      "line": 88
+    },
+    {
+      "id": "zuoci",
+      "pack": "shenhua",
+      "skills": [
+        "huashen",
+        "xinsheng"
+      ],
+      "line": 54
+    }
+  ]
+}
