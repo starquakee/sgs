@@ -1,4 +1,4 @@
-/* WUI-03: one top bar; non-interactive status beside native confirmation. */
+/* One top bar and the native prompt above manual confirmation. */
 :root.sgs-game {
   --sgs-toolbar-h: 44px;
 }
@@ -13,25 +13,10 @@
 .sgs-game .sgs-table-clock { display: inline; margin-left: auto; flex: none; font-size: 12px; font-variant-numeric: tabular-nums; }
 .sgs-game .sgs-audio { margin-left: 0; flex: none; }
 .sgs-game .sgs-turn { font-size: 13px; margin-left: 0; max-width: 150px; }
-.sgs-game .sgs-action-rail {
-  position: absolute; inset: auto var(--sgs-action-right) calc(var(--sgs-hand-h) + 106px) var(--sgs-action-left);
-  z-index: 15; min-height: 40px; box-sizing: border-box; padding: 5px 12px;
-  display: flex; align-items: center; justify-content: center; pointer-events: none;
-  background: #523523e8; color: var(--sgs-text); border: 1px solid #b791654d;
-  border-radius: 2px; font: 13px/1.4 var(--sgs-font-body); text-shadow: none;
-}
-.sgs-game #window #arena > .dialog.nobutton { bottom: calc(var(--sgs-hand-h) + 156px)!important; }
-.sgs-game #window #arena:has(> .sgs-action-rail[data-action='opening']) > .dialog.nobutton { bottom: calc(var(--sgs-hand-h) + 106px)!important; }
-.sgs-action-rail :is(div,nav,p,details,summary,strong,span,button),
+.sgs-game #window #arena > .dialog.nobutton { bottom: calc(var(--sgs-hand-h) + 106px)!important; }
 .sgs-tools-panel :is(div,nav,p,details,summary,strong,span,button) {
   position: static; inset: auto; box-sizing: border-box; text-shadow: none;
 }
-.sgs-action-state { display: grid; grid-template-columns: max-content max-content; column-gap: 12px; row-gap: 0; align-items: baseline; justify-content: center; min-width: 0; text-align: center; }
-.sgs-action-state strong { font-size: 14px; color: var(--sgs-text); }
-.sgs-action-counts { color: var(--sgs-text); font-variant-numeric: tabular-nums; }
-.sgs-action-counts[hidden] { display: none; }
-.sgs-action-detail { grid-column: 1 / -1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color: var(--sgs-muted); font-size: 12px; line-height: 15px; }
-.sgs-game .sgs-action-rail[data-action='opening'] { visibility: hidden; }
 
 /* The menu owns only presentation nodes; native tools keep their handlers. */
 .sgs-game .sgs-hud .sgs-tools > .sgs-tools-panel {
@@ -97,6 +82,5 @@
 }
 @media (max-width: 650px) {
   .sgs-game .sgs-table-clock { display: none; }
-  .sgs-game .sgs-action-rail { left: 12px; right: calc(var(--sgs-player-w) + 24px); }
   .sgs-game .sgs-turn { max-width: 90px; margin-right: auto; }
 }

@@ -48,7 +48,7 @@
 
 /* Chrome and native action buttons sit on wood; reading surfaces use paper.
    These local palettes do not recolor native card faces or faction states. */
-:is(.masthead, .sgs-hud, .sgs-action-rail),
+:is(.masthead, .sgs-hud),
 .sgs-game #arena #control,
 .sgs-game #arena > .dialog.nobutton {
   --sgs-bg: #523523;

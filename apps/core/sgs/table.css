@@ -430,10 +430,9 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 19px; line-height: 1.5; }
 .sgs-game #window #arena > .dialog:not(.nobutton) {
-  bottom: calc(var(--sgs-hand-h) + 156px)!important;
-  max-height: calc(100% - var(--sgs-hand-h) - 194px);
+  bottom: calc(var(--sgs-hand-h) + 106px)!important;
+  max-height: calc(100% - var(--sgs-hand-h) - 144px);
 }
-.sgs-game #window #arena > .sgs-action-rail { border: 0; background: #523523bd; padding: 4px 8px; }
 @media (max-width: 1100px) {
   .sgs-game #window #arena { --sgs-equip-w: 116px; }
   .sgs-game #window #arena > .sgs-teammate-hand { width: 164px; }

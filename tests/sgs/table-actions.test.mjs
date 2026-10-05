@@ -209,14 +209,13 @@ function mounted({ detached = false } = {}) {
   const api = installTableActions(f, { document, queueMicrotask: fn => queued.push(fn),
     toolsMenu, toolsHost,
     setInterval: fn => { timers.add(fn); return fn; }, clearInterval: fn => timers.delete(fn) });
-  const rail = document.body.children.find(node => node.className === 'sgs-action-rail');
-  const state = rail.children[0], nav = toolsHost ? toolsHost.children[0] : rail.children[1];
+  const nav = (toolsHost || document.body).children.find(node => node.tag === 'nav');
   const [general, cards, record] = nav.children;
   const [summary, menu] = cards.children;
-  return { ...f, api, document, queued, timers, rail, state, general, cardsMenu: cards, record, summary, menu, toolsMenu, toolsHost, toolSummary, nativeTools };
+  return { ...f, api, document, queued, timers, nav, general, cardsMenu: cards, record, summary, menu, toolsMenu, toolsHost, toolSummary, nativeTools };
 }
 
-test('installed rail updates after native checks, delegates records and removes hooks/listeners/timer on disposal', () => {
+test('installed references refresh after native checks, delegate records and remove hooks/listeners/timer on disposal', () => {
   const f = mounted();
   let records = 0;
   f.ui.click.pause = () => records++;
@@ -225,7 +224,7 @@ test('installed rail updates after native checks, delegates records and removes 
   f.ui.selected.cards.push(...f.cards);
   f.lib.hooks.checkEnd.at(-1)();
   f.queued.shift()();
-  assert.equal(f.state.children[1].textContent, '已选 2 牌 · 0 目标');
+  assert.deepEqual(f.ui.selected.cards, f.cards);
   f.record.emit('click');
   assert.equal(records, 1);
   f._status.paused2 = true;
@@ -292,16 +291,6 @@ test('public character menu exposes visible players only and preserves selection
   f.api.dispose();
 });
 
-test('ready-to-confirm guidance reads the native confirmation without recomputing card rules', () => {
-  const f = mounted();
-  f.ui.selected.cards.push(f.cards[0]); f.enemy.classList.add('selectable');
-  f.api.refresh(); assert.equal(f.state.children[2].textContent, '请点击亮起的角色，选好后再确定');
-  f.ui.confirm = { parentNode: {}, children: [{ link: 'ok' }] };
-  f.api.refresh(); assert.equal(f.state.children[2].textContent, '选择已就绪，点击“确定”继续');
-  f.event.finished = true; f.api.refresh(); assert.doesNotMatch(f.state.children[2].textContent, /已就绪/);
-  f.api.dispose();
-});
-
 test('references mounted in tools keep selection, focus the visible opener and fully detach on disposal', () => {
   const f = mounted({ detached: true }), opened = [];
   f.ui.click.intro = function () { opened.push(this); };
@@ -312,7 +301,7 @@ test('references mounted in tools keep selection, focus the visible opener and f
   assert.deepEqual(f.ui.selected.cards, [f.cards[0]]);
   assert.equal(f.toolsMenu.open, false);
   assert.equal(f.toolSummary.focused, true);
-  assert.equal(f.rail.children.length, 1);
+  assert.deepEqual(f.document.body.children, [f.toolsMenu]);
   f.api.dispose();
   assert.equal(f.toolsHost.children.length, 0);
   assert.equal(f.toolsMenu.listeners.size, 0);

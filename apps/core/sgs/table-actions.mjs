@@ -113,20 +113,6 @@ export function installTableActions(context, { document = globalThis.document,
   setInterval = globalThis.setInterval, clearInterval = globalThis.clearInterval,
   queueMicrotask = globalThis.queueMicrotask, dialogs, mode, toolsHost, toolsMenu } = {}) {
   const { game, ui, lib, _status, get } = context;
-  const rail = document.createElement('section');
-  rail.className = 'sgs-action-rail';
-  rail.setAttribute('aria-label', '当前操作与说明');
-  const state = document.createElement('div');
-  state.className = 'sgs-action-state';
-  state.setAttribute('role', 'status');
-  state.setAttribute('aria-live', 'polite');
-  state.setAttribute('aria-atomic', 'true');
-  const title = document.createElement('strong');
-  const counts = document.createElement('span');
-  counts.className = 'sgs-action-counts';
-  const detail = document.createElement('span');
-  detail.className = 'sgs-action-detail';
-  state.append(title, counts, detail);
   const button = (text, parent, listener) => {
     const node = document.createElement('button');
     node.type = 'button';
@@ -184,10 +170,7 @@ export function installTableActions(context, { document = globalThis.document,
     prepareDialog();
     openPlayGuide(dialogs, mode, document);
   }) : null;
-  rail.append(state);
-  (toolsHost || rail).append(actions);
-  (ui.arena || document.body).append(rail);
-  const label = (node, text) => { if (node.textContent !== text) node.textContent = text; };
+  (toolsHost || document.body).append(actions);
   let entries = null, generalEntries = null;
   let disposed = false;
   let releaseIntroFocus;
@@ -197,15 +180,6 @@ export function installTableActions(context, { document = globalThis.document,
   };
   const refresh = () => {
     if (disposed) return;
-    const action = readTableAction(context);
-    rail.dataset.action = action.kind;
-    label(title, action.title);
-    label(counts, action.counts);
-    counts.hidden = !action.counts;
-    label(detail, action.detail);
-    const ready = action.counts && ui.confirm?.parentNode && Array.from(ui.confirm.children).some(node => node.link === 'ok');
-    if (ready) label(detail, '选择已就绪，点击“确定”继续');
-    else if (action.kind === 'target' && ui.selected.cards.length && !ui.selected.targets.length) label(detail, '请点击亮起的角色，选好后再确定');
     // Modal content already makes the table inert. Keep its opener focusable so
     // focus can return before the asynchronous native pause gate is released.
     record.disabled = !canOpenNativeRecord(context) && !dialogs?.has('battle-log');
@@ -297,6 +271,5 @@ export function installTableActions(context, { document = globalThis.document,
     toolsMenu?.removeEventListener('toggle', toolToggle);
     if (toolsMenu) toolsMenu.open = false;
     actions.remove();
-    rail.remove();
   } };
 }

@@ -9,7 +9,7 @@ import { installOpeningHand } from './opening-hand.mjs';
 import { installHandLayout } from './hand-layout.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
 import { installSelectedTiesuoRecast } from './card-recast.mjs';
-import { installTableActions, visiblePlayerName } from './table-actions.mjs';
+import { installTableActions, readTableAction, visiblePlayerName } from './table-actions.mjs';
 import { installPublicStates, publicBattleLog } from './table-reference.mjs';
 import { createProblemReports, installProblemReportUI } from './problem-report.mjs';
 import { installRuntimeErrors } from './runtime-errors.mjs';
@@ -120,7 +120,10 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     // Reuse the real engine toolbar, including its menus and click handlers.
     if (ui.system) hud.querySelector('.sgs-native-tools').append(ui.system);
     const reports = createProblemReports({ upstream: roster.upstream, engineVersion: lib.version, build: lib.buildInfo, launch,
-      readAction: () => document.querySelector('.sgs-action-state')?.textContent || '', readLog: () => publicBattleLog(ui) });
+      readAction: () => {
+        const action = readTableAction({ game, ui, get, _status });
+        return [action.title, action.counts, action.detail].filter(Boolean).join(' · ');
+      }, readLog: () => publicBattleLog(ui) });
     const reportUI = installProblemReportUI({ reports, dialogs: session.dialogs, menu: hud.querySelector('.sgs-tool-commands'), returnFocus: toolMenu.querySelector('summary'), closeMenu: () => { toolMenu.open = false; } });
     const runtimeErrors = installRuntimeErrors({ session, reports, reportUI });
     if (ui.volumn) ui.volumn.style.display = 'none';
