@@ -15,6 +15,9 @@ html body .sgs-result-stats strong { position: static; inset: auto; color: var(-
 .sgs-result-dialog [data-result-status] { color: var(--sgs-gold); font-size: 13px; margin: 10px 0 0; }
 .sgs-result-dialog [data-result-status]:empty { display: none; }
 .sgs-result-dialog .sgs-dialog-actions { margin-top: 24px; }
+html body .sgs-result-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
+.sgs-result-dialog > :not(.sgs-result-content) { flex-shrink: 0; }
+.sgs-result-dialog .sgs-result-content { min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) var(--sgs-paper); }
 @media (max-width: 540px), (max-height: 650px) {
   html body .sgs-client-dialog.sgs-result-dialog { padding: 20px; }
   .sgs-result-dialog h2 { font-size: 32px; }

@@ -17,10 +17,11 @@ html body .sgs-reference-dialog[open] { display: flex; flex-direction: column; o
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar-thumb { background: var(--sgs-bronze); border-radius: 3px; }
 .sgs-game #arena > .player > .sgs-public-states { position: absolute; z-index: 6; left: 30px; right: 23px; top: 36px; display: flex; flex-wrap: wrap; gap: 3px; pointer-events: none; }
 .sgs-game #arena > .player > .sgs-public-states[hidden] { display: none; }
-.sgs-public-states span { position: static; padding: 2px 5px; border: 1px solid var(--sgs-bronze); border-radius: 3px; background: #171715ed; color: var(--sgs-gold); font: 12px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; }
+.sgs-public-states span { position: static; padding: 2px 5px; border: 1px solid #b79165; border-radius: 3px; background: #523523ed; color: #fff0d8; font: 12px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; }
 .sgs-game #arena > .player.turnedover > .sgs-public-states { opacity: 1; }
 .sgs-game #window > .dialog.sgs-readable-intro {
   position: fixed!important; bottom: auto!important; right: auto!important;
+  margin: 0!important;
   width: min(480px, calc(100vw - 32px))!important; height: auto!important;
   left: max(16px, calc(50% - 240px))!important; top: calc(var(--sgs-toolbar-h) + 8px)!important;
   max-height: calc(100dvh - var(--sgs-toolbar-h) - 24px); box-sizing: border-box;
@@ -34,4 +35,12 @@ html body .sgs-reference-dialog[open] { display: flex; flex-direction: column; o
 .sgs-readable-intro .caption > div > .skill, .sgs-readable-intro .caption > div > .skill + div { position: static!important; width: auto!important; float: none!important; }
 .sgs-readable-intro .caption > div > .skill { color: var(--sgs-gold); }
 .sgs-readable-intro .bar { display: none; }
+.sgs-game #window > .dialog.sgs-readable-intro > .content-container {
+  overflow-x: hidden!important; overflow-y: auto!important; overscroll-behavior: contain;
+  box-sizing: border-box; scrollbar-gutter: stable;
+}
+.sgs-game #window > .dialog.sgs-readable-intro .content { box-sizing: border-box; }
+.sgs-game #window > .dialog.sgs-readable-intro .caption {
+  box-sizing: border-box; width: 100%; overflow-wrap: anywhere;
+}
 @media (max-width: 650px) { .sgs-reference-dialog { width: calc(100vw - 28px); } .sgs-log-list { max-height: 46vh; } }

@@ -61,7 +61,7 @@ export function installProblemReportUI({ reports, dialogs, menu, returnFocus, cl
     if (disposed) return null;
     returnFocus?.focus();
     closeMenu();
-    return dialogs.open('problem-report', '<h2>问题报告</h2><p class="sgs-dialog-note">记录当前版本、玩法、操作提示和公开记录，便于排查问题。下载后可自行提供给排查人员。</p><p data-report-summary></p><p class="sgs-report-status" data-report-status role="status"></p><div class="sgs-dialog-actions"><button type="button" data-close>返回牌局</button><button type="button" data-download data-primary>下载问题报告</button></div>', (dialog, close) => {
+    return dialogs.open('problem-report', '<h2>问题报告</h2><div class="sgs-report-content" tabindex="0" role="region" aria-label="报告摘要"><p class="sgs-dialog-note">记录当前版本、玩法、操作提示和公开记录，便于排查问题。下载后可自行提供给排查人员。</p><p data-report-summary></p><p class="sgs-report-status" data-report-status role="status"></p></div><div class="sgs-dialog-actions"><button type="button" data-close>返回牌局</button><button type="button" data-download data-primary>下载问题报告</button></div>', (dialog, close) => {
       dialog.classList.add('sgs-report-dialog');
       const snapshot = reports.snapshot();
       dialog.querySelector('[data-report-summary]').textContent = `本局公开记录 ${snapshot.publicLog.length} 条 · 已记录错误 ${snapshot.errors.length} 条。报告只保存在你下载的文件中。`;

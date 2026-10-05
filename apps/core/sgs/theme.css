@@ -7,22 +7,29 @@
 }
 
 :root {
-  --sgs-bg: #171715;
-  --sgs-panel: #22211e;
-  --sgs-panel-raised: #2c2923;
-  --sgs-control: #343027;
-  --sgs-control-hover: #443b2d;
-  --sgs-line: #62533d;
-  --sgs-bronze: #ac8c59;
-  --sgs-gold: #e0bd80;
-  --sgs-text: #eee4d1;
-  --sgs-muted: #c0b29b;
-  --sgs-primary: #a33d2e;
-  --sgs-primary-hover: #b84734;
-  --sgs-primary-edge: #d37e59;
-  --sgs-on-primary: #fff3df;
-  --sgs-focus: #f6d58b;
-  --sgs-backdrop: #0c0c0bd1;
+  --sgs-paper: #eadcc0;
+  --sgs-paper-light: #f5ebd6;
+  --sgs-paper-shade: #dfccaa;
+  --sgs-ink: #493224;
+  --sgs-ink-muted: #6d503b;
+  --sgs-wood: #523523;
+  --sgs-cream: #fff0d8;
+  --sgs-bg: var(--sgs-paper-shade);
+  --sgs-panel: var(--sgs-paper);
+  --sgs-panel-raised: var(--sgs-paper-light);
+  --sgs-control: #dfc9a6;
+  --sgs-control-hover: #d2b88e;
+  --sgs-line: #b69770;
+  --sgs-bronze: #936a45;
+  --sgs-gold: #744522;
+  --sgs-text: var(--sgs-ink);
+  --sgs-muted: var(--sgs-ink-muted);
+  --sgs-primary: #82502c;
+  --sgs-primary-hover: #6c3f22;
+  --sgs-primary-edge: #b68b5a;
+  --sgs-on-primary: var(--sgs-cream);
+  --sgs-focus: #754524;
+  --sgs-backdrop: #3924169e;
   --sgs-font-body: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
   --sgs-font-title: SGSKai, 'STKaiti', 'KaiTi', serif;
   --sgs-text-small: 12px;
@@ -31,17 +38,66 @@
   --sgs-text-action: 20px;
   --sgs-action-width: 126px;
   --sgs-action-height: 50px;
-  --sgs-radius: 4px;
-  --sgs-shadow: 0 6px 20px #0006;
-  --sgs-control-shadow: inset 0 1px #eed5a41f, 0 2px 4px #0004;
+  --sgs-button-shape: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px);
+  --sgs-radius: 3px;
+  --sgs-shadow: 0 6px 20px #41281940;
+  --sgs-control-shadow: inset 0 1px #fff5dc70, 0 2px 3px #57371b26;
   --sgs-motion: 140ms ease-out;
-  --sgs-scene: linear-gradient(180deg, #171715b3, #171715e8), url('../image/background/ol_bg.jpg') center / cover;
+  --sgs-scene: linear-gradient(0deg, #3c2116d6, transparent 38%), linear-gradient(#b97e4c50, #b97e4c50), url('../image/background/ol_bg.jpg') center / cover;
+}
+
+/* Chrome and native action buttons sit on wood; reading surfaces use paper.
+   These local palettes do not recolor native card faces or faction states. */
+:is(.masthead, .sgs-hud, .sgs-action-rail),
+.sgs-game #arena #control,
+.sgs-game #arena > .dialog.nobutton {
+  --sgs-bg: #523523;
+  --sgs-panel: #60402a;
+  --sgs-panel-raised: #68472f;
+  --sgs-control: #765033;
+  --sgs-control-hover: #825936;
+  --sgs-line: #a57e55;
+  --sgs-bronze: #b79165;
+  --sgs-gold: #f2d9af;
+  --sgs-text: #fff0d8;
+  --sgs-muted: #efdab9;
+  --sgs-focus: #ffe8b9;
+  --sgs-control-shadow: inset 0 1px #ffe1ae33, 0 2px 3px #38201233;
+}
+
+.sgs-hud .sgs-tools-panel,
+.sgs-hud .sgs-tools #system,
+.sgs-card-help-menu {
+  --sgs-bg: var(--sgs-paper-shade);
+  --sgs-panel: var(--sgs-paper);
+  --sgs-panel-raised: var(--sgs-paper-light);
+  --sgs-control: #dfc9a6;
+  --sgs-control-hover: #d2b88e;
+  --sgs-line: #b69770;
+  --sgs-bronze: #936a45;
+  --sgs-gold: #744522;
+  --sgs-text: var(--sgs-ink);
+  --sgs-muted: var(--sgs-ink-muted);
+  --sgs-focus: #754524;
 }
 
 /* Applies only to the two SGS entry points that import this sheet. */
 :root body :is(button, a, input, select, summary, [role='button']):focus-visible {
   outline: 2px solid var(--sgs-focus);
   outline-offset: 3px;
+}
+
+.start-button, .sgs-client-dialog .sgs-dialog-actions > button,
+.sgs-game #arena #control > .control:not(.sgs-skill-control) > div {
+  clip-path: var(--sgs-button-shape)!important;
+}
+html body .start-button:focus-visible,
+html body .sgs-client-dialog .sgs-dialog-actions > button:focus-visible {
+  outline-offset: -5px;
+}
+html body .start-button:focus-visible,
+html body .sgs-client-dialog .sgs-dialog-actions > button[data-primary]:focus-visible {
+  outline-color: var(--sgs-cream);
 }
 
 @media (prefers-reduced-motion: reduce) {

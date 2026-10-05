@@ -6,6 +6,7 @@ import { installCardAudio } from './card-audio.mjs';
 import { installCharacterAudio } from './character-audio.mjs';
 import { installTeammateHand } from './teammate-hand.mjs';
 import { installOpeningHand } from './opening-hand.mjs';
+import { installHandLayout } from './hand-layout.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
 import { installTableActions, visiblePlayerName } from './table-actions.mjs';
 import { installPublicStates, publicBattleLog } from './table-reference.mjs';
@@ -69,11 +70,12 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     installOpeningHand({ lib, game, _status });
     const hud = document.createElement('header');
     hud.className = 'sgs-hud';
-    hud.innerHTML = `<a href="./sgs.html" class="sgs-return">‹ 点将台</a><strong>三国杀 <span>${landlord ? '斗地主' : teams ? '双人对抗 · 2v2' : '身份军争'}</span></strong><span class="sgs-table-state">单机 AI 对局</span><span class="sgs-turn" aria-live="polite">准备开局</span><span class="sgs-table-clock" aria-label="对局进度"></span><button type="button" class="sgs-audio">语音：开</button><details class="sgs-tools"><summary>牌桌工具</summary></details><button type="button" class="sgs-restart">重新开局</button>`;
+    hud.innerHTML = `<a href="./sgs.html" class="sgs-return">‹ 点将台</a><strong>三国杀 <span>${landlord ? '斗地主' : teams ? '双人对抗 · 2v2' : '身份军争'}</span></strong><span class="sgs-table-state">单机 AI 对局</span><span class="sgs-turn" aria-live="polite">准备开局</span><span class="sgs-table-clock" aria-label="对局进度"></span><button type="button" class="sgs-audio">语音：开</button><details class="sgs-tools"><summary>牌桌工具</summary><div class="sgs-tools-panel"><div class="sgs-tool-reference"></div><div class="sgs-tool-commands"><button type="button" class="sgs-restart">重新开局</button></div><details class="sgs-native-tools"><summary>原生工具</summary></details></div></details>`;
     document.documentElement.classList.toggle('sgs-teams', teams || landlord);
     document.documentElement.classList.toggle('sgs-landlord', landlord);
     const label = (node, value) => { if (node.textContent !== value) node.textContent = value; };
     document.body.append(hud);
+    const toolMenu = hud.querySelector('.sgs-tools');
     const audioButton = hud.querySelector('.sgs-audio');
     const audioEnabled = preferences.get().sound;
     const updateAudio = status => {
@@ -106,22 +108,19 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       preferences.set({ sound: !cardAudio.status().enabled });
     });
     const session = installTableSession({ lib, game, ui, _status, hud, preferences, audio: cardAudio });
-    const tableActions = installTableActions({ lib, game, ui, get, _status }, { dialogs: session.dialogs, mode: launch.mode });
+    const tableActions = installTableActions({ lib, game, ui, get, _status }, { dialogs: session.dialogs, mode: launch.mode,
+      toolsHost: hud.querySelector('.sgs-tool-reference'), toolsMenu: toolMenu });
     const publicStates = installPublicStates({ game, ui });
     const results = installBattleResults({ lib, game, get, _status, launch, preferences,
       retainReplay: config => retainLaunch(config, preferences.get()),
       elapsedMs: session.elapsedMs, navigate: session.navigate, onReady: session.setResultActions });
     const battleFeedback = installBattleFeedback({ lib, game, ui, get, _status, preferences });
     // Reuse the real engine toolbar, including its menus and click handlers.
-    const toolMenu = hud.querySelector('.sgs-tools');
-    if (ui.system) toolMenu.append(ui.system);
+    if (ui.system) hud.querySelector('.sgs-native-tools').append(ui.system);
     const reports = createProblemReports({ upstream: roster.upstream, engineVersion: lib.version, build: lib.buildInfo, launch,
       readAction: () => document.querySelector('.sgs-action-state')?.textContent || '', readLog: () => publicBattleLog(ui) });
-    const reportUI = installProblemReportUI({ reports, dialogs: session.dialogs, menu: ui.system || toolMenu, returnFocus: toolMenu.querySelector('summary'), closeMenu: () => { toolMenu.open = false; } });
+    const reportUI = installProblemReportUI({ reports, dialogs: session.dialogs, menu: hud.querySelector('.sgs-tool-commands'), returnFocus: toolMenu.querySelector('summary'), closeMenu: () => { toolMenu.open = false; } });
     const runtimeErrors = installRuntimeErrors({ session, reports, reportUI });
-    toolMenu.addEventListener('click', event => {
-      if (event.target.closest('[data-sgs-tool]')) queueMicrotask(() => { toolMenu.open = false; });
-    }, true);
     if (ui.volumn) ui.volumn.style.display = 'none';
     const sortHandButton = document.createElement('button');
     sortHandButton.type = 'button';
@@ -136,8 +135,6 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       game.me?.sortHandcardOL(_status.tempHandcardSort);
     });
     ui.arena.append(sortHandButton);
-    const closeTools = event => { if (!toolMenu.contains(event.target)) toolMenu.open = false; };
-    document.addEventListener('pointerdown', closeTools);
     const decorateControls = () => {
       for (const button of ui.system?.querySelectorAll(':scope > div > div') || []) {
         const name = button.textContent.trim();
@@ -166,15 +163,10 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     const controlsObserver = new MutationObserver(decorateControls);
     if (ui.control) controlsObserver.observe(ui.control, { childList: true, subtree: true });
     let equipmentOwner;
-    let handContainer;
-    const handResizeObserver = new ResizeObserver(() => ui.updatehl());
+    const handLayout = installHandLayout(() => ui.updatehl());
     const teammateHand = installTeammateHand({ game, ui, get }, launch.mode);
     const decorate = () => {
-      if (ui.handcards1Container && handContainer !== ui.handcards1Container) {
-        handResizeObserver.disconnect();
-        handContainer = ui.handcards1Container;
-        handResizeObserver.observe(handContainer);
-      }
+      handLayout.observe(ui.handcards1Container);
       if (game.me?.name && equipmentOwner !== game.me) {
         // Render the engine's own empty equipment slots; no equipment is added.
         game.me.$handleEquipChange();
@@ -226,7 +218,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handResizeObserver.disconnect(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); document.removeEventListener('pointerdown',closeTools); }, { once: true });
+    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); }, { once: true });
     decorate();
     loading?.ready();
   });

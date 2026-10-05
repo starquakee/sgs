@@ -332,7 +332,7 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #arena>.dialog .caption,
 .sgs-game #arena>.dialog:not(.nobutton) .caption { color: var(--sgs-text); font-family: var(--sgs-font-title); }
-.sgs-game #arena>.dialog.nobutton { color: var(--sgs-text); background: linear-gradient(90deg, transparent, #171715e8 18%, #171715e8 82%, transparent); font-family: var(--sgs-font-body); }
+.sgs-game #arena>.dialog.nobutton { color: var(--sgs-text); background: linear-gradient(90deg, transparent, #68442cd9 18%, #68442cd9 82%, transparent); font-family: var(--sgs-font-body); }
 .sgs-game #arena>.dialog .caption>.sgs-opening-copy { color: var(--sgs-text); font-family: var(--sgs-font-body); }
 .sgs-game .dialog .caption>.text { font-family: var(--sgs-font-body); }
 .sgs-game .menu-container { background: var(--sgs-backdrop); }
@@ -360,3 +360,81 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-leave-dialog button[data-leave]:hover { background: var(--sgs-primary-hover); }
 .sgs-game #arena>.sgs-teammate-hand { background: var(--sgs-panel); border-color: var(--sgs-bronze); border-radius: var(--sgs-radius); color: var(--sgs-text); box-shadow: var(--sgs-shadow); }
 .sgs-teammate-heading>span, .sgs-teammate-empty { color: var(--sgs-muted); }
+.sgs-teammate-heading strong { color: var(--sgs-text); }
+
+/* WUI-04: one composition for the native seat, hand and control containers.
+   Keep every card's internal face and native movement transform unchanged. */
+.sgs-game #window #arena {
+  --sgs-player-w: clamp(128px, min(12.2vw, 21vh), 220px);
+  --sgs-player-h: calc(var(--sgs-player-w) * 1.34);
+  --sgs-edge: clamp(20px, 2vw, 34px);
+  --sgs-equip-w: clamp(116px, 11.7vw, 158px);
+  --sgs-hand-h: clamp(126px, 20vh, 184px);
+  --sgs-side-top: 22%;
+  --sgs-action-left: calc(var(--sgs-edge) + var(--sgs-player-w) + var(--sgs-equip-w) + 26px);
+  --sgs-action-right: var(--sgs-action-left);
+}
+.sgs-game #window #arena:is([data-number='7'],[data-number='8']) {
+  --sgs-player-w: clamp(104px, min(9vw, 17vh), 172px);
+}
+.sgs-game #window #arena > .player:not(.minskin) { border-radius: 4px!important; }
+.sgs-game #window #arena > .player:not(.minskin) > .avatar { border-radius: 2px!important; }
+.sgs-game #window #arena > .player[data-position='0'] { bottom: 34px!important; }
+.sgs-game #window #arena:is([data-number='4'],[data-number='5'],[data-number='6']) > .player[data-position='1'],
+.sgs-game #window #arena[data-number='4'] > .player[data-position='3'],
+.sgs-game #window #arena[data-number='5'] > .player[data-position='4'],
+.sgs-game #window #arena[data-number='6'] > .player[data-position='5'] { top: var(--sgs-side-top)!important; }
+.sgs-game #window #arena:is([data-number='7'],[data-number='8']) > .player[data-position='1'],
+.sgs-game #window #arena[data-number='7'] > .player[data-position='6'],
+.sgs-game #window #arena[data-number='8'] > .player[data-position='7'] { top: calc(var(--sgs-player-h) + 66px)!important; }
+.sgs-game #window #arena #me,
+.sgs-game #window #arena #mebg,
+.sgs-game #window #arena #autonode,
+.sgs-game #window #arena #control {
+  left: var(--sgs-action-left)!important; right: var(--sgs-action-right)!important;
+}
+.sgs-game #window #arena #me #handcards1 > .handcards { margin: 0 auto!important; }
+.sgs-game #window #arena #me { bottom: 6px!important; }
+/* Large hands may use the free lower-left space; the confirmation stays put. */
+.sgs-game #window #arena #me:has(.handcards > .card:nth-child(n+8)) { left: var(--sgs-edge)!important; }
+.sgs-game #window #arena #control > .control.sgs-skill-control {
+  left: calc(100% + var(--sgs-equip-w) + 26px)!important;
+  bottom: calc(-1 * var(--sgs-hand-h) + var(--sgs-skill-row,0) * 34px - 2px)!important;
+  gap: 4px;
+}
+.sgs-game #window #arena #control > .control.sgs-skill-control > div { min-height: 30px; padding: 4px 8px; }
+.sgs-game #window #arena > .player[data-position='0'] > .equips {
+  left: calc(-1 * var(--sgs-equip-w) - 18px)!important;
+  width: var(--sgs-equip-w)!important; bottom: 24px!important; gap: 5px;
+}
+.sgs-game #window #arena > .player[data-position='0'] > .equips > .card { border-radius: 2px!important; }
+.sgs-game #window #arena > .player[data-position='0'] > .equips > .card > .name2 { max-width: calc(var(--sgs-equip-w) - 10px); }
+.sgs-game #window #arena > .sgs-sort-hand {
+  width: var(--sgs-equip-w); right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); bottom: 14px;
+  height: 34px; border-radius: 2px;
+}
+.sgs-game #window #arena > .sgs-teammate-hand {
+  right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); top: var(--sgs-side-top);
+  width: clamp(164px, 14.5vw, 210px); padding: 9px; box-shadow: 0 3px 12px #35231526;
+}
+.sgs-game #window #arena[data-number='3'] { --sgs-side-top: 56px; }
+.sgs-game #window #arena > .sgs-teammate-hand[data-position='2'] { left: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); right: auto; }
+.sgs-game .sgs-teammate-cards { max-height: calc(var(--sgs-player-h) - 44px); }
+.sgs-game .sgs-teammate-card { min-height: 60px; }
+.sgs-game .sgs-teammate-card-name { letter-spacing: 0; font-size: 16px; }
+.sgs-game #window #arena > .dialog.nobutton {
+  left: var(--sgs-action-left)!important; right: var(--sgs-action-right)!important;
+  box-sizing: border-box; padding: 7px 12px; max-height: 112px;
+}
+.sgs-game #window #arena > .dialog.nobutton .caption { font-size: 19px; line-height: 1.5; }
+.sgs-game #window #arena > .dialog:not(.nobutton) {
+  bottom: calc(var(--sgs-hand-h) + 156px)!important;
+  max-height: calc(100% - var(--sgs-hand-h) - 194px);
+}
+.sgs-game #window #arena > .sgs-action-rail { border: 0; background: #523523bd; padding: 4px 8px; }
+@media (max-width: 1100px) {
+  .sgs-game #window #arena { --sgs-equip-w: 116px; }
+  .sgs-game #window #arena > .sgs-teammate-hand { width: 164px; }
+  .sgs-game .sgs-teammate-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 17px; }
+}

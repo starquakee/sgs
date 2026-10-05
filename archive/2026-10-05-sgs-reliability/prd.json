@@ -1,0 +1,106 @@
+{
+  "project": "三国杀单机版完整性与可靠性优化",
+  "branchName": "codex/sgs-reliability",
+  "description": "有来源的技能阅读、操作连续性、声音超时和局内问题报告",
+  "userStories": [
+    {
+      "id": "MAT-01",
+      "title": "技能说明提取",
+      "description": "静态解析模板、get.poptip字符串/对象及上游固定数组map/join形式；在大厅名册生成带来源的初始说明和引用。",
+      "acceptanceCriteria": [
+        "锁定并补齐当前63项缺失正文，保留源文件/行号/校验值；解析器不执行模块、getter或任意表达式。",
+        "同包优先，跨包只接受无歧义确切ID；同名不同版本、循环/缺失/不支持表达式有明确状态，禁止猜测。",
+        "构建可重复；catalog原始证据、行为状态和评分映射不变。",
+        "Syntax/type checks and focused/full regression tests pass; parent browser confirms generated data loads without a regression."
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "MAT-01: static description reader covers63 audited skills/60characters (64 references), preserves catalog evidence and fingerprints, handles exact-ID cross-pack/inline/rule/card/map references and bounded cycles.7focused and180total tests pass; syntax/diff pass. Raw production roster SHA matches. Parent production8083 lobby loaded2563/494filtered, existing selection/ratings/launch intact; screenshot inspected1280x720 and console empty. Explanation UI remains MAT-02."
+    },
+    {
+      "id": "MAT-02",
+      "title": "完整阅读技能",
+      "description": "大厅阅读初始规则全文与可展开的技能/卡牌/术语解释，保留段落、列表；实际变化说明仍在局内原生介绍中查看。",
+      "acceptanceCriteria": [
+        "神黄忠裂穹含击伤四项和天冲细则；引用来源可查看，未解析内容不编造。",
+        "长文本/术语在1024×640和390px可阅读，不遮挡出战；键盘、Escape及展开收起可用。",
+        "Syntax/type checks and focused/full regression tests pass; parent browser visual verification passes."
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "MAT-02: sourced initial rules/expandable skill-card-rule-character references, semantic paragraphs/lists, pinned source links and large reading dialog.3new tests;183total pass; JS syntax/CSS parse pass. Parent production8083 ShenHuangZhong confirms four injury options and Tianchong; found/fixed dialog action scrolling offscreen. Actual1024x640 dialog700x608/return126x50bottom599;390x844 dialog341x812/returnbottom803/document375wide. Escape collapses nearest term, then dialog close restores read-skills focus and unchanged ShenHuangZhong. Console empty; two durable screenshots. No upstream/native-rule edits."
+    },
+    {
+      "id": "MAT-03",
+      "title": "操作连续性",
+      "description": "选择时保留列表卡片节点、焦点和滚动；筛选/排序/resize保留仍存在的焦点目标。",
+      "acceptanceCriteria": [
+        "删除筛选标签聚焦相邻标签，最后一项删除后聚焦搜索；所选武将/配置不变。",
+        "中文组合输入期间不重绘结果，compositionend再搜索；不添加出牌快捷键。",
+        "Mouse/keyboard/browser checks and focused/full regression tests pass."
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "MAT-03: keyed card/filter reconciliation retains nodes and images on selection; resize keeps focused visible key on its correct page; filter removal chooses adjacent chip then search. IME uses committed query only.5new tests,188total pass and JS/diff checks pass. Parent production mouseclick and Enter retain BUTTON xianding:shen_huangzhong;1024resize retains same focus. Removing search focuses age, removing final age focuses search; selected hero/mode unchanged. Sorting both ways and pagination work; restored age=true/high sorting; console empty. Screenshot lobby-keyboard-selection.jpg. Composition lifecycle is covered by actual lobby handlers in unit harness; no claim of OS IME automation."
+    },
+    {
+      "id": "MAT-04",
+      "title": "音频故障隔离",
+      "description": "8秒下载/解码总超时释放队列；取消请求并防止迟到重播。",
+      "acceptanceCriteria": [
+        "永久挂起/404/解码失败/迟到/静音取消/销毁均有测试；后续同类恢复、跨类并行和即时受击保持。",
+        "录音字节、双语音队列、三路音量、去重及原生触发时机不变。",
+        "Syntax checks, full audio/regression suite and parent real browser smoke pass."
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "MAT-04: deadline-aware loader bounds fetch/body/decode to8000ms, aborts/cancels pending jobs, retains successful cache only, guards late results/new retries, disposes buffers. Native TimeoutError skips whole utterance instead of tryAudio variant retries.6new tests;194total pass, syntax/diff pass. Parent real production1024x640 WeiDongZhuo landlord: selected Hanbing hasplayed0, native confirm playscard10.152..11.147 and Guangyong10.661..15.890 on same unlocked context;7HP/8max, hand7, native play returns normally. Console empty; screenshot audio-native-use.jpg; paused test match. No listening claim. Assets/rules/timing/dedup and audio channel gains unchanged."
+    },
+    {
+      "id": "MAT-05",
+      "title": "本地问题报告",
+      "description": "牌桌工具提供手动导出版本化JSON；异常界面在MAT-06接入同一报告能力。",
+      "acceptanceCriteria": [
+        "含客户端/上游版本、模式、所选pack:id、当前操作提示、最近20条错误摘要与300条公开日志。",
+        "不自动上传或持久化，不序列化原生事件/隐藏身份/手牌/牌堆；过滤非公开原生错误调试文本。",
+        "导出失败留可读提示、可重试；正常打开/关闭保留暂停归属和选牌。",
+        "Syntax/type checks, focused/full tests and browser download/visual verification pass."
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "MAT-05: bounded in-memory versioned JSON reports, safe error summaries, allowlisted build/mode/general/action and native publicLog only; manual Blob download with cleanup and recoverable errors.5new tests;199total pass; JS/CSS/diff pass. Parent production1024/390 found native #system pointer-events:none made visible new button click through; fixed explicit pointer events and isolated input. Download API event timed out but actual851-byte JSON was created in Downloads/sgs-problem-2026-10-05T06-27-34-301Z.json; inspected schema1, correct upstream/mode/hero,5native public lines/no hidden game objects. Real wine selection1card/1target stays through report open/close; clock00:20 unchanged, focus returns SUMMARY.390 dialog356x319 and both>=126x50 actions fit. Desktop/mobile screenshots; console empty. Native technical game.print output is separate from ui.sidebar and is not collected."
+    },
+    {
+      "id": "MAT-06",
+      "title": "局内异常处理",
+      "description": "SGS局内接管脚本错误/未处理Promise，去重显示单一异常界面，独立持有暂停并禁用继续；提供报告/同配置重开/点将台。",
+      "acceptanceCriteria": [
+        "不覆盖其他入口；清理恢复原处理器，无重复监听；已处理音频/导出失败非阻断。",
+        "嵌套暂停不泄漏，重复错误不重复弹窗/结算；提前退出不记胜负。",
+        "用隔离测试夹具验证故障，不注入真实牌局状态；syntax/full tests及浏览器验收通过。"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "MAT-06: SGS arena-only script/rejection handlers replace native technical alerts, deduplicate bounded errors, acquire independent fatal lease before closing owned modals, keep browser console evidence and restore handlers on disposal. Fault modal cannot Escape/cancel into unsafe continuation; report/restart/return and navigation retry available. Session background/manual/auto guards respect fatal state.7new tests,206total pass; real native PauseManager gate test preserves event/cards/targets and does not release on native resume/background return. Parent isolated browser fixture (not a match) verifies duplicate1record/1modal, Promise error, nondismissal, nested report failure+retry, both navigation callbacks and preexisting pause retained;1280/390 screenshots. Test-only fixture deliberately emits console errors; no live game state injection. Standalone HTML/mjs under tests only, temporary dist copy removed by final build."
+    },
+    {
+      "id": "MAT-07",
+      "title": "稳定性验收",
+      "description": "聚合测试、生产构建、真实多模式和长局验证，修复本轮可复现的适配层问题。",
+      "acceptanceCriteria": [
+        "地主/农民/2v2/八人身份各至少完成一场原生对局；八人另持续运行至少30分钟。",
+        "弹窗反复20次、连续再战5次，无重复监听/UI/结算或持续增长的残留。",
+        "桌面1920×1080/1366×768/1280×720/1024×640及390px大厅/弹窗视觉检查；所有尺寸按实际CSS视口记录。",
+        "实际后台隐藏至少5秒；选择/牌局/局时保留，手动继续才推进；含嵌套暂停和偏好关闭。连接不支持则保持待验收，不改旧UX-09为通过。",
+        "全部回归、Node22/pnpm生产构建、console、截图及文档通过；US-006保持false。",
+        "FR-1: SGS适配层拥有呈现/偏好/异常UI，原生引擎拥有选牌、规则、AI及胜负。",
+        "FR-2: 非资源任意脚本不得在提取期间执行。说明元数据和官方行为验证保持独立。",
+        "FR-3: 所有监听、计时器、请求、URL和暂停令牌有明确清理路径。",
+        "FR-4: 所有新子进程windowsHide；服务只绑定loopback；不使用unsafe或禁用沙箱。"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "206/206 tests and final Node22.12.0/pnpm10.11.0 production build pass;34JS syntax/12CSS parses/47output hashes pass. Parent real production browser completed landlord, farmer, native2v2 and8identity matches,5successive native rematches,20settings/record/help cycles with stable1505DOMnodes and1card/1target selection,4actual desktop viewports and390px lobby/dialogs. Separate native8identity table reached30:19active clock/round3, then native autoplay finished at33:16/round8/victory; console empty, exactly1record added (10completed matches this run). Includes human decision waits/UI checks, not30minutes continuous autoplay. Ordinary upstream entry unaffected; early exit adds no result. Only genuine background visibility acceptance remains: Edge connection unavailable and IAB staysdocument.hidden=false. Keep MAT-07/archived UX-09 false until actual hidden>=5s, selection/clock/manual-continue plus nested/preference-off cases are observed. Archived US-006 remainsfalse. Screenshots and exact evidence in docs/sgs-reliability-validation.md. No push."
+    }
+  ]
+}

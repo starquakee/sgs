@@ -179,6 +179,10 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   }
   function playCardAudio(...args) {
     if (!state.enabled || disposed) return;
+    // Equipment stays silent on both native and committed fallback paths,
+    // even if an old native setting still enables its announcements.
+    const card = typeof args[0] === 'string' ? { name: args[0] } : args[0];
+    if (get.type(card) === 'equip') return;
     return nativePlayCardAudio.apply(this, args);
   }
   function playCommitted(event) {
@@ -207,7 +211,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     setEnabled(enabled) {
       state.enabled = Boolean(enabled);
       lib.config.background_audio = state.enabled;
-      lib.config.equip_audio = state.enabled;
+      lib.config.equip_audio = false;
       if (!state.enabled) stop();
       else void unlock();
       changed();

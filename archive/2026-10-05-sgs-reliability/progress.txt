@@ -1,0 +1,45 @@
+# Ralph Progress: SGS reliability
+
+Started: 2026-10-05 Asia/Shanghai
+Source PRD: tasks/prd-sgs-reliability.md
+Baseline: 2d7477f; 173 tests passing; previous run archived byte-for-byte in archive/2026-10-05-sgs-client-experience. UX-09 remains false; older US-006 remains false.
+
+## Codebase Patterns
+- One story per iteration; parent browser validation before pass/commit. No push. Existing production8083, user8081 untouched.
+- Node22/pnpm; windowsHide for processes, loopback-only services, no unsafe flags.
+- Preserve pack:id/catalog evidence/official scores/native rules/AI/selection/LICENSE/assets.
+- Native dialog CSS needs normal-flow children; use owned pause, preserve selection and focus.
+- Browser viewport override may scale: measure innerWidth/innerHeight, not requested physical size.
+
+## 2026-10-05 - Setup
+- User explicitly authorized all seven stories. Created codex/sgs-reliability from clean2d7477f and archived previous checklist/progress/PRD without changing incomplete statuses.
+- Audit: 60 common-browsing characters/63 distinct initial skills missing descriptions; all63 are templates using poptip. Actual click discards keyboard focus. Hanging audio reproduces2pending/0started despite second fetch resolving.
+
+## 2026-10-05 - MAT-01
+- MAT-01: static description reader covers63 audited skills/60characters (64 references), preserves catalog evidence and fingerprints, handles exact-ID cross-pack/inline/rule/card/map references and bounded cycles.7focused and180total tests pass; syntax/diff pass. Raw production roster SHA matches. Parent production8083 lobby loaded2563/494filtered, existing selection/ratings/launch intact; screenshot inspected1280x720 and console empty. Explanation UI remains MAT-02.
+- New reader deliberately does not alter catalog.json or official rating mapping. Character poptips may register an inline name before later references; preserve the exact character ID, never infer another edition.
+
+## 2026-10-05 - MAT-02
+MAT-02: sourced initial rules/expandable skill-card-rule-character references, semantic paragraphs/lists, pinned source links and large reading dialog.3new tests;183total pass; JS syntax/CSS parse pass. Parent production8083 ShenHuangZhong confirms four injury options and Tianchong; found/fixed dialog action scrolling offscreen. Actual1024x640 dialog700x608/return126x50bottom599;390x844 dialog341x812/returnbottom803/document375wide. Escape collapses nearest term, then dialog close restores read-skills focus and unchanged ShenHuangZhong. Console empty; two durable screenshots. No upstream/native-rule edits.
+
+## 2026-10-05 - MAT-03
+MAT-03: keyed card/filter reconciliation retains nodes and images on selection; resize keeps focused visible key on its correct page; filter removal chooses adjacent chip then search. IME uses committed query only.5new tests,188total pass and JS/diff checks pass. Parent production mouseclick and Enter retain BUTTON xianding:shen_huangzhong;1024resize retains same focus. Removing search focuses age, removing final age focuses search; selected hero/mode unchanged. Sorting both ways and pagination work; restored age=true/high sorting; console empty. Screenshot lobby-keyboard-selection.jpg. Composition lifecycle is covered by actual lobby handlers in unit harness; no claim of OS IME automation.
+
+## 2026-10-05 - MAT-04
+MAT-04: deadline-aware loader bounds fetch/body/decode to8000ms, aborts/cancels pending jobs, retains successful cache only, guards late results/new retries, disposes buffers. Native TimeoutError skips whole utterance instead of tryAudio variant retries.6new tests;194total pass, syntax/diff pass. Parent real production1024x640 WeiDongZhuo landlord: selected Hanbing hasplayed0, native confirm playscard10.152..11.147 and Guangyong10.661..15.890 on same unlocked context;7HP/8max, hand7, native play returns normally. Console empty; screenshot audio-native-use.jpg; paused test match. No listening claim. Assets/rules/timing/dedup and audio channel gains unchanged.
+
+## 2026-10-05 - MAT-05
+MAT-05: bounded in-memory versioned JSON reports, safe error summaries, allowlisted build/mode/general/action and native publicLog only; manual Blob download with cleanup and recoverable errors.5new tests;199total pass; JS/CSS/diff pass. Parent production1024/390 found native #system pointer-events:none made visible new button click through; fixed explicit pointer events and isolated input. Download API event timed out but actual851-byte JSON was created in Downloads/sgs-problem-2026-10-05T06-27-34-301Z.json; inspected schema1, correct upstream/mode/hero,5native public lines/no hidden game objects. Real wine selection1card/1target stays through report open/close; clock00:20 unchanged, focus returns SUMMARY.390 dialog356x319 and both>=126x50 actions fit. Desktop/mobile screenshots; console empty. Native technical game.print output is separate from ui.sidebar and is not collected.
+
+## 2026-10-05 - MAT-06
+MAT-06: SGS arena-only script/rejection handlers replace native technical alerts, deduplicate bounded errors, acquire independent fatal lease before closing owned modals, keep browser console evidence and restore handlers on disposal. Fault modal cannot Escape/cancel into unsafe continuation; report/restart/return and navigation retry available. Session background/manual/auto guards respect fatal state.7new tests,206total pass; real native PauseManager gate test preserves event/cards/targets and does not release on native resume/background return. Parent isolated browser fixture (not a match) verifies duplicate1record/1modal, Promise error, nondismissal, nested report failure+retry, both navigation callbacks and preexisting pause retained;1280/390 screenshots. Test-only fixture deliberately emits console errors; no live game state injection. Standalone HTML/mjs under tests only, temporary dist copy removed by final build.
+
+## 2026-10-05 - MAT-07 acceptance evidence (still false)
+- Final206/206tests,34JS syntax checks,12CSS parses and Node22.12.0/pnpm10.11.0 production build pass.47adapter outputs match source SHA256. Native engine/character/card/LICENSE unchanged from2d7477f.
+- Parent production browser completed real landlord/farmer/2v2/8identity matches; five successive rematches all completed and each appears once in local records. Ordinary non-SGS mode splash unaffected; early lobby return adds no outcome.
+- Twenty full settings/record/help cycles retained1card/1target and1505DOMnodes after each close with0owned dialogs. All four actual desktop viewport sizes and390px lobby/dialogs visually inspected;126x50confirm fits every desktop size. No fixture state injected into live matches.
+- Separate8identity session reached native active clock30:19, round3, with continuing legitimate equipment, skill, response, discard, AI and death resolution. Includes human decision waits and UI checks, not30minutes uninterrupted autoplay. Console warnings/errors empty.
+- That same long match then finished naturally via native autoplay: victory/round8/33:16,6damage/2received/49gained/25used/3kills. Final console empty; exactly1new record,12total (10this run,2preexisting). Final result screenshot saved. All temporary match tabs closed; restored lobby retained.
+- Restored original lobby selection/config (ShenHuangZhong/landlord/normal speed/overall score descending/hide-old/sound100%). Temporary viewport override removed. Production8083 reused; user8081 untouched.
+- Remaining: real background hidden>=5seconds, preserved card/target/clock, explicit manual Continue, nested pauses and background-pause-off cases. Edge connection unavailable; IAB document.hidden remainsfalse. Keep MAT-07 and archivedUX-09 false; oldUS-006 remainsfalse. Do not rerun implementation stories or pretend synthetic events close this gap. Reconnect a real browser and follow docs/sgs-reliability-validation.md when available.
+- Evidence and screenshots committed locally; no remote publish/push.

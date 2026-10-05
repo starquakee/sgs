@@ -1,56 +1,102 @@
-/* Reserve a separate utility row outside the arena. Native prompts, controls,
-   hands and equipment retain their existing anchors and stacking order. */
-:root.sgs-game { --sgs-toolbar-h: 88px; }
-.sgs-game .sgs-hud { height: 48px; }
+/* WUI-03: one top bar; non-interactive status beside native confirmation. */
+:root.sgs-game {
+  --sgs-toolbar-h: 44px;
+}
+.sgs-game #arena {
+  --sgs-action-left: calc(var(--sgs-player-w) + 195px);
+  --sgs-action-right: calc(var(--sgs-player-w) + 195px);
+}
+.sgs-game .sgs-hud { height: var(--sgs-toolbar-h); gap: 10px; padding-inline: 16px; }
+.sgs-game .sgs-hud strong { flex: none; font-size: 21px; letter-spacing: 2px; }
+.sgs-game .sgs-hud strong span { display: inline; font-size: 14px; padding-left: 10px; margin-left: 8px; letter-spacing: 0; }
+.sgs-game .sgs-table-state { display: none; }
+.sgs-game .sgs-table-clock { display: inline; margin-left: auto; flex: none; font-size: 12px; font-variant-numeric: tabular-nums; }
+.sgs-game .sgs-audio { margin-left: 0; flex: none; }
+.sgs-game .sgs-turn { font-size: 13px; margin-left: 0; max-width: 150px; }
 .sgs-game .sgs-action-rail {
-  position: fixed; inset: 48px 0 auto; z-index: 99;
-  height: 40px; box-sizing: border-box; padding: 0 22px;
-  display: flex; align-items: center; gap: 18px;
-  background: var(--sgs-panel); color: var(--sgs-text);
-  border-bottom: 1px solid var(--sgs-bronze);
-  font: 13px/1.4 var(--sgs-font-body);
+  position: absolute; inset: auto var(--sgs-action-right) calc(var(--sgs-hand-h) + 106px) var(--sgs-action-left);
+  z-index: 15; min-height: 40px; box-sizing: border-box; padding: 5px 12px;
+  display: flex; align-items: center; justify-content: center; pointer-events: none;
+  background: #523523e8; color: var(--sgs-text); border: 1px solid #b791654d;
+  border-radius: 2px; font: 13px/1.4 var(--sgs-font-body); text-shadow: none;
 }
-/* Upstream positions divs absolutely: all utility content uses normal flow. */
-.sgs-action-rail :is(div,nav,p,details,summary,strong,span,button) {
-  position: static; inset: auto; box-sizing: border-box;
+.sgs-game #window #arena > .dialog.nobutton { bottom: calc(var(--sgs-hand-h) + 156px)!important; }
+.sgs-game #window #arena:has(> .sgs-action-rail[data-action='opening']) > .dialog.nobutton { bottom: calc(var(--sgs-hand-h) + 106px)!important; }
+.sgs-action-rail :is(div,nav,p,details,summary,strong,span,button),
+.sgs-tools-panel :is(div,nav,p,details,summary,strong,span,button) {
+  position: static; inset: auto; box-sizing: border-box; text-shadow: none;
 }
-.sgs-action-state { display: grid; grid-template-columns: max-content 1fr; column-gap: 12px; row-gap: 0; align-items: baseline; min-width: 0; flex: 1; }
-.sgs-action-state strong { flex: none; font-size: 14px; color: var(--sgs-gold); }
-.sgs-action-counts { flex: none; color: var(--sgs-text); font-variant-numeric: tabular-nums; }
+.sgs-action-state { display: grid; grid-template-columns: max-content max-content; column-gap: 12px; row-gap: 0; align-items: baseline; justify-content: center; min-width: 0; text-align: center; }
+.sgs-action-state strong { font-size: 14px; color: var(--sgs-text); }
+.sgs-action-counts { color: var(--sgs-text); font-variant-numeric: tabular-nums; }
 .sgs-action-counts[hidden] { display: none; }
-.sgs-action-detail { grid-column: 1 / -1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--sgs-muted); font-size: 12px; line-height: 15px; }
-.sgs-action-rail nav { display: flex; align-items: center; gap: 6px; flex: none; }
-.sgs-action-rail :is(button,summary) {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 30px; margin: 0; padding: 5px 10px; white-space: nowrap;
-  border: 1px solid var(--sgs-line); border-radius: var(--sgs-radius);
-  background: var(--sgs-control); color: var(--sgs-text);
-  font: inherit; cursor: pointer; list-style: none;
+.sgs-action-detail { grid-column: 1 / -1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 100%; color: var(--sgs-muted); font-size: 12px; line-height: 15px; }
+.sgs-game .sgs-action-rail[data-action='opening'] { visibility: hidden; }
+
+/* The menu owns only presentation nodes; native tools keep their handlers. */
+.sgs-game .sgs-hud .sgs-tools > .sgs-tools-panel {
+  position: absolute; top: calc(100% + 7px); right: 0; width: 302px;
+  max-width: calc(100vw - 24px); max-height: calc(100dvh - 64px); overflow-y: auto;
+  box-sizing: border-box; padding: 12px; border: 1px solid var(--sgs-bronze); border-radius: 3px;
+  background: var(--sgs-panel); color: var(--sgs-text); box-shadow: var(--sgs-shadow);
+  pointer-events: auto; z-index: 160; font: 13px/1.5 var(--sgs-font-body); text-shadow: none;
 }
-.sgs-action-rail summary::-webkit-details-marker { display: none; }
-.sgs-action-rail :is(button,summary):hover { border-color: var(--sgs-bronze); background: var(--sgs-panel-raised); }
-.sgs-action-rail :is(button,summary):focus-visible { outline: 2px solid var(--sgs-focus); outline-offset: 2px; }
-.sgs-action-rail button:disabled { opacity: .5; cursor: default; }
-.sgs-action-rail .sgs-card-help { position: relative; }
-.sgs-action-rail .sgs-card-help-menu {
-  position: absolute; inset: calc(100% + 6px) 0 auto auto;
-  width: 310px; max-width: calc(100vw - 32px); max-height: min(360px, 65vh);
-  padding: 14px; overflow: auto; border: 1px solid var(--sgs-bronze);
-  border-radius: var(--sgs-radius); background: var(--sgs-panel);
-  box-shadow: var(--sgs-shadow);
+.sgs-game .sgs-tools:not([open]) > .sgs-tools-panel { display: none; }
+.sgs-tool-reference { display: block; width: 100%; }
+.sgs-tool-reference nav, .sgs-tool-commands { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sgs-tool-commands { margin-top: 10px; border-top: 1px solid var(--sgs-line); padding-top: 10px; }
+.sgs-tools-panel :is(button,summary) {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 38px;
+  margin: 0; padding: 7px 10px; width: 100%; white-space: normal;
+  border: 1px solid var(--sgs-line); border-radius: 2px; background: var(--sgs-control);
+  color: var(--sgs-text); font: inherit; cursor: pointer; list-style: none; pointer-events: auto;
+}
+.sgs-tools-panel summary::-webkit-details-marker { display: none; }
+.sgs-tools-panel :is(button,summary):hover { border-color: var(--sgs-bronze); background: var(--sgs-control-hover); }
+.sgs-tools-panel :is(button,summary):focus-visible { outline: 2px solid var(--sgs-focus); outline-offset: -3px; }
+.sgs-tools-panel button:disabled { opacity: .5; cursor: default; }
+.sgs-game .sgs-tools-panel .sgs-restart { display: inline-flex; min-height: 38px; font-size: 13px; }
+.sgs-tools-panel .sgs-card-help { position: relative; min-width: 0; }
+.sgs-tools-panel .sgs-card-help[open] { grid-column: 1 / -1; }
+.sgs-tools-panel .sgs-card-help[open] > summary { justify-content: flex-start; }
+.sgs-tools-panel .sgs-card-help[open] > summary:after { content: '收起'; margin-left: auto; font-size: 11px; color: var(--sgs-muted); }
+.sgs-tools-panel .sgs-card-help-menu {
+  position: static; width: 100%; max-height: min(310px, 42vh); padding: 10px; overflow: auto;
+  border: 1px solid var(--sgs-line); border-top: 0; background: var(--sgs-panel-raised);
 }
 .sgs-card-help:not([open]) .sgs-card-help-menu { display: none; }
-.sgs-card-help-menu p { margin: 0 0 12px; color: var(--sgs-muted); line-height: 1.7; }
+.sgs-card-help-menu p { margin: 0 0 10px; color: var(--sgs-muted); line-height: 1.6; }
 .sgs-card-help-menu p[hidden] { display: none; }
-.sgs-card-help-list { display: flex; flex-wrap: wrap; gap: 7px; }
-.sgs-card-help-list button { min-height: 36px; white-space: normal; text-align: left; }
+.sgs-card-help-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.sgs-card-help-list button { width: auto; min-height: 36px; flex: 1 0 auto; text-align: left; }
+.sgs-native-tools { margin-top: 10px; border-top: 1px solid var(--sgs-line); padding-top: 8px; }
+.sgs-native-tools > summary { justify-content: flex-start; border: 0; background: none; color: var(--sgs-muted); padding-inline: 2px; }
+.sgs-native-tools > summary:after { content: '⌄'; margin-left: auto; }
+.sgs-game .sgs-hud .sgs-tools-panel #system {
+  position: static!important; inset: auto!important; width: 100%!important; height: auto!important;
+  margin: 0!important; padding: 4px 0 0!important; border: 0!important; background: none!important;
+  box-shadow: none!important; pointer-events: auto; gap: 6px;
+}
+.sgs-game .sgs-hud .sgs-native-tools:not([open]) #system { display: none!important; }
+.sgs-game .sgs-hud .sgs-tools-panel #system .hidden { display: none!important; }
+.sgs-game .sgs-hud .sgs-tools-panel #system > div > div { min-height: 34px; box-sizing: border-box; pointer-events: auto; }
+@media (min-width: 1450px) {
+  .sgs-game .sgs-table-state { display: inline; }
+}
 @media (max-width: 1100px) {
-  .sgs-game .sgs-action-rail { padding: 0 15px; gap: 10px; }
-  .sgs-action-state { column-gap: 10px; }
+  .sgs-game #arena { --sgs-action-left: clamp(22px, 12vw, 160px); --sgs-action-right: calc(var(--sgs-player-w) + var(--sgs-edge) + 148px); }
+  .sgs-game .sgs-hud { gap: 7px; padding-inline: 12px; }
+  .sgs-game .sgs-hud strong { font-size: 18px; }
+  .sgs-game .sgs-hud strong span { font-size: 13px; padding-left: 8px; margin-left: 6px; }
+  .sgs-game .sgs-turn { max-width: 130px; }
+}
+@media (max-width: 800px) {
+  .sgs-game .sgs-hud strong { display: none; }
+  .sgs-game .sgs-turn { max-width: 112px; }
+  .sgs-game .sgs-hud { gap: 5px; }
 }
 @media (max-width: 650px) {
-  :root.sgs-game { --sgs-toolbar-h: 120px; }
-  .sgs-game .sgs-action-rail { height: 72px; flex-wrap: wrap; align-content: center; gap: 4px; padding: 4px 10px; }
-  .sgs-action-state { flex-basis: 100%; }
-  .sgs-action-rail nav { margin-left: auto; }
+  .sgs-game .sgs-table-clock { display: none; }
+  .sgs-game .sgs-action-rail { left: 12px; right: calc(var(--sgs-player-w) + 24px); }
+  .sgs-game .sgs-turn { max-width: 90px; margin-right: auto; }
 }

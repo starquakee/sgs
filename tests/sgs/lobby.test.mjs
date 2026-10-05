@@ -429,6 +429,25 @@ test('slow roster loading preserves the saved rating scope before enabling the s
   assert.equal(app.visible()[0], 'xianding:shen_huangzhong');
 });
 
+test('a mode and seat choice made while the roster loads survives completion and launches exactly that setup', async () => {
+  const local = storage({'sgs.settings.v1': JSON.stringify({mode:'doudizhu',landlordRole:'farmer',playerCount:3})});
+  let release;
+  const app = await lobby({local, pending:true, fetcher: async url => {
+    if (url.includes('portraits')) return {ok:true,json:async()=>({portraits:{}})};
+    return new Promise(resolve => { release = () => resolve({ok:true,json:async()=>({characters:structuredClone(characters),packs:[]})}); });
+  }});
+  const e = app.elements;
+  app.modes.find(mode => mode.dataset.mode === 'identity').emit('click');
+  e['player-count'].value = '6'; e['player-count'].emit('change');
+  e.identity.value = 'fan'; e.identity.emit('change');
+  assert.equal(e['start-game'].disabled, true);
+  release(); await new Promise(resolve => setImmediate(resolve));
+  assert.equal(app.modes.find(mode => mode.dataset.mode === 'identity').attrs['aria-pressed'], 'true');
+  assert.equal(e['player-count'].value, '6'); assert.equal(e.identity.value, 'fan');
+  e['start-game'].onclick();
+  assert.equal(app.carrier().mode, 'identity'); assert.equal(app.carrier().playerCount, 6); assert.equal(app.carrier().identity, 'fan');
+});
+
 test('actual rating controls sort numbers, keep unknowns last in both directions and preserve exact native launch', async () => {
   const app = await lobby({roster: ratedSample}), e = app.elements;
   app.select('refresh:re_caocao');

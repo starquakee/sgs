@@ -9,12 +9,12 @@ html body .sgs-client-dialog.sgs-record-dialog {
   width: min(760px, calc(100vw - 32px));
   max-height: calc(100dvh - 32px);
 }
-.sgs-record-dialog[open] { display: flex; flex-direction: column; }
+.sgs-record-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
 .sgs-record-dialog > * { flex-shrink: 0; }
 .sgs-record-dialog .sgs-record-content {
   flex: 0 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain;
   scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) transparent;
-  border-block: 1px solid var(--sgs-bronze); padding: 6px 0;
+  border-block: 1px solid #b6977070; padding: 6px 0;
 }
 .sgs-record-dialog [data-record-status] { color: var(--sgs-gold); font-size: 13px; overflow-wrap: anywhere; }
 .sgs-record-dialog [data-record-status]:empty { display: none; }

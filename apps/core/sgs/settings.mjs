@@ -51,6 +51,7 @@ export function createClientDialogs({ document, pause }) {
 export function openClientSettings(dialogs, preferences) {
   let unsubscribe = () => {};
   return dialogs.open('settings', `<h2>便捷设置</h2><p class="sgs-dialog-note">更改即时生效，并记住下次的选择。</p>
+    <div class="sgs-settings-content">
     <label class="sgs-setting-row"><span>AI 行动速度<small>调整AI行动之间的等待时间</small></span><select name="speed"><option value="normal">适中</option><option value="fast">快速</option></select></label>
     <label class="sgs-setting-row"><span>游戏声音<small>卡牌、武将语音与受击音效</small></span><input type="checkbox" name="sound"></label>
     <fieldset class="sgs-volume-settings"><legend>独立音量</legend>
@@ -58,7 +59,8 @@ export function openClientSettings(dialogs, preferences) {
     </fieldset>
     <label class="sgs-setting-row"><span>后台自动暂停<small>离开页面时暂停，回来后手动继续</small></span><input type="checkbox" name="backgroundPause"></label>
     <label class="sgs-setting-row"><span>减少动态效果<small>关闭战斗闪动，缩短界面和卡牌动画</small></span><input type="checkbox" name="reducedMotion"></label>
-    <p class="sgs-save-status" role="status"></p><div class="sgs-dialog-actions"><button type="button" data-close data-primary>完成</button></div>`, (dialog, close) => {
+    </div><p class="sgs-save-status" role="status"></p><div class="sgs-dialog-actions"><button type="button" data-close data-primary>完成</button></div>`, (dialog, close) => {
+    dialog.classList.add('sgs-settings-dialog');
     const render = (value, saved) => {
       for (const key of ['speed', 'sound', 'backgroundPause', 'reducedMotion']) {
         const input = dialog.querySelector(`[name="${key}"]`);

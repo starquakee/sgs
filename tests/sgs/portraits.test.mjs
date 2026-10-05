@@ -7,10 +7,15 @@ test('every catalog character has a local, attributed thumbnail within the size 
   const base = new URL('../../apps/core/sgs/', import.meta.url);
   const [catalog, manifest] = await Promise.all(['catalog.json','portraits.json'].map(async file => JSON.parse(await readFile(new URL(file,base),'utf8'))));
   assert.equal(manifest.upstreamCommit, catalog.upstream.commit);
+  assert.deepEqual(manifest.size, [192, 256]);
+  assert.equal(manifest.perFileLimit, 8192);
+  assert.equal(manifest.totalByteLimit, 20 * 1024 * 1024);
   assert.deepEqual(manifest.missing, []);
   assert.deepEqual(manifest.failures, []);
   assert.equal(manifest.mappedCharacters, catalog.characters.length);
   const files = new Map();
+  const fallbacks = new Map(manifest.upgradeFallbacks.map(row => [row.source, row]));
+  const sourceFiles = new Map();
   for (const character of catalog.characters) {
     const portrait = manifest.portraits[character.id];
     assert.ok(portrait, `Missing ${character.id}`);
@@ -19,9 +24,20 @@ test('every catalog character has a local, attributed thumbnail within the size 
     assert.ok(['upstream','same-person-variant','network'].includes(portrait.kind));
     assert.ok(portrait.source);
     if (portrait.kind === 'network') assert.match(portrait.sourcePage, /^https:\/\//);
-    assert.equal(portrait.width, 96);
-    assert.equal(portrait.height, 128);
-    assert.ok(portrait.bytes <= 4096);
+    const fallback = fallbacks.get(portrait.source);
+    if (fallback) {
+      assert.equal(fallback.file, portrait.file);
+      assert.ok(fallback.reason);
+      assert.ok([[96, 128], [192, 256]].some(([w, h]) => portrait.width === w && portrait.height === h));
+    } else {
+      assert.equal(portrait.width, 192);
+      assert.equal(portrait.height, 256);
+      assert.match(portrait.sourceSha256, /^[a-f\d]{64}$/);
+      assert.ok(portrait.sourceWidth > 0 && portrait.sourceHeight > 0);
+    }
+    assert.ok(portrait.bytes <= 8192);
+    if (sourceFiles.has(portrait.source)) assert.equal(sourceFiles.get(portrait.source), portrait.file);
+    sourceFiles.set(portrait.source, portrait.file);
     files.set(portrait.file, portrait);
   }
   let total = 0;
@@ -35,5 +51,6 @@ test('every catalog character has a local, attributed thumbnail within the size 
   }
   assert.equal(files.size, manifest.uniqueImages);
   assert.equal(total, manifest.totalBytes);
+  assert.ok(total <= 20 * 1024 * 1024);
   assert.equal((await readdir(new URL('portraits/',base))).length, files.size);
 });

@@ -3,6 +3,7 @@ output
 dist-sgs/
 .sgs-build.log
 .sgs-assets-cache/
+__pycache__/
 scripts/ralph/.last-branch
 node_modules
 package-lock.json

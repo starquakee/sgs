@@ -35,11 +35,11 @@ try { hideOld = localStorage.getItem('sgs.hide-old-generals.v1') === 'true'; } c
 let ratingPreference = normalizeRatingPreference();
 try { ratingPreference = normalizeRatingPreference(JSON.parse(localStorage.getItem('sgs.roster-sort.v1') || 'null')); } catch { /* Keep the default order. */ }
 $('sort-order').value = ratingPreference.order; $('rating-scope').value = ratingPreference.scope;
-let activeMode = 'identity';
+let activeMode = 'identity', initialChosen;
 let favorites;
 try { favorites = new Set(JSON.parse(localStorage.getItem('sgs.favorites.v1') || '[]')); } catch { favorites = new Set(); }
 const preferred = ['caocao','liubei','sunquan','guanyu','zhaoyun','zhangfei','dc_sb_zhouyu','dc_sb_lusu','caoyi','shen_zhangfei','dc_sb_zhugeliang','dc_caochun','shen_huangzhong','dc_shen_sunquan'];
-const pageSize = () => innerWidth < 540 ? 9 : innerWidth >= 1450 ? 12 : 8;
+const pageSize = () => innerWidth < 540 ? 9 : innerWidth >= 1450 ? 12 : innerWidth >= 1000 && innerWidth < 1150 ? 6 : 8;
 const packName = id => catalog?.packs.find(p => p.id === id)?.name || id;
 
 function showInfo(title, html) {
@@ -89,7 +89,7 @@ function render(resetScroll = false) {
   const selectedScore = ratingValue(selected, ratingPreference.scope);
   $('rating-detail').textContent = selectedScore === null ? '此版本评分待收录 · 查看说明 ↗' : `${ratingScopeName(ratingPreference.scope)} ${selectedScore} / 10 · 查看分项 ↗`;
   $('rating-source-date').textContent = catalog.ratingSource ? `官方客户端评分 · ${catalog.ratingSource.versionTime.slice(0,10)}` : '暂无官方评分数据';
-  reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}${hideOld && hasUnknownYear(c) ? '，年份待核实' : ''}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="96" height="128" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}${hideOld && hasUnknownYear(c) ? '<span class="card-year">年份待核实</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
+  reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}${hideOld && hasUnknownYear(c) ? '，年份待核实' : ''}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="192" height="256" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}${hideOld && hasUnknownYear(c) ? '<span class="card-year">年份待核实</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
   $('previous').disabled = currentPage === 1; $('next').disabled = currentPage === pages;
   $('page-number').textContent = `${currentPage} / ${pages}`;
   $('favorite-count').textContent = favorites.size;
@@ -276,13 +276,7 @@ function init() {
     catalog.characters.sort((a,b) => { const rank = c => {const i=preferred.indexOf(c.id);return i<0?999:i}; return compareBrowseCharacters(a,b) || rank(a)-rank(b) || text(a.name).localeCompare(text(b.name),'zh-CN'); });
     $('total-count').textContent = catalog.characters.length.toLocaleString('zh-CN');
     $('pack').innerHTML = '<option value="all">全部原始包</option>' + catalog.packs.map(p => `<option value="${escape(p.id)}">${escape(p.name)} · ${p.characterCount}</option>`).join('');
-    let saved, chosen;
-    try { saved=JSON.parse(localStorage.getItem('sgs.settings.v1')||'{}'); chosen=localStorage.getItem('sgs.selected.v1'); } catch { saved={}; }
-    if (!saved || typeof saved !== 'object' || Array.isArray(saved)) saved = {};
-    const settings=normalizeLaunch(saved); activeMode=settings.mode || (settings.playerCount===4?'versus':'identity'); $('player-count').value=[5,6,8].includes(settings.playerCount)?settings.playerCount:8; $('identity').value=settings.identity; $('speed').value=preferences.get().speed;
-    document.querySelector(`[name="landlord-role"][value="${settings.landlordRole || 'landlord'}"]`).checked=true;
-    syncMode();
-    select(catalog.characters.find(c=>c.key===chosen) || catalog.characters.find(c=>c.id==='caocao') || catalog.characters[0]);
+    select(catalog.characters.find(c=>c.key===(selected?.key || initialChosen)) || catalog.characters.find(c=>c.id==='caocao') || catalog.characters[0]);
     syncTabs();
     catalogState = 'ready';
     $('sort-order').disabled = false; $('rating-scope').disabled = false;
@@ -294,4 +288,15 @@ function init() {
   } finally { catalogRequest = null; notifyCatalog(); } })();
   return catalogRequest;
 }
+// Restore before asynchronous loading begins. A later catalog response must
+// never overwrite a mode, role or seat choice already made in the visible UI.
+let savedSetup;
+try { savedSetup = JSON.parse(localStorage.getItem('sgs.settings.v1') || '{}'); initialChosen = localStorage.getItem('sgs.selected.v1'); } catch { savedSetup = {}; }
+if (!savedSetup || typeof savedSetup !== 'object' || Array.isArray(savedSetup)) savedSetup = {};
+const initialSetup = normalizeLaunch(savedSetup);
+activeMode = initialSetup.mode;
+$('player-count').value = [5,6,8].includes(initialSetup.playerCount) ? initialSetup.playerCount : 8;
+$('identity').value = initialSetup.identity;
+document.querySelector(`[name="landlord-role"][value="${initialSetup.landlordRole}"]`).checked = true;
+syncMode();
 init();

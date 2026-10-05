@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readTableAction, visiblePlayerName, ownDescriptionCards, openNativeDescription,
-  canOpenNativeRecord, installTableActions } from '../../apps/core/sgs/table-actions.mjs';
+  canOpenNativeRecord, installTableActions, retainIntroFocus } from '../../apps/core/sgs/table-actions.mjs';
 
 function element(name = '') {
   const classes = new Set();
@@ -138,6 +138,42 @@ test('record availability respects native game start, pause ownership and nopaus
   assert.equal(canOpenNativeRecord(f), false);
 });
 
+test('native description close preserves its callback and restores focus without stealing another dialog or surviving disposal', () => {
+  for (const scenario of ['restore', 'other-focus', 'modal', 'dispose', 'cancel']) {
+    const queued = [], body = {}, originalCalls = [];
+    const original = function (value) { originalCalls.push([this, value]); };
+    const intro = { _onclose: original, contains: () => false };
+    let focused = 0;
+    const opener = { isConnected: true, focus() { focused++; } };
+    const document = { body, activeElement: scenario === 'other-focus' ? {} : body,
+      querySelector: () => scenario === 'modal' ? {} : null };
+    const release = retainIntroFocus(intro, opener, { document, queueMicrotask: fn => queued.push(fn), isDisposed: () => scenario === 'dispose' });
+    intro._onclose('closed');
+    if (scenario === 'cancel') release();
+    queued.shift()();
+    assert.deepEqual(originalCalls, [[intro, 'closed']]);
+    assert.equal(intro._onclose, original);
+    assert.equal(focused, scenario === 'restore' ? 1 : 0);
+    release();
+  }
+});
+
+test('SGS descriptions use a manual top layer while retaining native close work and selected cards', () => {
+  const f = fixture(), calls = [], queued = [], body = {};
+  const intro = { ...element(), isConnected: true, contains: () => false,
+    showPopover() { calls.push('show'); }, hidePopover() { calls.push('hide'); }, _onclose() { calls.push('native-close'); } };
+  f.ui.click.intro = () => intro;
+  f.ui.selected.cards.push(f.cards[0]);
+  const opener = { isConnected: true, focus() { calls.push('focus'); } };
+  const document = { body, activeElement: body, querySelector: () => null };
+  openNativeDescription(f, f.cards[0], {}, node => retainIntroFocus(node, opener, { document, queueMicrotask: fn => queued.push(fn), isDisposed: () => false }));
+  assert.equal(intro.popover, 'manual'); assert.equal(intro.classList.contains('sgs-readable-intro'), true);
+  assert.deepEqual(calls, ['show']); assert.deepEqual(f.ui.selected.cards, [f.cards[0]]);
+  intro._onclose(); queued.shift()();
+  assert.deepEqual(calls, ['show', 'hide', 'native-close', 'focus']);
+  assert.equal(f._status.paused2, undefined, 'the wrapper never owns native pause');
+});
+
 // Minimal DOM for actual installed event handlers, not a layout/browser proxy.
 class Node {
   constructor(tag) { this.tag = tag; this.children = []; this.listeners = new Map(); this.dataset = {}; this.textContent = ''; }
@@ -146,26 +182,38 @@ class Node {
   setAttribute() {}
   addEventListener(name, fn) { this.listeners.set(name, fn); }
   removeEventListener(name, fn) { if (this.listeners.get(name) === fn) this.listeners.delete(name); }
-  emit(name, event = {}) { this.listeners.get(name)?.({ stopPropagation() {}, ...event }); }
+  emit(name, event = {}) { this.listeners.get(name)?.({ stopPropagation() {}, preventDefault() { this.defaultPrevented = true; }, ...event }); }
+  querySelector(selector) {
+    for (const child of this.children) {
+      if (child.tag === selector || (selector.startsWith('.') && child.className === selector.slice(1))) return child;
+      const nested = child.querySelector(selector); if (nested) return nested;
+    }
+  }
   remove() { this.parent.children.splice(this.parent.children.indexOf(this), 1); }
   contains(node) { return node === this || this.children.some(child => child.contains(node)); }
   getBoundingClientRect() { return { left: 320, bottom: 84 }; }
   focus() { this.focused = true; }
 }
-function mounted() {
+function mounted({ detached = false } = {}) {
   const f = fixture();
   const document = new Node('document');
   document.body = new Node('body');
   document.createElement = tag => new Node(tag);
   const queued = [];
   const timers = new Set();
+  const toolsMenu = detached ? new Node('details') : undefined;
+  const toolsHost = detached ? new Node('div') : undefined;
+  const toolSummary = new Node('summary'), nativeTools = new Node('details');
+  nativeTools.className = 'sgs-native-tools'; nativeTools.append(new Node('summary'));
+  if (toolsMenu) { toolsMenu.append(toolSummary, toolsHost, nativeTools); document.body.append(toolsMenu); }
   const api = installTableActions(f, { document, queueMicrotask: fn => queued.push(fn),
+    toolsMenu, toolsHost,
     setInterval: fn => { timers.add(fn); return fn; }, clearInterval: fn => timers.delete(fn) });
-  const rail = document.body.children[0];
-  const [state, nav] = rail.children;
+  const rail = document.body.children.find(node => node.className === 'sgs-action-rail');
+  const state = rail.children[0], nav = toolsHost ? toolsHost.children[0] : rail.children[1];
   const [general, cards, record] = nav.children;
   const [summary, menu] = cards.children;
-  return { ...f, api, document, queued, timers, rail, state, general, cardsMenu: cards, record, summary, menu };
+  return { ...f, api, document, queued, timers, rail, state, general, cardsMenu: cards, record, summary, menu, toolsMenu, toolsHost, toolSummary, nativeTools };
 }
 
 test('installed rail updates after native checks, delegates records and removes hooks/listeners/timer on disposal', () => {
@@ -252,4 +300,55 @@ test('ready-to-confirm guidance reads the native confirmation without recomputin
   f.api.refresh(); assert.equal(f.state.children[2].textContent, '选择已就绪，点击“确定”继续');
   f.event.finished = true; f.api.refresh(); assert.doesNotMatch(f.state.children[2].textContent, /已就绪/);
   f.api.dispose();
+});
+
+test('references mounted in tools keep selection, focus the visible opener and fully detach on disposal', () => {
+  const f = mounted({ detached: true }), opened = [];
+  f.ui.click.intro = function () { opened.push(this); };
+  f.ui.selected.cards.push(f.cards[0]);
+  f.toolsMenu.open = true; f.cardsMenu.open = true; f.cardsMenu.emit('toggle');
+  f.menu.children[1].children[0].emit('click');
+  assert.deepEqual(opened, [f.cards[0]]);
+  assert.deepEqual(f.ui.selected.cards, [f.cards[0]]);
+  assert.equal(f.toolsMenu.open, false);
+  assert.equal(f.toolSummary.focused, true);
+  assert.equal(f.rail.children.length, 1);
+  f.api.dispose();
+  assert.equal(f.toolsHost.children.length, 0);
+  assert.equal(f.toolsMenu.listeners.size, 0);
+  assert.deepEqual(f.lib.hooks.checkEnd, []);
+  assert.equal(f.timers.size, 0);
+});
+
+test('tools Escape closes inner disclosure before its parent and respects composition and handled events', () => {
+  const f = mounted({ detached: true });
+  f.toolsMenu.open = true; f.cardsMenu.open = true; f.cardsMenu.emit('toggle');
+  f.document.emit('keydown', { key: 'Escape', isComposing: true });
+  assert.equal(f.cardsMenu.open, true); assert.equal(f.toolsMenu.open, true);
+  f.document.emit('keydown', { key: 'Escape' });
+  assert.equal(f.cardsMenu.open, false); assert.equal(f.toolsMenu.open, true);
+  assert.equal(f.summary.focused, true);
+  f.nativeTools.open = true;
+  f.document.emit('keydown', { key: 'Escape' });
+  assert.equal(f.nativeTools.open, false); assert.equal(f.toolsMenu.open, true);
+  f.document.emit('keydown', { key: 'Escape', defaultPrevented: true });
+  assert.equal(f.toolsMenu.open, true);
+  f.document.emit('keydown', { key: 'Escape' });
+  assert.equal(f.toolsMenu.open, false); assert.equal(f.toolSummary.focused, true);
+  f.toolsMenu.open = true;
+  f.document.emit('pointerdown', { target: f.document.body });
+  assert.equal(f.toolsMenu.open, false);
+  f.api.dispose();
+});
+
+test('restart prepares parent focus before its dialog; queued native-tool close cannot outlive disposal', () => {
+  const f = mounted({ detached: true });
+  f.toolsMenu.open = true;
+  f.toolsMenu.emit('click', { target: { closest: selector => selector === '.sgs-restart' ? {} : null } });
+  assert.equal(f.toolsMenu.open, false); assert.equal(f.toolSummary.focused, true);
+  f.toolsMenu.open = true;
+  f.toolsMenu.emit('click', { target: { closest: selector => selector === '[data-sgs-tool]' ? {} : null } });
+  assert.equal(f.queued.length, 1);
+  f.api.dispose(); f.toolsMenu.open = true; f.queued.shift()();
+  assert.equal(f.toolsMenu.open, true);
 });

@@ -164,7 +164,7 @@ test('native confirmed play and supplemental trigger produce one correctly gende
   assert.equal(h.game.playCardAudio, h.original);
 });
 
-test('skill conversion, response, equipment, and Peach are audible only for committed events', async () => {
+test('skill conversion, response, and Peach remain audible while committed equipment stays silent', async () => {
   const h = harness();
   assert.equal(h.starts.length, 0);
   for (const [name, card, sex] of [['useCard', 'sha', 'male'], ['respond', 'shan', 'female'], ['useCard', 'bagua', 'male'], ['useCard', 'tao', 'female']]) {
@@ -172,15 +172,43 @@ test('skill conversion, response, equipment, and Peach are audible only for comm
     await h.lib.skill[h.game.globalSkill].content({}, event);
   }
   await h.controller.whenIdle();
-  assert.equal(h.starts.length, 4);
-  assert.deepEqual(h.fetched.map(url => url.split('/').slice(-2).join('/')), ['male/sha.mp3', 'female/shan.mp3', 'male/bagua.mp3', 'female/tao.mp3']);
+  assert.equal(h.starts.length, 3);
+  assert.deepEqual(h.fetched.map(url => url.split('/').slice(-2).join('/')), ['male/sha.mp3', 'female/shan.mp3', 'female/tao.mp3']);
   assert.ok(h.starts.every((entry, i) => !i || entry.at >= h.starts[i - 1].at + 0.8));
   h.controller.playCommitted({ name: 'useCard', card: { name: 'sha' }, audio: false });
   h.game.playAudio('effect', 'damage');
   h.game.playAudio('skill', 'longdan1');
   await h.controller.whenIdle();
-  assert.equal(h.starts.length, 4);
+  assert.equal(h.starts.length, 3);
   h.controller.dispose();
+});
+
+test('equipment is silent through native and fallback calls after unmuting, without suppressing hero lines or view-as cards', async () => {
+  const h = harness({ characterAudio: true });
+  const player = { name: 'v_dongzhuo', sex: 'male' };
+  try {
+    for (const toggle of [false, true]) {
+      if (toggle) {
+        h.controller.setEnabled(false);
+        h.controller.setEnabled(true);
+        assert.equal(h.lib.config.equip_audio, false);
+      }
+      const event = { name: 'useCard', card: { name: 'bagua' }, player };
+      h.setEvent(event);
+      h.game.playCardAudio(event.card, player);
+      h.game.playCardAudio('bagua', 'female');
+      await h.lib.skill[h.game.globalSkill].content({}, event);
+      await h.controller.whenIdle();
+      assert.equal(h.fetched.length, 0, 'equipment must not enter the audio queue');
+      assert.equal(h.starts.length, 0);
+    }
+    h.game.trySkillAudio('dcguangyong', player);
+    // An equipment cost converted into Slash is still announced as Slash.
+    h.controller.playCommitted({ name: 'useCard', card: { name: 'sha', cards: [{ name: 'bagua' }] }, player });
+    await h.controller.whenIdle();
+    assert.equal(h.starts.length, 2);
+    assert.deepEqual(h.fetched.map(url => url.replace('http://localhost/sgs/audio/', '')), ['skill/dcguangyong1.mp3', 'card/male/sha.mp3']);
+  } finally { h.hero.dispose(); h.controller.dispose(); }
 });
 
 test('gesture unlock persists for AI, mute stops queued audio, and no blocked backlog is replayed', async () => {
@@ -318,7 +346,7 @@ test('native card and hero recordings overlap while each category keeps its own 
   const h = harness({ characterAudio: true });
   const player = { name: 'v_dongzhuo', sex: 'male' };
   try {
-    const event = { name: 'useCard', card: { name: 'bagua' }, player };
+    const event = { name: 'useCard', card: { name: 'huogong' }, player };
     h.setEvent(event);
     h.controller.playCommitted(event);
     h.game.trySkillAudio('dcguangyong', player);
@@ -340,7 +368,7 @@ test('a pending card or hero download never blocks the other category', async ()
     const response = { ok: true, arrayBuffer: async () => new ArrayBuffer(12) };
     const h = harness({ characterAudio: true, fetchAudio: url => String(url).includes(`/${blocked}/`)
       ? new Promise(resolve => { release = () => resolve(response); }) : response });
-    const card = () => h.controller.playCommitted({ name: 'useCard', card: { name: 'bagua' }, player: { name: 'v_dongzhuo', sex: 'male' } });
+    const card = () => h.controller.playCommitted({ name: 'useCard', card: { name: 'huogong' }, player: { name: 'v_dongzhuo', sex: 'male' } });
     const hero = () => h.game.trySkillAudio('dcguangyong', 'v_dongzhuo');
     try {
       if (blocked === 'card') { card(); hero(); } else { hero(); card(); }
@@ -367,10 +395,10 @@ test('mute stops both voice channels and canceled loads cannot stall or revive a
   for (const fail of [false, true]) {
     const releases = [];
     const response = { ok: true, arrayBuffer: async () => new ArrayBuffer(12) };
-    const h = harness({ characterAudio: true, fetchAudio: url => /bagua|dcguangyong/.test(String(url))
+    const h = harness({ characterAudio: true, fetchAudio: url => /huogong|dcguangyong/.test(String(url))
       ? new Promise(resolve => releases.push(() => resolve(fail ? { ok: false, status: 404 } : response))) : response });
     try {
-      h.controller.playCommitted({ name: 'useCard', card: { name: 'bagua' }, player: { sex: 'male' } });
+      h.controller.playCommitted({ name: 'useCard', card: { name: 'huogong' }, player: { sex: 'male' } });
       h.game.trySkillAudio('dcguangyong', 'v_dongzhuo');
       h.controller.setEnabled(false);
       h.controller.setEnabled(true);
@@ -394,12 +422,12 @@ test('timed-out card and hero loads release their own queues while the other voi
     const timers = {setTimeout(fn,ms){assert.equal(ms,8000);tasks.set(++timer,fn);return timer;},clearTimeout(id){tasks.delete(id);}};
     const response = {ok:true,arrayBuffer:async()=>new ArrayBuffer(12)};
     const h = harness({characterAudio:true,audioOptions:{timers},fetchAudio:(url,request)=>{
-      if (String(url).includes(blocked==='card'?'bagua':'dcguangyong')) {signal=request.signal;return new Promise(resolve=>release=resolve);}
+      if (String(url).includes(blocked==='card'?'huogong':'dcguangyong')) {signal=request.signal;return new Promise(resolve=>release=resolve);}
       return response;
     }});
     try {
       if(blocked==='card') {
-        h.controller.playCommitted({name:'useCard',card:{name:'bagua'},player:{sex:'male'}});
+        h.controller.playCommitted({name:'useCard',card:{name:'huogong'},player:{sex:'male'}});
         h.controller.playCommitted({name:'respond',card:{name:'shan'},player:{sex:'male'}});
         h.game.trySkillAudio('dcjuchui','v_dongzhuo');
       } else {
@@ -419,7 +447,7 @@ test('a late decoder cannot sound after timeout or block the next confirmed card
   const h=harness({audioOptions:{timers:{setTimeout(fn){tasks.set(++timer,fn);return timer;},clearTimeout(id){tasks.delete(id);}}}});
   h.ctx.decodeAudioData=()=>++decode===1?new Promise(resolve=>release=resolve):Promise.resolve({duration:0.8});
   try {
-    h.controller.playCommitted({name:'useCard',card:{name:'bagua'},player:{sex:'male'}});
+    h.controller.playCommitted({name:'useCard',card:{name:'huogong'},player:{sex:'male'}});
     h.controller.playCommitted({name:'respond',card:{name:'shan'},player:{sex:'male'}});
     await new Promise(r=>setImmediate(r));assert.equal(h.starts.length,0);
     for(const fn of [...tasks.values()])fn();await h.controller.whenIdle();assert.equal(h.starts.length,1);
@@ -430,7 +458,7 @@ test('a late decoder cannot sound after timeout or block the next confirmed card
 test('native hero variants and death keep their own queue without consuming card deduplication', async () => {
   const h = harness({ characterAudio: true });
   const player = { name: 'v_dongzhuo', sex: 'male' };
-  const event = { name: 'useCard', card: { name: 'bagua' }, player };
+  const event = { name: 'useCard', card: { name: 'huogong' }, player };
   h.setEvent(event);
   for (const skill of ['dcguangyong', 'dcjuchui']) {
     for (const last of [false, true]) {
@@ -445,7 +473,7 @@ test('native hero variants and death keep their own queue without consuming card
   await h.controller.whenIdle();
   assert.equal(h.starts.length, 6);
   assert.deepEqual(h.fetched.map(url => url.replace('http://localhost/sgs/audio/', '')), [
-    'skill/dcguangyong1.mp3', 'skill/dcguangyong2.mp3', 'skill/dcjuchui1.mp3', 'skill/dcjuchui2.mp3', 'card/male/bagua.mp3', 'die/v_dongzhuo.mp3',
+    'skill/dcguangyong1.mp3', 'skill/dcguangyong2.mp3', 'skill/dcjuchui1.mp3', 'skill/dcjuchui2.mp3', 'card/male/huogong.mp3', 'die/v_dongzhuo.mp3',
   ]);
   const times = h.starts.map(entry => entry.at).sort((a, b) => a - b);
   assert.deepEqual(times.slice(0, 2), [5, 5]);
@@ -543,7 +571,7 @@ test('pending loads use latest per-channel gain; mute cancels all three channels
   const response = { ok: true, arrayBuffer: async () => new ArrayBuffer(12) };
   const h = harness({ characterAudio: true, damageAudio: true,
     fetchAudio: () => hold ? new Promise(resolve => releases.push(() => resolve(response))) : response });
-  h.controller.playCommitted({ name: 'useCard', card: { name: 'bagua' }, player: { sex: 'male' } });
+  h.controller.playCommitted({ name: 'useCard', card: { name: 'huogong' }, player: { sex: 'male' } });
   h.game.trySkillAudio('dcguangyong', 'v_dongzhuo');
   const hit = damageEvent(); h.setEvent(hit); await h.damage(hit, null, hit.player);
   assert.equal(releases.length, 3);

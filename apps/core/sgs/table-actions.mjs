@@ -60,7 +60,7 @@ export function visibleDescriptionPlayers(game) {
   return [...game.players, ...game.dead].filter(player => player.name && !player._nointro && !player.classList.contains('unseen'));
 }
 
-export function openNativeDescription({ game, ui, _status }, node, pointer) {
+export function openNativeDescription({ game, ui, _status }, node, pointer, onOpen) {
   if (!node || _status.paused2 || _status.dragged || _status.removePop) return false;
   if (node === game.me || visibleDescriptionPlayers(game).includes(node)) {
     if (!node.name || node._nointro || node.classList.contains('unseen')) return false;
@@ -68,9 +68,40 @@ export function openNativeDescription({ game, ui, _status }, node, pointer) {
   // These buttons live outside ui.window, whose bubbling click handler normally
   // clears this flag. Preserve it here so the next native card click still works.
   const clicked = _status.clicked;
-  try { ui.click.intro.call(node, pointer)?.classList.add('sgs-readable-intro'); }
+  try {
+    const intro = ui.click.intro.call(node, pointer);
+    if (intro) {
+      intro.classList.add('sgs-readable-intro');
+      // Native mobile layout scales body down to fit the entire table. A
+      // manual top-layer popover keeps this reading surface at viewport size
+      // without moving its DOM, replacing dismissal, or acquiring pause.
+      if (intro.isConnected && intro.showPopover) { intro.popover = 'manual'; intro.showPopover(); }
+      onOpen?.(intro);
+    }
+  }
   finally { _status.clicked = clicked; }
   return true;
+}
+
+// Use the native close notification, preserving any skill-owned close work.
+// This restores keyboard focus only; native pause and dismissal stay native.
+export function retainIntroFocus(intro, opener, { document, queueMicrotask, isDisposed }) {
+  const previous = intro._onclose;
+  let cancelled = false;
+  const close = function (...args) {
+    if (intro.popover === 'manual') intro.hidePopover?.();
+    try { previous?.apply(this, args); }
+    finally {
+      if (intro._onclose === close) intro._onclose = previous;
+      queueMicrotask(() => {
+        if (cancelled || isDisposed() || !opener?.isConnected || document.querySelector('dialog[open]')) return;
+        const active = document.activeElement;
+        if (!active || active === document.body || intro.contains(active)) opener.focus({ preventScroll: true });
+      });
+    }
+  };
+  intro._onclose = close;
+  return () => { cancelled = true; if (intro._onclose === close) intro._onclose = previous; };
 }
 
 export function canOpenNativeRecord({ ui, _status, lib }) {
@@ -80,7 +111,7 @@ export function canOpenNativeRecord({ ui, _status, lib }) {
 
 export function installTableActions(context, { document = globalThis.document,
   setInterval = globalThis.setInterval, clearInterval = globalThis.clearInterval,
-  queueMicrotask = globalThis.queueMicrotask, dialogs, mode } = {}) {
+  queueMicrotask = globalThis.queueMicrotask, dialogs, mode, toolsHost, toolsMenu } = {}) {
   const { game, ui, lib, _status, get } = context;
   const rail = document.createElement('section');
   rail.className = 'sgs-action-rail';
@@ -106,6 +137,14 @@ export function installTableActions(context, { document = globalThis.document,
   };
   const actions = document.createElement('nav');
   actions.setAttribute('aria-label', '对局参考');
+  const toolSummary = toolsMenu?.querySelector('summary');
+  const nativeTools = toolsMenu?.querySelector('.sgs-native-tools');
+  const prepareDialog = () => {
+    if (!toolsMenu) return;
+    // The visible parent opener must own focus before a modal captures it.
+    toolSummary?.focus();
+    toolsMenu.open = false;
+  };
   const position = (event, anchor) => {
     const rect = anchor.getBoundingClientRect();
     return { clientX: event.clientX || rect.left, clientY: event.clientY || rect.bottom };
@@ -136,18 +175,26 @@ export function installTableActions(context, { document = globalThis.document,
     cards.open = false;
     general.open = false;
     if (!canOpenNativeRecord(context)) return;
+    prepareDialog();
     if (dialogs) openBattleLog(dialogs, ui, document); else ui.click.pause();
   });
   record.title = '查找本局已公开的技能、卡牌和伤害记录';
   const help = dialogs ? button('操作帮助', actions, event => {
     event.stopPropagation(); cards.open = general.open = false;
+    prepareDialog();
     openPlayGuide(dialogs, mode, document);
   }) : null;
-  rail.append(state, actions);
-  document.body.append(rail);
+  rail.append(state);
+  (toolsHost || rail).append(actions);
+  (ui.arena || document.body).append(rail);
   const label = (node, text) => { if (node.textContent !== text) node.textContent = text; };
   let entries = null, generalEntries = null;
   let disposed = false;
+  let releaseIntroFocus;
+  const trackIntro = intro => {
+    releaseIntroFocus?.();
+    releaseIntroFocus = retainIntroFocus(intro, toolSummary || summary, { document, queueMicrotask, isDisposed: () => disposed });
+  };
   const refresh = () => {
     if (disposed) return;
     const action = readTableAction(context);
@@ -171,7 +218,9 @@ export function installTableActions(context, { document = globalThis.document,
         generalEntries = players.map((player, index) => {
           const entry = button(labels[index], generalList, event => {
             event.stopPropagation(); general.open = false;
-            openNativeDescription(context, player, position(event, generalSummary));
+            const pointer = position(event, generalSummary);
+            prepareDialog();
+            openNativeDescription(context, player, pointer, trackIntro);
           });
           entry.disabled = !!_status.paused2;
           return { player, label: labels[index] };
@@ -189,24 +238,42 @@ export function installTableActions(context, { document = globalThis.document,
         event.stopPropagation();
         const pointer = position(event, summary);
         cards.open = false;
-        openNativeDescription(context, card, pointer);
+        prepareDialog();
+        openNativeDescription(context, card, pointer, trackIntro);
       });
       entry.disabled = !!_status.paused2;
       return { card, label: labels[index] };
     });
     empty.hidden = owned.length > 0;
   };
-  const toggle = () => { if (cards.open) { general.open = false; entries = null; refresh(); } };
-  const generalToggle = () => { if (general.open) { cards.open = false; generalEntries = null; refresh(); } };
-  const outside = event => { if (!cards.contains(event.target)) cards.open = false; if (!general.contains(event.target)) general.open = false; };
-  const escape = event => {
-    if (event.key === 'Escape' && cards.open) { cards.open = false; summary.focus(); }
-    if (event.key === 'Escape' && general.open) { general.open = false; generalSummary.focus(); }
+  const toggle = () => { if (cards.open) { general.open = false; if (nativeTools) nativeTools.open = false; entries = null; refresh(); } };
+  const generalToggle = () => { if (general.open) { cards.open = false; if (nativeTools) nativeTools.open = false; generalEntries = null; refresh(); } };
+  const outside = event => {
+    if (!cards.contains(event.target)) cards.open = false;
+    if (!general.contains(event.target)) general.open = false;
+    if (toolsMenu && !toolsMenu.contains(event.target)) toolsMenu.open = false;
   };
+  const escape = event => {
+    if (event.key !== 'Escape' || event.isComposing || event.defaultPrevented) return;
+    if (cards.open) { cards.open = false; summary.focus(); }
+    else if (general.open) { general.open = false; generalSummary.focus(); }
+    else if (nativeTools?.open) { nativeTools.open = false; nativeTools.querySelector('summary')?.focus(); }
+    else if (toolsMenu?.open) prepareDialog();
+    else return;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+  const toolClick = event => {
+    if (event.target.closest?.('.sgs-restart')) prepareDialog();
+    else if (event.target.closest?.('[data-sgs-tool]')) queueMicrotask(() => { if (!disposed) toolsMenu.open = false; });
+  };
+  const toolToggle = () => { if (!toolsMenu.open) { cards.open = general.open = false; if (nativeTools) nativeTools.open = false; } };
   cards.addEventListener('toggle', toggle);
   general.addEventListener('toggle', generalToggle);
   document.addEventListener('pointerdown', outside);
   document.addEventListener('keydown', escape);
+  toolsMenu?.addEventListener('click', toolClick, true);
+  toolsMenu?.addEventListener('toggle', toolToggle);
   // Run after the native check/clear has settled; never alter its return value.
   const afterCheck = () => queueMicrotask(refresh);
   lib.hooks.checkEnd.push(afterCheck);
@@ -216,6 +283,7 @@ export function installTableActions(context, { document = globalThis.document,
   return { refresh, dispose() {
     if (disposed) return;
     disposed = true;
+    releaseIntroFocus?.();
     clearInterval(timer);
     for (const hooks of [lib.hooks.checkEnd, lib.hooks.uncheckEnd]) {
       const index = hooks.indexOf(afterCheck);
@@ -225,6 +293,10 @@ export function installTableActions(context, { document = globalThis.document,
     general.removeEventListener('toggle', generalToggle);
     document.removeEventListener('pointerdown', outside);
     document.removeEventListener('keydown', escape);
+    toolsMenu?.removeEventListener('click', toolClick, true);
+    toolsMenu?.removeEventListener('toggle', toolToggle);
+    if (toolsMenu) toolsMenu.open = false;
+    actions.remove();
     rail.remove();
   } };
 }

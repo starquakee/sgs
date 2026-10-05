@@ -1,106 +1,98 @@
 {
-  "project": "三国杀单机版完整性与可靠性优化",
-  "branchName": "codex/sgs-reliability",
-  "description": "有来源的技能阅读、操作连续性、声音超时和局内问题报告",
+  "project": "三国杀暖棕古典 UI 改版",
+  "branchName": "codex/sgs-warm-client-ui",
+  "description": "参考暖棕牌桌、纸色阅读面板与轻量画像升级",
   "userStories": [
     {
-      "id": "MAT-01",
-      "title": "技能说明提取",
-      "description": "静态解析模板、get.poptip字符串/对象及上游固定数组map/join形式；在大厅名册生成带来源的初始说明和引用。",
+      "id": "WUI-01",
+      "title": "主题基础",
+      "description": "更新共享颜色、场景、文字、边框和按钮，清理覆盖新主题的黑色遮罩与硬编码色；牌桌棕色、阅读区纸色，普通上游入口保持原样。",
       "acceptanceCriteria": [
-        "锁定并补齐当前63项缺失正文，保留源文件/行号/校验值；解析器不执行模块、getter或任意表达式。",
-        "同包优先，跨包只接受无歧义确切ID；同名不同版本、循环/缺失/不支持表达式有明确状态，禁止猜测。",
-        "构建可重复；catalog原始证据、行为状态和评分映射不变。",
-        "Syntax/type checks and focused/full regression tests pass; parent browser confirms generated data loads without a regression."
+        "更新共享颜色、场景、文字、边框和按钮，清理覆盖新主题的黑色遮罩与硬编码色；牌桌棕色、阅读区纸色，普通上游入口保持原样。",
+        "语法/CSS检查通过，父会话在大厅/设置/真实牌桌验证视觉与可读性后提交；后续故事布局不提前实现。"
       ],
       "priority": 1,
       "passes": true,
-      "notes": "MAT-01: static description reader covers63 audited skills/60characters (64 references), preserves catalog evidence and fingerprints, handles exact-ID cross-pack/inline/rule/card/map references and bounded cycles.7focused and180total tests pass; syntax/diff pass. Raw production roster SHA matches. Parent production8083 lobby loaded2563/494filtered, existing selection/ratings/launch intact; screenshot inspected1280x720 and console empty. Explanation UI remains MAT-02."
+      "notes": "WUI-01: warm brown wood/chrome and light paper palettes replace black/gold; preserved native card/faction/selection states. Six changed CSS files parse. Text contrast pairs 5.09..8.78:1 (wood controls5.97..6.31:1). Parent actual1280x720 lobby, native2v2 opening and settings visually verified; found/fixed inherited native text-shadow on paper dialog and dark footer. Wood chamfered main buttons keep126x50. Normal upstream splash has noSGSclass/noSGSstyles. Console warnings/errors empty. Before/after screenshots in docs/sgs-warm-ui-screenshots. PureCSS, no logic changes; broad regression deferred to data/logic stories."
     },
     {
-      "id": "MAT-02",
-      "title": "完整阅读技能",
-      "description": "大厅阅读初始规则全文与可展开的技能/卡牌/术语解释，保留段落、列表；实际变化说明仍在局内原生介绍中查看。",
+      "id": "WUI-02",
+      "title": "轻量画像升级",
+      "description": "从现有源图重制192×256WebP、每图<=8KiB、总量<=20MiB；同源去重，不从旧小图放大。",
       "acceptanceCriteria": [
-        "神黄忠裂穹含击伤四项和天冲细则；引用来源可查看，未解析内容不编造。",
-        "长文本/术语在1024×640和390px可阅读，不遮挡出战；键盘、Escape及展开收起可用。",
-        "Syntax/type checks and focused/full regression tests pass; parent browser visual verification passes."
+        "从现有源图重制192×256WebP、每图<=8KiB、总量<=20MiB；同源去重，不从旧小图放大。",
+        "所有2563版本有本地映射，别名/来源/剪影/转换形态保留；失败保留旧有效图并记录原因。",
+        "全清单尺寸/字节/哈希/引用/目录一致性校验；原图和旧图不重复打包；真实大厅与牌桌验证。"
       ],
       "priority": 2,
       "passes": true,
-      "notes": "MAT-02: sourced initial rules/expandable skill-card-rule-character references, semantic paragraphs/lists, pinned source links and large reading dialog.3new tests;183total pass; JS syntax/CSS parse pass. Parent production8083 ShenHuangZhong confirms four injury options and Tianchong; found/fixed dialog action scrolling offscreen. Actual1024x640 dialog700x608/return126x50bottom599;390x844 dialog341x812/returnbottom803/document375wide. Escape collapses nearest term, then dialog close restores read-skills focus and unchanged ShenHuangZhong. Console empty; two durable screenshots. No upstream/native-rule edits."
+      "notes": "WUI-02: rebuilt2491deduplicated originals for2563versions at192x256; total16607254bytes (15.8379MiB), largest8190bytes, nofallbacks/missing/failures. Same source/kind/sourcePage/note/characterKey for every ID; new source dimensions/SHA256 retained. Validated decode/hash/budget before manifest switch and old-file cleanup; no duplicate staged/shipped sets. ThreePython maintenance tests and206Node tests pass, Python/JS syntax pass. Offline rebuild reproduces manifest SHA25631caff840e056cc6f1b9c7d510065b9fef8f0720b5dc450b3d511eb48e7af305. Parent1280x720 real lobby confirms natural192x256 and native2v2 portraits visually improved, console empty. One high-detail ZhenJi image needed lower bounded encoding, no source substitution. Screenshots wui02-lobby/table."
     },
     {
-      "id": "MAT-03",
-      "title": "操作连续性",
-      "description": "选择时保留列表卡片节点、焦点和滚动；筛选/排序/resize保留仍存在的焦点目标。",
+      "id": "WUI-03",
+      "title": "单层顶栏与操作区",
+      "description": "桌面44px单层顶栏，玩法/回合/局时/暂停/托管/声音/设置可达。说明/记录/报告/重开置工具菜单；移除顶部第二排。",
       "acceptanceCriteria": [
-        "删除筛选标签聚焦相邻标签，最后一项删除后聚焦搜索；所选武将/配置不变。",
-        "中文组合输入期间不重绘结果，compositionend再搜索；不添加出牌快捷键。",
-        "Mouse/keyboard/browser checks and focused/full regression tests pass."
+        "桌面44px单层顶栏，玩法/回合/局时/暂停/托管/声音/设置可达。说明/记录/报告/重开置工具菜单；移除顶部第二排。",
+        "当前操作和数量移近手牌确认区；保留原生复杂提示。菜单焦点/传播/暂停/监听清理正确，不改事件规则。",
+        "专项和完整回归通过；真实选牌后开关工具/说明/设置仍保留选择和手动确认。"
       ],
       "priority": 3,
       "passes": true,
-      "notes": "MAT-03: keyed card/filter reconciliation retains nodes and images on selection; resize keeps focused visible key on its correct page; filter removal chooses adjacent chip then search. IME uses committed query only.5new tests,188total pass and JS/diff checks pass. Parent production mouseclick and Enter retain BUTTON xianding:shen_huangzhong;1024resize retains same focus. Removing search focuses age, removing final age focuses search; selected hero/mode unchanged. Sorting both ways and pagination work; restored age=true/high sorting; console empty. Screenshot lobby-keyboard-selection.jpg. Composition lifecycle is covered by actual lobby handlers in unit harness; no claim of OS IME automation."
+      "notes": "WUI-03: 44px single HUD; references/restart/report in owned tool menu, original native tool nodes retained. Status/counts moved above confirmation; native complex prompts preserved. Added scoped native intro close-focus restoration preserving its own _onclose and pause behavior. 13 focused and210 full Node tests pass; changed CSS parse/JS syntax checked. Parent1280x720 real2v2 selected1card/1target survives settings/log/help/report/restart-cancel; menu nested Escape and description close restore visible opener. Native ShenHuangZhong choice, opening card/player references and44px geometry verified; console empty. Screenshots wui03-tools and wui03-native-choice. Intro horizontal overflow is tracked for WUI-06."
     },
     {
-      "id": "MAT-04",
-      "title": "音频故障隔离",
-      "description": "8秒下载/解码总超时释放队列；取消请求并防止迟到重播。",
+      "id": "WUI-04",
+      "title": "牌桌构图",
+      "description": "2v2上/左/右/右下己方构图，原一四对二三席位不变；优化头像/手牌/装备/技能及队友牌视图。",
       "acceptanceCriteria": [
-        "永久挂起/404/解码失败/迟到/静音取消/销毁均有测试；后续同类恢复、跨类并行和即时受击保持。",
-        "录音字节、双语音队列、三路音量、去重及原生触发时机不变。",
-        "Syntax checks, full audio/regression suite and parent real browser smoke pass."
+        "2v2上/左/右/右下己方构图，原一四对二三席位不变；优化头像/手牌/装备/技能及队友牌视图。",
+        "地主/农民与五至八人身份分别适配，主要控制>=126×50，无遮挡、出界或牌面变形。",
+        "四桌面尺寸浏览器验证；真原生模式选牌/响应/复杂选择验证。"
       ],
       "priority": 4,
       "passes": true,
-      "notes": "MAT-04: deadline-aware loader bounds fetch/body/decode to8000ms, aborts/cancels pending jobs, retains successful cache only, guards late results/new retries, disposes buffers. Native TimeoutError skips whole utterance instead of tryAudio variant retries.6new tests;194total pass, syntax/diff pass. Parent real production1024x640 WeiDongZhuo landlord: selected Hanbing hasplayed0, native confirm playscard10.152..11.147 and Guangyong10.661..15.890 on same unlocked context;7HP/8max, hand7, native play returns normally. Console empty; screenshot audio-native-use.jpg; paused test match. No listening claim. Assets/rules/timing/dedup and audio channel gains unchanged."
+      "notes": "WUI-04: responsive native seat dimensions; centered short hand, lower-left expansion for8+cards; fixed equipment/sort/skill spacing and compact ally hands. 2v2 verified at1920x1080/1366x768/1280x720/1024x640, landlord/farmer at1024, native8identity at1024/1280/1366/1920. Primary controls126x50minimum; cards stay inside bottom edge. Complex native dialogs moved above status dock. Real2v2 Wuxie response/forced discard, landlord two mulligans/12cards/manualSlash/FireAttack response, farmer Nanman response/native skill/manualSlash,8identity native choice/Snatch/mandatory discard verified. Two real2v2 victories (round4/09:26 andround2/02:12), including human decisions then native auto. Found/reproduced ResizeObserver loop on1920->1024 landlord: synchronous native hand reflow during resize delivery caused a fault. New coalesced next-frame adapter preserves native updatehl, cancels stale/disposed work; red-before/green-after2tests and212full tests pass. Repeated original resize path in landlord/farmer/8identity nofault/consoleerrors. Screenshots in warm-ui folder. Lobby loading can overwrite an early mode click; tracked for WUI-05. Final full production build and remaining coverage belong to WUI-07."
     },
     {
-      "id": "MAT-05",
-      "title": "本地问题报告",
-      "description": "牌桌工具提供手动导出版本化JSON；异常界面在MAT-06接入同一报告能力。",
+      "id": "WUI-05",
+      "title": "大厅统一",
+      "description": "保留三栏、固定出战，暖棕与纸面组合、轻边框；图片与文字对比清晰。",
       "acceptanceCriteria": [
-        "含客户端/上游版本、模式、所选pack:id、当前操作提示、最近20条错误摘要与300条公开日志。",
-        "不自动上传或持久化，不序列化原生事件/隐藏身份/手牌/牌堆；过滤非公开原生错误调试文本。",
-        "导出失败留可读提示、可重试；正常打开/关闭保留暂停归属和选牌。",
-        "Syntax/type checks, focused/full tests and browser download/visual verification pass."
+        "保留三栏、固定出战，暖棕与纸面组合、轻边框；图片与文字对比清晰。",
+        "全部搜索/筛选/评分/收藏/最近/技能阅读及焦点/滚动/IME行为不变，选中武将不因重排丢失。",
+        "桌面与390px浏览器检查，通过专项/完整回归。"
       ],
       "priority": 5,
       "passes": true,
-      "notes": "MAT-05: bounded in-memory versioned JSON reports, safe error summaries, allowlisted build/mode/general/action and native publicLog only; manual Blob download with cleanup and recoverable errors.5new tests;199total pass; JS/CSS/diff pass. Parent production1024/390 found native #system pointer-events:none made visible new button click through; fixed explicit pointer events and isolated input. Download API event timed out but actual851-byte JSON was created in Downloads/sgs-problem-2026-10-05T06-27-34-301Z.json; inspected schema1, correct upstream/mode/hero,5native public lines/no hidden game objects. Real wine selection1card/1target stays through report open/close; clock00:20 unchanged, focus returns SUMMARY.390 dialog356x319 and both>=126x50 actions fit. Desktop/mobile screenshots; console empty. Native technical game.print output is separate from ui.sidebar and is not collected."
+      "notes": "WUI-05: lighter paper roster, quiet borders and wood header; denser desktop filters and two visible rows at1280x720, six-card pages at1024 retaining independent scrolling; fixed launch controls and mobile stack preserved. Correct192x256intrinsic portrait attributes. Reproduced early-mode-choice overwrite with a delayed real lobby handler test, then moved saved match restoration before async catalog load;213fullNode tests pass. Parent checked1920x1080,1280x720,1024x640 and390x844.1280grid clientHeight292=scrollHeight292 (both rows complete).1024selection retained71.2pxscroll andfocus; responsive resize retained focused WangLang and selected setup. Tested combined search/group/age filters, independent removal/focus, score ascending/descending, favorite add/remove, recent list, exact ShenHuangZhong selection and complete skill reader.390nohorizontal overflow, fixed start >=126x50 and reader Escape restores opener. Original favorite/age/high-score/target-scope restored; mode restored at final acceptance. Console empty. Existing keyed-node and committed-IME regression tests continue passing. Screenshots wui05-*."
     },
     {
-      "id": "MAT-06",
-      "title": "局内异常处理",
-      "description": "SGS局内接管脚本错误/未处理Promise，去重显示单一异常界面，独立持有暂停并禁用继续；提供报告/同配置重开/点将台。",
+      "id": "WUI-06",
+      "title": "弹窗与说明统一",
+      "description": "设置/技能/评分/战绩/日志/报告/异常/结算统一纸色；长内容独立滚动，动作固定可达。",
       "acceptanceCriteria": [
-        "不覆盖其他入口；清理恢复原处理器，无重复监听；已处理音频/导出失败非阻断。",
-        "嵌套暂停不泄漏，重复错误不重复弹窗/结算；提前退出不记胜负。",
-        "用隔离测试夹具验证故障，不注入真实牌局状态；syntax/full tests及浏览器验收通过。"
+        "设置/技能/评分/战绩/日志/报告/异常/结算统一纸色；长内容独立滚动，动作固定可达。",
+        "SGS原生介绍单独作用域；复杂技能内容/暂停归属/焦点恢复/IME Escape/异常不可继续保持。",
+        "1024×640及390px真浏览器检查；异常仅隔离夹具，不注入真实牌局。"
       ],
       "priority": 6,
       "passes": true,
-      "notes": "MAT-06: SGS arena-only script/rejection handlers replace native technical alerts, deduplicate bounded errors, acquire independent fatal lease before closing owned modals, keep browser console evidence and restore handlers on disposal. Fault modal cannot Escape/cancel into unsafe continuation; report/restart/return and navigation retry available. Session background/manual/auto guards respect fatal state.7new tests,206total pass; real native PauseManager gate test preserves event/cards/targets and does not release on native resume/background return. Parent isolated browser fixture (not a match) verifies duplicate1record/1modal, Promise error, nondismissal, nested report failure+retry, both navigation callbacks and preexisting pause retained;1280/390 screenshots. Test-only fixture deliberately emits console errors; no live game state injection. Standalone HTML/mjs under tests only, temporary dist copy removed by final build."
+      "notes": "WUI-06: paper dialogs share lighter borders/spacing; settings, reports and native-result summaries now have bounded keyboard-accessible reading areas separate from fixed actions. Records, ratings, skills, help/log and fault summaries scroll independently. Native introductions keep their original DOM/close/pause behavior and use a manual top-layer popover so native mobile table scaling cannot shrink text; horizontal overflow removed. New lifecycle test plus214fullNode tests pass; all adapter JS/CSS parse. Parent verified1024x640 and390x640/520 settings, ratings, complete injury-term skills, records/details, public search/log, reports, isolated non-dismissable faults and real2v2results.390x520 result body188/232scroll pixels and all3actions50pxhigh within483.2px. Native intro width326=scrollWidth326 at390, normal23pxheading; original close restores tool summary.20reference/settings round trips retain the same selected Nanman response card; manual confirmation still required. Clock01:27held during settings, explicit pause survives nested settings. Fault fixture repeats coalesce1error, Escape keeps pause, report failure keeps2dialogs/independent pause, restart uses test navigation. Fixture is absent after production build. Fresh production2v2 native victory round3/02:22 (includes opening inspection time). Muted ink darkened slightly to guarantee4.67:1 even on shaded paper. Final build refresh/evidence consolidation continues underWUI-07."
     },
     {
-      "id": "MAT-07",
-      "title": "稳定性验收",
-      "description": "聚合测试、生产构建、真实多模式和长局验证，修复本轮可复现的适配层问题。",
+      "id": "WUI-07",
+      "title": "综合验收",
+      "description": "四桌面1920×1080/1366×768/1280×720/1024×640，390px大厅/弹窗；按实际CSS视口记录截图。",
       "acceptanceCriteria": [
-        "地主/农民/2v2/八人身份各至少完成一场原生对局；八人另持续运行至少30分钟。",
-        "弹窗反复20次、连续再战5次，无重复监听/UI/结算或持续增长的残留。",
-        "桌面1920×1080/1366×768/1280×720/1024×640及390px大厅/弹窗视觉检查；所有尺寸按实际CSS视口记录。",
-        "实际后台隐藏至少5秒；选择/牌局/局时保留，手动继续才推进；含嵌套暂停和偏好关闭。连接不支持则保持待验收，不改旧UX-09为通过。",
-        "全部回归、Node22/pnpm生产构建、console、截图及文档通过；US-006保持false。",
-        "FR-1: SGS适配层拥有呈现/偏好/异常UI，原生引擎拥有选牌、规则、AI及胜负。",
-        "FR-2: 非资源任意脚本不得在提取期间执行。说明元数据和官方行为验证保持独立。",
-        "FR-3: 所有监听、计时器、请求、URL和暂停令牌有明确清理路径。",
-        "FR-4: 所有新子进程windowsHide；服务只绑定loopback；不使用unsafe或禁用沙箱。"
+        "四桌面1920×1080/1366×768/1280×720/1024×640，390px大厅/弹窗；按实际CSS视口记录截图。",
+        "地主/农民/2v2/8身份开局/选牌/响应/复杂选择实测，至少一局2v2自然结算。各类菜单弹窗往返确认选择/目标/暂停/焦点。",
+        "画像完整性与20MiB预算、正文4.5:1、JS/CSS/全部回归、Node22/pnpm生产构建通过。",
+        "无新资源404/运行时错误；普通上游入口保留；前后三轮未完状态不改；截图/文档/提交记录齐全，不推送。"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": "206/206 tests and final Node22.12.0/pnpm10.11.0 production build pass;34JS syntax/12CSS parses/47output hashes pass. Parent real production browser completed landlord, farmer, native2v2 and8identity matches,5successive native rematches,20settings/record/help cycles with stable1505DOMnodes and1card/1target selection,4actual desktop viewports and390px lobby/dialogs. Separate native8identity table reached30:19active clock/round3, then native autoplay finished at33:16/round8/victory; console empty, exactly1record added (10completed matches this run). Includes human decision waits/UI checks, not30minutes continuous autoplay. Ordinary upstream entry unaffected; early exit adds no result. Only genuine background visibility acceptance remains: Edge connection unavailable and IAB staysdocument.hidden=false. Keep MAT-07/archived UX-09 false until actual hidden>=5s, selection/clock/manual-continue plus nested/preference-off cases are observed. Archived US-006 remainsfalse. Screenshots and exact evidence in docs/sgs-reliability-validation.md. No push."
+      "passes": true,
+      "notes": "WUI-07: final214Node regressions,3Python portrait tests, allSGSJS/CSS syntax, Node22/pnpm production build and2781source/build byte comparisons pass. Portraits2563versions/2491files/all192x256/max8190bytes/total16607254bytes; offline manifestSHA unchanged; allsource/alias/silhouette evidence preserved. Final text contrast minimum4.67:1. Parent actual1920x1080/1366x768/1280x720/1024x640 production2v2 and390px lobby/dialog screenshots saved. All3supported modes exercised opening/selection/response/complex choices;6natural2v2 results and1native8identity result recorded. Native5identity SunQuan Zhiheng selected2costcards/0targets/manualconfirm;6and7native openings visually checked (7through existing launch fragment, no new lobby option).20modal round trips and independent pause verified. PureCSS final polish keeps1280landlord controls fully visible and390long launch label onone line,162x50. Ordinary upstream entry haszeroSGSstyles/UI; finalbrowserwarnings/errors empty; faultfixtures absent frombuild; native source/LICENSE/audio untouched. OriginalShenHuangZhong/landlord/normal/sound100all/ageon/highoverall prefs restored. ArchivedMAT07/UX09/US006 remainfalse. Final evidence docs/sgs-warm-ui-validation.md and final-*screenshots. Localcommits only; no push."
     }
   ]
 }

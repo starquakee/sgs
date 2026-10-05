@@ -60,7 +60,7 @@ export function engineSettings(input) {
     choice_zhu_mode_config_identity: 3, choice_zhong_mode_config_identity: 4,
     choice_fan_mode_config_identity: 3, choice_nei_mode_config_identity: 6,
     choose_group_mode_config_identity: false, change_skin: false,
-    background_music: 'music_off', background_audio: true, equip_audio: true, background_speak: false,
+    background_music: 'music_off', background_audio: true, equip_audio: false, background_speak: false,
     volumn_background: 0, volumn_audio: 6,
     game_speed: launch.speed === 'fast' ? 'vfast' : 'fast',
     theme: 'simple', layout: 'nova', image_background: 'default', image_background_random: false,

@@ -10,7 +10,7 @@
 @media(min-width:801px){.masthead{height:78px}.lobby{padding-top:27px}.portrait{height:119px}.skills{max-height:207px}.skill{padding:10px 0}.battle-settings{padding-top:10px;padding-bottom:14px;margin-top:9px}.start-button{padding-top:11px;padding-bottom:11px}.general-detail{position:sticky;top:18px}}
 
 
-/* Local 96×128 artwork keeps the roster light while preserving name contrast. */
+/* Local bounded WebP artwork keeps the roster light and names readable. */
 .card-portrait{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;z-index:-2}
 .general-card:before{inset:0;border:0;background:linear-gradient(180deg,#0c110955,transparent 38%,#0c1109dd),linear-gradient(90deg,transparent 50%,#0c110955);z-index:-1}
 .card-mark{display:none}.card-name{text-shadow:0 1px 4px #000,0 0 8px #000;right:10px;top:34px;font-size:23px}
@@ -125,11 +125,11 @@ body {
 .favorite-toggle { color: var(--sgs-gold); }
 .favorite-toggle:hover { color: var(--sgs-on-primary)!important; }
 .portrait { background: var(--sgs-panel-raised); border-color: var(--sgs-line); border-radius: var(--sgs-radius); }
-.portrait:before { background: linear-gradient(90deg, #2c2923 42%, #2c292300 80%); }
-.portrait-title h2 { color: var(--sgs-text); }
-.portrait-title>span { color: var(--sgs-muted); }
+.portrait:before { background: linear-gradient(90deg, #f5ebd6 42%, #f5ebd600 80%); }
+.portrait-title h2 { color: var(--sgs-text); text-shadow: none; }
+.portrait-title>span { color: var(--sgs-muted); text-shadow: none; }
 .portrait-seal { background: var(--sgs-primary); outline-color: var(--sgs-primary); border-color: var(--sgs-primary-edge); }
-.hp { color: #bad296; }
+.hp { color: #47602d; }
 .skills { scrollbar-color: var(--sgs-bronze) transparent; }
 .skill { border-color: var(--sgs-line); }
 .skill h3 { color: var(--sgs-gold); }
@@ -182,6 +182,6 @@ dialog a { color: var(--sgs-gold); }
 .dialog-heading button:hover { color: var(--sgs-gold)!important; }
 #toast { background: var(--sgs-panel-raised); color: var(--sgs-text); border-color: var(--sgs-bronze); box-shadow: var(--sgs-shadow); }
 @media(max-width:800px) {
-  .portrait:before { background: linear-gradient(90deg, #171715bf, #17171500 85%); }
+  .portrait:before { background: linear-gradient(90deg, #f5ebd6 42%, #f5ebd600 85%); }
   .portrait-title>span { color: var(--sgs-text); }
 }

@@ -74,12 +74,12 @@ export function installBattleResults({ lib, game, get, _status, launch, preferen
   }
   function show() {
     if (!snapshot || disposed) return null;
-    return dialogs.open('result', `<h2></h2>
+    return dialogs.open('result', `<h2></h2><div class="sgs-result-content" tabindex="0" role="region" aria-label="本局结算详情">
       <p class="sgs-result-player"></p><p class="sgs-result-context"></p>
       <div class="sgs-result-stats" aria-label="你的本局统计"></div>
       <p class="sgs-result-note">摸牌包含通过技能或其他角色获得的牌。</p>
       <p data-result-status role="status"></p>
-      <div class="sgs-dialog-actions"><button type="button" data-details>本局详情</button><button type="button" data-return>返回点将台</button><button type="button" data-replay data-primary>再来一局</button></div>`, (dialog, close) => {
+      </div><div class="sgs-dialog-actions"><button type="button" data-details>本局详情</button><button type="button" data-return>返回点将台</button><button type="button" data-replay data-primary>再来一局</button></div>`, (dialog, close) => {
       dialog.classList.add('sgs-result-dialog');
       dialog.dataset.outcome = snapshot.outcome;
       dialog.querySelector('h2').textContent = snapshot.title;
