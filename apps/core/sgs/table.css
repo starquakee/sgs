@@ -403,6 +403,8 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   gap: 4px;
 }
 .sgs-game #window #arena #control > .control.sgs-skill-control > div { min-height: 30px; padding: 4px 8px; }
+/* Keep end-turn, contextual recast and confirm together at 1024px. */
+.sgs-game #window #arena #control > .control.sgs-recast-control > div { padding-inline: 18px!important; }
 .sgs-game #window #arena > .player[data-position='0'] > .equips {
   left: calc(-1 * var(--sgs-equip-w) - 18px)!important;
   width: var(--sgs-equip-w)!important; bottom: 24px!important; gap: 5px;

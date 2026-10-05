@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from '../../apps/core/sgs/card-selection.mjs';
 import { installManualConfirmation } from '../../apps/core/sgs/experience.mjs';
+import { installSelectedTiesuoRecast } from '../../apps/core/sgs/card-recast.mjs';
 
 const gameSource = readFileSync(new URL('../../apps/core/noname/game/index.js', import.meta.url), 'utf8');
 const clickSource = readFileSync(new URL('../../apps/core/noname/ui/click/index.js', import.meta.url), 'utf8');
@@ -378,4 +379,146 @@ test('responses, AI, active skills, multi-card costs and complex or optional cho
     assert.equal(f.ui.selected.targets.length, kind === 'all' ? 1 : 0, kind);
     assert.equal(f.commits(), 0, kind);
   }
+});
+
+// Use pinned native skill entry, skill/ok/cancel handlers and event backup/restore.
+function recastFixture() {
+  const f = fixture({ uniqueTarget: true });
+  const scope = [f.lib, f.game, f.ui, f.get, f._status, class {}];
+  const skillSource = readFileSync(new URL('../../apps/core/noname/library/skill.js', import.meta.url), 'utf8');
+  const entry = skillSource.slice(skillSource.indexOf('\t_recasting: {'), skillSource.indexOf('\t_lianhuan: {'));
+  f.lib.skill._recasting = new Function('lib', 'game', 'get', '_status', `return ({${entry}})._recasting;`)(f.lib, f.game, f.get, f._status);
+  f.lib.skill.global.push('_recasting');
+  const librarySource = readFileSync(new URL('../../apps/core/noname/library/index.js', import.meta.url), 'utf8');
+  f.lib.filter.filterEnable = method(librarySource, 'filterEnable(event, player, skill)', '\n\t\t/**', scope);
+  const eventSource = readFileSync(new URL('../../apps/core/noname/library/element/gameEvent.ts', import.meta.url), 'utf8');
+  f.event.backup = method(eventSource, 'backup(skill)', '\n\trestore()', scope);
+  f.event.restore = method(eventSource, 'restore()', '\n\t// #endregion', scope);
+  f.event.type = 'phase';
+  f.event.selectTarget = [1, 2];
+  f.player.storage = {};
+  f.player.hasCard = filter => f.player.getCards('h').some(filter);
+  f.player.canRecast = card => card.recastAllowed === true;
+  f.cards[0].name = 'tiesuo';
+  f.cards[0].recastAllowed = true;
+  for (const card of f.cards) card.recheck = () => {};
+  f.get.name = card => card.effectiveName || card.name;
+  f.get.filter = value => value;
+  f.get.translation = value => value;
+  f.get.event = () => f._status.event;
+  f.get.links = () => [];
+  f.get.objtype = value => value?.close ? 'div' : undefined;
+  f.lib.dynamicTranslate = {}; f.lib.translate = {};
+  f.ui.create.dialog = () => ({ close() {} });
+  f.ui.create.skills2 = () => {};
+  for (const [signature, end] of [['skill(skill)', '\n\tok(node)'], ['ok(node)', '\n\tcancel(node)'], ['cancel(node)', '\n\tlogv(e)']]) {
+    f.ui.click[signature.split('(')[0]] = method(clickSource, signature, end, scope);
+  }
+  const controls = [];
+  let resumed = 0;
+  f.game.resume = () => resumed++;
+  f.ui.create.control = (text, custom) => {
+    const button = { attributes: {}, listeners: {}, setAttribute(key, value) { this.attributes[key] = value; }, addEventListener(key, fn) { this.listeners[key] = fn; }, click: () => custom() };
+    const control = { text, custom, firstChild: button, classList: classes(), open: true,
+      close() { this.open = false; }, remove() { this.open = false; } };
+    controls.push(control);
+    return control;
+  };
+  const controller = installSelectedTiesuoRecast(f);
+  f.game.check();
+  return { ...f, controller, controls, active: () => controls.filter(control => control.open), resumed: () => resumed };
+}
+
+test('selecting Iron Chain exposes recast without changing native targets, then hands the same card to native confirmation', () => {
+  const f = recastFixture();
+  assert.equal(f.active().length, 0);
+  f.click(f.cards[0]);
+  assert.equal(f.active().length, 1);
+  assert.equal(f.active()[0].text, '重铸此牌');
+  assert.equal(f.event.skill, undefined);
+  assert.equal(f.ui.selected.targets.length, 0, 'Iron Chain keeps its native optional target choice');
+  f.selectTarget();
+  assert.deepEqual([...f.ui.selected.targets], [f.target]);
+  f.game.check();
+  assert.equal(f.active().length, 1, 'repeated checks do not duplicate the action');
+  assert.equal(f.confirm().includes('o'), true, 'normal linking still has native confirmation');
+  f._status.clicked = true; // Native control click has already set this guard.
+  f.active()[0].custom();
+  assert.equal(f.event.skill, '_recasting');
+  assert.deepEqual([...f.ui.selected.cards], [f.cards[0]], 'no need to select the same card again');
+  assert.equal(f.ui.selected.targets.length, 0, 'native skill entry clears former link targets');
+  assert.equal(f.confirm().includes('o'), true);
+  assert.equal(f.active().length, 0);
+  assert.equal(f.commits(), 0);
+  assert.equal(f.resumed(), 0);
+  assert.equal(f._status.clicked, true);
+  f.ui.click.ok();
+  assert.equal(f.resumed(), 1, 'only a separate manual confirmation submits the native action');
+  assert.equal(f.event.result.skill, '_recasting');
+  assert.deepEqual(f.event.result.cards, [f.cards[0]]);
+  assert.equal(f.event.result.targets.length, 0);
+  f.controller.dispose();
+});
+
+test('canceling native recast restores normal Iron Chain selection, switching or deselecting removes the shortcut', () => {
+  const f = recastFixture();
+  f.click(f.cards[0]); f.active()[0].custom();
+  f.ui.click.cancel();
+  assert.equal(f.event.skill, undefined);
+  assert.equal(f.ui.selected.cards.length, 0);
+  assert.equal(f.resumed(), 0);
+  f.click(f.cards[0]);
+  const stale = f.active()[0];
+  f.click(f.cards[1]);
+  assert.equal(f.active().length, 0);
+  stale.custom();
+  assert.deepEqual([...f.ui.selected.cards], [f.cards[1]]);
+  assert.equal(f.event.skill, undefined);
+  f.click(f.cards[0]); f.click(f.cards[0]);
+  assert.equal(f.active().length, 0);
+  f.controller.dispose();
+});
+
+test('Iron Chain shortcut obeys native recast restrictions and excludes response, AI, view-as and custom/multiple costs', () => {
+  for (const kind of ['forbidden', 'skillBanned', 'response', 'ai', 'auto', 'viewAs', 'effectiveName', 'multiple', 'complex', 'custom', 'notInHand']) {
+    const f = recastFixture();
+    f.click(f.cards[0]);
+    const stale = f.active()[0];
+    if (kind === 'forbidden') f.cards[0].recastAllowed = false;
+    if (kind === 'skillBanned') f.player.storage.temp_ban__recasting = true;
+    if (kind === 'response') f.event.type = 'respond';
+    if (kind === 'ai') f.event.isMine = () => false;
+    if (kind === 'auto') f._status.auto = true;
+    if (kind === 'viewAs') f.event.skill = 'other_view_as';
+    if (kind === 'effectiveName') f.cards[0].effectiveName = 'sha';
+    if (kind === 'multiple') f.event.selectCard = [1, 2];
+    if (kind === 'complex') f.event.complexCard = true;
+    if (kind === 'custom') f.event.custom.add.card = () => {};
+    if (kind === 'notInHand') f.player.getCards = () => f.cards.slice(1);
+    stale.custom();
+    assert.equal(f.active().length, 0, kind);
+    assert.notEqual(f.event.skill, '_recasting', kind);
+    assert.equal(f.resumed(), 0, kind);
+    f.controller.dispose();
+  }
+});
+
+test('recast entry never marks an illegal card selectable and disposal removes its hooks and stale actions', () => {
+  const f = recastFixture();
+  f.click(f.cards[0]);
+  const stale = f.active()[0];
+  f.cards[0].respondable = false; // Native Check.card may reject after the skill backup.
+  stale.custom();
+  assert.equal(f.event.skill, '_recasting');
+  assert.equal(f.ui.selected.cards.length, 0);
+  assert.equal(f.cards[0].classList.contains('selectable'), false);
+  assert.equal(f.resumed(), 0);
+  f.ui.click.cancel(); f.cards[0].respondable = true; f.game.check(); f.click(f.cards[0]);
+  const end = f.lib.hooks.checkEnd.length, uncheck = f.lib.hooks.uncheckBegin.length;
+  f.controller.dispose(); f.controller.dispose();
+  assert.equal(f.lib.hooks.checkEnd.length, end - 1);
+  assert.equal(f.lib.hooks.uncheckBegin.length, uncheck - 1);
+  assert.equal(f.active().length, 0);
+  stale.custom();
+  assert.equal(f.resumed(), 0);
 });

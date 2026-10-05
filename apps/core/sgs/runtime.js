@@ -8,6 +8,7 @@ import { installTeammateHand } from './teammate-hand.mjs';
 import { installOpeningHand } from './opening-hand.mjs';
 import { installHandLayout } from './hand-layout.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
+import { installSelectedTiesuoRecast } from './card-recast.mjs';
 import { installTableActions, visiblePlayerName } from './table-actions.mjs';
 import { installPublicStates, publicBattleLog } from './table-reference.mjs';
 import { createProblemReports, installProblemReportUI } from './problem-report.mjs';
@@ -61,6 +62,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   });
 
   lib.arenaReady.push(() => {
+    const selectedRecast = installSelectedTiesuoRecast({ lib, game, ui, get, _status });
     // chooseCharacter schedules but does not return its event.
     const teams = launch.mode === 'versus';
     const landlord = launch.mode === 'doudizhu';
@@ -218,7 +220,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); }, { once: true });
+    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); }, { once: true });
     decorate();
     loading?.ready();
   });
