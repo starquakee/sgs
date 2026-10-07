@@ -85,6 +85,7 @@ class Element {
   }
   setAttribute(name, value) { this.attrs[name] = value; }
   addEventListener(name, callback) { this.listeners[name] = callback; }
+  removeEventListener(name, callback) { if (this.listeners[name] === callback) delete this.listeners[name]; }
   emit(name, event = {}) { this.listeners[name]?.(event); }
   focus() { this.focused = true; }
   scrollIntoView() { this.scrolled = true; }
@@ -110,7 +111,8 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
     },
     addEventListener() {},
   };
-  const location = {href: ''}, navigations = [];
+  const location = {href: ''}, navigations = [], window = dom(), timers = new Map();
+  let timerId = 0;
   const fetch = fetcher || (async url => ({ok: true, json: async () => url.includes('portraits') ? {portraits: {}} : {
     characters: structuredClone(roster), packs: ['standard', 'refresh', 'xianding'].map(id => ({id, name: id})),
   }}));
@@ -128,18 +130,78 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
     // retention and focus are exercised separately in lobby-continuity tests/CUA.
     reconcileKeyedHTML: (node, html) => { node.innerHTML = html; },
     installComposedSearch, focusAfterFilterRemoval: (_node, _index, fallback) => fallback.focus(),
-    window: {addEventListener() {}}, setTimeout() {},
+    window, setTimeout(fn) { timers.set(++timerId, fn); return timerId; }, clearTimeout(id) { timers.delete(id); },
     fetch,
   });
   await new Promise(resolve => setImmediate(resolve));
   if (!pending) assert.equal(elements['detail-name'].textContent, roster.find(c => c.id === 'caocao').name, 'real lobby init should finish');
   return {
-    elements, local, session, location, modes, factions, browse, roles, document, navigations,
+    elements, local, session, location, modes, factions, browse, roles, document, window, navigations,
+    flushTimers() { for (const [id, fn] of timers) { timers.delete(id); fn(); } },
     carrier: () => readLaunch({ location: { hash: new URL(location.href, 'http://localhost').hash } }),
     select(key) { elements['general-grid'].emit('click', {target: {closest: () => ({dataset: {key}})}}); },
     visible() { return [...elements['general-grid'].innerHTML.matchAll(/data-key="([^"]+)"/g)].map(([, key]) => key); },
   };
 }
+
+test('cached lobby returns preserve transient browsing and live settings/search, and allow one new launch per return', async () => {
+  const app = await lobby(), e = app.elements;
+  app.select('xianding:recent');
+  app.modes.find(button => button.dataset.mode === 'doudizhu').emit('click');
+  app.roles.forEach(role => { role.checked = role.value === 'farmer'; });
+  app.roles[1].emit('change');
+  e.search.value = 'general'; e.search.emit('input');
+  e['general-grid'].scrollTop = 73;
+  app.document.activeElement = e.search;
+  const before = e['general-grid'].innerHTML;
+  for (let cycle = 1; cycle <= 2; cycle++) {
+    e['start-game'].onclick(); e['start-game'].onclick();
+    assert.equal(app.navigations.length, cycle);
+    app.window.emit('pageshow', { persisted: false });
+    assert.equal(e['start-game'].disabled, true, 'ordinary pageshow cannot clear a live launch lock');
+    app.window.emit('pagehide', { persisted: true });
+    app.window.emit('pageshow', { persisted: true });
+    assert.equal(e['start-game'].disabled, false, 'the cached lobby must accept a new launch');
+    assert.equal(e['start-label'].textContent, '以农民身份出战');
+    assert.equal(e['general-grid'].innerHTML, before);
+    assert.equal(e['general-grid'].scrollTop, 73);
+    assert.equal(app.document.activeElement, e.search);
+    assert.equal(e['launch-general'].textContent, 'recent');
+    assert.equal(app.carrier().mode, 'doudizhu');
+    assert.equal(app.carrier().landlordRole, 'farmer');
+  }
+  e.search.value = 'caocao'; e.search.emit('input');
+  assert.deepEqual(app.visible(), ['standard:caocao']);
+  e['settings-link'].onclick();
+  const settings = app.document.body.children.at(-1);
+  assert.equal(settings.open, true);
+  const speed = settings.querySelector('[name="speed"]');
+  speed.value = 'fast'; speed.emit('change');
+  assert.equal(e.speed.value, 'fast', 'preference subscriptions survive persisted hides');
+  app.window.emit('pagehide', { persisted: false });
+  assert.equal(app.document.body.children.length, 0);
+  assert.equal(e.search.listeners.input, undefined, 'a later real leave still cleans up');
+  assert.equal(app.window.listeners.get('pageshow')?.size || 0, 0);
+});
+
+test('history-restored search text updates the actual roster after pageshow without committing IME or changing the selected hero', async () => {
+  const app = await lobby(), e = app.elements;
+  app.select('xianding:recent');
+  app.window.emit('pageshow', { persisted: false });
+  // Browsers restore form state without an input event after pageshow.
+  e.search.value = 'caocao'; app.flushTimers();
+  assert.deepEqual(app.visible(), ['standard:caocao']);
+  assert.equal(e['launch-general'].textContent, 'recent');
+  e.search.emit('compositionstart'); e.search.value = 'general';
+  app.window.emit('pageshow', { persisted: true }); app.flushTimers();
+  assert.deepEqual(app.visible(), ['standard:caocao'], 'uncommitted IME text stays out of the list');
+  e.search.emit('compositionend');
+  assert.ok(app.visible().every(key => key.startsWith('standard:general')));
+  const before = e['general-grid'].innerHTML;
+  app.window.emit('pageshow', { persisted: true });
+  e.search.value = 'caocao'; app.window.emit('pagehide', { persisted: false }); app.flushTimers();
+  assert.equal(e['general-grid'].innerHTML, before, 'leaving cancels the deferred reconciliation');
+});
 
 test('browsing, favorites and combined filters preserve behavior without recording recent use', async () => {
   const app = await lobby();

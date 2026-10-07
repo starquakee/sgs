@@ -24,7 +24,6 @@ if (!canPersist()) warnStorage();
 const applyPreferences = (value, saved) => { $('speed').value = value.speed; applyMotionPreference(document, value); if (saved === false) warnStorage(); };
 applyPreferences(preferences.get());
 const unsubscribePreferences = preferences.subscribe(applyPreferences);
-window.addEventListener('pagehide', () => { settingsDialogs.dispose(); unsubscribePreferences(); catalogListeners.clear(); }, { once: true });
 const factionNames = { wei: '魏', shu: '蜀', wu: '吴', qun: '群', jin: '晋', shen: '神', key: '异' };
 const text = value => String(value ?? '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
 const displayName = value => text(value).replace(/^新杀/, '');
@@ -167,7 +166,6 @@ $('roster-policy').onclick = () => {
   showInfo('武将包与年份', `<p>主要按<strong>一将成名、限定专属、群英荟萃、星河璀璨、谋包、威包</strong>浏览，一将成名排在前面。</p><p>神将、祈福将、王朗、刘徽和武庙将归入限定专属；许绍归入群英荟萃；星曹仁、星袁术等归入新的星河璀璨。谋将、威将各自独立。</p><p>“全部”也保留经典与界限突破。其他版本可在“更多筛选”中切换范围和原始包；原有收藏、出战武将和技能版本保持独立。</p><h3>隐藏老武将</h3><p>隐藏已有依据属于2020年及以前的版本，保留2021年起的新将和新版本。年份未核实的条目继续保留并标注，不按姓名、强度或“界”字判断年份。</p>${evidence}`);
 };
 const stopSearch = installComposedSearch($('search'), value => { if (searchQuery === value) return; searchQuery = value; currentPage = 1; render(true); });
-window.addEventListener('pagehide', stopSearch, { once: true });
 for (const id of ['version','pack']) $(id).addEventListener('change', () => { currentPage = 1; render(true); });
 $('clear-filters').onclick = reset;
 $('active-filters').addEventListener('click', event => {
@@ -299,4 +297,24 @@ $('player-count').value = [5,6,8].includes(initialSetup.playerCount) ? initialSe
 $('identity').value = initialSetup.identity;
 document.querySelector(`[name="landlord-role"][value="${initialSetup.landlordRole}"]`).checked = true;
 syncMode();
+let restoreSearchTimer;
+function restoreLobby(event) {
+  clearTimeout(restoreSearchTimer);
+  // Browser-restored input values arrive after pageshow without an input event.
+  restoreSearchTimer = setTimeout(() => { restoreSearchTimer = undefined; stopSearch.sync(); }, 0);
+  if (!event.persisted) return;
+  handoff.reset();
+  $('start-game').disabled = !selected || catalogState !== 'ready';
+  // Do not reload/re-render: the cached DOM owns filters, focus and scroll.
+  syncMode();
+}
+function leaveLobby(event) {
+  clearTimeout(restoreSearchTimer); restoreSearchTimer = undefined;
+  if (event.persisted) return;
+  settingsDialogs.dispose(); unsubscribePreferences(); catalogListeners.clear(); stopSearch();
+  window.removeEventListener('pagehide', leaveLobby);
+  window.removeEventListener('pageshow', restoreLobby);
+}
+window.addEventListener('pagehide', leaveLobby);
+window.addEventListener('pageshow', restoreLobby);
 init();

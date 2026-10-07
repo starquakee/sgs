@@ -53,6 +53,18 @@ test('unverified years remain visible with a clear label, and absence in old sou
   assert.equal(policy.unknownBehavior, 'keep-and-label');
 });
 
+test('audio release evidence is edition-specific and availability alone leaves the release year unknown', () => {
+  const fixture = { key: 'xianding:fixture', id: 'fixture', pack: 'xianding', groups: [], skills: [] };
+  const selection = { fixture: { pack: 'newjiang', releaseDate: '2026-02-15', evidenceUrl: 'official-fixture' } };
+  assert.equal(classifyRelease(fixture, policy, history, selection).era, 'unknown');
+  fixture.pack = 'newjiang'; fixture.key = 'newjiang:fixture';
+  assert.equal(classifyRelease(fixture, policy, history, selection).year, 2026);
+  selection.fixture.releaseDate = '2020-02-15';
+  assert.equal(classifyRelease(fixture, policy, history, selection).era, 'old');
+  selection.fixture.releaseDate = null; selection.fixture.officialAvailabilityDate = '2022-06-24';
+  assert.equal(classifyRelease(fixture, policy, history, selection).era, 'unknown');
+});
+
 test('roster metadata reproduces for every character without changing IDs, native packs or skill versions', () => {
   validateRosterPolicy(catalog, policy);
   assert.equal(roster.characters.length, catalog.characters.length);

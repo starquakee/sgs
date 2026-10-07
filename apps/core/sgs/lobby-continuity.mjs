@@ -20,18 +20,22 @@ export function reconcileKeyedHTML(container, html, keyAttribute, document = con
 }
 
 export function installComposedSearch(input, search) {
-  let composing = false;
+  let composing = false, disposed = false;
   const start = () => { composing = true; };
-  const update = event => { if (!composing && !event.isComposing) search(input.value); };
+  const update = (event = {}) => { if (!disposed && !composing && !event.isComposing) search(input.value); };
   const end = () => { composing = false; search(input.value); };
   input.addEventListener('compositionstart', start);
   input.addEventListener('compositionend', end);
   input.addEventListener('input', update);
-  return () => {
+  const dispose = () => {
+    disposed = true;
     input.removeEventListener('compositionstart', start);
     input.removeEventListener('compositionend', end);
     input.removeEventListener('input', update);
   };
+  // History form restoration does not dispatch input. Use the same IME guard.
+  dispose.sync = update;
+  return dispose;
 }
 
 export function focusAfterFilterRemoval(container, index, fallback) {

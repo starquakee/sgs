@@ -22,7 +22,7 @@ export function retainLaunch(input, preferences, { history = globalThis.history 
 }
 export function createLaunchHandoff({ session = () => globalThis.sessionStorage, navigate = url => { location.href = url; } } = {}) {
   let navigating = false;
-  return (config, preferences, beforeNavigate = () => {}) => {
+  const handoff = (config, preferences, beforeNavigate = () => {}) => {
     if (navigating) return false;
     navigating = true;
     try {
@@ -32,4 +32,7 @@ export function createLaunchHandoff({ session = () => globalThis.sessionStorage,
       return true;
     } catch (error) { navigating = false; throw error; }
   };
+  // A cached lobby keeps the same closure after browser Back/Forward.
+  handoff.reset = () => { navigating = false; };
+  return handoff;
 }

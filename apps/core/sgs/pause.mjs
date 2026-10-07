@@ -6,34 +6,37 @@ export function installOwnedPause({ game, _status, now = () => performance.now()
   const nativeResume = game.resume2;
   const owners = new Set();
   let nativeHeld = !!_status.paused2, disposed = false;
+  let resumeTimer = null;
   let last = now(), elapsed = 0, wasPaused = !!_status.paused2, ended = !!_status.over;
   function sample() {
     const current = now();
     if (!wasPaused && !ended) elapsed += Math.max(0, current - last);
     last = current;
-    wasPaused = nativeHeld || owners.size > 0;
+    wasPaused = nativeHeld || owners.size > 0 || resumeTimer !== null;
     ended ||= !!_status.over;
     return elapsed;
   }
   function change(action) {
     sample();
     const result = action();
-    wasPaused = nativeHeld || owners.size > 0;
+    wasPaused = nativeHeld || owners.size > 0 || resumeTimer !== null;
     return result;
   }
-  let resumeQueued = false;
+  function cancelRelease() {
+    if (resumeTimer !== null) clearTimeout(resumeTimer);
+    resumeTimer = null;
+  }
   function releaseGate() {
-    if (resumeQueued) return;
-    resumeQueued = true;
-    // Native Deferred.resolve clears asynchronously. Coalesce close/open in the
-    // same turn before asking it to resolve, so a new dialog retains the gate.
-    queueMicrotask(() => {
-      resumeQueued = false;
+    if (resumeTimer !== null) return;
+    // Native Deferred.resolve cannot be undone once called. Wait for all current
+    // microtasks, including nested promise handoffs, before releasing the gate.
+    resumeTimer = setTimeout(() => change(() => {
+      resumeTimer = null;
       if (!disposed && !nativeHeld && !owners.size) nativeResume.call(game);
-    });
+    }), 0);
   }
   function pause2(...args) {
-    return change(() => { nativeHeld = true; return nativePause.apply(this, args); });
+    return change(() => { cancelRelease(); nativeHeld = true; return nativePause.apply(this, args); });
   }
   function resume2() {
     change(() => { nativeHeld = false; if (!owners.size) releaseGate(); });
@@ -46,7 +49,7 @@ export function installOwnedPause({ game, _status, now = () => performance.now()
     acquire(reason) {
       if (disposed) return () => {};
       const token = { reason };
-      change(() => { owners.add(token); if (!_status.paused2) nativePause.call(game); });
+      change(() => { cancelRelease(); owners.add(token); if (!_status.paused2) nativePause.call(game); });
       let released = false;
       return () => {
         if (released || disposed) return;
@@ -58,8 +61,10 @@ export function installOwnedPause({ game, _status, now = () => performance.now()
     reasons: () => [...owners].map(owner => owner.reason),
     dispose() {
       if (disposed) return;
-      owners.clear();
-      if (!nativeHeld) change(() => nativeResume.call(game));
+      change(() => {
+        cancelRelease(); owners.clear();
+        if (!nativeHeld) nativeResume.call(game);
+      });
       if (game.pause2 === pause2) game.pause2 = nativePause;
       if (game.resume2 === resume2) game.resume2 = nativeResume;
       disposed = true;

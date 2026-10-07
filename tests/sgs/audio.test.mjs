@@ -26,8 +26,8 @@ const audioSource = await readFile(new URL('../../apps/core/noname/get/audio.ts'
 const audioJS = ts.transpileModule(audioSource.replace(/^import[^\n]+\n/, '').replace('export class Audio', 'class Audio'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } }).outputText;
 const originalRandomRemove = Object.getOwnPropertyDescriptor(Array.prototype, 'randomRemove');
 const originalAddArray = Object.getOwnPropertyDescriptor(Array.prototype, 'addArray');
-let pickLast = false;
-Object.defineProperty(Array.prototype, 'randomRemove', { configurable: true, value() { return this.splice(pickLast ? this.length - 1 : 0, 1)[0]; } });
+let pickLast = false, pickIndex = null;
+Object.defineProperty(Array.prototype, 'randomRemove', { configurable: true, value() { return this.splice(pickIndex === null ? pickLast ? this.length - 1 : 0 : Math.min(pickIndex, this.length - 1), 1)[0]; } });
 Object.defineProperty(Array.prototype, 'addArray', { configurable: true, value(values) { for (const value of values) if (!this.includes(value)) this.push(value); return this; } });
 after(() => { if (originalRandomRemove) Object.defineProperty(Array.prototype, 'randomRemove', originalRandomRemove); else delete Array.prototype.randomRemove; });
 after(() => { if (originalAddArray) Object.defineProperty(Array.prototype, 'addArray', originalAddArray); else delete Array.prototype.addArray; });
@@ -106,7 +106,7 @@ function harness({ running = true, fetchFail = false, characterAudio = false, da
   const lib = {
     config: { background_audio: true, equip_audio: true, background_speak: false, volumn_audio: 6 },
     skill: { global: [], ...structuredClone(characterSource.skills) },
-    translate: voices, characterSubstitute: structuredClone(characterSource.characterSubstitute), natureAudio: structuredClone(nativeNatureAudio),
+    translate: { ...characterSource.translates, ...characterSource.voices }, characterSubstitute: structuredClone(characterSource.characterSubstitute), natureAudio: structuredClone(nativeNatureAudio),
     card: { sha: { audio: true }, shan: { audio: true }, huogong: { audio: true }, tao: {}, bagua: { audio: true } },
   };
   const get = {
@@ -126,8 +126,9 @@ function harness({ running = true, fetchFail = false, characterAudio = false, da
     broadcast() {},
     broadcastAll(fn, ...args) { fn(...args); },
     log() {},
-    addGlobalSkill(name) { this.globalSkill = name; },
-    removeGlobalSkill(name) { assert.equal(name, this.globalSkill); },
+    globalSkills: new Set(),
+    addGlobalSkill(name) { this.globalSkills.add(name); this.globalSkill ||= name; },
+    removeGlobalSkill(name) { assert.ok(this.globalSkills.delete(name)); },
   };
   // Test the actual pinned native resolver rather than a mirror of its logic.
   game.playCardAudio = new Function('game', 'lib', 'get', `return ({${nativeMethod}}).playCardAudio;`)(game, lib, get);
@@ -143,7 +144,7 @@ function harness({ running = true, fetchFail = false, characterAudio = false, da
     fetch: async (url, request) => { fetched.push(String(url)); return fetchAudio ? fetchAudio(url, request) : { ok: !fetchFail, status: fetchFail ? 404 : 200, arrayBuffer: async () => new ArrayBuffer(12) }; },
   });
   const nativeSkill = game.trySkillAudio;
-  const hero = characterAudio ? installCharacterAudio({ lib, game }, characterManifest, { host: {} }) : null;
+  const hero = characterAudio ? installCharacterAudio({ lib, game, get }, characterManifest, { host: {} }) : null;
   const damage = new Function('game', 'lib', 'get', `${damageJS}\nreturn damage;`)(game, lib, get);
   return { game, lib, get, ctx, fetched, starts, stopped, listeners, controller, original, hero, nativeSkill, damage, setEvent: event => { current = event; } };
 }
@@ -232,6 +233,107 @@ test('gesture unlock persists for AI, mute stops queued audio, and no blocked ba
   assert.equal(h.listeners.size, 0);
 });
 
+test('audio device construction failures stay nonfatal for gestures and committed cards, and a later gesture can recover', async () => {
+  let unavailable = true;
+  const h = harness({ running: false, audioOptions: { createContext() {
+    if (unavailable) throw new Error('Audio device unavailable');
+    return h.ctx;
+  } } });
+  try {
+    assert.doesNotThrow(() => h.listeners.get('pointerdown')());
+    assert.equal(await h.controller.unlock(), false);
+    assert.doesNotThrow(() => h.controller.playCommitted({ name: 'useCard', card: { name: 'sha' }, player: { sex: 'male' } }));
+    assert.match(h.controller.status().lastError, /Audio device unavailable/);
+    assert.equal(h.controller.status().blocked, true);
+    assert.equal(h.fetched.length, 0);
+    unavailable = false;
+    h.listeners.get('keydown')();
+    assert.equal(h.ctx.resumes, 1, 'resume must run synchronously within the gesture');
+    assert.equal(await h.controller.unlock(), true);
+    assert.equal(h.controller.status().lastError, null);
+    assert.equal(h.starts.length, 0, 'recovering the device must not replay skipped cards');
+    h.controller.playCommitted({ name: 'respond', card: { name: 'shan' }, player: { sex: 'male' } });
+    await h.controller.whenIdle();
+    assert.equal(h.starts.length, 1);
+  } finally { h.controller.dispose(); }
+});
+
+for (const failure of ['synchronous', 'asynchronous']) test(`${failure} audio resume failures are handled and recover without deferred gesture calls`, async () => {
+  const h = harness({ running: false });
+  const nativeResume = h.ctx.resume;
+  h.ctx.resume = () => {
+    h.ctx.resumes++;
+    const error = new Error(`${failure} resume failure`);
+    if (failure === 'synchronous') throw error;
+    return Promise.reject(error);
+  };
+  try {
+    assert.doesNotThrow(() => h.listeners.get('pointerdown')());
+    assert.equal(h.ctx.resumes, 1);
+    assert.equal(await h.controller.unlock(), false);
+    assert.match(h.controller.status().lastError, /resume failure/);
+    assert.equal(h.controller.status().blocked, true);
+    assert.equal(h.starts.length, 0);
+    h.ctx.resume = nativeResume;
+    const resumes = h.ctx.resumes;
+    h.listeners.get('keydown')();
+    assert.equal(h.ctx.resumes, resumes + 1);
+    assert.equal(await h.controller.unlock(), true);
+    assert.equal(h.controller.status().lastError, null);
+    assert.equal(h.fetched.length, 0);
+  } finally { h.controller.dispose(); }
+});
+
+test('late audio unlock resolution and rejection cannot preload, notify or replay after mute or disposal', async () => {
+  for (const action of ['mute', 'dispose']) for (const outcome of ['resolve', 'reject']) {
+    const states = [];
+    const h = harness({ running: false, damageAudio: true, audioOptions: { onStateChange: value => states.push(value) } });
+    let finish;
+    h.ctx.resume = () => new Promise((resolve, reject) => { finish = () => {
+      if (outcome === 'reject') reject(new Error('Late resume failure'));
+      else { if (h.ctx.state !== 'closed') h.ctx.state = 'running'; resolve(); }
+    }; });
+    try {
+      h.controller.playCommitted({ name: 'useCard', card: { name: 'sha' }, player: { sex: 'male' } });
+      const unlocking = h.controller.unlock();
+      if (action === 'mute') h.controller.setEnabled(false); else h.controller.dispose();
+      const notifications = states.length, lastError = h.controller.status().lastError;
+      finish();
+      assert.equal(await unlocking, false, `${action}/${outcome} must be obsolete`);
+      await h.controller.whenIdle();
+      assert.equal(states.length, notifications, `${action}/${outcome} must not notify`);
+      assert.equal(h.controller.status().lastError, lastError);
+      assert.equal(h.fetched.length, 0, `${action}/${outcome} must not preload`);
+      assert.equal(h.starts.length, 0, `${action}/${outcome} must not replay`);
+    } finally { h.controller.dispose(); }
+  }
+});
+
+test('an unlock from before mute stays obsolete after unmute while a fresh gesture can preload normally', async () => {
+  const states = [], pending = [];
+  const h = harness({ running: false, damageAudio: true, audioOptions: { onStateChange: value => states.push(value) } });
+  h.ctx.resume = () => new Promise(resolve => pending.push(() => { h.ctx.state = 'running'; resolve(); }));
+  try {
+    const first = h.controller.unlock();
+    h.controller.setEnabled(false);
+    h.controller.setEnabled(true);
+    assert.equal(pending.length, 2, 'unmute must still request resume synchronously');
+    const notifications = states.length;
+    pending[0]();
+    assert.equal(await first, false);
+    assert.equal(states.length, notifications);
+    assert.equal(h.fetched.length, 0);
+    pending[1]();
+    await new Promise(resolve => setImmediate(resolve));
+    await h.controller.whenIdle();
+    assert.equal(h.fetched.length, Object.keys(damageManifest.clips).length);
+    assert.equal(h.starts.length, 0, 'preloading does not play an old event');
+    h.controller.playCommitted({ name: 'respond', card: { name: 'shan' }, player: { sex: 'male' } });
+    await h.controller.whenIdle();
+    assert.equal(h.starts.length, 1);
+  } finally { h.controller.dispose(); }
+});
+
 test('missing or undecodable audio cannot interrupt rule resolution', async () => {
   const h = harness({ fetchFail: true });
   assert.doesNotThrow(() => h.controller.playCommitted({ name: 'useCard', card: { name: 'sha' }, player: { sex: 'male' } }));
@@ -277,17 +379,21 @@ test('the original five Wei Dong Zhuo recordings remain byte-identical and match
   h.hero.dispose(); h.controller.dispose();
 });
 
-test('all curated recent hero audio is complete, pinned and reproducible, excluding old versions', async () => {
+test('all curated hero audio is complete, pinned and reproducible without borrowing other editions', async () => {
   assert.equal(characterManifest.schemaVersion, 2);
   assert.deepEqual(characterManifest.characters, characterSource.metadata);
   assert.deepEqual(Object.keys(characterManifest.clips).sort(), Object.keys(characterSource.clips).sort());
-  assert.equal(Object.keys(characterManifest.characters).length, 9);
-  assert.equal(characterManifest.uniqueFiles, 58);
+  assert.equal(Object.keys(characterManifest.characters).length, 36);
+  assert.equal(characterManifest.uniqueFiles, 276);
   const roster = JSON.parse(await readFile(new URL('roster.json', base), 'utf8'));
   for (const [id, hero] of Object.entries(characterManifest.characters)) {
-    assert.equal(roster.characters.find(character => character.id === id).version.category, 'decade');
-    assert.ok(hero.releaseDate >= '2024-10-04' && hero.releaseDate <= '2026-10-04');
-    assert.match(hero.evidenceUrl, /^https:\/\/x\.sanguosha\.com\/news\//);
+    const row = roster.characters.find(character => character.id === id && character.pack === hero.pack);
+    if (hero.initialSkills) assert.deepEqual(hero.initialSkills, characterSource.characters[id].skills, 'reviewed initial skills must still match the exact source edition');
+    assert.equal(row.version.category, id === 'v_sunce' ? 'pending' : 'decade', 'audio coverage never rewrites original catalog evidence');
+    const date = hero.releaseDate || hero.officialAvailabilityDate;
+    assert.ok(date >= '2022-01-01' && date <= '2026-10-07');
+    if (!hero.releaseDate) assert.equal(id, 'shen_jiangwei', 'availability evidence remains explicitly distinct');
+    assert.match(hero.evidenceUrl, /^https:\/\/(?:x\.|www\.)?sanguosha\.com\/news\//);
   }
   let total = 0;
   for (const [key, clip] of Object.entries(characterManifest.clips)) {
@@ -302,12 +408,52 @@ test('all curated recent hero audio is complete, pinned and reproducible, exclud
     total += bytes.length;
   }
   assert.equal(total, characterManifest.totalBytes);
-  assert.ok(total < 8 * 1024 * 1024);
-  assert.equal(new Set(Object.values(characterManifest.clips).map(clip => clip.file)).size, 58);
+  assert.ok(total < 40 * 1024 * 1024);
+  assert.equal(new Set(Object.values(characterManifest.clips).map(clip => clip.file)).size, 276);
+  for (const kind of ['skill', 'die']) {
+    assert.deepEqual((await readdir(new URL(`audio/${kind}/`, base))).sort(),
+      Object.values(characterManifest.clips).filter(clip => clip.file.startsWith(`audio/${kind}/`)).map(clip => clip.file.split('/').at(-1)).sort(), 'ship one referenced recording set without orphaned files');
+  }
   for (const id of ['dongzhuo', 'sunquan', 'shen_sunquan', 're_caocao', 'xunyu', 'sb_xunyu']) {
     assert.equal(characterManifest.characters[id], undefined);
     assert.equal(resolveCharacterAudio(`die/${id}`, characterManifest), null);
   }
+});
+
+test('reviewed source mappings reject an unverified dynamic backup or a wrong character pack', async () => {
+  const selection = { v_sunce: { ...characterManifest.characters.v_sunce, pack: 'xianding' } };
+  await assert.rejects(readCharacterAudioSource({ selection }));
+  await assert.rejects(readCharacterAudioSource({ selection: { shen_huangzhong: {
+    ...characterManifest.characters.shen_huangzhong, skillAliases: { invented_backup: 'dclieqiong' },
+  } } }), /Unverified dynamic backup audio/);
+  assert.equal(characterManifest.characters.shen_jiangwei.releaseDate, null);
+  assert.ok(characterSource.skills.rexingshang.audioname.includes('v_caopi'));
+  assert.equal(characterManifest.clips['skill/rexingshang1'], undefined, 'older refresh recordings must not be borrowed');
+});
+
+test('native Mou Pangtong logAudio selects all five branches in both conversion forms', async () => {
+  const h = harness({ characterAudio: true });
+  const method = characterSource.dynamicMethods.dcsbhongce.logAudio;
+  h.lib.skill.dcsbhongce.logAudio = new Function(`return ({${method.source}}).logAudio;`)();
+  assert.equal(characterManifest.metadataAudits.dcsbhongce.logAudio.sha256,
+    createHash('sha256').update(method.source).digest('hex'));
+  try {
+    for (const form of characterManifest.characters.dc_sb_pangtong.forms) {
+      const player = { name: 'dc_sb_pangtong', sex: 'male', skin: { name: form }, tempname: form === 'dc_sb_pangtong' ? [] : [form],
+        storage: {}, getAllHistory: () => [{ skill: 'dcsbhongce', link: player.link }] };
+      for (const [name, index, link] of [
+        ['phase', 0, null], ['phase', 1, null], ['useSkill', 0, 'sha'], ['useSkill', 0, 'recast'], ['useSkill', 0, 'draw'],
+      ]) {
+        pickIndex = index;
+        player.storage.dcsbyinmou = form.endsWith('_shadow'); player.link = link;
+        h.game.trySkillAudio('dcsbhongce', player, true, null, null, [{ name }, player]);
+      }
+    }
+    await h.controller.whenIdle();
+    assert.equal(h.starts.length, 10);
+    assert.deepEqual(h.fetched.map(url => url.split('/').at(-1)).sort(),
+      Object.keys(characterManifest.clips).filter(key => /^skill\/dcsbhongce/.test(key)).map(key => key.split('/').at(-1) + '.mp3').sort());
+  } finally { pickIndex = null; h.hero.dispose(); h.controller.dispose(); }
 });
 
 test('native skill aliases and conversion forms play every selected clip through the hero queue', async () => {
@@ -318,12 +464,16 @@ test('native skill aliases and conversion forms play every selected clip through
   for (const [id, hero] of Object.entries(characterManifest.characters)) {
     for (const form of hero.forms) {
       const player = { name: id, sex: 'male', skin: { name: form }, tempname: form === id ? [] : [form] };
-      for (const skill of hero.skills) for (const last of [false, true]) {
-        pickLast = last;
-        h.game.trySkillAudio(skill, player, true);
-        expectedStarts++;
-        assert.equal(h.lib.config.background_speak, false);
+      for (const skill of hero.skills) {
+        const variants = h.get.Audio.skill({ skill, player }).fileList;
+        for (let index = 0; index < variants.length; index++) {
+          pickIndex = index;
+          h.game.trySkillAudio(skill, player, true);
+          expectedStarts++;
+          assert.equal(h.lib.config.background_speak, false);
+        }
       }
+      pickIndex = null; pickLast = false;
       h.game.tryDieAudio(player);
       expectedStarts++;
     }

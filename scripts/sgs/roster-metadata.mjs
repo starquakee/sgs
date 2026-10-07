@@ -8,8 +8,12 @@ export function classifyBrowsePack(character, policy) {
 export function classifyRelease(character, policy, history, audioSelection) {
   const override = policy.releaseOverrides[character.key];
   if (override) return { ...override, basis: 'official-announcement' };
-  const audio = character.pack === 'xianding' && audioSelection[character.id];
-  if (audio) return { era: 'recent', year: Number(audio.releaseDate.slice(0, 4)), basis: 'official-announcement', url: audio.evidenceUrl };
+  const audio = audioSelection[character.id];
+  // Availability at an official event is not proof of the initial release year.
+  if (audio?.releaseDate && character.pack === (audio.pack || 'xianding')) {
+    const year = Number(audio.releaseDate.slice(0, 4));
+    return { era: year >= policy.cutoffYear ? 'recent' : 'old', year, basis: 'official-announcement', url: audio.evidenceUrl };
+  }
   // Only the three explicitly dated source tables can supply a version year.
   const group = policy.datedSourcePacks.includes(character.pack) && character.groups.find(group => /_(?:19|20)\d{2}$/.test(group.id));
   if (group) {

@@ -1,11 +1,571 @@
 {
-  "v_dongzhuo": { "displayName": "威董卓", "releaseDate": "2025-04-04", "evidenceUrl": "https://x.sanguosha.com/news/20250402_8034_2010.html", "selectionReason": "保留用户指定的既有语音" },
-  "shen_pangtong": { "displayName": "神庞统", "releaseDate": "2025-01-28", "evidenceUrl": "https://x.sanguosha.com/news/20250122_5601_2110.html", "selectionReason": "官网新上SSS；鸾锁、凤燎与鹍浴的联动" },
-  "dc_sb_xunyu": { "displayName": "新杀谋荀彧", "releaseDate": "2025-05-01", "evidenceUrl": "https://x.sanguosha.com/news/20250428_6442_0316.html", "selectionReason": "官网新上SSS；势谋调整手牌与弼佐额外回合" },
-  "shen_zhonghui": { "displayName": "神钟会", "releaseDate": "2025-07-12", "evidenceUrl": "https://x.sanguosha.com/news/20250709_1072_1917.html", "selectionReason": "官网新上神将；凛界、独仗与降祸" },
-  "dc_sb_caoang": { "displayName": "新杀谋曹昂", "releaseDate": "2025-08-24", "evidenceUrl": "https://x.sanguosha.com/news/20250820_6340_5315.html", "selectionReason": "官网新上SSS；丰愍与质亡" },
-  "dc_sb_dengai": { "displayName": "新杀谋邓艾", "releaseDate": "2025-09-06", "evidenceUrl": "https://x.sanguosha.com/news/20250904_3910_3309.html", "selectionReason": "官网新上SSS；骤袭与恃矜" },
-  "dc_shen_sunquan": { "displayName": "新杀神孙权", "releaseDate": "2026-01-10", "evidenceUrl": "https://x.sanguosha.com/news/20260108_4235_1811.html", "selectionReason": "官网新上SSS；沧溟、筹汐与激潮" },
-  "v_gongsunzan": { "displayName": "威公孙瓒", "releaseDate": "2026-04-04", "evidenceUrl": "https://x.sanguosha.com/news/20260402_4576_3310.html", "selectionReason": "官网新上SSS；举袭与追讨" },
-  "v_mateng": { "displayName": "威马腾", "releaseDate": "2026-08-08", "evidenceUrl": "https://x.sanguosha.com/news/20260806_5173_3719.html", "selectionReason": "官网新上限定武将；合骑、挥锐与骁贲" }
+  "v_dongzhuo": {
+    "displayName": "威董卓",
+    "releaseDate": "2025-04-04",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250402_8034_2010.html",
+    "selectionReason": "保留用户指定的既有语音"
+  },
+  "shen_pangtong": {
+    "displayName": "神庞统",
+    "releaseDate": "2025-01-28",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250122_5601_2110.html",
+    "selectionReason": "官网新上SSS；鸾锁、凤燎与鹍浴的联动"
+  },
+  "dc_sb_xunyu": {
+    "displayName": "新杀谋荀彧",
+    "releaseDate": "2025-05-01",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250428_6442_0316.html",
+    "selectionReason": "官网新上SSS；势谋调整手牌与弼佐额外回合"
+  },
+  "shen_zhonghui": {
+    "displayName": "神钟会",
+    "releaseDate": "2025-07-12",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250709_1072_1917.html",
+    "selectionReason": "官网新上神将；凛界、独仗与降祸"
+  },
+  "dc_sb_caoang": {
+    "displayName": "新杀谋曹昂",
+    "releaseDate": "2025-08-24",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250820_6340_5315.html",
+    "selectionReason": "官网新上SSS；丰愍与质亡"
+  },
+  "dc_sb_dengai": {
+    "displayName": "新杀谋邓艾",
+    "releaseDate": "2025-09-06",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250904_3910_3309.html",
+    "selectionReason": "官网新上SSS；骤袭与恃矜"
+  },
+  "dc_shen_sunquan": {
+    "displayName": "新杀神孙权",
+    "releaseDate": "2026-01-10",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260108_4235_1811.html",
+    "selectionReason": "官网新上SSS；沧溟、筹汐与激潮"
+  },
+  "v_gongsunzan": {
+    "displayName": "威公孙瓒",
+    "releaseDate": "2026-04-04",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260402_4576_3310.html",
+    "selectionReason": "官网新上SSS；举袭与追讨"
+  },
+  "v_mateng": {
+    "displayName": "威马腾",
+    "releaseDate": "2026-08-08",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260806_5173_3719.html",
+    "selectionReason": "官网新上限定武将；合骑、挥锐与骁贲"
+  },
+  "v_sunquan": {
+    "pack": "xianding",
+    "displayName": "威孙权",
+    "releaseDate": "2025-01-28",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250122_5601_2110.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcwoheng",
+      "dcyuhui"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "v_lvbu": {
+    "pack": "xianding",
+    "displayName": "威吕布",
+    "releaseDate": "2025-03-01",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250226_3631_5618.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcxiaowu",
+      "dcbaguan"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "allowedSilentInherits": {
+      "dcxiaowu_effect": {
+        "inherit": "nocount",
+        "source": "apps/core/noname/library/skill.js",
+        "note": "原生不计次数模板；charlotte/forced/popup:false，无audio，不能因此导入任何通用技能声音。"
+      }
+    }
+  },
+  "v_caopi": {
+    "pack": "xianding",
+    "displayName": "威曹丕",
+    "releaseDate": "2025-08-09",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250806_5692_2416.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcdianlun",
+      "dcjiwei",
+      "dcsugang"
+    ],
+    "extraSkills": [
+      "rexingshang"
+    ],
+    "skillSources": {
+      "rexingshang": "refresh"
+    },
+    "skillAliases": {
+      "dcsugang_viewAs_backup": "dcsugang"
+    },
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "肃纲临时授予行殇；refresh:rexingshang有audioname:[v_caopi]。只收skill/rexingshang_v_caopi1.mp3与2.mp3，台词位于xianding/voices.js；通用rexingshang1/2和caoying别名均不收。"
+    ]
+  },
+  "v_machao": {
+    "pack": "xianding",
+    "displayName": "威马超",
+    "releaseDate": "2025-10-01",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250928_6435_5115.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dczhongtao",
+      "dcjizhan"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {
+      "dczhongtao_backup": "dczhongtao"
+    },
+    "dynamicAudioSkills": []
+  },
+  "v_caocao": {
+    "pack": "xianding",
+    "displayName": "威曹操",
+    "releaseDate": "2025-12-06",
+    "evidenceUrl": "https://x.sanguosha.com/news/20251204_8422_1517.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcduoyue",
+      "dcjunhe",
+      "dcxiongwei"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "v_sunce": {
+    "pack": "newjiang",
+    "displayName": "威孙策",
+    "releaseDate": "2026-02-15",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260213_2684_4717.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dczhifeng",
+      "dcweijing"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "武将、技能、台词均位于newjiang包，必须保留准确pack:newjiang。",
+      "dczhifeng_backup本身无audio且log:false；precontent调用player.logSkill(dczhifeng)，发声ID仍为dczhifeng。",
+      "保留原catalog版本pending标记；准确ID及初始技能音频匹配不等于全量官方规则验证。"
+    ]
+  },
+  "v_sunshangxiang": {
+    "pack": "xianding",
+    "displayName": "威孙尚香",
+    "releaseDate": "2026-02-15",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260213_2684_4717.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcshuren",
+      "dcsaran"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "v_liubei": {
+    "pack": "xianding",
+    "displayName": "威刘备",
+    "releaseDate": "2026-05-01",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260429_1123_0517.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcliexiang",
+      "dcrengou"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {
+      "dcliexiang_backup": "dcliexiang"
+    },
+    "dynamicAudioSkills": []
+  },
+  "v_zhangxingcai": {
+    "pack": "xianding",
+    "displayName": "威张星彩",
+    "releaseDate": "2026-06-18",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260616_2004_3116.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dchuangnu",
+      "dcxiankuang"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {
+      "dchuangnu_backup": "dchuangnu"
+    },
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_jiangwei": {
+    "pack": "xianding",
+    "displayName": "新杀谋姜维",
+    "releaseDate": "2025-09-06",
+    "evidenceUrl": "https://x.sanguosha.com/news/20250904_3910_3309.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbjuemou",
+      "dcsbfuzhan"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_pangtong": {
+    "pack": "xianding",
+    "displayName": "新杀谋庞统",
+    "releaseDate": "2026-03-03",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260302_9276_4614.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbyinmou",
+      "dcsbhongce"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [
+      "dcsbhongce"
+    ],
+    "audioNotes": [
+      "宏策audio:5，每个形态各5条；logAudio为MethodDeclaration，fields()不会抓到。收集阶段按audio静态枚举，回归需执行原始logAudio验证phase和sha/recast/draw分支，保留原生日志时机。"
+    ]
+  },
+  "dc_sb_zhugeliang": {
+    "pack": "xianding",
+    "displayName": "新杀谋诸葛亮",
+    "releaseDate": "2026-09-05",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260904_8061_5810.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbjingmou",
+      "dcsbguyi"
+    ],
+    "extraSkills": [
+      "dcsbdingnan"
+    ],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "靖谋达成条件后获得定南；定南audio:2，audioname包含dc_sb_zhugeliang_shadow，需两形态共4条。"
+    ]
+  },
+  "dc_shen_caopi": {
+    "pack": "xianding",
+    "displayName": "新杀神曹丕",
+    "releaseDate": "2026-07-11",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260709_1838_3516.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcyinzhi",
+      "dckeming"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "刻名可随机临时触发别人的受伤技能；只收阴鸷、刻名及阵亡，不扩展为所有曹姓或其他角色技能包，未选录音保持静音。"
+    ]
+  },
+  "dc_sb_guanyu": {
+    "pack": "xianding",
+    "displayName": "新杀谋关羽",
+    "releaseDate": "2026-06-18",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260616_2004_3116.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbguanwu",
+      "dcsbweishi",
+      "dcsbjuao"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {
+      "dcsbjuao_backup": "dcsbjuao"
+    },
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_wangping": {
+    "pack": "xianding",
+    "displayName": "新杀谋王平",
+    "releaseDate": "2026-09-05",
+    "evidenceUrl": "https://x.sanguosha.com/news/20260904_8061_5810.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbyouyi",
+      "dcsbfangong"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "shen_huangzhong": {
+    "pack": "xianding",
+    "displayName": "神黄忠",
+    "releaseDate": "2024-10-01",
+    "evidenceUrl": "https://sanguosha.com/news/20240929_8183_2018",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "new_dclieqiong",
+      "dczhanjue"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioDependencies": {
+      "new_dclieqiong": "dclieqiong"
+    },
+    "audioNotes": [
+      "准确初始技能是new_dclieqiong，不是旧dclieqiong的行为实现；只按audio:dclieqiong解析其两条原生录音。dczhanjue_directHit/recover沿用斩决。"
+    ]
+  },
+  "shen_zhangfei": {
+    "pack": "xianding",
+    "displayName": "神张飞",
+    "releaseDate": "2022-12-24",
+    "evidenceUrl": "https://sanguosha.com/news/20221223_8364_1717",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合10/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "shencai",
+      "xunshi"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "shen_machao": {
+    "pack": "xianding",
+    "displayName": "神马超",
+    "releaseDate": "2022-07-23",
+    "evidenceUrl": "https://sanguosha.com/news/20220721_2755_1416",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合10/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "shouli",
+      "hengwu"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "shen_zhangjiao": {
+    "pack": "xianding",
+    "displayName": "神张角",
+    "releaseDate": "2023-03-03",
+    "evidenceUrl": "https://www.sanguosha.com/news/20230302_3037_4614",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcyizhao",
+      "sijun",
+      "sanshou",
+      "tianjie"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioDependencies": {
+      "dcyizhao": "yizhao"
+    },
+    "allowedAudioInherits": {
+      "dcyizhao": {
+        "inherit": "yizhao",
+        "source": "apps/core/character/xianding/skill.js",
+        "note": "初始dcyizhao显式audio:yizhao，父技能yizhao显式audio:2；仅静态抽取音频元数据。"
+      }
+    },
+    "audioNotes": [
+      "天劫audio:3，不能按两条默认漏掉第三条。",
+      "首发公告体力3，锁定源码与当前已匹配官方快照体力4；首发日期是武将版本历史证据，不能声称首发技能/数值至今未变。"
+    ]
+  },
+  "shen_jiangwei": {
+    "pack": "xianding",
+    "displayName": "神姜维",
+    "releaseDate": null,
+    "evidenceUrl": "https://sanguosha.com/news/20220614_5307_3917",
+    "evidenceNote": "官方2022年6月24日版本更新公告的全新官阶系统将神姜维列为国都护奖励，证明当日可获得；正文未单独确证这是首次上线，releaseDate保持null，不据此生成roster精确上线年份。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "jiufa",
+      "tianren",
+      "pingxiang"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "officialAvailabilityDate": "2022-06-24",
+    "audioNotes": [
+      "锁定pingxiang失去jiufa并获得无audio的pingxiang_effect（手牌上限基数改为体力上限）；未获得天覆，不添加不存在的有声依赖。"
+    ]
+  },
+  "shen_xuzhu": {
+    "pack": "xianding",
+    "displayName": "神许褚",
+    "releaseDate": "2024-02-09",
+    "evidenceUrl": "https://www.sanguosha.com/news/20240206_6675_3315",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "zhengqing",
+      "zhuangpo"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "shen_dengai": {
+    "pack": "xianding",
+    "displayName": "神邓艾",
+    "releaseDate": "2023-07-08",
+    "evidenceUrl": "https://sanguosha.com/news/20230707_9812_5709",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dctuoyu",
+      "dcxianjin",
+      "dcqijing"
+    ],
+    "extraSkills": [
+      "dccuixin"
+    ],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "奇径觉醒后addSkills(dccuixin)；摧心audio:2，需真实获得技能与后续原生useCard路径。"
+    ]
+  },
+  "dc_sb_zhouyu": {
+    "pack": "xianding",
+    "displayName": "新杀谋周瑜",
+    "releaseDate": "2023-12-16",
+    "evidenceUrl": "https://www.sanguosha.com/news/20231215_3585_1312",
+    "evidenceNote": "官方十周年新品谋周瑜公告，活动首日2023-12-16。公告把英谋写作雄谋，但转换技效果与该十周年版本对应；当前锁定源码及官方评分匹配名为英谋，不改技能名或借OL醉锋/顾曲版。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbronghuo",
+      "dcsbyingmou"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_lusu": {
+    "pack": "xianding",
+    "displayName": "新杀谋鲁肃",
+    "releaseDate": "2023-12-24",
+    "evidenceUrl": "https://sanguosha.com/news/20231222_5521_1916",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbmingshi",
+      "dcsbmengmou"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_jiaxu": {
+    "pack": "xianding",
+    "displayName": "新杀谋贾诩",
+    "releaseDate": "2024-07-13",
+    "evidenceUrl": "https://sanguosha.com/news/20240711_7303_0918",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbsushen",
+      "dcsbfumou"
+    ],
+    "extraSkills": [
+      "dcsbrushi"
+    ],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": [],
+    "audioNotes": [
+      "肃身后addSkills(dcsbrushi)，中文名入世；audio:2并有dc_sb_jiaxu_shadow，需收两形态共4条。"
+    ]
+  },
+  "dc_sb_simayi": {
+    "pack": "xianding",
+    "displayName": "新杀谋司马懿",
+    "releaseDate": "2024-03-02",
+    "evidenceUrl": "https://www.sanguosha.com/news/20240301_3524_0011",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbquanmou",
+      "dcsbpingliao"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  },
+  "dc_sb_luxun": {
+    "pack": "xianding",
+    "displayName": "新杀谋陆逊",
+    "releaseDate": "2025-11-07",
+    "evidenceUrl": "https://x.sanguosha.com/news/20251106_6948_1114.html",
+    "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+    "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+    "initialSkills": [
+      "dcsbjunmou",
+      "dcsbzhanyan"
+    ],
+    "extraSkills": [],
+    "skillSources": {},
+    "skillAliases": {},
+    "dynamicAudioSkills": []
+  }
 }

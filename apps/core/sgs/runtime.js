@@ -21,6 +21,7 @@ import { consumeRecordReplay } from './battle-records.mjs';
 import { readLaunch, retainLaunch } from './launch-handoff.mjs';
 import { persistentStorage, saveNativeSettings, storageNotice } from './storage.mjs';
 import { loadRosterAssets, loadAudioAssets } from './loading.mjs';
+import { installTablePageLifecycle } from './page-lifecycle.mjs';
 
 export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loading) {
   const saved = readLaunch();
@@ -31,9 +32,12 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   launch.speed = preferences.get().speed;
   retainLaunch(launch, preferences.get());
   const keepLaunch = preferences.subscribe(value => retainLaunch({ ...launch, speed: value.speed }, value));
-  window.addEventListener('pagehide', keepLaunch, { once: true });
+  let disposeTable;
+  const lifecycle = installTablePageLifecycle({ game, _status, cleanup() { keepLaunch(); disposeTable?.(); } });
   const { catalog: roster, portraits } = await loadRosterAssets(loading);
+  if (lifecycle.stopped) return;
   const { audioManifest, characterAudioManifest, damageAudioManifest } = await loadAudioAssets(loading);
+  if (lifecycle.stopped) return;
   const selected = roster.characters.find(c => c.id === launch.generalId && c.pack === launch.pack && !c.isUnseen);
   if (!selected) throw new Error('武将配置无效，请返回选将。');
   const allowed = new Set(roster.characters.filter(c => ['decade', 'common'].includes(c.version.category) && !c.isUnseen).map(c => c.id));
@@ -41,6 +45,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   lib.configprefix = 'sgs_local_v1_';
   loading?.stage('正在准备本局配置');
   if (!await saveNativeSettings(lib.configprefix, engineSettings(launch))) loading?.warn(storageNotice);
+  if (lifecycle.stopped) return;
   localStorage.setItem(`${lib.configprefix}directstart`, 'true');
   localStorage.setItem(`${lib.configprefix}loadtime`, '60000');
   document.title = '三国杀 · 单机对局';
@@ -53,6 +58,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   style.rel = 'stylesheet'; style.href = './sgs/table.css'; document.head.append(style);
 
   lib.onload.push(() => {
+    if (lifecycle.stopped) return;
     applyPortraits(lib.imported.character || {}, portraits);
     // All upstream packs are imported for cross-pack skill references; only the
     // enabled packs take part in selection. Keep variant IDs distinct.
@@ -62,6 +68,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   });
 
   lib.arenaReady.push(() => {
+    if (lifecycle.stopped) return;
     const selectedRecast = installSelectedTiesuoRecast({ lib, game, ui, get, _status });
     // chooseCharacter schedules but does not return its event.
     const teams = launch.mode === 'versus';
@@ -99,7 +106,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       }
     };
     const cardAudio = installCardAudio({ lib, game, get }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
-    installCharacterAudio({ lib, game }, characterAudioManifest);
+    installCharacterAudio({ lib, game, get }, characterAudioManifest);
     updateAudio(cardAudio.status());
     let unlockClick = false;
     const rememberAudioIntent = () => { unlockClick = cardAudio.status().blocked; };
@@ -223,7 +230,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    window.addEventListener('pagehide', () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); session.dispose(); }, { once: true });
+    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); cardAudio.dispose(); session.dispose(); };
     decorate();
     loading?.ready();
   });

@@ -1,6 +1,7 @@
 {
   "schemaVersion": 2,
   "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "curatedOn": "2026-10-07",
   "attribution": {
     "name": "Noname / 无名杀",
     "repository": "https://github.com/libnoname/noname",
@@ -9,7 +10,7 @@
     "licenseUrl": "https://github.com/libnoname/noname/blob/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/LICENSE",
     "note": "录音与台词原样取自锁定的上游资源；保留来源，不主张录音原创或另行授权。"
   },
-  "scope": "Nine selected 2025–2026 decade generals, including native skill aliases, conversion forms and death. No standard/refresh voices.",
+  "scope": "36 curated decade/general editions, including earlier strong God/Mou editions approved on 2026-10-07; no standard/refresh character voices.",
   "characters": {
     "v_dongzhuo": {
       "displayName": "威董卓",
@@ -225,10 +226,1047 @@
         "skill/dcxiaoben2",
         "die/v_mateng"
       ]
+    },
+    "v_sunquan": {
+      "pack": "xianding",
+      "displayName": "威孙权",
+      "releaseDate": "2025-01-28",
+      "evidenceUrl": "https://x.sanguosha.com/news/20250122_5601_2110.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcwoheng",
+        "dcyuhui"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcwoheng",
+        "dcyuhui"
+      ],
+      "forms": [
+        "v_sunquan"
+      ],
+      "clipKeys": [
+        "skill/dcwoheng1",
+        "skill/dcwoheng2",
+        "skill/dcyuhui1",
+        "skill/dcyuhui2",
+        "die/v_sunquan"
+      ]
+    },
+    "v_lvbu": {
+      "pack": "xianding",
+      "displayName": "威吕布",
+      "releaseDate": "2025-03-01",
+      "evidenceUrl": "https://x.sanguosha.com/news/20250226_3631_5618.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcxiaowu",
+        "dcbaguan"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "allowedSilentInherits": {
+        "dcxiaowu_effect": {
+          "inherit": "nocount",
+          "source": "apps/core/noname/library/skill.js",
+          "note": "原生不计次数模板；charlotte/forced/popup:false，无audio，不能因此导入任何通用技能声音。"
+        }
+      },
+      "skills": [
+        "dcxiaowu",
+        "dcbaguan"
+      ],
+      "forms": [
+        "v_lvbu"
+      ],
+      "clipKeys": [
+        "skill/dcxiaowu1",
+        "skill/dcxiaowu2",
+        "skill/dcbaguan1",
+        "skill/dcbaguan2",
+        "die/v_lvbu"
+      ]
+    },
+    "v_caopi": {
+      "pack": "xianding",
+      "displayName": "威曹丕",
+      "releaseDate": "2025-08-09",
+      "evidenceUrl": "https://x.sanguosha.com/news/20250806_5692_2416.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcdianlun",
+        "dcjiwei",
+        "dcsugang"
+      ],
+      "extraSkills": [
+        "rexingshang"
+      ],
+      "skillSources": {
+        "rexingshang": "refresh"
+      },
+      "skillAliases": {
+        "dcsugang_viewAs_backup": "dcsugang"
+      },
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "肃纲临时授予行殇；refresh:rexingshang有audioname:[v_caopi]。只收skill/rexingshang_v_caopi1.mp3与2.mp3，台词位于xianding/voices.js；通用rexingshang1/2和caoying别名均不收。"
+      ],
+      "skills": [
+        "dcdianlun",
+        "dcjiwei",
+        "dcsugang",
+        "rexingshang",
+        "dcsugang_viewAs_backup"
+      ],
+      "forms": [
+        "v_caopi"
+      ],
+      "clipKeys": [
+        "skill/dcdianlun1",
+        "skill/dcdianlun2",
+        "skill/dcjiwei1",
+        "skill/dcjiwei2",
+        "skill/dcsugang1",
+        "skill/dcsugang2",
+        "skill/rexingshang_v_caopi1",
+        "skill/rexingshang_v_caopi2",
+        "die/v_caopi"
+      ]
+    },
+    "v_machao": {
+      "pack": "xianding",
+      "displayName": "威马超",
+      "releaseDate": "2025-10-01",
+      "evidenceUrl": "https://x.sanguosha.com/news/20250928_6435_5115.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dczhongtao",
+        "dcjizhan"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {
+        "dczhongtao_backup": "dczhongtao"
+      },
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dczhongtao",
+        "dczhongtao_reset",
+        "dcjizhan",
+        "dczhongtao_backup"
+      ],
+      "forms": [
+        "v_machao"
+      ],
+      "clipKeys": [
+        "skill/dczhongtao1",
+        "skill/dczhongtao2",
+        "skill/dcjizhan1",
+        "skill/dcjizhan2",
+        "die/v_machao"
+      ]
+    },
+    "v_caocao": {
+      "pack": "xianding",
+      "displayName": "威曹操",
+      "releaseDate": "2025-12-06",
+      "evidenceUrl": "https://x.sanguosha.com/news/20251204_8422_1517.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcduoyue",
+        "dcjunhe",
+        "dcxiongwei"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcduoyue",
+        "dcjunhe",
+        "dcjunhe_effect",
+        "dcxiongwei"
+      ],
+      "forms": [
+        "v_caocao"
+      ],
+      "clipKeys": [
+        "skill/dcduoyue1",
+        "skill/dcduoyue2",
+        "skill/dcjunhe1",
+        "skill/dcjunhe2",
+        "skill/dcxiongwei1",
+        "skill/dcxiongwei2",
+        "die/v_caocao"
+      ]
+    },
+    "v_sunce": {
+      "pack": "newjiang",
+      "displayName": "威孙策",
+      "releaseDate": "2026-02-15",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260213_2684_4717.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dczhifeng",
+        "dcweijing"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "武将、技能、台词均位于newjiang包，必须保留准确pack:newjiang。",
+        "dczhifeng_backup本身无audio且log:false；precontent调用player.logSkill(dczhifeng)，发声ID仍为dczhifeng。",
+        "保留原catalog版本pending标记；准确ID及初始技能音频匹配不等于全量官方规则验证。"
+      ],
+      "skills": [
+        "dczhifeng",
+        "dcweijing"
+      ],
+      "forms": [
+        "v_sunce"
+      ],
+      "clipKeys": [
+        "skill/dczhifeng1",
+        "skill/dczhifeng2",
+        "skill/dcweijing1",
+        "skill/dcweijing2",
+        "die/v_sunce"
+      ]
+    },
+    "v_sunshangxiang": {
+      "pack": "xianding",
+      "displayName": "威孙尚香",
+      "releaseDate": "2026-02-15",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260213_2684_4717.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcshuren",
+        "dcsaran"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcshuren",
+        "dcsaran"
+      ],
+      "forms": [
+        "v_sunshangxiang",
+        "v_sunshangxiang_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcshuren1",
+        "skill/dcshuren2",
+        "skill/dcsaran1",
+        "skill/dcsaran2",
+        "die/v_sunshangxiang",
+        "skill/dcshuren_v_sunshangxiang_shadow1",
+        "skill/dcshuren_v_sunshangxiang_shadow2",
+        "skill/dcsaran_v_sunshangxiang_shadow1",
+        "skill/dcsaran_v_sunshangxiang_shadow2",
+        "die/v_sunshangxiang_shadow"
+      ]
+    },
+    "v_liubei": {
+      "pack": "xianding",
+      "displayName": "威刘备",
+      "releaseDate": "2026-05-01",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260429_1123_0517.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcliexiang",
+        "dcrengou"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {
+        "dcliexiang_backup": "dcliexiang"
+      },
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcliexiang",
+        "dcliexiang_backup",
+        "dcrengou"
+      ],
+      "forms": [
+        "v_liubei"
+      ],
+      "clipKeys": [
+        "skill/dcliexiang1",
+        "skill/dcliexiang2",
+        "skill/dcrengou1",
+        "skill/dcrengou2",
+        "die/v_liubei"
+      ]
+    },
+    "v_zhangxingcai": {
+      "pack": "xianding",
+      "displayName": "威张星彩",
+      "releaseDate": "2026-06-18",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260616_2004_3116.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dchuangnu",
+        "dcxiankuang"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {
+        "dchuangnu_backup": "dchuangnu"
+      },
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dchuangnu",
+        "dchuangnu_damage",
+        "dcxiankuang",
+        "dchuangnu_backup"
+      ],
+      "forms": [
+        "v_zhangxingcai",
+        "v_zhangxingcai_shadow"
+      ],
+      "clipKeys": [
+        "skill/dchuangnu1",
+        "skill/dchuangnu2",
+        "skill/dcxiankuang1",
+        "skill/dcxiankuang2",
+        "die/v_zhangxingcai",
+        "skill/dchuangnu_v_zhangxingcai_shadow1",
+        "skill/dchuangnu_v_zhangxingcai_shadow2",
+        "skill/dcxiankuang_v_zhangxingcai_shadow1",
+        "skill/dcxiankuang_v_zhangxingcai_shadow2",
+        "die/v_zhangxingcai_shadow"
+      ]
+    },
+    "dc_sb_jiangwei": {
+      "pack": "xianding",
+      "displayName": "新杀谋姜维",
+      "releaseDate": "2025-09-06",
+      "evidenceUrl": "https://x.sanguosha.com/news/20250904_3910_3309.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbjuemou",
+        "dcsbfuzhan"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbjuemou",
+        "dcsbjuemou_recover",
+        "dcsbjuemou_change",
+        "dcsbfuzhan"
+      ],
+      "forms": [
+        "dc_sb_jiangwei",
+        "dc_sb_jiangwei_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbjuemou1",
+        "skill/dcsbjuemou2",
+        "skill/dcsbfuzhan1",
+        "skill/dcsbfuzhan2",
+        "die/dc_sb_jiangwei",
+        "skill/dcsbjuemou_dc_sb_jiangwei_shadow1",
+        "skill/dcsbjuemou_dc_sb_jiangwei_shadow2",
+        "skill/dcsbfuzhan_dc_sb_jiangwei_shadow1",
+        "skill/dcsbfuzhan_dc_sb_jiangwei_shadow2",
+        "die/dc_sb_jiangwei_shadow"
+      ]
+    },
+    "dc_sb_pangtong": {
+      "pack": "xianding",
+      "displayName": "新杀谋庞统",
+      "releaseDate": "2026-03-03",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260302_9276_4614.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbyinmou",
+        "dcsbhongce"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [
+        "dcsbhongce"
+      ],
+      "audioNotes": [
+        "宏策audio:5，每个形态各5条；logAudio为MethodDeclaration，fields()不会抓到。收集阶段按audio静态枚举，回归需执行原始logAudio验证phase和sha/recast/draw分支，保留原生日志时机。"
+      ],
+      "skills": [
+        "dcsbyinmou",
+        "dcsbyinmou_change",
+        "dcsbhongce"
+      ],
+      "forms": [
+        "dc_sb_pangtong",
+        "dc_sb_pangtong_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbyinmou1",
+        "skill/dcsbyinmou2",
+        "skill/dcsbhongce1",
+        "skill/dcsbhongce2",
+        "skill/dcsbhongce3",
+        "skill/dcsbhongce4",
+        "skill/dcsbhongce5",
+        "die/dc_sb_pangtong",
+        "skill/dcsbyinmou_dc_sb_pangtong_shadow1",
+        "skill/dcsbyinmou_dc_sb_pangtong_shadow2",
+        "skill/dcsbhongce_dc_sb_pangtong_shadow1",
+        "skill/dcsbhongce_dc_sb_pangtong_shadow2",
+        "skill/dcsbhongce_dc_sb_pangtong_shadow3",
+        "skill/dcsbhongce_dc_sb_pangtong_shadow4",
+        "skill/dcsbhongce_dc_sb_pangtong_shadow5",
+        "die/dc_sb_pangtong_shadow"
+      ]
+    },
+    "dc_sb_zhugeliang": {
+      "pack": "xianding",
+      "displayName": "新杀谋诸葛亮",
+      "releaseDate": "2026-09-05",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260904_8061_5810.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbjingmou",
+        "dcsbguyi"
+      ],
+      "extraSkills": [
+        "dcsbdingnan"
+      ],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "靖谋达成条件后获得定南；定南audio:2，audioname包含dc_sb_zhugeliang_shadow，需两形态共4条。"
+      ],
+      "skills": [
+        "dcsbjingmou",
+        "dcsbjingmou_mark",
+        "dcsbjingmou_change",
+        "dcsbguyi",
+        "dcsbdingnan"
+      ],
+      "forms": [
+        "dc_sb_zhugeliang",
+        "dc_sb_zhugeliang_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbjingmou1",
+        "skill/dcsbjingmou2",
+        "skill/dcsbguyi1",
+        "skill/dcsbguyi2",
+        "skill/dcsbdingnan1",
+        "skill/dcsbdingnan2",
+        "die/dc_sb_zhugeliang",
+        "skill/dcsbjingmou_dc_sb_zhugeliang_shadow1",
+        "skill/dcsbjingmou_dc_sb_zhugeliang_shadow2",
+        "skill/dcsbguyi_dc_sb_zhugeliang_shadow1",
+        "skill/dcsbguyi_dc_sb_zhugeliang_shadow2",
+        "skill/dcsbdingnan_dc_sb_zhugeliang_shadow1",
+        "skill/dcsbdingnan_dc_sb_zhugeliang_shadow2",
+        "die/dc_sb_zhugeliang_shadow"
+      ]
+    },
+    "dc_shen_caopi": {
+      "pack": "xianding",
+      "displayName": "新杀神曹丕",
+      "releaseDate": "2026-07-11",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260709_1838_3516.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcyinzhi",
+        "dckeming"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "刻名可随机临时触发别人的受伤技能；只收阴鸷、刻名及阵亡，不扩展为所有曹姓或其他角色技能包，未选录音保持静音。"
+      ],
+      "skills": [
+        "dcyinzhi",
+        "dckeming"
+      ],
+      "forms": [
+        "dc_shen_caopi"
+      ],
+      "clipKeys": [
+        "skill/dcyinzhi1",
+        "skill/dcyinzhi2",
+        "skill/dckeming1",
+        "skill/dckeming2",
+        "die/dc_shen_caopi"
+      ]
+    },
+    "dc_sb_guanyu": {
+      "pack": "xianding",
+      "displayName": "新杀谋关羽",
+      "releaseDate": "2026-06-18",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260616_2004_3116.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbguanwu",
+        "dcsbweishi",
+        "dcsbjuao"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {
+        "dcsbjuao_backup": "dcsbjuao"
+      },
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbguanwu",
+        "dcsbweishi",
+        "dcsbjuao",
+        "dcsbjuao_backup"
+      ],
+      "forms": [
+        "dc_sb_guanyu"
+      ],
+      "clipKeys": [
+        "skill/dcsbguanwu1",
+        "skill/dcsbguanwu2",
+        "skill/dcsbweishi1",
+        "skill/dcsbweishi2",
+        "skill/dcsbjuao1",
+        "skill/dcsbjuao2",
+        "die/dc_sb_guanyu"
+      ]
+    },
+    "dc_sb_wangping": {
+      "pack": "xianding",
+      "displayName": "新杀谋王平",
+      "releaseDate": "2026-09-05",
+      "evidenceUrl": "https://x.sanguosha.com/news/20260904_8061_5810.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbyouyi",
+        "dcsbfangong"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbyouyi",
+        "dcsbyouyi_eff",
+        "dcsbfangong"
+      ],
+      "forms": [
+        "dc_sb_wangping"
+      ],
+      "clipKeys": [
+        "skill/dcsbyouyi1",
+        "skill/dcsbyouyi2",
+        "skill/dcsbfangong1",
+        "skill/dcsbfangong2",
+        "die/dc_sb_wangping"
+      ]
+    },
+    "shen_huangzhong": {
+      "pack": "xianding",
+      "displayName": "神黄忠",
+      "releaseDate": "2024-10-01",
+      "evidenceUrl": "https://sanguosha.com/news/20240929_8183_2018",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "new_dclieqiong",
+        "dczhanjue"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioDependencies": {
+        "new_dclieqiong": "dclieqiong"
+      },
+      "audioNotes": [
+        "准确初始技能是new_dclieqiong，不是旧dclieqiong的行为实现；只按audio:dclieqiong解析其两条原生录音。dczhanjue_directHit/recover沿用斩决。"
+      ],
+      "skills": [
+        "new_dclieqiong",
+        "dczhanjue",
+        "dczhanjue_directHit",
+        "dczhanjue_recover"
+      ],
+      "forms": [
+        "shen_huangzhong"
+      ],
+      "clipKeys": [
+        "skill/dclieqiong1",
+        "skill/dclieqiong2",
+        "skill/dczhanjue1",
+        "skill/dczhanjue2",
+        "die/shen_huangzhong"
+      ]
+    },
+    "shen_zhangfei": {
+      "pack": "xianding",
+      "displayName": "神张飞",
+      "releaseDate": "2022-12-24",
+      "evidenceUrl": "https://sanguosha.com/news/20221223_8364_1717",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合10/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "shencai",
+        "xunshi"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "shencai",
+        "xunshi"
+      ],
+      "forms": [
+        "shen_zhangfei"
+      ],
+      "clipKeys": [
+        "skill/shencai1",
+        "skill/shencai2",
+        "skill/xunshi1",
+        "skill/xunshi2",
+        "die/shen_zhangfei"
+      ]
+    },
+    "shen_machao": {
+      "pack": "xianding",
+      "displayName": "神马超",
+      "releaseDate": "2022-07-23",
+      "evidenceUrl": "https://sanguosha.com/news/20220721_2755_1416",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合10/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "shouli",
+        "hengwu"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "shouli",
+        "shouli_init",
+        "hengwu"
+      ],
+      "forms": [
+        "shen_machao"
+      ],
+      "clipKeys": [
+        "skill/shouli1",
+        "skill/shouli2",
+        "skill/hengwu1",
+        "skill/hengwu2",
+        "die/shen_machao"
+      ]
+    },
+    "shen_zhangjiao": {
+      "pack": "xianding",
+      "displayName": "神张角",
+      "releaseDate": "2023-03-03",
+      "evidenceUrl": "https://www.sanguosha.com/news/20230302_3037_4614",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcyizhao",
+        "sijun",
+        "sanshou",
+        "tianjie"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioDependencies": {
+        "dcyizhao": "yizhao"
+      },
+      "allowedAudioInherits": {
+        "dcyizhao": {
+          "inherit": "yizhao",
+          "source": "apps/core/character/xianding/skill.js",
+          "note": "初始dcyizhao显式audio:yizhao，父技能yizhao显式audio:2；仅静态抽取音频元数据。"
+        }
+      },
+      "audioNotes": [
+        "天劫audio:3，不能按两条默认漏掉第三条。",
+        "首发公告体力3，锁定源码与当前已匹配官方快照体力4；首发日期是武将版本历史证据，不能声称首发技能/数值至今未变。"
+      ],
+      "skills": [
+        "dcyizhao",
+        "sijun",
+        "sanshou",
+        "tianjie"
+      ],
+      "forms": [
+        "shen_zhangjiao"
+      ],
+      "clipKeys": [
+        "skill/yizhao1",
+        "skill/yizhao2",
+        "skill/sijun1",
+        "skill/sijun2",
+        "skill/sanshou1",
+        "skill/sanshou2",
+        "skill/tianjie1",
+        "skill/tianjie2",
+        "skill/tianjie3",
+        "die/shen_zhangjiao"
+      ]
+    },
+    "shen_jiangwei": {
+      "pack": "xianding",
+      "displayName": "神姜维",
+      "releaseDate": null,
+      "evidenceUrl": "https://sanguosha.com/news/20220614_5307_3917",
+      "evidenceNote": "官方2022年6月24日版本更新公告的全新官阶系统将神姜维列为国都护奖励，证明当日可获得；正文未单独确证这是首次上线，releaseDate保持null，不据此生成roster精确上线年份。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "jiufa",
+        "tianren",
+        "pingxiang"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "officialAvailabilityDate": "2022-06-24",
+      "audioNotes": [
+        "锁定pingxiang失去jiufa并获得无audio的pingxiang_effect（手牌上限基数改为体力上限）；未获得天覆，不添加不存在的有声依赖。"
+      ],
+      "skills": [
+        "jiufa",
+        "tianren",
+        "tianren_maxHp",
+        "pingxiang"
+      ],
+      "forms": [
+        "shen_jiangwei"
+      ],
+      "clipKeys": [
+        "skill/jiufa1",
+        "skill/jiufa2",
+        "skill/tianren1",
+        "skill/tianren2",
+        "skill/pingxiang1",
+        "skill/pingxiang2",
+        "die/shen_jiangwei"
+      ]
+    },
+    "shen_xuzhu": {
+      "pack": "xianding",
+      "displayName": "神许褚",
+      "releaseDate": "2024-02-09",
+      "evidenceUrl": "https://www.sanguosha.com/news/20240206_6675_3315",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "zhengqing",
+        "zhuangpo"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "zhengqing",
+        "zhuangpo",
+        "zhuangpo_effect",
+        "zhuangpo_damage"
+      ],
+      "forms": [
+        "shen_xuzhu"
+      ],
+      "clipKeys": [
+        "skill/zhengqing1",
+        "skill/zhengqing2",
+        "skill/zhuangpo1",
+        "skill/zhuangpo2",
+        "die/shen_xuzhu"
+      ]
+    },
+    "shen_dengai": {
+      "pack": "xianding",
+      "displayName": "神邓艾",
+      "releaseDate": "2023-07-08",
+      "evidenceUrl": "https://sanguosha.com/news/20230707_9812_5709",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dctuoyu",
+        "dcxianjin",
+        "dcqijing"
+      ],
+      "extraSkills": [
+        "dccuixin"
+      ],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "奇径觉醒后addSkills(dccuixin)；摧心audio:2，需真实获得技能与后续原生useCard路径。"
+      ],
+      "skills": [
+        "dctuoyu",
+        "dctuoyu_effect",
+        "dcxianjin",
+        "dcqijing",
+        "dccuixin"
+      ],
+      "forms": [
+        "shen_dengai"
+      ],
+      "clipKeys": [
+        "skill/dctuoyu1",
+        "skill/dctuoyu2",
+        "skill/dcxianjin1",
+        "skill/dcxianjin2",
+        "skill/dcqijing1",
+        "skill/dcqijing2",
+        "skill/dccuixin1",
+        "skill/dccuixin2",
+        "die/shen_dengai"
+      ]
+    },
+    "dc_sb_zhouyu": {
+      "pack": "xianding",
+      "displayName": "新杀谋周瑜",
+      "releaseDate": "2023-12-16",
+      "evidenceUrl": "https://www.sanguosha.com/news/20231215_3585_1312",
+      "evidenceNote": "官方十周年新品谋周瑜公告，活动首日2023-12-16。公告把英谋写作雄谋，但转换技效果与该十周年版本对应；当前锁定源码及官方评分匹配名为英谋，不改技能名或借OL醉锋/顾曲版。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbronghuo",
+        "dcsbyingmou"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbronghuo",
+        "dcsbronghuo_target",
+        "dcsbyingmou",
+        "dcsbyingmou_change"
+      ],
+      "forms": [
+        "dc_sb_zhouyu",
+        "dc_sb_zhouyu_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbronghuo1",
+        "skill/dcsbronghuo2",
+        "skill/dcsbyingmou1",
+        "skill/dcsbyingmou2",
+        "die/dc_sb_zhouyu",
+        "skill/dcsbronghuo_dc_sb_zhouyu_shadow1",
+        "skill/dcsbronghuo_dc_sb_zhouyu_shadow2",
+        "skill/dcsbyingmou_dc_sb_zhouyu_shadow1",
+        "skill/dcsbyingmou_dc_sb_zhouyu_shadow2",
+        "die/dc_sb_zhouyu_shadow"
+      ]
+    },
+    "dc_sb_lusu": {
+      "pack": "xianding",
+      "displayName": "新杀谋鲁肃",
+      "releaseDate": "2023-12-24",
+      "evidenceUrl": "https://sanguosha.com/news/20231222_5521_1916",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbmingshi",
+        "dcsbmengmou"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbmingshi",
+        "dcsbmengmou",
+        "dcsbmengmou_change"
+      ],
+      "forms": [
+        "dc_sb_lusu",
+        "dc_sb_lusu_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbmingshi1",
+        "skill/dcsbmingshi2",
+        "skill/dcsbmengmou1",
+        "skill/dcsbmengmou2",
+        "die/dc_sb_lusu",
+        "skill/dcsbmingshi_dc_sb_lusu_shadow1",
+        "skill/dcsbmingshi_dc_sb_lusu_shadow2",
+        "skill/dcsbmengmou_dc_sb_lusu_shadow1",
+        "skill/dcsbmengmou_dc_sb_lusu_shadow2",
+        "die/dc_sb_lusu_shadow"
+      ]
+    },
+    "dc_sb_jiaxu": {
+      "pack": "xianding",
+      "displayName": "新杀谋贾诩",
+      "releaseDate": "2024-07-13",
+      "evidenceUrl": "https://sanguosha.com/news/20240711_7303_0918",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合8/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbsushen",
+        "dcsbfumou"
+      ],
+      "extraSkills": [
+        "dcsbrushi"
+      ],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "audioNotes": [
+        "肃身后addSkills(dcsbrushi)，中文名入世；audio:2并有dc_sb_jiaxu_shadow，需收两形态共4条。"
+      ],
+      "skills": [
+        "dcsbsushen",
+        "dcsbfumou",
+        "dcsbfumou_change",
+        "dcsbrushi"
+      ],
+      "forms": [
+        "dc_sb_jiaxu",
+        "dc_sb_jiaxu_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbsushen1",
+        "skill/dcsbsushen2",
+        "skill/dcsbfumou1",
+        "skill/dcsbfumou2",
+        "skill/dcsbrushi1",
+        "skill/dcsbrushi2",
+        "die/dc_sb_jiaxu",
+        "skill/dcsbsushen_dc_sb_jiaxu_shadow1",
+        "skill/dcsbsushen_dc_sb_jiaxu_shadow2",
+        "skill/dcsbfumou_dc_sb_jiaxu_shadow1",
+        "skill/dcsbfumou_dc_sb_jiaxu_shadow2",
+        "skill/dcsbrushi_dc_sb_jiaxu_shadow1",
+        "skill/dcsbrushi_dc_sb_jiaxu_shadow2",
+        "die/dc_sb_jiaxu_shadow"
+      ]
+    },
+    "dc_sb_simayi": {
+      "pack": "xianding",
+      "displayName": "新杀谋司马懿",
+      "releaseDate": "2024-03-02",
+      "evidenceUrl": "https://www.sanguosha.com/news/20240301_3524_0011",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbquanmou",
+        "dcsbpingliao"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbquanmou",
+        "dcsbquanmou_change",
+        "dcsbquanmou_true",
+        "dcsbquanmou_false",
+        "dcsbpingliao",
+        "dcsbpingliao_hide"
+      ],
+      "forms": [
+        "dc_sb_simayi",
+        "dc_sb_simayi_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbquanmou1",
+        "skill/dcsbquanmou2",
+        "skill/dcsbpingliao1",
+        "skill/dcsbpingliao2",
+        "die/dc_sb_simayi",
+        "skill/dcsbquanmou_dc_sb_simayi_shadow1",
+        "skill/dcsbquanmou_dc_sb_simayi_shadow2",
+        "skill/dcsbpingliao_dc_sb_simayi_shadow1",
+        "skill/dcsbpingliao_dc_sb_simayi_shadow2",
+        "die/dc_sb_simayi_shadow"
+      ]
+    },
+    "dc_sb_luxun": {
+      "pack": "xianding",
+      "displayName": "新杀谋陆逊",
+      "releaseDate": "2025-11-07",
+      "evidenceUrl": "https://x.sanguosha.com/news/20251106_6948_1114.html",
+      "evidenceNote": "官方十周年/一将成名新品武将公告；日期取活动首日而非URL或文章发布日期。与锁定准确ID的版本姓名、初始技能和当前官方评分映射核对。",
+      "selectionReason": "官方2026-10-01客户端评分（2026-10-05采集）：综合9/10；补充用户指定的神、谋、威系列，不作为跨玩法统一排名。",
+      "initialSkills": [
+        "dcsbjunmou",
+        "dcsbzhanyan"
+      ],
+      "extraSkills": [],
+      "skillSources": {},
+      "skillAliases": {},
+      "dynamicAudioSkills": [],
+      "skills": [
+        "dcsbjunmou",
+        "dcsbjunmou_change",
+        "dcsbzhanyan",
+        "dcsbzhanyan_draw"
+      ],
+      "forms": [
+        "dc_sb_luxun",
+        "dc_sb_luxun_shadow"
+      ],
+      "clipKeys": [
+        "skill/dcsbjunmou1",
+        "skill/dcsbjunmou2",
+        "skill/dcsbzhanyan1",
+        "skill/dcsbzhanyan2",
+        "die/dc_sb_luxun",
+        "skill/dcsbjunmou_dc_sb_luxun_shadow1",
+        "skill/dcsbjunmou_dc_sb_luxun_shadow2",
+        "skill/dcsbzhanyan_dc_sb_luxun_shadow1",
+        "skill/dcsbzhanyan_dc_sb_luxun_shadow2",
+        "die/dc_sb_luxun_shadow"
+      ]
     }
   },
-  "uniqueFiles": 58,
-  "totalBytes": 7554559,
+  "metadataAudits": {
+    "dcsbhongce": {
+      "logAudio": {
+        "file": "character/xianding/skill.js",
+        "line": 11580,
+        "sha256": "89551cf3b7ba453ee29dc4867f4da0bb36be375237116300b254ce0da6879f30"
+      }
+    }
+  },
+  "uniqueFiles": 276,
+  "totalBytes": 26509700,
   "clips": {
     "skill/dcguangyong1": {
       "key": "skill/dcguangyong1",
@@ -867,6 +1905,2404 @@
       "sourceGitBlob": "856672d7f27ba75cd7023285de9e24030fa97950",
       "bytes": 109081,
       "sha256": "79f2273935903eda3f4269701ef0da852efe421807c1e42dabe70d5262aeb9d9"
+    },
+    "skill/dcwoheng1": {
+      "key": "skill/dcwoheng1",
+      "file": "audio/skill/dcwoheng1.mp3",
+      "character": "v_sunquan",
+      "label": "威孙权 · 斡衡",
+      "text": "壁立以千仞，非蚍蜉可撼。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcwoheng1.mp3",
+      "sourceGitBlob": "66bf712c871433421f94280a950a149a47721e58",
+      "bytes": 69452,
+      "sha256": "8e7edff0e68bdc7432bf594b184c401d6015e95f38f7fdfbd6a4210e878ee2f8"
+    },
+    "skill/dcwoheng2": {
+      "key": "skill/dcwoheng2",
+      "file": "audio/skill/dcwoheng2.mp3",
+      "character": "v_sunquan",
+      "label": "威孙权 · 斡衡",
+      "text": "朕德载后土，焉不容天下风雨。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcwoheng2.mp3",
+      "sourceGitBlob": "8cfb0b8c57642f935d4d3177a6d76807357f864e",
+      "bytes": 76604,
+      "sha256": "b573c59f99d6e319c049b902de1641a63c5a78eb266d248e63b5fb46abc3e1bd"
+    },
+    "skill/dcyuhui1": {
+      "key": "skill/dcyuhui1",
+      "file": "audio/skill/dcyuhui1.mp3",
+      "character": "v_sunquan",
+      "label": "威孙权 · 御麾",
+      "text": "惠用张仪，昭得范雎，朕拥卿足矣！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcyuhui1.mp3",
+      "sourceGitBlob": "3c0f186e3d12bc311232f46b2287e1a5a13a7d23",
+      "bytes": 104300,
+      "sha256": "e1e417516d517cf41a2b11f15dc9e36c94f92cd87986778e442329c37845ff1b"
+    },
+    "skill/dcyuhui2": {
+      "key": "skill/dcyuhui2",
+      "file": "audio/skill/dcyuhui2.mp3",
+      "character": "v_sunquan",
+      "label": "威孙权 · 御麾",
+      "text": "南靖交越，北复荆襄，使吴成帝业。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcyuhui2.mp3",
+      "sourceGitBlob": "b2c5a9aa57a61a32dd3ac27ae95ecb189cd8bf58",
+      "bytes": 91076,
+      "sha256": "1f49abebc0f29deff074c2394a188ffcc53f5fb01c50ba9987eaa3f54fb838eb"
+    },
+    "die/v_sunquan": {
+      "key": "die/v_sunquan",
+      "file": "audio/die/v_sunquan.mp3",
+      "character": "v_sunquan",
+      "label": "威孙权 · 阵亡",
+      "text": "自古许多忧，英雄老来愁。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_sunquan.mp3",
+      "sourceGitBlob": "268df5929e8468d773ee9a16f800c9a11f0e04a6",
+      "bytes": 110252,
+      "sha256": "2f37e8eae6cf007409a150c01fbb7ade14d726e739d2fab0feb94c66a170f4d1"
+    },
+    "skill/dcxiaowu1": {
+      "key": "skill/dcxiaowu1",
+      "file": "audio/skill/dcxiaowu1.mp3",
+      "character": "v_lvbu",
+      "label": "威吕布 · 骁武",
+      "text": "百战生豪意，一戟破万军！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiaowu1.mp3",
+      "sourceGitBlob": "daa93a41a3e326204f28eb257e5f582a586a6356",
+      "bytes": 64604,
+      "sha256": "604a74b27e69884bd18423ace666749fb1358c7c7d632c47982ce51b76c1b8dc"
+    },
+    "skill/dcxiaowu2": {
+      "key": "skill/dcxiaowu2",
+      "file": "audio/skill/dcxiaowu2.mp3",
+      "character": "v_lvbu",
+      "label": "威吕布 · 骁武",
+      "text": "烽烟既起，吾当独擎沙场！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiaowu2.mp3",
+      "sourceGitBlob": "cfc993628be8677f04773b7df8dfa5c0b6ceb979",
+      "bytes": 73004,
+      "sha256": "7e01c60f0b19a29822b7f3099769fb6e1e744dbdda77b9e8dac1cab066419073"
+    },
+    "skill/dcbaguan1": {
+      "key": "skill/dcbaguan1",
+      "file": "audio/skill/dcbaguan1.mp3",
+      "character": "v_lvbu",
+      "label": "威吕布 · 霸关",
+      "text": "颅献白骨观，血祭黄沙场！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcbaguan1.mp3",
+      "sourceGitBlob": "32f0ebe9dcda574daaa215856787c2248db93ac3",
+      "bytes": 84428,
+      "sha256": "67534e54bf0169c94537e8239363e453178f8dd76266634694f3b27d50a64352"
+    },
+    "skill/dcbaguan2": {
+      "key": "skill/dcbaguan2",
+      "file": "audio/skill/dcbaguan2.mp3",
+      "character": "v_lvbu",
+      "label": "威吕布 · 霸关",
+      "text": "拥酒炙胡马，北虏复唱匈奴歌！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcbaguan2.mp3",
+      "sourceGitBlob": "4bd8cc9160047a1fa451a8ee6496c080ab0880f0",
+      "bytes": 91172,
+      "sha256": "9ee25976ac0c81822014b88242c55ef8aa5b10e47c30927b12ac1969f4506126"
+    },
+    "die/v_lvbu": {
+      "key": "die/v_lvbu",
+      "file": "audio/die/v_lvbu.mp3",
+      "character": "v_lvbu",
+      "label": "威吕布 · 阵亡",
+      "text": "虓虎失落尽，日暮无归途。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_lvbu.mp3",
+      "sourceGitBlob": "4912981af86b017e2b68d1c6bc2518a2ca1b3ebe",
+      "bytes": 78980,
+      "sha256": "98926a41a93be32fcb8b9273eacc7013a562d6de2a2c30cf41a5d462b51f5fb1"
+    },
+    "skill/dcdianlun1": {
+      "key": "skill/dcdianlun1",
+      "file": "audio/skill/dcdianlun1.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 典论",
+      "text": "寄身翰墨，见意篇籍，规此身以华章！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcdianlun1.mp3",
+      "sourceGitBlob": "791e39894dcd5644e68d1cfe27f99597e9202492",
+      "bytes": 59562,
+      "sha256": "34763e6889ead5920849020672683850fbb77c4643a8cd2e63b5b0e2b5e8ca4a"
+    },
+    "skill/dcdianlun2": {
+      "key": "skill/dcdianlun2",
+      "file": "audio/skill/dcdianlun2.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 典论",
+      "text": "行文论七子，建安有贤，千秋之幸。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcdianlun2.mp3",
+      "sourceGitBlob": "c342b3ea08c24b70df41ff3ca420f667b4bf871a",
+      "bytes": 51007,
+      "sha256": "53fdf0ed5165989ac6ca967e7585eb8029e1142ad1f35478408b9bebab77a244"
+    },
+    "skill/dcjiwei1": {
+      "key": "skill/dcjiwei1",
+      "file": "audio/skill/dcjiwei1.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 极威",
+      "text": "法儒圣，效兵威，朕当为大魏始皇！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjiwei1.mp3",
+      "sourceGitBlob": "d819b98e85f12b19007f967d84052c8122f20204",
+      "bytes": 66398,
+      "sha256": "de72e9bf7177fc24172390bdb5cc59a1775a5fa5c45f730acb73eb91c26110cb"
+    },
+    "skill/dcjiwei2": {
+      "key": "skill/dcjiwei2",
+      "file": "audio/skill/dcjiwei2.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 极威",
+      "text": "朕承天命，御极四方，当系天下之颈。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjiwei2.mp3",
+      "sourceGitBlob": "9098c5c662be8bdf55a6b4615d09e7495e4094a5",
+      "bytes": 56275,
+      "sha256": "f98260bff4afb47ea0cb65ccfa857c083e53a030d2a63340ba7125a56e59b059"
+    },
+    "skill/dcsugang1": {
+      "key": "skill/dcsugang1",
+      "file": "audio/skill/dcsugang1.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 肃纲",
+      "text": "秦汉败絮在前，朕岂假寐之主！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsugang1.mp3",
+      "sourceGitBlob": "2f5942efe7b3463285b1d6407ab8df1ec4d846f5",
+      "bytes": 49224,
+      "sha256": "cb1c63020f451487f7c669c850ef12cbbed296172809b566cff3b1e76c84fdb6"
+    },
+    "skill/dcsugang2": {
+      "key": "skill/dcsugang2",
+      "file": "audio/skill/dcsugang2.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 肃纲",
+      "text": "众卿非犬，何故狺狺于朝堂！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsugang2.mp3",
+      "sourceGitBlob": "e683f5955c2e80f0cdf288d26dadb3528eabbeda",
+      "bytes": 46186,
+      "sha256": "46fbb8f23b95b9036a20021a1a2ae75b76941907195c0417a19b1f676f8f6c0c"
+    },
+    "skill/rexingshang_v_caopi1": {
+      "key": "skill/rexingshang_v_caopi1",
+      "file": "audio/skill/rexingshang_v_caopi1.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 行殇",
+      "text": "秋夜漫长，起坐彷徨，帝王一诺，践于秋月春风。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/rexingshang_v_caopi1.mp3",
+      "sourceGitBlob": "cc2e10cf85c6ef27fa8c2b691a1ffd24e42a575f",
+      "bytes": 142538,
+      "sha256": "2d3c70dc84081a5e82ce92ac66fe6ca67965711d76eefc3b39ac3214956215af"
+    },
+    "skill/rexingshang_v_caopi2": {
+      "key": "skill/rexingshang_v_caopi2",
+      "file": "audio/skill/rexingshang_v_caopi2.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 行殇",
+      "text": "西风萧瑟，草木摇落，余屈子行吟，宋玉悲秋。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/rexingshang_v_caopi2.mp3",
+      "sourceGitBlob": "2f0a53b62b8abb7ca4c6764958b61586bab79286",
+      "bytes": 122928,
+      "sha256": "1f568028611ed1eb8c902ead11eba84170ad34c334be34f791fcb947558358a5"
+    },
+    "die/v_caopi": {
+      "key": "die/v_caopi",
+      "file": "audio/die/v_caopi.mp3",
+      "character": "v_caopi",
+      "label": "威曹丕 · 阵亡",
+      "text": "建平所言八十，谓昼夜也，吾其绝矣。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_caopi.mp3",
+      "sourceGitBlob": "4d74493ded5b9886eda7d6220eba35fec6c1ebe2",
+      "bytes": 79211,
+      "sha256": "25f39343cbd645d69ec0d7f522cf033c38b02b1fe17d7f28d6051ab4591d0bb1"
+    },
+    "skill/dczhongtao1": {
+      "key": "skill/dczhongtao1",
+      "file": "audio/skill/dczhongtao1.mp3",
+      "character": "v_machao",
+      "label": "威马超 · 众讨",
+      "text": "凉州男儿，可愿随我再破千军！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhongtao1.mp3",
+      "sourceGitBlob": "b9eaa10cc56f95f0099f0090c4a5a880f579486c",
+      "bytes": 64670,
+      "sha256": "bcad4b17945543b74a8300c33769d4c0650a676d20bfedcedb664ef66ff4e822"
+    },
+    "skill/dczhongtao2": {
+      "key": "skill/dczhongtao2",
+      "file": "audio/skill/dczhongtao2.mp3",
+      "character": "v_machao",
+      "label": "威马超 · 众讨",
+      "text": "你我勠力讨贼，何人可堪一战！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhongtao2.mp3",
+      "sourceGitBlob": "0918fb8e6f8748720471c387de03ee59af67c1d1",
+      "bytes": 61850,
+      "sha256": "c9f596c90b9dbd6854d86bdc8cf86045cd8105340ac9a1fc8136086625a2eeba"
+    },
+    "skill/dcjizhan1": {
+      "key": "skill/dcjizhan1",
+      "file": "audio/skill/dcjizhan1.mp3",
+      "character": "v_machao",
+      "label": "威马超 · 极斩",
+      "text": "吾不畏死，又岂畏战！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjizhan1.mp3",
+      "sourceGitBlob": "5fae7253d9c15ad93abf8a7c5be85f2488f59438",
+      "bytes": 44078,
+      "sha256": "f1bbf07ae09f84db8c697b583f8bfa0d607ef10c903e865ff2dd5ca9f6f6518a"
+    },
+    "skill/dcjizhan2": {
+      "key": "skill/dcjizhan2",
+      "file": "audio/skill/dcjizhan2.mp3",
+      "character": "v_machao",
+      "label": "威马超 · 极斩",
+      "text": "祁连雪未销，战功簿已满！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjizhan2.mp3",
+      "sourceGitBlob": "a8c2ae97a1d795cb252faf3639d6f036d415c251",
+      "bytes": 56725,
+      "sha256": "41b0247206a96877f26d278e9b80b10a84df2ae49a6ab32aff5e211425703d61"
+    },
+    "die/v_machao": {
+      "key": "die/v_machao",
+      "file": "audio/die/v_machao.mp3",
+      "character": "v_machao",
+      "label": "威马超 · 阵亡",
+      "text": "战马不休，唯死方卧。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_machao.mp3",
+      "sourceGitBlob": "3650514454c2cffdfcd5161301fefa9ca8da4837",
+      "bytes": 72187,
+      "sha256": "3789172db00af08d8749a61fc60e0325087c0815f8bf19a3c2b7c6399a16e0d7"
+    },
+    "skill/dcduoyue1": {
+      "key": "skill/dcduoyue1",
+      "file": "audio/skill/dcduoyue1.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 掇月",
+      "text": "月升，月升，乌鹊绕匝天下惊! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcduoyue1.mp3",
+      "sourceGitBlob": "1300506b139dd999c5d7b569d7339bcb322f80a8",
+      "bytes": 53980,
+      "sha256": "4eab886f1cbf9f0753a192a11ef30e1b24c99cef3c9c3be582028eff54b87f5a"
+    },
+    "skill/dcduoyue2": {
+      "key": "skill/dcduoyue2",
+      "file": "audio/skill/dcduoyue2.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 掇月",
+      "text": "月下举世皆白，唯我独黑。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcduoyue2.mp3",
+      "sourceGitBlob": "29ada9a1dc2fcd787cbfb1ef172f894fe27806f0",
+      "bytes": 43114,
+      "sha256": "a1ba50236eb34cd04c314a2faa63f79eb0d78f26f9411777449a81f6e1e39321"
+    },
+    "skill/dcjunhe1": {
+      "key": "skill/dcjunhe1",
+      "file": "audio/skill/dcjunhe1.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 军合",
+      "text": "聚兵如铁，方能碎尽敌胆。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjunhe1.mp3",
+      "sourceGitBlob": "adeeb048e57cfd7d499cf39cd51b690513a37723",
+      "bytes": 36217,
+      "sha256": "3e6cb9c2253890c36e67c1e29a2d611600c3b7d2c58b2684e414937028a9cca5"
+    },
+    "skill/dcjunhe2": {
+      "key": "skill/dcjunhe2",
+      "file": "audio/skill/dcjunhe2.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 军合",
+      "text": "万众一口，可吞千里之国。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcjunhe2.mp3",
+      "sourceGitBlob": "bfa77b42eed5b12b12510780a37fec9aed26d469",
+      "bytes": 35173,
+      "sha256": "56a7bfc722b599a4e57e45ee8d458a66e716dd177c768019d313d2af28ddfb89"
+    },
+    "skill/dcxiongwei1": {
+      "key": "skill/dcxiongwei1",
+      "file": "audio/skill/dcxiongwei1.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 雄威",
+      "text": "哼哼哼，独夫之心，非百城可易。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiongwei1.mp3",
+      "sourceGitBlob": "e8a5892706c3bd13947e634629b65a7c17d0ef41",
+      "bytes": 46875,
+      "sha256": "005ef86bae3768c096faaef1c4d0306600af5ad9337b8f4f67fe779f9812a3d7"
+    },
+    "skill/dcxiongwei2": {
+      "key": "skill/dcxiongwei2",
+      "file": "audio/skill/dcxiongwei2.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 雄威",
+      "text": "设使天下无孤，不知几人称帝、几人称王? ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiongwei2.mp3",
+      "sourceGitBlob": "f9b19e5ad1a67f41ead03564cdd60c1b8bd598c6",
+      "bytes": 58997,
+      "sha256": "72ecbafd255d4853b68ace251c5d7f6ff5b0f6319b121afa37106af593bfab18"
+    },
+    "die/v_caocao": {
+      "key": "die/v_caocao",
+      "file": "audio/die/v_caocao.mp3",
+      "character": "v_caocao",
+      "label": "威曹操 · 阵亡",
+      "text": "孤这一生，何其壮哉! 哈哈哈哈哈哈! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_caocao.mp3",
+      "sourceGitBlob": "f6b70c3964e0fcef9572f332db88414906debeee",
+      "bytes": 55652,
+      "sha256": "d216e2dbd32f2b5a8993002731f828b4f6885e275a74d6a4d3fda261984373cc"
+    },
+    "skill/dczhifeng1": {
+      "key": "skill/dczhifeng1",
+      "file": "audio/skill/dczhifeng1.mp3",
+      "character": "v_sunce",
+      "label": "威孙策 · 猘锋",
+      "text": "千里江东地，谁敢独槊相向！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhifeng1.mp3",
+      "sourceGitBlob": "29214248c91a8026e37896a05e2ca02ae10f4794",
+      "bytes": 52197,
+      "sha256": "63af32c3532bff673b16a348f27cd8b4497a0e0df16d9bf8d7bb9b3790cdd799"
+    },
+    "skill/dczhifeng2": {
+      "key": "skill/dczhifeng2",
+      "file": "audio/skill/dczhifeng2.mp3",
+      "character": "v_sunce",
+      "label": "威孙策 · 猘锋",
+      "text": "饮江为酿，看我醉挑山河！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhifeng2.mp3",
+      "sourceGitBlob": "bb82e2fac11bfff899010d33ea45d98a3bd13ede",
+      "bytes": 47778,
+      "sha256": "6a6d19ddddfbc44395c2677f05a25f45fb5b46fbd5a52563dc70f6d0bba418ea"
+    },
+    "skill/dcweijing1": {
+      "key": "skill/dcweijing1",
+      "file": "audio/skill/dcweijing1.mp3",
+      "character": "v_sunce",
+      "label": "威孙策 · 威靖",
+      "text": "既称吴臣，方可免死！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcweijing1.mp3",
+      "sourceGitBlob": "5b3a07fb3069a5838d16eea9e94ee84302883e2f",
+      "bytes": 45279,
+      "sha256": "6fa6572544f209e7da129b64fa476fb1dc98fe91d551e293d12552a8cf9a6af8"
+    },
+    "skill/dcweijing2": {
+      "key": "skill/dcweijing2",
+      "file": "audio/skill/dcweijing2.mp3",
+      "character": "v_sunce",
+      "label": "威孙策 · 威靖",
+      "text": "天无二日，虎犬安能并列！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcweijing2.mp3",
+      "sourceGitBlob": "f9ac7cd7c419a18cb2c31a9e5fcdfecd5c40d7b9",
+      "bytes": 59147,
+      "sha256": "b7d8c91b97587601998cc42dfc7260240634c9cfc5d29959ec6a4a6ae797232b"
+    },
+    "die/v_sunce": {
+      "key": "die/v_sunce",
+      "file": "audio/die/v_sunce.mp3",
+      "character": "v_sunce",
+      "label": "威孙策 · 阵亡",
+      "text": "恨，不见九鼎，尽刻吴纹。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_sunce.mp3",
+      "sourceGitBlob": "d381dcadb40fc7fa76f143feb9fcd3d8ea4a3eb8",
+      "bytes": 68545,
+      "sha256": "a971df8bb285dd1b8980b04d4de54d3627554c945723d3179c6767ef611f13f6"
+    },
+    "skill/dcshuren1": {
+      "key": "skill/dcshuren1",
+      "file": "audio/skill/dcshuren1.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香 · 淑任",
+      "text": "嫁舟过江浦，荷花犹记女儿红。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcshuren1.mp3",
+      "sourceGitBlob": "3144bd010082d3c96624e11d9aefcd18e4914286",
+      "bytes": 68443,
+      "sha256": "ad1a54bd715d5dc449bb086a044e2f32c7b8aca12535d7340d28fd2ebc4ac09d"
+    },
+    "skill/dcshuren2": {
+      "key": "skill/dcshuren2",
+      "file": "audio/skill/dcshuren2.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香 · 淑任",
+      "text": "玉锁枷春风，却惊小荷角上蜓。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcshuren2.mp3",
+      "sourceGitBlob": "8a9ea493776363aa83e424d62da8a62428c18e6f",
+      "bytes": 74467,
+      "sha256": "983ad7a9f0b6d2acce39f7b2832557c62b3b727e860a1a6375e25e98334a4fa7"
+    },
+    "skill/dcsaran1": {
+      "key": "skill/dcsaran1",
+      "file": "audio/skill/dcsaran1.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香 · 飒然",
+      "text": "愈创愈狂愈烈，越伤越战越凶！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsaran1.mp3",
+      "sourceGitBlob": "7c88204f52e533999ecddece71e360da15b67e11",
+      "bytes": 60347,
+      "sha256": "b42b23e243961bec82d1b167828ddefbfa76cab6eb60417f60f2e1d6cc3e11d0"
+    },
+    "skill/dcsaran2": {
+      "key": "skill/dcsaran2",
+      "file": "audio/skill/dcsaran2.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香 · 飒然",
+      "text": "阵前女儿怒，一步一杀一雷霆！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsaran2.mp3",
+      "sourceGitBlob": "25e754d20f4d14bdf97e6af0202cc7ce3591b0ec",
+      "bytes": 56176,
+      "sha256": "430fbc76605a0f599acce06ebabf2fa82a353a8cb9821619235c97ae44ac665b"
+    },
+    "die/v_sunshangxiang": {
+      "key": "die/v_sunshangxiang",
+      "file": "audio/die/v_sunshangxiang.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香 · 阵亡",
+      "text": "荷残风住时，无物可赠君。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_sunshangxiang.mp3",
+      "sourceGitBlob": "bb79be1e75679b8fcf0428b601d95f84b24b5001",
+      "bytes": 85263,
+      "sha256": "4875de278d2e2524c90bde47e9065156cde83b5981decbd41dede42be326dc3f"
+    },
+    "skill/dcshuren_v_sunshangxiang_shadow1": {
+      "key": "skill/dcshuren_v_sunshangxiang_shadow1",
+      "file": "audio/skill/dcshuren_v_sunshangxiang_shadow1.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香（转换形态） · 淑任",
+      "text": "南雁忽啼王孙去，唯闻故园捣衣声。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcshuren_v_sunshangxiang_shadow1.mp3",
+      "sourceGitBlob": "6d0f9ed540387569473b050d7fa94f1b0646b5a3",
+      "bytes": 86252,
+      "sha256": "c050dfb89762b77d0648914ee99dd5f90435e16dff40730e8905cb44e3968354"
+    },
+    "skill/dcshuren_v_sunshangxiang_shadow2": {
+      "key": "skill/dcshuren_v_sunshangxiang_shadow2",
+      "file": "audio/skill/dcshuren_v_sunshangxiang_shadow2.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香（转换形态） · 淑任",
+      "text": "褪得绫罗去，清风渡我怀。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcshuren_v_sunshangxiang_shadow2.mp3",
+      "sourceGitBlob": "f130b81fb649623e906ebd6e0c2541876f91d4d8",
+      "bytes": 63198,
+      "sha256": "409f07e33e09a906718acdac7004d1641402e693e6d57c3c856b22afb95ebef2"
+    },
+    "skill/dcsaran_v_sunshangxiang_shadow1": {
+      "key": "skill/dcsaran_v_sunshangxiang_shadow1",
+      "file": "audio/skill/dcsaran_v_sunshangxiang_shadow1.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香（转换形态） · 飒然",
+      "text": "赤焰烧云我裁舟，敢教江水逆弓流！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsaran_v_sunshangxiang_shadow1.mp3",
+      "sourceGitBlob": "abcf24c355fd9b8b373416d9ce5310fe9dfa17cf",
+      "bytes": 67788,
+      "sha256": "86b28d78fb7d1f41b7a1d5f5bddbdea90b27bccb625d64983399be40d07db4a3"
+    },
+    "skill/dcsaran_v_sunshangxiang_shadow2": {
+      "key": "skill/dcsaran_v_sunshangxiang_shadow2",
+      "file": "audio/skill/dcsaran_v_sunshangxiang_shadow2.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香（转换形态） · 飒然",
+      "text": "娥眉贯弓，大江作炉熔，千帆成冢，滴铁如红！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsaran_v_sunshangxiang_shadow2.mp3",
+      "sourceGitBlob": "e7b4e2bc023aa6ff223d2b998ea8f6d229db111b",
+      "bytes": 86100,
+      "sha256": "f9c51ad3500d59bf6845972a17f9b2ff1018d8373b429d14c191a0d740be585a"
+    },
+    "die/v_sunshangxiang_shadow": {
+      "key": "die/v_sunshangxiang_shadow",
+      "file": "audio/die/v_sunshangxiang_shadow.mp3",
+      "character": "v_sunshangxiang",
+      "label": "威孙尚香（转换形态） · 阵亡",
+      "text": "终未成藏剑鞘，倒做了隔岸火。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_sunshangxiang_shadow.mp3",
+      "sourceGitBlob": "b01acbdab6f5edd83b678ae38d2af076da95d495",
+      "bytes": 86935,
+      "sha256": "67c1916595b92d54415143a78e18cdd83dec322c0c36836f8fa781ae6f166264"
+    },
+    "skill/dcliexiang1": {
+      "key": "skill/dcliexiang1",
+      "file": "audio/skill/dcliexiang1.mp3",
+      "character": "v_liubei",
+      "label": "威刘备 · 烈骧",
+      "text": "二十四世王业在背，朕岂与汉贼两立！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcliexiang1.mp3",
+      "sourceGitBlob": "55d0ab1d81dbd27dc1b301e132ad704983137279",
+      "bytes": 82438,
+      "sha256": "c2fb8bb732231fad13c8888dd84e10527d8657767d0db35a31f66a062918e9f7"
+    },
+    "skill/dcliexiang2": {
+      "key": "skill/dcliexiang2",
+      "file": "audio/skill/dcliexiang2.mp3",
+      "character": "v_liubei",
+      "label": "威刘备 · 烈骧",
+      "text": "效光武、清河洛，为苍生开太平！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcliexiang2.mp3",
+      "sourceGitBlob": "1a5a0de65898c456ba660bfe6febee90e2a54a1d",
+      "bytes": 72169,
+      "sha256": "45ae565d2cd77e6305234f2868b1603053f9ce18973e5a17f79f2eeb6abedc64"
+    },
+    "skill/dcrengou1": {
+      "key": "skill/dcrengou1",
+      "file": "audio/skill/dcrengou1.mp3",
+      "character": "v_liubei",
+      "label": "威刘备 · 仁彀",
+      "text": "万里江山待扫，朕当同卿勠力。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcrengou1.mp3",
+      "sourceGitBlob": "8e71b3f8110de4c0fa63c95ff5788a0946a80776",
+      "bytes": 74426,
+      "sha256": "1368def11020f37fb56d547471b96c1a92649ec870e44ac1230a80015594b145"
+    },
+    "skill/dcrengou2": {
+      "key": "skill/dcrengou2",
+      "file": "audio/skill/dcrengou2.mp3",
+      "character": "v_liubei",
+      "label": "威刘备 · 仁彀",
+      "text": "执天下一诺，此志昭昭，可对日月！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcrengou2.mp3",
+      "sourceGitBlob": "27393725e1d2155fbf94c4630e954694ad3eb270",
+      "bytes": 68818,
+      "sha256": "e6695b09a4fb76af2cf12a97a3c7c7cd0915c6c19078f2ad48ad7e8f8f8a8263"
+    },
+    "die/v_liubei": {
+      "key": "die/v_liubei",
+      "file": "audio/die/v_liubei.mp3",
+      "character": "v_liubei",
+      "label": "威刘备 · 阵亡",
+      "text": "朕不为弟报仇，纵有万里江山何足为贵！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_liubei.mp3",
+      "sourceGitBlob": "b69d0bd2070b724958bddebf565c0206bc4522c3",
+      "bytes": 80311,
+      "sha256": "d333d0d1f17274f143b47a62854e0c9142b09a821a2f46f77491afde310d33fd"
+    },
+    "skill/dchuangnu1": {
+      "key": "skill/dchuangnu1",
+      "file": "audio/skill/dchuangnu1.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩 · 煌怒",
+      "text": "豺狼叩关，我辈岂有退让之理！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dchuangnu1.mp3",
+      "sourceGitBlob": "f4f4613e8d31b2b306a072359180aa9496778e3c",
+      "bytes": 52526,
+      "sha256": "2ee975f528ad0f8280b7f54a7658d45ce72f6715024e8848547a9546fb936dc5"
+    },
+    "skill/dchuangnu2": {
+      "key": "skill/dchuangnu2",
+      "file": "audio/skill/dchuangnu2.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩 · 煌怒",
+      "text": "我大汉山河，不容沦丧半分！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dchuangnu2.mp3",
+      "sourceGitBlob": "09cd8cafd45329537026117a1025b2405ea63ab7",
+      "bytes": 46740,
+      "sha256": "9b1049ccd784c735adefdd36ef5a6cc3e098e4b14ad0a4ee3cdee06eee11d03c"
+    },
+    "skill/dcxiankuang1": {
+      "key": "skill/dcxiankuang1",
+      "file": "audio/skill/dcxiankuang1.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩 · 贤贶",
+      "text": "陛下夜嬉到明，明嬉到夜，能乐死曹叡否？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiankuang1.mp3",
+      "sourceGitBlob": "1486cef3660e2ee9d9c0d29275bbf1be9c4f63f2",
+      "bytes": 64312,
+      "sha256": "d15974529b10e248b3bb556352f4816d78f9b75bbd5e39236877ab4f708fabd8"
+    },
+    "skill/dcxiankuang2": {
+      "key": "skill/dcxiankuang2",
+      "file": "audio/skill/dcxiankuang2.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩 · 贤贶",
+      "text": "相父字字珠玑，奈何汝看在眼里、忘之脑后！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiankuang2.mp3",
+      "sourceGitBlob": "61e058e9b538b864da93b3e0385100b5ab6c6606",
+      "bytes": 79584,
+      "sha256": "abefe0a8cc1c4f1185162836bd48098acb1d02067db396c9d8da40512d815f27"
+    },
+    "die/v_zhangxingcai": {
+      "key": "die/v_zhangxingcai",
+      "file": "audio/die/v_zhangxingcai.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩 · 阵亡",
+      "text": "陛下良善，请诸公容之辅之。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_zhangxingcai.mp3",
+      "sourceGitBlob": "5a301014ca5c1477d3b24236c6a48608df08ce4f",
+      "bytes": 69775,
+      "sha256": "8a1ca29a74efb5fb24e7bce7a161dcd30678a93749ba2b46e8e0be3c9cd290e2"
+    },
+    "skill/dchuangnu_v_zhangxingcai_shadow1": {
+      "key": "skill/dchuangnu_v_zhangxingcai_shadow1",
+      "file": "audio/skill/dchuangnu_v_zhangxingcai_shadow1.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩（转换形态） · 煌怒",
+      "text": "父啸当阳声未绝，我亦可退百万兵！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dchuangnu_v_zhangxingcai_shadow1.mp3",
+      "sourceGitBlob": "5cbc56f4b60779306b6fa6ec390e19e24d42e5f5",
+      "bytes": 60607,
+      "sha256": "7dc4b9e60dd8cbf3f0b4cf1e9626d136bac6278d827a2a39b3f90839bc4bd003"
+    },
+    "skill/dchuangnu_v_zhangxingcai_shadow2": {
+      "key": "skill/dchuangnu_v_zhangxingcai_shadow2",
+      "file": "audio/skill/dchuangnu_v_zhangxingcai_shadow2.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩（转换形态） · 煌怒",
+      "text": "今江山有恙，我虽女流，亦当披坚执锐！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dchuangnu_v_zhangxingcai_shadow2.mp3",
+      "sourceGitBlob": "055b4bafa2be3a37e27364891dd99c62e3ad5ce6",
+      "bytes": 69949,
+      "sha256": "5247ff3ce63dff8ed751dc0b7d0c97c968a2b6d40ee427055d9cbc512a248aad"
+    },
+    "skill/dcxiankuang_v_zhangxingcai_shadow1": {
+      "key": "skill/dcxiankuang_v_zhangxingcai_shadow1",
+      "file": "audio/skill/dcxiankuang_v_zhangxingcai_shadow1.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩（转换形态） · 贤贶",
+      "text": "常侍之祸未远，陛下欲效灵帝寻阿父阿母？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiankuang_v_zhangxingcai_shadow1.mp3",
+      "sourceGitBlob": "e87490a2df1df13808b9843832c8d211ab72ed7c",
+      "bytes": 75859,
+      "sha256": "9195e0ca87c44497f594ac5fac3ecb4881373950f79f362ac93338356f9339c6"
+    },
+    "skill/dcxiankuang_v_zhangxingcai_shadow2": {
+      "key": "skill/dcxiankuang_v_zhangxingcai_shadow2",
+      "file": "audio/skill/dcxiankuang_v_zhangxingcai_shadow2.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩（转换形态） · 贤贶",
+      "text": "这等谄媚小人，处之久矣，必同鱼肆之臭！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxiankuang_v_zhangxingcai_shadow2.mp3",
+      "sourceGitBlob": "234c2509da083aa07aec696748a73afa9ff1dcf4",
+      "bytes": 66054,
+      "sha256": "dad5686ed011cd394d84a1c6b7cfbda9bda95e1b5bced4efef87c2bec1192509"
+    },
+    "die/v_zhangxingcai_shadow": {
+      "key": "die/v_zhangxingcai_shadow",
+      "file": "audio/die/v_zhangxingcai_shadow.mp3",
+      "character": "v_zhangxingcai",
+      "label": "威张星彩（转换形态） · 阵亡",
+      "text": "此生缘尽，来世再续连理枝。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/v_zhangxingcai_shadow.mp3",
+      "sourceGitBlob": "df2bacc2f1e96db0f409ec5239fd988d813e0912",
+      "bytes": 80143,
+      "sha256": "632d6dea9880f98d62e52d9fa7154c20c21972ffdf1e3a9bf92b0311b07b04a6"
+    },
+    "skill/dcsbjuemou1": {
+      "key": "skill/dcsbjuemou1",
+      "file": "audio/skill/dcsbjuemou1.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维 · 绝谋",
+      "text": "我若束手待缚，四百年来英雄血，岂不枉流！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuemou1.mp3",
+      "sourceGitBlob": "f9fc6d61ef1109ee38206fbf09575f859a91de1c",
+      "bytes": 82778,
+      "sha256": "36dcd5bb092172e82e28c7868355bc91f5601303c463c81a2e5719de1fab9da6"
+    },
+    "skill/dcsbjuemou2": {
+      "key": "skill/dcsbjuemou2",
+      "file": "audio/skill/dcsbjuemou2.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维 · 绝谋",
+      "text": "武侯遗志，绝不可成泡影！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuemou2.mp3",
+      "sourceGitBlob": "506bf2fcb87971f76d719aaf774e0fcdf38e2309",
+      "bytes": 53412,
+      "sha256": "a88c96ec822db043509f113878f1c63e655383fb3643e687e7f847113ad5abb4"
+    },
+    "skill/dcsbfuzhan1": {
+      "key": "skill/dcsbfuzhan1",
+      "file": "audio/skill/dcsbfuzhan1.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维 · 复盏",
+      "text": "丞相！五丈原的那盏灯，没有灭！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfuzhan1.mp3",
+      "sourceGitBlob": "e22f07d18db386b79d385b1fff6e768db1706580",
+      "bytes": 76820,
+      "sha256": "7f3e01633cc70d6c041472ecf8e3c1776a700fb0408df60b20b5dda71f041b14"
+    },
+    "skill/dcsbfuzhan2": {
+      "key": "skill/dcsbfuzhan2",
+      "file": "audio/skill/dcsbfuzhan2.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维 · 复盏",
+      "text": "汉贼不两立，王业不偏安！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfuzhan2.mp3",
+      "sourceGitBlob": "2d13d8936a995ccd716f6442d91a8a170268a67d",
+      "bytes": 54605,
+      "sha256": "c3642aa56a0012771dff710f7b207ed823e1083f90451fd21f81a6328487a3ed"
+    },
+    "die/dc_sb_jiangwei": {
+      "key": "die/dc_sb_jiangwei",
+      "file": "audio/die/dc_sb_jiangwei.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维 · 阵亡",
+      "text": "天地君师在上，维尽力了。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_jiangwei.mp3",
+      "sourceGitBlob": "f996077ec84ecd558f0f6b8109522b9df3bc5601",
+      "bytes": 73968,
+      "sha256": "671fc428b1dd9d3a54833d35e92e80f411f247be8b91864cf6e3b9ce516484ce"
+    },
+    "skill/dcsbjuemou_dc_sb_jiangwei_shadow1": {
+      "key": "skill/dcsbjuemou_dc_sb_jiangwei_shadow1",
+      "file": "audio/skill/dcsbjuemou_dc_sb_jiangwei_shadow1.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维（转换形态） · 绝谋",
+      "text": "晋道克昌，皆君之功，艾何窃之？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuemou_dc_sb_jiangwei_shadow1.mp3",
+      "sourceGitBlob": "b89995773907a6a588a24a23dcaea913fcc09830",
+      "bytes": 59766,
+      "sha256": "1e0d67fa15eab3d83380cbd055ec3bc78832675a18530a340eb6fc5ae560a04b"
+    },
+    "skill/dcsbjuemou_dc_sb_jiangwei_shadow2": {
+      "key": "skill/dcsbjuemou_dc_sb_jiangwei_shadow2",
+      "file": "audio/skill/dcsbjuemou_dc_sb_jiangwei_shadow2.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维（转换形态） · 绝谋",
+      "text": "一山难容二虎，二士争桃，唯一人饱腹。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuemou_dc_sb_jiangwei_shadow2.mp3",
+      "sourceGitBlob": "fcc2d47a2d13f4d2a9ad1615547c00bd0b8689e0",
+      "bytes": 79906,
+      "sha256": "3641b5c244d241a11302040a7ca80430bf24c4bd5397c7aedf2496309ac3d298"
+    },
+    "skill/dcsbfuzhan_dc_sb_jiangwei_shadow1": {
+      "key": "skill/dcsbfuzhan_dc_sb_jiangwei_shadow1",
+      "file": "audio/skill/dcsbfuzhan_dc_sb_jiangwei_shadow1.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维（转换形态） · 复盏",
+      "text": "维才疏智短，拼得一死也要保住先帝基业！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfuzhan_dc_sb_jiangwei_shadow1.mp3",
+      "sourceGitBlob": "d3a630596fe26ebf10fac168401dca23d97b2d11",
+      "bytes": 82874,
+      "sha256": "8b000b080bbc0903522cb8e88cc67708b34bf6b02b6dc0df0faf9b86ce5060cc"
+    },
+    "skill/dcsbfuzhan_dc_sb_jiangwei_shadow2": {
+      "key": "skill/dcsbfuzhan_dc_sb_jiangwei_shadow2",
+      "file": "audio/skill/dcsbfuzhan_dc_sb_jiangwei_shadow2.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维（转换形态） · 复盏",
+      "text": "愿陛下忍数日之辱，臣欲使社稷危而复安，日月幽而复明。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfuzhan_dc_sb_jiangwei_shadow2.mp3",
+      "sourceGitBlob": "7a6180012ac4c50e1143904b91f7f85faea9109d",
+      "bytes": 100332,
+      "sha256": "870a2f820cac27fa12cd1839b00b3d02f86161e4014e8eb0225ffd3d2fcec64d"
+    },
+    "die/dc_sb_jiangwei_shadow": {
+      "key": "die/dc_sb_jiangwei_shadow",
+      "file": "audio/die/dc_sb_jiangwei_shadow.mp3",
+      "character": "dc_sb_jiangwei",
+      "label": "新杀谋姜维（转换形态） · 阵亡",
+      "text": "国亡之日，当有忠士随赴黄泉。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_jiangwei_shadow.mp3",
+      "sourceGitBlob": "e49e1acadeca6d705ad149d4b4c9524990899413",
+      "bytes": 72492,
+      "sha256": "5e97ea6e6cdeb3ea2dfcbb416596efdedac9abc0597661184719847733d42dc5"
+    },
+    "skill/dcsbyinmou1": {
+      "key": "skill/dcsbyinmou1",
+      "file": "audio/skill/dcsbyinmou1.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 寅谋",
+      "text": "曹脏孙乱、碌碌嚣尘，君岂可坐观天下丧于匹夫之手！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyinmou1.mp3",
+      "sourceGitBlob": "8cee70a8af110393418fdff295b50fca50f801ad",
+      "bytes": 130260,
+      "sha256": "69156e1ef97e81cdcb7b97515cbf572211ceffa4416f4a9e32f280f06bcfc4a7"
+    },
+    "skill/dcsbyinmou2": {
+      "key": "skill/dcsbyinmou2",
+      "file": "audio/skill/dcsbyinmou2.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 寅谋",
+      "text": "吾君起于微末，知仁晓忍，舍公其谁当配天下！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyinmou2.mp3",
+      "sourceGitBlob": "0751c9fbe944dee8012ee4b314aef344d76cfdec",
+      "bytes": 102321,
+      "sha256": "2e4c012f8714a7c0b91ae504fc65fdc2093b7c3e66eed500595dc679a9befa94"
+    },
+    "skill/dcsbhongce1": {
+      "key": "skill/dcsbhongce1",
+      "file": "audio/skill/dcsbhongce1.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 宏策",
+      "text": "金刀刘，做王侯，千里蜀川化冕旒！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce1.mp3",
+      "sourceGitBlob": "867cdcae46073c76d012992a9444514d397c250a",
+      "bytes": 79866,
+      "sha256": "4208d92077a478be399f144c6e93e0dad51db61d6751437be2d1347ee0657157"
+    },
+    "skill/dcsbhongce2": {
+      "key": "skill/dcsbhongce2",
+      "file": "audio/skill/dcsbhongce2.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 宏策",
+      "text": "蜀狐如牛毛，待我取之，为公子裘。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce2.mp3",
+      "sourceGitBlob": "ca08040058b2bbc1fb3cb86935cb41d5dc2f6b34",
+      "bytes": 85480,
+      "sha256": "99145e0a99bfdd066fa7d38e03722f5ee01ddea44e084e6e09833398c668c938"
+    },
+    "skill/dcsbhongce3": {
+      "key": "skill/dcsbhongce3",
+      "file": "audio/skill/dcsbhongce3.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 宏策",
+      "text": "阴选精兵，径袭成都，如此大事可定。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce3.mp3",
+      "sourceGitBlob": "438c497f20fb73c41fd15d651e5a0bcc7c73db5d",
+      "bytes": 87799,
+      "sha256": "30575401cbb3206642f7d5a732b4e20a0dc0c9a1c0f8e1c6149333fb27bc70fa"
+    },
+    "skill/dcsbhongce4": {
+      "key": "skill/dcsbhongce4",
+      "file": "audio/skill/dcsbhongce4.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 宏策",
+      "text": "遣使惑敌，擒首取兵，璋必自溃。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce4.mp3",
+      "sourceGitBlob": "8cf7dbea2aacba86208cddb0a74d194022ce38e0",
+      "bytes": 76827,
+      "sha256": "eedd9ed027d4999c2b4a19d2dfd1741ff1c0fae6f63b089f2a57f843b01d7032"
+    },
+    "skill/dcsbhongce5": {
+      "key": "skill/dcsbhongce5",
+      "file": "audio/skill/dcsbhongce5.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 宏策",
+      "text": "退白帝，还荆州，亦可徐而图之。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce5.mp3",
+      "sourceGitBlob": "9f15519653c0ef68fdd6f1ab710a3ba06b4a4b3b",
+      "bytes": 101933,
+      "sha256": "d47cfd6f577fdfa759432b0800d7aa6bf079965abfea073ac8e6e5cd70df5347"
+    },
+    "die/dc_sb_pangtong": {
+      "key": "die/dc_sb_pangtong",
+      "file": "audio/die/dc_sb_pangtong.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统 · 阵亡",
+      "text": "的卢的卢，今日妨我。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_pangtong.mp3",
+      "sourceGitBlob": "9dc8b5880670bab7ae423c6551aec0fe5c369fe9",
+      "bytes": 70512,
+      "sha256": "0df59d3da4d2838f056770bd201a7c0d15bb090ce9947c34149f6c83abfeb3b5"
+    },
+    "skill/dcsbyinmou_dc_sb_pangtong_shadow1": {
+      "key": "skill/dcsbyinmou_dc_sb_pangtong_shadow1",
+      "file": "audio/skill/dcsbyinmou_dc_sb_pangtong_shadow1.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 寅谋",
+      "text": "鹿食苹，虎食鹿，鸱居梧桐，何以食腐鼠？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyinmou_dc_sb_pangtong_shadow1.mp3",
+      "sourceGitBlob": "be0c7b35bcb361230f9b33bf29ffacbf385cfb54",
+      "bytes": 99949,
+      "sha256": "c5d393092df09a04b55f47823686b623d81b254d2f89c5f91a5de0a6bb12fb0f"
+    },
+    "skill/dcsbyinmou_dc_sb_pangtong_shadow2": {
+      "key": "skill/dcsbyinmou_dc_sb_pangtong_shadow2",
+      "file": "audio/skill/dcsbyinmou_dc_sb_pangtong_shadow2.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 寅谋",
+      "text": "昔尧舜相让以成贤名，季玉效之，亦不失为富家翁！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyinmou_dc_sb_pangtong_shadow2.mp3",
+      "sourceGitBlob": "5516c48c47a1d8c9bb19c6ac92aae4c1ad331420",
+      "bytes": 122258,
+      "sha256": "82ed4e23f0594ded9f03c5f7f79eab1caaed24be74dcfb6b4c92aaaba1850a1d"
+    },
+    "skill/dcsbhongce_dc_sb_pangtong_shadow1": {
+      "key": "skill/dcsbhongce_dc_sb_pangtong_shadow1",
+      "file": "audio/skill/dcsbhongce_dc_sb_pangtong_shadow1.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 宏策",
+      "text": "昔秦赵会于渑池，璋公麾下，有蔺姓卿乎？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce_dc_sb_pangtong_shadow1.mp3",
+      "sourceGitBlob": "8d63a462f30c64cbf8d45ed63fa8a5b3ac3b97da",
+      "bytes": 104697,
+      "sha256": "7f95d744d233a2423a2b5201bcd9fb7eeb10bcabf98b2c8ef80d0abba9fe3cf3"
+    },
+    "skill/dcsbhongce_dc_sb_pangtong_shadow2": {
+      "key": "skill/dcsbhongce_dc_sb_pangtong_shadow2",
+      "file": "audio/skill/dcsbhongce_dc_sb_pangtong_shadow2.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 宏策",
+      "text": "张鲁居卧榻之侧，无皇叔备患，谁可安睡？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce_dc_sb_pangtong_shadow2.mp3",
+      "sourceGitBlob": "fa2e1e6992fb03e0f64440a6b819001ea213cb1c",
+      "bytes": 106358,
+      "sha256": "f2d2d8a7919de2aadb64919f113914c94bbef73672085546b031e20057c4961b"
+    },
+    "skill/dcsbhongce_dc_sb_pangtong_shadow3": {
+      "key": "skill/dcsbhongce_dc_sb_pangtong_shadow3",
+      "file": "audio/skill/dcsbhongce_dc_sb_pangtong_shadow3.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 宏策",
+      "text": "大人者，言不必信，行不必果。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce_dc_sb_pangtong_shadow3.mp3",
+      "sourceGitBlob": "94441a552c24ede7c97baddca30750846641d946",
+      "bytes": 79230,
+      "sha256": "79c23de5736cdcbd6eca0fc775fdf2f9465ce5cb46b3427ac2c9e97eac4efb5a"
+    },
+    "skill/dcsbhongce_dc_sb_pangtong_shadow4": {
+      "key": "skill/dcsbhongce_dc_sb_pangtong_shadow4",
+      "file": "audio/skill/dcsbhongce_dc_sb_pangtong_shadow4.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 宏策",
+      "text": "君子之于天下，非于一人一城。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce_dc_sb_pangtong_shadow4.mp3",
+      "sourceGitBlob": "77d08ab2787d396df7c9abe14671fd52c46d5699",
+      "bytes": 66610,
+      "sha256": "52601c37e63619936ddebf073f5ad056a8995668acf882ade7037eec01189823"
+    },
+    "skill/dcsbhongce_dc_sb_pangtong_shadow5": {
+      "key": "skill/dcsbhongce_dc_sb_pangtong_shadow5",
+      "file": "audio/skill/dcsbhongce_dc_sb_pangtong_shadow5.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 宏策",
+      "text": "普天应元，嘉宾亦能夺主。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbhongce_dc_sb_pangtong_shadow5.mp3",
+      "sourceGitBlob": "87fd4a5da94cc1da7b63671eb1b3fc5b8ff7f9a5",
+      "bytes": 71459,
+      "sha256": "67a5c52ff8976ef5df045dec3cf6d4eade64a0cc99e60be3a41edb48d6ab545d"
+    },
+    "die/dc_sb_pangtong_shadow": {
+      "key": "die/dc_sb_pangtong_shadow",
+      "file": "audio/die/dc_sb_pangtong_shadow.mp3",
+      "character": "dc_sb_pangtong",
+      "label": "新杀谋庞统（转换形态） · 阵亡",
+      "text": "大好江山，岂庸人居之！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_pangtong_shadow.mp3",
+      "sourceGitBlob": "014bdf008d20c972225e8e8fad69fa1f75867a43",
+      "bytes": 77005,
+      "sha256": "036b74e2afd0042fd1de137cc4c9dcba162c3a21b4aadd2c3e0f2e93bca29ad6"
+    },
+    "skill/dcsbjingmou1": {
+      "key": "skill/dcsbjingmou1",
+      "file": "audio/skill/dcsbjingmou1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 靖谋",
+      "text": "不服王化者，当死此谷中！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjingmou1.mp3",
+      "sourceGitBlob": "caf2f7b7cfd484e0c0da3601e009b0c9d86da075",
+      "bytes": 119321,
+      "sha256": "96b88f077ac933643baec84132cbafa157a95fd0dcb3cf946a82775d34b57739"
+    },
+    "skill/dcsbjingmou2": {
+      "key": "skill/dcsbjingmou2",
+      "file": "audio/skill/dcsbjingmou2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 靖谋",
+      "text": "盘蛇一炬，万骨成焦，顺天者昌，逆天者亡。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjingmou2.mp3",
+      "sourceGitBlob": "7f2d787db85c53e3f1cc8133aea91f6d6a4c23e1",
+      "bytes": 227781,
+      "sha256": "e1b06336a372c65de69324ef43ceda9fa963c9c3715fef0869fe69a9e03da417"
+    },
+    "skill/dcsbguyi1": {
+      "key": "skill/dcsbguyi1",
+      "file": "audio/skill/dcsbguyi1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 孤熠",
+      "text": "孤影照寒旌，忽见旧甲悬东壁，欲唤始觉非故人。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguyi1.mp3",
+      "sourceGitBlob": "e69d80646550a3b74b30bc147d5485aea8601431",
+      "bytes": 242828,
+      "sha256": "52eb2924a5b816022be91bf842c0049c517cdf63d93d347e534a01a00477c40b"
+    },
+    "skill/dcsbguyi2": {
+      "key": "skill/dcsbguyi2",
+      "file": "audio/skill/dcsbguyi2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 孤熠",
+      "text": "雨中持炬唤天晴，莫谓星火微，终照山河醒。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguyi2.mp3",
+      "sourceGitBlob": "c159004e0d37ac38decd4aa598369b00ad693734",
+      "bytes": 207092,
+      "sha256": "f11fedc3e89aa1d733e86e94414799bd9450308827849e7485c2e5c4c96056bc"
+    },
+    "skill/dcsbdingnan1": {
+      "key": "skill/dcsbdingnan1",
+      "file": "audio/skill/dcsbdingnan1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 定南",
+      "text": "七擒七纵南疆定，三顾三分天下平。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbdingnan1.mp3",
+      "sourceGitBlob": "0a964f2294918c045fbe1a7d6cabbf55a71806ff",
+      "bytes": 170730,
+      "sha256": "69dd40e5a18bc15c57080cfb5b4dc9ec6a6d79fc4fc493135d27772100926d64"
+    },
+    "skill/dcsbdingnan2": {
+      "key": "skill/dcsbdingnan2",
+      "file": "audio/skill/dcsbdingnan2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 定南",
+      "text": "自此南中归汉，汉亦不负南中。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbdingnan2.mp3",
+      "sourceGitBlob": "557a6088578eebcf2bee7d7ddaf0f631ef2f4374",
+      "bytes": 137502,
+      "sha256": "5474dd169951bdac3df63b1066226aa199ff33c4bab13eb6f4acf50134e289c9"
+    },
+    "die/dc_sb_zhugeliang": {
+      "key": "die/dc_sb_zhugeliang",
+      "file": "audio/die/dc_sb_zhugeliang.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮 · 阵亡",
+      "text": "吾虽功于社稷，必损寿矣。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_zhugeliang.mp3",
+      "sourceGitBlob": "fde4843e6cd6af2f287fc62c63185f66b71becda",
+      "bytes": 118694,
+      "sha256": "79a5539213453deb0b7973097c8d3683b1c147e0f09718e33b3fda49923bca28"
+    },
+    "skill/dcsbjingmou_dc_sb_zhugeliang_shadow1": {
+      "key": "skill/dcsbjingmou_dc_sb_zhugeliang_shadow1",
+      "file": "audio/skill/dcsbjingmou_dc_sb_zhugeliang_shadow1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 靖谋",
+      "text": "尔若再叛，王师所至，人与林俱焚。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjingmou_dc_sb_zhugeliang_shadow1.mp3",
+      "sourceGitBlob": "d5423ea9fca843f2d7cc11ee367d308965507341",
+      "bytes": 133114,
+      "sha256": "947623ece882e28d2ad20680a2fc4bf4059ac7f9fc37cc1387181cbea80baf5e"
+    },
+    "skill/dcsbjingmou_dc_sb_zhugeliang_shadow2": {
+      "key": "skill/dcsbjingmou_dc_sb_zhugeliang_shadow2",
+      "file": "audio/skill/dcsbjingmou_dc_sb_zhugeliang_shadow2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 靖谋",
+      "text": "江山在德不在险，民心在帛不在戈。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjingmou_dc_sb_zhugeliang_shadow2.mp3",
+      "sourceGitBlob": "d88ee5bbfeaa51cfae07de99ec3be575ebb656c6",
+      "bytes": 159445,
+      "sha256": "9166575ec3cce471285285d835bc0e7c4bff40dd73832ce420a8fd71138c99c7"
+    },
+    "skill/dcsbguyi_dc_sb_zhugeliang_shadow1": {
+      "key": "skill/dcsbguyi_dc_sb_zhugeliang_shadow1",
+      "file": "audio/skill/dcsbguyi_dc_sb_zhugeliang_shadow1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 孤熠",
+      "text": "二十八宿悬孤灯，独照我衣霜浓。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguyi_dc_sb_zhugeliang_shadow1.mp3",
+      "sourceGitBlob": "6a84f9bb288481d1373ec5f518048b9ada62c5a1",
+      "bytes": 161953,
+      "sha256": "135b589c3f736c37a99cde92a55571fb01e040db6f10867a8f48ad264d2a291e"
+    },
+    "skill/dcsbguyi_dc_sb_zhugeliang_shadow2": {
+      "key": "skill/dcsbguyi_dc_sb_zhugeliang_shadow2",
+      "file": "audio/skill/dcsbguyi_dc_sb_zhugeliang_shadow2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 孤熠",
+      "text": "欲举杯，无人共，满堂新将，谁与话隆中？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguyi_dc_sb_zhugeliang_shadow2.mp3",
+      "sourceGitBlob": "c5585947da938d1a8ad19d61bf9a898489fd9a00",
+      "bytes": 232797,
+      "sha256": "eff40d37a58dd7533989a0fd0530a646f2bcd9289a0cf9d93d51382489b60dab"
+    },
+    "skill/dcsbdingnan_dc_sb_zhugeliang_shadow1": {
+      "key": "skill/dcsbdingnan_dc_sb_zhugeliang_shadow1",
+      "file": "audio/skill/dcsbdingnan_dc_sb_zhugeliang_shadow1.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 定南",
+      "text": "南中未定，何谈北复中原？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbdingnan_dc_sb_zhugeliang_shadow1.mp3",
+      "sourceGitBlob": "159fe68b5d602d53b91d0c12a8cb9c9bed6251b0",
+      "bytes": 114932,
+      "sha256": "907399333d28b47ad4aaf3a5581ae810cc366e182ed6fe7377428d2e70ecb1f8"
+    },
+    "skill/dcsbdingnan_dc_sb_zhugeliang_shadow2": {
+      "key": "skill/dcsbdingnan_dc_sb_zhugeliang_shadow2",
+      "file": "audio/skill/dcsbdingnan_dc_sb_zhugeliang_shadow2.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 定南",
+      "text": "杀人易，服人难，平南易，定南艰。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbdingnan_dc_sb_zhugeliang_shadow2.mp3",
+      "sourceGitBlob": "16340eb688c52a4a3ca6d66ca2a554725ff38d56",
+      "bytes": 176999,
+      "sha256": "a7c1e20646060f2d01218138c7706750437cc5ce849ddcd64be883c702c1de54"
+    },
+    "die/dc_sb_zhugeliang_shadow": {
+      "key": "die/dc_sb_zhugeliang_shadow",
+      "file": "audio/die/dc_sb_zhugeliang_shadow.mp3",
+      "character": "dc_sb_zhugeliang",
+      "label": "新杀谋诸葛亮（转换形态） · 阵亡",
+      "text": "天地不平，我心何甘？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_zhugeliang_shadow.mp3",
+      "sourceGitBlob": "58d3a9b1ff03d342bc1b847fdc408f6c1a87606b",
+      "bytes": 120575,
+      "sha256": "c0b94c97b4a9f687f99fb53e42d1f36c2f115cc71890974270194ab049992878"
+    },
+    "skill/dcyinzhi1": {
+      "key": "skill/dcyinzhi1",
+      "file": "audio/skill/dcyinzhi1.mp3",
+      "character": "dc_shen_caopi",
+      "label": "新杀神曹丕 · 阴鸷",
+      "text": "大袖蔽天穹，日月一息起，逆我者，永堕无明！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcyinzhi1.mp3",
+      "sourceGitBlob": "9dce57b4c4ee66026d28fb0e3c197d6ca7b8cbbf",
+      "bytes": 134158,
+      "sha256": "59ccf6413a7e88db2f0fa9cd45b2c6ce5a85010a7eb541018979768a6296cfa1"
+    },
+    "skill/dcyinzhi2": {
+      "key": "skill/dcyinzhi2",
+      "file": "audio/skill/dcyinzhi2.mp3",
+      "character": "dc_shen_caopi",
+      "label": "新杀神曹丕 · 阴鸷",
+      "text": "枯骨九重阶，血墨万卷诏，孤不怿以天为父！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcyinzhi2.mp3",
+      "sourceGitBlob": "42ab2c180ddba4519d83f0f1567b96f32afc682f",
+      "bytes": 144189,
+      "sha256": "37653c180f31ccaf76c2da1fa164139fbcdd06cb6f5f03d47020e8d5035cb962"
+    },
+    "skill/dckeming1": {
+      "key": "skill/dckeming1",
+      "file": "audio/skill/dckeming1.mp3",
+      "character": "dc_shen_caopi",
+      "label": "新杀神曹丕 · 刻名",
+      "text": "冠我名于九州，始知天下多好臣！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dckeming1.mp3",
+      "sourceGitBlob": "cbd49fc5a8f07fa69cff49fb3cbdfa502965eccc",
+      "bytes": 88601,
+      "sha256": "812477d8c4f643394b546ea8f867cb4fd07b56a1b1c8d3c6c96f092be41b53cb"
+    },
+    "skill/dckeming2": {
+      "key": "skill/dckeming2",
+      "file": "audio/skill/dckeming2.mp3",
+      "character": "dc_shen_caopi",
+      "label": "新杀神曹丕 · 刻名",
+      "text": "我言成诏，汝名成囚！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dckeming2.mp3",
+      "sourceGitBlob": "df8e89102df1460af991270ccebd17a9eeabcd08",
+      "bytes": 68539,
+      "sha256": "6dcab6e853b3c572c20a30f336794731457900377600e9d2c9768246d42c8291"
+    },
+    "die/dc_shen_caopi": {
+      "key": "die/dc_shen_caopi",
+      "file": "audio/die/dc_shen_caopi.mp3",
+      "character": "dc_shen_caopi",
+      "label": "新杀神曹丕 · 阵亡",
+      "text": "身登九五如何，终不过孤影寒灯。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_shen_caopi.mp3",
+      "sourceGitBlob": "f9fc193af789d3c3a831ca840a55c11ed30db32e",
+      "bytes": 120784,
+      "sha256": "01216e7d511c8e7e95808601f347af76f320a85412791a0e17b909214aef5703"
+    },
+    "skill/dcsbguanwu1": {
+      "key": "skill/dcsbguanwu1",
+      "file": "audio/skill/dcsbguanwu1.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 冠武",
+      "text": "某今既来，便敢独去。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguanwu1.mp3",
+      "sourceGitBlob": "7b58e4c4b6fc05c251af88150a92b9fdc47d1f80",
+      "bytes": 46031,
+      "sha256": "5a6b865d79b53ab2fc8fa130f39e849fff77222ada52a311a344574cdc20e45b"
+    },
+    "skill/dcsbguanwu2": {
+      "key": "skill/dcsbguanwu2",
+      "file": "audio/skill/dcsbguanwu2.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 冠武",
+      "text": "汝无霸王之姿，安敢仿宴鸿门！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbguanwu2.mp3",
+      "sourceGitBlob": "a9dfb4cf5777e7b7d04588576641284619d32712",
+      "bytes": 72908,
+      "sha256": "a6090bfe072a9d12cf92b88d0548b656c013fb3e23418fc44793a3035b4e5f33"
+    },
+    "skill/dcsbweishi1": {
+      "key": "skill/dcsbweishi1",
+      "file": "audio/skill/dcsbweishi1.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 威势",
+      "text": "豺狈虽众，其奈龙虎何？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbweishi1.mp3",
+      "sourceGitBlob": "09fb60e440a94f0080f2f4260fda6f81d1a2c676",
+      "bytes": 51533,
+      "sha256": "a8cc7e12a5d5daa192b01e3eab9735e8b88512dccde6a46c28c387ed6091e65f"
+    },
+    "skill/dcsbweishi2": {
+      "key": "skill/dcsbweishi2",
+      "file": "audio/skill/dcsbweishi2.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 威势",
+      "text": "子敬！送关某一程山水如何！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbweishi2.mp3",
+      "sourceGitBlob": "7a110936e11af9913f5c7e2dac199e45be94eef4",
+      "bytes": 53725,
+      "sha256": "63d2e501e9a04dc2ac2188ba9720ca7b7873c356f9c0f8f8f2d86c95b337433f"
+    },
+    "skill/dcsbjuao1": {
+      "key": "skill/dcsbjuao1",
+      "file": "audio/skill/dcsbjuao1.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 倨傲",
+      "text": "守户之犬效伶人姿态，徒增天下人笑耳。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuao1.mp3",
+      "sourceGitBlob": "dabee9232d1a9741652fa93eb8ddd63715977a25",
+      "bytes": 94571,
+      "sha256": "f3c35cb5091103f5545eea0cae2b03f8f3329cf0c6e85ae85f17fbbba3aec42c"
+    },
+    "skill/dcsbjuao2": {
+      "key": "skill/dcsbjuao2",
+      "file": "audio/skill/dcsbjuao2.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 倨傲",
+      "text": "子敬素称长者，今日却也学小儿做派？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjuao2.mp3",
+      "sourceGitBlob": "5eb25f482c122b4db629ffdd692650f0900f5711",
+      "bytes": 91103,
+      "sha256": "657a16ed6a14b4214e53a359e81acfd2b96c18468bdb3d5fcf7eb3cb7fc34008"
+    },
+    "die/dc_sb_guanyu": {
+      "key": "die/dc_sb_guanyu",
+      "file": "audio/die/dc_sb_guanyu.mp3",
+      "character": "dc_sb_guanyu",
+      "label": "新杀谋关羽 · 阵亡",
+      "text": "这也不是江水，二十年流不尽的英雄血！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_guanyu.mp3",
+      "sourceGitBlob": "9d2f9878d0cf7ce0346c6455f50eec3aec851e50",
+      "bytes": 158886,
+      "sha256": "32682766b79d38b8f3be2ead663e6f36dcb54b1f1eb0e36cf41fbab143bda6d9"
+    },
+    "skill/dcsbyouyi1": {
+      "key": "skill/dcsbyouyi1",
+      "file": "audio/skill/dcsbyouyi1.mp3",
+      "character": "dc_sb_wangping",
+      "label": "新杀谋王平 · 诱夷",
+      "text": "败名一人担之，全胜三军同享！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyouyi1.mp3",
+      "sourceGitBlob": "6183fcfa49250de63a213ccdddfc8316c554bb47",
+      "bytes": 107377,
+      "sha256": "cc98c1280f76fe0714bd8384902db159c30adc768fb37ea63d4152ed7d7e8848"
+    },
+    "skill/dcsbyouyi2": {
+      "key": "skill/dcsbyouyi2",
+      "file": "audio/skill/dcsbyouyi2.mp3",
+      "character": "dc_sb_wangping",
+      "label": "新杀谋王平 · 诱夷",
+      "text": "蛮兵势大，不可力敌，撤！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyouyi2.mp3",
+      "sourceGitBlob": "eb1b7380e61a9511ffd3cf230d0f83619daafdef",
+      "bytes": 27820,
+      "sha256": "dda7777ad1bd07b92a74d15edc0627098575693c858fdfd07c784472bc9f42f8"
+    },
+    "skill/dcsbfangong1": {
+      "key": "skill/dcsbfangong1",
+      "file": "audio/skill/dcsbfangong1.mp3",
+      "character": "dc_sb_wangping",
+      "label": "新杀谋王平 · 返攻",
+      "text": "伏兵何在！起！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfangong1.mp3",
+      "sourceGitBlob": "cdb7504471b8b35281e425a6b7b837be2b1abbd0",
+      "bytes": 18604,
+      "sha256": "f3cab830005d34c809cf2344ae971a959e8d1640bbbd5870851d9576537e166e"
+    },
+    "skill/dcsbfangong2": {
+      "key": "skill/dcsbfangong2",
+      "file": "audio/skill/dcsbfangong2.mp3",
+      "character": "dc_sb_wangping",
+      "label": "新杀谋王平 · 返攻",
+      "text": "忍汝数日，便为此时！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfangong2.mp3",
+      "sourceGitBlob": "7306110250a89d17e7804399ceeed069b261f916",
+      "bytes": 23596,
+      "sha256": "e8c57d730fdbc02fb2dc4b0aa2fa09fa45f1195edd1dee0aef5fe50a7cf09264"
+    },
+    "die/dc_sb_wangping": {
+      "key": "die/dc_sb_wangping",
+      "file": "audio/die/dc_sb_wangping.mp3",
+      "character": "dc_sb_wangping",
+      "label": "新杀谋王平 · 阵亡",
+      "text": "南疆多瘴气，未战身先休。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_wangping.mp3",
+      "sourceGitBlob": "eac794f753898ff7a0b451c63ee8c3c6616f89fe",
+      "bytes": 38572,
+      "sha256": "b88f08b396e9c3a24f57d5acbbb45666aac8e2ca0abbb0b1e32c4f8040977da3"
+    },
+    "skill/dclieqiong1": {
+      "key": "skill/dclieqiong1",
+      "file": "audio/skill/dclieqiong1.mp3",
+      "character": "shen_huangzhong",
+      "label": "神黄忠 · 裂穹",
+      "text": "横眉蔑风雨，引弓狩天狼。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dclieqiong1.mp3",
+      "sourceGitBlob": "a321d0b1d623dc03fb1cbf9d801691acaad3c4cf",
+      "bytes": 197339,
+      "sha256": "92cfa9a9374ef2584beda4689f2523838c9408fa236133865d9d4f105934852d"
+    },
+    "skill/dclieqiong2": {
+      "key": "skill/dclieqiong2",
+      "file": "audio/skill/dclieqiong2.mp3",
+      "character": "shen_huangzhong",
+      "label": "神黄忠 · 裂穹",
+      "text": "一箭出，万军毙！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dclieqiong2.mp3",
+      "sourceGitBlob": "a318197ef617a06eae1ff2c4b934d22c2c169302",
+      "bytes": 135299,
+      "sha256": "b34ea55fd9059459fcf466b405785fd823f677811550608b218f72e8fb47f41f"
+    },
+    "skill/dczhanjue1": {
+      "key": "skill/dczhanjue1",
+      "file": "audio/skill/dczhanjue1.mp3",
+      "character": "shen_huangzhong",
+      "label": "神黄忠 · 斩决",
+      "text": "流不尽的英雄血，斩不尽的逆贼头！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhanjue1.mp3",
+      "sourceGitBlob": "c0e21dea0a63a91f60b291ffe73f1bc1fbb17d9a",
+      "bytes": 196259,
+      "sha256": "18db72408d2b408ab79756089ea9548e284e5096e0c40a292497a9bb3da81182"
+    },
+    "skill/dczhanjue2": {
+      "key": "skill/dczhanjue2",
+      "file": "audio/skill/dczhanjue2.mp3",
+      "character": "shen_huangzhong",
+      "label": "神黄忠 · 斩决",
+      "text": "长刀渴血，当饲英雄胆！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dczhanjue2.mp3",
+      "sourceGitBlob": "528d6a541ba2b014229d70fcdd09e9b90b43b695",
+      "bytes": 182867,
+      "sha256": "6a087a2e767435d4381c862eb242c273917188c1d7a5d06d1a2800a3a6570200"
+    },
+    "die/shen_huangzhong": {
+      "key": "die/shen_huangzhong",
+      "file": "audio/die/shen_huangzhong.mp3",
+      "character": "shen_huangzhong",
+      "label": "神黄忠 · 阵亡",
+      "text": "箭雨曾蔽日，今夕却成绝响。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_huangzhong.mp3",
+      "sourceGitBlob": "464bf1af1ccd539cda727b17c6506f42ecfb2ef6",
+      "bytes": 227387,
+      "sha256": "ea24fa3fda60c2877c23dead679a2ea4567cbf29cf52894a925d400f9091ba88"
+    },
+    "skill/shencai1": {
+      "key": "skill/shencai1",
+      "file": "audio/skill/shencai1.mp3",
+      "character": "shen_zhangfei",
+      "label": "神张飞 · 神裁",
+      "text": "我有三千炼狱，待汝万世轮回！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/shencai1.mp3",
+      "sourceGitBlob": "01916c1ece44f6c1c068cfd9c1134cecf82a5701",
+      "bytes": 93020,
+      "sha256": "8ca236fcbb1b7bb27f94cd26694f8de4089a0244d3c23241be88f40724e24c00"
+    },
+    "skill/shencai2": {
+      "key": "skill/shencai2",
+      "file": "audio/skill/shencai2.mp3",
+      "character": "shen_zhangfei",
+      "label": "神张飞 · 神裁",
+      "text": "纵汝王侯将相，亦须俯首待裁！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/shencai2.mp3",
+      "sourceGitBlob": "dc595c878f699cb74c2a21228fa9389f68aea55f",
+      "bytes": 97502,
+      "sha256": "ad33b8135f9841f1edb219bbf3ef51de27e4dc9a157c3c7dd5c4ea8bad5447d8"
+    },
+    "skill/xunshi1": {
+      "key": "skill/xunshi1",
+      "file": "audio/skill/xunshi1.mp3",
+      "character": "shen_zhangfei",
+      "label": "神张飞 · 巡使",
+      "text": "秉身为正，辟易万邪！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/xunshi1.mp3",
+      "sourceGitBlob": "5a4b3a99651ac57e70dd3dbf9d74d92c1389fe75",
+      "bytes": 68402,
+      "sha256": "cd88bd5a7b688ed37818fc003b38bbae48a6c1c85a34b3766f6e560976e58b73"
+    },
+    "skill/xunshi2": {
+      "key": "skill/xunshi2",
+      "file": "audio/skill/xunshi2.mp3",
+      "character": "shen_zhangfei",
+      "label": "神张飞 · 巡使",
+      "text": "巡御两界，路寻不平！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/xunshi2.mp3",
+      "sourceGitBlob": "36c16f3381cf9652e8257781b0f4baab1497d574",
+      "bytes": 70868,
+      "sha256": "246c50e1d32dd962199966b83e5b27e1f196fcb1889b9bf560e71597161aa1b9"
+    },
+    "die/shen_zhangfei": {
+      "key": "die/shen_zhangfei",
+      "file": "audio/die/shen_zhangfei.mp3",
+      "character": "shen_zhangfei",
+      "label": "神张飞 · 阵亡",
+      "text": "尔等，欲复斩我头乎？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_zhangfei.mp3",
+      "sourceGitBlob": "992ddc353715b0267499c48f03485fe85adf208e",
+      "bytes": 75264,
+      "sha256": "c00629888cf970070a876533ab20573e71d5606ec9a46d2822e5d186da309751"
+    },
+    "skill/shouli1": {
+      "key": "skill/shouli1",
+      "file": "audio/skill/shouli1.mp3",
+      "character": "shen_machao",
+      "label": "神马超 · 狩骊",
+      "text": "赤骊骋疆，巡狩八荒！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/shouli1.mp3",
+      "sourceGitBlob": "a5163d29ce3c097d67e937e5eee8e87df8cfa152",
+      "bytes": 56877,
+      "sha256": "c41dd2ea6787693b09a096276bd23d5dddd69b305adb62fcd2a8bf9be89f2215"
+    },
+    "skill/shouli2": {
+      "key": "skill/shouli2",
+      "file": "audio/skill/shouli2.mp3",
+      "character": "shen_machao",
+      "label": "神马超 · 狩骊",
+      "text": "长缨在手，百骥可降！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/shouli2.mp3",
+      "sourceGitBlob": "41338650235f37c829c86011d9e1d7a317e8afeb",
+      "bytes": 55075,
+      "sha256": "eb63555cc3cafc869b36877537b62cccade697fd8a0b00b3188ce9f9f11c6784"
+    },
+    "skill/hengwu1": {
+      "key": "skill/hengwu1",
+      "file": "audio/skill/hengwu1.mp3",
+      "character": "shen_machao",
+      "label": "神马超 · 横骛",
+      "text": "横枪立马，独啸秋风！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/hengwu1.mp3",
+      "sourceGitBlob": "f04c1a3e8f13e72b3e936f423f100a0ce473d20b",
+      "bytes": 57379,
+      "sha256": "4dc33eb36e571b013fc0b876ec15e3422ec092ac47ea34bbd291d0e4148406af"
+    },
+    "skill/hengwu2": {
+      "key": "skill/hengwu2",
+      "file": "audio/skill/hengwu2.mp3",
+      "character": "shen_machao",
+      "label": "神马超 · 横骛",
+      "text": "世皆彳亍，唯我纵横！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/hengwu2.mp3",
+      "sourceGitBlob": "718024b1b3804759db83e7e62b92cfce9e93ce8d",
+      "bytes": 64675,
+      "sha256": "368d1d4947256a4dccb2b24a2dc548af0a7540575ea3d9200c29375445a8125b"
+    },
+    "die/shen_machao": {
+      "key": "die/shen_machao",
+      "file": "audio/die/shen_machao.mp3",
+      "character": "shen_machao",
+      "label": "神马超 · 阵亡",
+      "text": "离群之马，虽强亦亡……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_machao.mp3",
+      "sourceGitBlob": "99ca6278bc13e1808835a031b1307e3298850b23",
+      "bytes": 90019,
+      "sha256": "1a7d6d1ecc84cf8100a1fec904debe89d06fc5475d64bab470518ca258e11f7c"
+    },
+    "skill/yizhao1": {
+      "key": "skill/yizhao1",
+      "file": "audio/skill/yizhao1.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 异兆",
+      "text": "苍天已死，此黄天当立之时。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/yizhao1.mp3",
+      "sourceGitBlob": "91fb938fc9f65ef9ef286395a4fbc3ce344281df",
+      "bytes": 49160,
+      "sha256": "b2e2d75e5e6de5d7d4a9dc080fdb04b3cae4ea7ae7cadfb659edfc938730379b"
+    },
+    "skill/yizhao2": {
+      "key": "skill/yizhao2",
+      "file": "audio/skill/yizhao2.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 异兆",
+      "text": "甲子尚水，显炎汉将亡之兆。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/yizhao2.mp3",
+      "sourceGitBlob": "2ed359572da60f4578d8bde5eaf9f45090d2fee3",
+      "bytes": 50414,
+      "sha256": "faed3dd2e96b7f1dc1fa56bcc47e1610d77e8d84ec9404f2333ecffa69805c0f"
+    },
+    "skill/sijun1": {
+      "key": "skill/sijun1",
+      "file": "audio/skill/sijun1.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 肆军",
+      "text": "联九州黎庶，撼一家之王庭。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/sijun1.mp3",
+      "sourceGitBlob": "b3c3cb090bdd101e779725e0c43132f425a41efb",
+      "bytes": 50623,
+      "sha256": "b76791ec5638021bbedc0995e284c3beca2eb8de708ebfefb550574caf8a7b7c"
+    },
+    "skill/sijun2": {
+      "key": "skill/sijun2",
+      "file": "audio/skill/sijun2.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 肆军",
+      "text": "吾以此身为药，欲医天下之疾。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/sijun2.mp3",
+      "sourceGitBlob": "5681857e2e1c8949965c3f2db768219ad9140e79",
+      "bytes": 48951,
+      "sha256": "aaa86eaade7b9b93707f8ce0a7ab2c4e6dd5e4e813cf071a07c964dd047e8651"
+    },
+    "skill/sanshou1": {
+      "key": "skill/sanshou1",
+      "file": "audio/skill/sanshou1.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 三首",
+      "text": "三公既现，领大道而立黄天。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/sanshou1.mp3",
+      "sourceGitBlob": "3975099daed55ec0f41d9396bb4d6e8d1953f057",
+      "bytes": 46234,
+      "sha256": "d016fd61505db203de5c2dc16bb5a2e7670a78a48093fccf9a1439eff96313d2"
+    },
+    "skill/sanshou2": {
+      "key": "skill/sanshou2",
+      "file": "audio/skill/sanshou2.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 三首",
+      "text": "天地三才，载厚德以驱魍魉。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/sanshou2.mp3",
+      "sourceGitBlob": "35790b3ead90a112a46b3acde8faffca3c4f2d01",
+      "bytes": 49578,
+      "sha256": "34511f113f176f87e702c9b6455d21bd9c27643661e2cb3b64dfd00698e53492"
+    },
+    "skill/tianjie1": {
+      "key": "skill/tianjie1",
+      "file": "audio/skill/tianjie1.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 天劫",
+      "text": "苍天既死，贫道当替天行道！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/tianjie1.mp3",
+      "sourceGitBlob": "4403bd9ab43676777008ad7fa62daf24c615a21f",
+      "bytes": 50414,
+      "sha256": "30b557ca9a53fa2244a886d4dccc3d6cc7420e8db76c9f8dbaf955d9030e418b"
+    },
+    "skill/tianjie2": {
+      "key": "skill/tianjie2",
+      "file": "audio/skill/tianjie2.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 天劫",
+      "text": "朱紫庸，肉食鄙，吾当代天伐之！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/tianjie2.mp3",
+      "sourceGitBlob": "26b324c954890296ac87b8a0dbadccbe6a7d7f8e",
+      "bytes": 106575,
+      "sha256": "61aa3b17975ce925da2b55c4bcbc3b4552b8f645df6e23949ad14d9f52ec45d4"
+    },
+    "skill/tianjie3": {
+      "key": "skill/tianjie3",
+      "file": "audio/skill/tianjie3.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 天劫",
+      "text": "贫道张角，请大汉赴死！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/tianjie3.mp3",
+      "sourceGitBlob": "a7b9d120afe60a9d274b412a1b5e91fce61aa81e",
+      "bytes": 46025,
+      "sha256": "b7e572b874e4c4b07cfe4ddd1a9355b30d30eb245a1712bd57c14d385a69e404"
+    },
+    "die/shen_zhangjiao": {
+      "key": "die/shen_zhangjiao",
+      "file": "audio/die/shen_zhangjiao.mp3",
+      "character": "shen_zhangjiao",
+      "label": "神张角 · 阵亡",
+      "text": "诸君唤我为贼，然我所窃何物？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_zhangjiao.mp3",
+      "sourceGitBlob": "906bc8b0ce6e0db04f7d7489984ca23c90d73447",
+      "bytes": 53130,
+      "sha256": "75b37233e305082dedc54317f9a2f5e5d7897bc5adfe2f8af994bc0b1dace1dd"
+    },
+    "skill/jiufa1": {
+      "key": "skill/jiufa1",
+      "file": "audio/skill/jiufa1.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 九伐",
+      "text": "九伐中原，以圆先帝遗志。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/jiufa1.mp3",
+      "sourceGitBlob": "a0b91ad59cbd858c2371d10f8864a03ecf548d18",
+      "bytes": 72072,
+      "sha256": "15b014c47014979bceae0fe0e2b7e9216c8c5c600f736397812b3bcf4e4c7a50"
+    },
+    "skill/jiufa2": {
+      "key": "skill/jiufa2",
+      "file": "audio/skill/jiufa2.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 九伐",
+      "text": "日日砺剑，相报丞相厚恩。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/jiufa2.mp3",
+      "sourceGitBlob": "e2bfe3e7a54323632142db9f9f2b4c6dd177671e",
+      "bytes": 71232,
+      "sha256": "9832aa609672c1a1f0c943da5425cabdb337fb08cf0478a83c755af64d646f1b"
+    },
+    "skill/tianren1": {
+      "key": "skill/tianren1",
+      "file": "audio/skill/tianren1.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 天任",
+      "text": "举石补苍天，舍我更复其谁？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/tianren1.mp3",
+      "sourceGitBlob": "23a5b36985ab9278ac71a5b9fdfa7bbb9f210928",
+      "bytes": 83736,
+      "sha256": "ce42a9dfcb0a757b50e4c04436955b25022ff6e4313cadb3903b6c02ed3f97ad"
+    },
+    "skill/tianren2": {
+      "key": "skill/tianren2",
+      "file": "audio/skill/tianren2.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 天任",
+      "text": "天地同协力，何愁汉道不昌？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/tianren2.mp3",
+      "sourceGitBlob": "6d88efc8f2329450a44faf09ba1cf8711c8f12cb",
+      "bytes": 73656,
+      "sha256": "1dd690c79e14400b09524c96edec2312fa3a2d0be6464f0f346660ec6abf964e"
+    },
+    "skill/pingxiang1": {
+      "key": "skill/pingxiang1",
+      "file": "audio/skill/pingxiang1.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 平襄",
+      "text": "策马纵慷慨，捐躯抗虎豺。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/pingxiang1.mp3",
+      "sourceGitBlob": "711ad8077c652f54a09c91aa0d2132c4dd6de8e2",
+      "bytes": 81864,
+      "sha256": "1cb0d097de312c739a52094473ccfc5cfb40a130239ea67f00a06b118780f51f"
+    },
+    "skill/pingxiang2": {
+      "key": "skill/pingxiang2",
+      "file": "audio/skill/pingxiang2.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 平襄",
+      "text": "解甲事仇雠，竭力挽狂澜。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/pingxiang2.mp3",
+      "sourceGitBlob": "cc789e0314f10993e546cd49655c3b0b4e882ca0",
+      "bytes": 79512,
+      "sha256": "93341af2b1dae4a4e4a8dcdafd3c348671944cf865cd2e8dd08bff8eae61b564"
+    },
+    "die/shen_jiangwei": {
+      "key": "die/shen_jiangwei",
+      "file": "audio/die/shen_jiangwei.mp3",
+      "character": "shen_jiangwei",
+      "label": "神姜维 · 阵亡",
+      "text": "武侯遗志，已成泡影矣……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_jiangwei.mp3",
+      "sourceGitBlob": "29aec9aec42a4605dda516f4739cdd4906f2deac",
+      "bytes": 75888,
+      "sha256": "78efb0dccbe4f8a4f5450514ae16d2ca4249fccdc3c70c6b2b327d434ba94ed2"
+    },
+    "skill/zhengqing1": {
+      "key": "skill/zhengqing1",
+      "file": "audio/skill/zhengqing1.mp3",
+      "character": "shen_xuzhu",
+      "label": "神许褚 · 争擎",
+      "text": "锐势夺志，斩将者虎候是也！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/zhengqing1.mp3",
+      "sourceGitBlob": "4d121da3fa4fb61989598574d9376f26c8c6369e",
+      "bytes": 154403,
+      "sha256": "1d749b8730b2ef52d58fbb17efbf6e22881656c0be0eec80f4fb8fbe24915936"
+    },
+    "skill/zhengqing2": {
+      "key": "skill/zhengqing2",
+      "file": "audio/skill/zhengqing2.mp3",
+      "character": "shen_xuzhu",
+      "label": "神许褚 · 争擎",
+      "text": "三军争勇，擎纛者舍我其谁！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/zhengqing2.mp3",
+      "sourceGitBlob": "c849ebb4903f1f41e0eb292410956f9430cc7de5",
+      "bytes": 147683,
+      "sha256": "a3484a050a1284b462ab9d3143a0adf44b6426e0e99ae73a49f4fd529a2d57c8"
+    },
+    "skill/zhuangpo1": {
+      "key": "skill/zhuangpo1",
+      "file": "audio/skill/zhuangpo1.mp3",
+      "character": "shen_xuzhu",
+      "label": "神许褚 · 壮魄",
+      "text": "腹吞龙虎，气撼山河！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/zhuangpo1.mp3",
+      "sourceGitBlob": "ea6da3622d972b622c535ab2a8f96527fc757b35",
+      "bytes": 126659,
+      "sha256": "6b27b82ffc6ac9c93f1cddcb37c25abc657739eb05897e1b366630b7ebcb6dcb"
+    },
+    "skill/zhuangpo2": {
+      "key": "skill/zhuangpo2",
+      "file": "audio/skill/zhuangpo2.mp3",
+      "character": "shen_xuzhu",
+      "label": "神许褚 · 壮魄",
+      "text": "神魄凝威，魍魉辟易！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/zhuangpo2.mp3",
+      "sourceGitBlob": "13eb8ff2db3d25f5e3a45086f2e073cdab8c7759",
+      "bytes": 123635,
+      "sha256": "d3814e438cd9415d5d78c87a4b4c69691129160837b00df086a8cec1e02bf79d"
+    },
+    "die/shen_xuzhu": {
+      "key": "die/shen_xuzhu",
+      "file": "audio/die/shen_xuzhu.mp3",
+      "character": "shen_xuzhu",
+      "label": "神许褚 · 阵亡",
+      "text": "猛虎归林晚，不见往来人……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_xuzhu.mp3",
+      "sourceGitBlob": "bbc0fafbdb92183e30f6f569e0df9af5ec63262e",
+      "bytes": 159587,
+      "sha256": "b743652d4118d2fa0be209da57fe67b38bdf783e76a496dff9c6d0271fbc4905"
+    },
+    "skill/dctuoyu1": {
+      "key": "skill/dctuoyu1",
+      "file": "audio/skill/dctuoyu1.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 拓域",
+      "text": "本尊目之所及，皆为麾下王土。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dctuoyu1.mp3",
+      "sourceGitBlob": "6348ab4e468925931b1afa52782d6158dfc6a8a4",
+      "bytes": 39695,
+      "sha256": "87bb990534c3c4e225898c09245182a7b029cdc337e7ffb4aa2dae6436531df7"
+    },
+    "skill/dctuoyu2": {
+      "key": "skill/dctuoyu2",
+      "file": "audio/skill/dctuoyu2.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 拓域",
+      "text": "擎五丁之神力，碎万仞之高山。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dctuoyu2.mp3",
+      "sourceGitBlob": "bfbb0f90cd4dc1670b1411ac5bb3ac7dbaeb9593",
+      "bytes": 39227,
+      "sha256": "82be43aaea09075a2258e7398ef8f05e6f9317aee4639d5ae3e56ec42d4fd8b8"
+    },
+    "skill/dcxianjin1": {
+      "key": "skill/dcxianjin1",
+      "file": "audio/skill/dcxianjin1.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 险进",
+      "text": "大风！大雨！大景！！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxianjin1.mp3",
+      "sourceGitBlob": "8a80f5b884f15f10871bd7fd0acf239f567b2112",
+      "bytes": 35771,
+      "sha256": "033e0fe4eb530143be587274e55805edbe6960d1d7f62c39608d83cdd5c7f394"
+    },
+    "skill/dcxianjin2": {
+      "key": "skill/dcxianjin2",
+      "file": "audio/skill/dcxianjin2.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 险进",
+      "text": "行役沙场，不战胜，则战死！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcxianjin2.mp3",
+      "sourceGitBlob": "7644de1b4140a2d94a83ae6d3122a9b6fe9edaca",
+      "bytes": 48371,
+      "sha256": "ffbb7678f02f477f83e2d489970ce3273a57b45d858ec0d8702eb60b3489d7da"
+    },
+    "skill/dcqijing1": {
+      "key": "skill/dcqijing1",
+      "file": "audio/skill/dcqijing1.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 奇径",
+      "text": "今神兵于天降，贯奕世之长虹！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcqijing1.mp3",
+      "sourceGitBlob": "b69a561dc17a882c1556a104b3fdf58086727fa2",
+      "bytes": 41747,
+      "sha256": "d5fb363eb763283eb9cd8c4515ff4ce8d8cd82dd39d46b0e1447cc5cd8efbd3f"
+    },
+    "skill/dcqijing2": {
+      "key": "skill/dcqijing2",
+      "file": "audio/skill/dcqijing2.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 奇径",
+      "text": "辟罗浮之险径，捣伪汉之黄龙！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcqijing2.mp3",
+      "sourceGitBlob": "4e2c025918e79e1b55b2cd17fcf18a7e5217df1a",
+      "bytes": 37607,
+      "sha256": "632fee71b008883231fab0205474f0e1a50d1cfcbafc3dfc599fa50ab3e2bfd1"
+    },
+    "skill/dccuixin1": {
+      "key": "skill/dccuixin1",
+      "file": "audio/skill/dccuixin1.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 摧心",
+      "text": "今兵临城下，其王庭可摧。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dccuixin1.mp3",
+      "sourceGitBlob": "5038466fe35606349d9404b15a0d740537b7b9a7",
+      "bytes": 35744,
+      "sha256": "1d695890385eea73c6ec1c3480c4993a3fc94b4fa9839124d882eab14e6bdc50"
+    },
+    "skill/dccuixin2": {
+      "key": "skill/dccuixin2",
+      "file": "audio/skill/dccuixin2.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 摧心",
+      "text": "四面皆奏楚歌，问汝降是不降？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dccuixin2.mp3",
+      "sourceGitBlob": "df4d242a48d1420f6353548c517f134ec271cf35",
+      "bytes": 42260,
+      "sha256": "db6fab7ba5f724198464f9b6d6b28ecaf920e4de793775786c0043df6a5aa69d"
+    },
+    "die/shen_dengai": {
+      "key": "die/shen_dengai",
+      "file": "audio/die/shen_dengai.mp3",
+      "character": "shen_dengai",
+      "label": "神邓艾 · 阵亡",
+      "text": "灭蜀者，邓氏士载也！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/shen_dengai.mp3",
+      "sourceGitBlob": "974617def41cfca60e5551f7ad4a2f1c3d6453ff",
+      "bytes": 37283,
+      "sha256": "e5c989b665a95c693d2cc25ce3ab80985724f5cb80b8a21b2341228767bd9555"
+    },
+    "skill/dcsbronghuo1": {
+      "key": "skill/dcsbronghuo1",
+      "file": "audio/skill/dcsbronghuo1.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜 · 融火",
+      "text": "火莲绽江矶，炎映三千弱水。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbronghuo1.mp3",
+      "sourceGitBlob": "f6442009fec32aff6e37353071a1f7c436066915",
+      "bytes": 68123,
+      "sha256": "314ca18446e09fbd05fcfc6564264b136aca1702ca4f655593a9da116583937b"
+    },
+    "skill/dcsbronghuo2": {
+      "key": "skill/dcsbronghuo2",
+      "file": "audio/skill/dcsbronghuo2.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜 · 融火",
+      "text": "奇志吞樯橹，潮平百万寇贼。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbronghuo2.mp3",
+      "sourceGitBlob": "d1624d4ed4c32e7e118013db683e69667faabebc",
+      "bytes": 66407,
+      "sha256": "4efe0aeda5cb64ce8a6a7ed4648e25a33dc46ce3230552950c4021cf3902eb92"
+    },
+    "skill/dcsbyingmou1": {
+      "key": "skill/dcsbyingmou1",
+      "file": "audio/skill/dcsbyingmou1.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜 · 英谋",
+      "text": "行计以险，纵略以奇，敌虽百万亦戏之如犬豕。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyingmou1.mp3",
+      "sourceGitBlob": "361ab2c4a32387cf192994240683c558692376ab",
+      "bytes": 126942,
+      "sha256": "199ba10d973cfce400fd2d53d219de797056b584c1e1eda0e2b0bda81152e3c5"
+    },
+    "skill/dcsbyingmou2": {
+      "key": "skill/dcsbyingmou2",
+      "file": "audio/skill/dcsbyingmou2.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜 · 英谋",
+      "text": "若生铸剑为犁之心，须有纵钺止戈之力。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyingmou2.mp3",
+      "sourceGitBlob": "71830a215ced4bd903266e3b77a396411b362550",
+      "bytes": 84508,
+      "sha256": "12ab0f92ab344a92e62937d6e855935b71acf65c2e4e228dd60104dbb6582c1e"
+    },
+    "die/dc_sb_zhouyu": {
+      "key": "die/dc_sb_zhouyu",
+      "file": "audio/die/dc_sb_zhouyu.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜 · 阵亡",
+      "text": "人生之艰难，犹如不息之长河……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_zhouyu.mp3",
+      "sourceGitBlob": "1f69f6ac0f627f8e8804e143988b887e35a618a4",
+      "bytes": 83194,
+      "sha256": "4ce970b28ccfde52ab98b8f98bf44306623dcc372e84be1e6bdc9dbaa8e26e69"
+    },
+    "skill/dcsbronghuo_dc_sb_zhouyu_shadow1": {
+      "key": "skill/dcsbronghuo_dc_sb_zhouyu_shadow1",
+      "file": "audio/skill/dcsbronghuo_dc_sb_zhouyu_shadow1.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜（转换形态） · 融火",
+      "text": "江东多锦绣，离火起曹贼毕，九州同忾。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbronghuo_dc_sb_zhouyu_shadow1.mp3",
+      "sourceGitBlob": "ea7f8814ea3d68ef9f716f9d00134a6330b4c15d",
+      "bytes": 95106,
+      "sha256": "c686d47c8e48070cb375928b55c0c12aec2e8a6611e18dfa7e6698c59dddc140"
+    },
+    "skill/dcsbronghuo_dc_sb_zhouyu_shadow2": {
+      "key": "skill/dcsbronghuo_dc_sb_zhouyu_shadow2",
+      "file": "audio/skill/dcsbronghuo_dc_sb_zhouyu_shadow2.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜（转换形态） · 融火",
+      "text": "星火乘风，风助火势，其必成燎原之姿。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbronghuo_dc_sb_zhouyu_shadow2.mp3",
+      "sourceGitBlob": "b7fe45828517d940d0ddc57ab74eefdc691cfa8c",
+      "bytes": 97869,
+      "sha256": "830fe34f79cab807ac22a6f6bc4c670ed98c7d4413695f4d5918ddb8e59e3ac7"
+    },
+    "skill/dcsbyingmou_dc_sb_zhouyu_shadow1": {
+      "key": "skill/dcsbyingmou_dc_sb_zhouyu_shadow1",
+      "file": "audio/skill/dcsbyingmou_dc_sb_zhouyu_shadow1.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜（转换形态） · 英谋",
+      "text": "既遇知己之明主，当福祸共之，荣辱共之。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyingmou_dc_sb_zhouyu_shadow1.mp3",
+      "sourceGitBlob": "caf5784b60e05218ddf3db42480b865a8a467a5b",
+      "bytes": 89612,
+      "sha256": "f4570c84001eb8b324afe289d17a03a1e9846072570186d636986aff852c6aac"
+    },
+    "skill/dcsbyingmou_dc_sb_zhouyu_shadow2": {
+      "key": "skill/dcsbyingmou_dc_sb_zhouyu_shadow2",
+      "file": "audio/skill/dcsbyingmou_dc_sb_zhouyu_shadow2.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜（转换形态） · 英谋",
+      "text": "将者，贵在知敌虚实，而后避实而击虚。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbyingmou_dc_sb_zhouyu_shadow2.mp3",
+      "sourceGitBlob": "fb1b85b806507c4556ba461881967d053ab724bd",
+      "bytes": 101684,
+      "sha256": "91953a9220c1137377b818c69bc285e3c2a8b44ded78f016c6deec8bcbf864d9"
+    },
+    "die/dc_sb_zhouyu_shadow": {
+      "key": "die/dc_sb_zhouyu_shadow",
+      "file": "audio/die/dc_sb_zhouyu_shadow.mp3",
+      "character": "dc_sb_zhouyu",
+      "label": "新杀谋周瑜（转换形态） · 阵亡",
+      "text": "大业未成，奈何身付黄泉……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_zhouyu_shadow.mp3",
+      "sourceGitBlob": "36dd80c1051ccd241ab950c2c87729dda85bcb94",
+      "bytes": 80049,
+      "sha256": "1c9ff6973e94dfc3e4d5e223373fe9bf489c521a261488bf662fbbf5781a8e9e"
+    },
+    "skill/dcsbmingshi1": {
+      "key": "skill/dcsbmingshi1",
+      "file": "audio/skill/dcsbmingshi1.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃 · 明势",
+      "text": "联刘以抗曹，此可行之大势。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmingshi1.mp3",
+      "sourceGitBlob": "b1c22032b4b3d4a3c750756ca4691993d979363e",
+      "bytes": 71361,
+      "sha256": "7732ab616ec15f3e050fcd6fa89e626d21e00efe82c6eb3d26b357dbb414f2fc"
+    },
+    "skill/dcsbmingshi2": {
+      "key": "skill/dcsbmingshi2",
+      "file": "audio/skill/dcsbmingshi2.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃 · 明势",
+      "text": "强敌在北，唯协力可御之。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmingshi2.mp3",
+      "sourceGitBlob": "4ead1318388a9464d036e07622f1716d69d0ede9",
+      "bytes": 79815,
+      "sha256": "07cae471e8dd21a736a450b91f4e17b3594a3b14bed6442589cb526be07d297f"
+    },
+    "skill/dcsbmengmou1": {
+      "key": "skill/dcsbmengmou1",
+      "file": "audio/skill/dcsbmengmou1.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃 · 盟谋",
+      "text": "南北同仇，请皇叔移驾江东，共观花火。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmengmou1.mp3",
+      "sourceGitBlob": "13a71dfb396a2cef88052def17f692510279b4ec",
+      "bytes": 96626,
+      "sha256": "227d68bb210f4eee7500c6db20192559aeed0bd19832c4260e6d2cb0a1939e8a"
+    },
+    "skill/dcsbmengmou2": {
+      "key": "skill/dcsbmengmou2",
+      "file": "audio/skill/dcsbmengmou2.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃 · 盟谋",
+      "text": "孙刘一家，慕英雄之意，忾窃汉之敌。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmengmou2.mp3",
+      "sourceGitBlob": "17fa3ea15e514d4ca080254601332f02eb6bf035",
+      "bytes": 78837,
+      "sha256": "84dcef0678b35f8626626fe5824edf12afee20b484159df42f08a18689498a0f"
+    },
+    "die/dc_sb_lusu": {
+      "key": "die/dc_sb_lusu",
+      "file": "audio/die/dc_sb_lusu.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃 · 阵亡",
+      "text": "虎可为之用，亦可为之伤……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_lusu.mp3",
+      "sourceGitBlob": "058e641973706f866cb819b3cd79867b2d35158c",
+      "bytes": 86176,
+      "sha256": "5171108483ff962cfb72dafb52e08987004d8ed60accbf28eb6385a1bd776bdb"
+    },
+    "skill/dcsbmingshi_dc_sb_lusu_shadow1": {
+      "key": "skill/dcsbmingshi_dc_sb_lusu_shadow1",
+      "file": "audio/skill/dcsbmingshi_dc_sb_lusu_shadow1.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃（转换形态） · 明势",
+      "text": "今天下春秋已定，君不见南北沟壑乎？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmingshi_dc_sb_lusu_shadow1.mp3",
+      "sourceGitBlob": "88770124840d3ab47f4fcc2d95038c26f0404107",
+      "bytes": 86916,
+      "sha256": "e57d178c178f4ea4ab42414b7c48fc614b4dcd3f7e1e901646db8a67bfc888ab"
+    },
+    "skill/dcsbmingshi_dc_sb_lusu_shadow2": {
+      "key": "skill/dcsbmingshi_dc_sb_lusu_shadow2",
+      "file": "audio/skill/dcsbmingshi_dc_sb_lusu_shadow2.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃（转换形态） · 明势",
+      "text": "善谋者借势而为，其化万物为己用。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmingshi_dc_sb_lusu_shadow2.mp3",
+      "sourceGitBlob": "00b5c82ac1eef2cb8467238cefb42ec25548e2e3",
+      "bytes": 105855,
+      "sha256": "8e5d1265831125cabaccb82c05edfc1baae4531979bebf905b0fc61f83a0034f"
+    },
+    "skill/dcsbmengmou_dc_sb_lusu_shadow1": {
+      "key": "skill/dcsbmengmou_dc_sb_lusu_shadow1",
+      "file": "audio/skill/dcsbmengmou_dc_sb_lusu_shadow1.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃（转换形态） · 盟谋",
+      "text": "合左抑右，定两家之盟。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmengmou_dc_sb_lusu_shadow1.mp3",
+      "sourceGitBlob": "d548d3e0b66f5c109dbf1059401737c945c46497",
+      "bytes": 53518,
+      "sha256": "92250227f898328447c8bec9e15fa4235a3dea1ed453806f621653c4221503a7"
+    },
+    "skill/dcsbmengmou_dc_sb_lusu_shadow2": {
+      "key": "skill/dcsbmengmou_dc_sb_lusu_shadow2",
+      "file": "audio/skill/dcsbmengmou_dc_sb_lusu_shadow2.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃（转换形态） · 盟谋",
+      "text": "求同存异，邀英雄问鼎。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbmengmou_dc_sb_lusu_shadow2.mp3",
+      "sourceGitBlob": "d5288680b0d8e45654e3c27d5023879d13192687",
+      "bytes": 61469,
+      "sha256": "ce7a99f9bfd38ad4e95e15f9e1514100ee9dc13fa8d2450dd537f3bdb6a6ab8c"
+    },
+    "die/dc_sb_lusu_shadow": {
+      "key": "die/dc_sb_lusu_shadow",
+      "file": "audio/die/dc_sb_lusu_shadow.mp3",
+      "character": "dc_sb_lusu",
+      "label": "新杀谋鲁肃（转换形态） · 阵亡",
+      "text": "青龙已巢，以何驱之？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_lusu_shadow.mp3",
+      "sourceGitBlob": "c7411b2c14925b643d4f6e7191a86a2a6e5df4f9",
+      "bytes": 62076,
+      "sha256": "bad0351bee8ff14678c14a6b01f48b2872fc9d9b1407bee6df2789552cfc2356"
+    },
+    "skill/dcsbsushen1": {
+      "key": "skill/dcsbsushen1",
+      "file": "audio/skill/dcsbsushen1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 肃身",
+      "text": "谋先于行则昌，行先于谋则亡。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbsushen1.mp3",
+      "sourceGitBlob": "1d6505b91027bcccac11314c2ce5fd613bf084ca",
+      "bytes": 101516,
+      "sha256": "2679b3846517e413a7b1fd500393a9381bdcc40b70b96e6fa5634bf1479b5440"
+    },
+    "skill/dcsbsushen2": {
+      "key": "skill/dcsbsushen2",
+      "file": "audio/skill/dcsbsushen2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 肃身",
+      "text": "天行五色，雪覆林间睡狐，独我执白。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbsushen2.mp3",
+      "sourceGitBlob": "2b7f313b0e158d7c202f049bb21cc7a81c84d110",
+      "bytes": 101372,
+      "sha256": "76786b5c05bbc49d68419592a3a9bbf436e0069a15d238a0714dd6fc1598b312"
+    },
+    "skill/dcsbfumou1": {
+      "key": "skill/dcsbfumou1",
+      "file": "audio/skill/dcsbfumou1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 覆谋",
+      "text": "恩仇付浊酒，荡平劫波，且做英雄吼。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfumou1.mp3",
+      "sourceGitBlob": "97ad34dd054fbb037f49ad60f13bf96d7d46e7eb",
+      "bytes": 115196,
+      "sha256": "13cedbbd1343233ff46a8c72d58f808973418d20904f311b217d4b337c280876"
+    },
+    "skill/dcsbfumou2": {
+      "key": "skill/dcsbfumou2",
+      "file": "audio/skill/dcsbfumou2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 覆谋",
+      "text": "人无恒敌，亦无恒友，唯有恒利。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfumou2.mp3",
+      "sourceGitBlob": "2db9beef33f41f4a82a75816dff5756c7d83b46a",
+      "bytes": 85124,
+      "sha256": "f8e51fac5c26ed7b900f707a4a05a2ae3706e2bf114a4d298024ada6fa8ea323"
+    },
+    "skill/dcsbrushi1": {
+      "key": "skill/dcsbrushi1",
+      "file": "audio/skill/dcsbrushi1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 入世",
+      "text": "孤立川上，观逝者如东去之流水。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbrushi1.mp3",
+      "sourceGitBlob": "bd68df88d2ffa6921971ade73b2fc6ce70b8c517",
+      "bytes": 109220,
+      "sha256": "234bd3e13648949f080541240993942a2f176de024833f0be0f8e5a5f78cb3f3"
+    },
+    "skill/dcsbrushi2": {
+      "key": "skill/dcsbrushi2",
+      "file": "audio/skill/dcsbrushi2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 入世",
+      "text": "九州如画，怎可空老人间？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbrushi2.mp3",
+      "sourceGitBlob": "b04e980694b73fd8e0998bdc608435c973e9077e",
+      "bytes": 70244,
+      "sha256": "a2b7b2841ab58a591e008f8abcbc07dda5a1c1f3978cc5f0cb02218ec8e61a01"
+    },
+    "die/dc_sb_jiaxu": {
+      "key": "die/dc_sb_jiaxu",
+      "file": "audio/die/dc_sb_jiaxu.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩 · 阵亡",
+      "text": "辛者抱薪，妄燃烽火以戏诸侯……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_jiaxu.mp3",
+      "sourceGitBlob": "4f42cf4a25c26f18422007e5239ef530d3f811b3",
+      "bytes": 101756,
+      "sha256": "8ff608512c4e2d7030c7f269ef717c2e8bbbf1a8f85fa4481f23f0791cf6c27d"
+    },
+    "skill/dcsbsushen_dc_sb_jiaxu_shadow1": {
+      "key": "skill/dcsbsushen_dc_sb_jiaxu_shadow1",
+      "file": "audio/skill/dcsbsushen_dc_sb_jiaxu_shadow1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 肃身",
+      "text": "我有三窟之筹谋，不蹈背水之维谷。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbsushen_dc_sb_jiaxu_shadow1.mp3",
+      "sourceGitBlob": "0f0ed39072141c0a272ba4e2482628f24dabcaad",
+      "bytes": 92900,
+      "sha256": "fa80fa1fd0cdc25fbeeb984ec0d7ad78569ebb2d6771e67a690da22d774ff2bd"
+    },
+    "skill/dcsbsushen_dc_sb_jiaxu_shadow2": {
+      "key": "skill/dcsbsushen_dc_sb_jiaxu_shadow2",
+      "file": "audio/skill/dcsbsushen_dc_sb_jiaxu_shadow2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 肃身",
+      "text": "已积千里跬步，欲履万里河山。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbsushen_dc_sb_jiaxu_shadow2.mp3",
+      "sourceGitBlob": "51e19c352935c8d318e8af5b399818b4560c7d42",
+      "bytes": 81284,
+      "sha256": "45d59a07dfdee7e0e83bd94fd1e49777a210234353989a23ce66f201df21654b"
+    },
+    "skill/dcsbfumou_dc_sb_jiaxu_shadow1": {
+      "key": "skill/dcsbfumou_dc_sb_jiaxu_shadow1",
+      "file": "audio/skill/dcsbfumou_dc_sb_jiaxu_shadow1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 覆谋",
+      "text": "不周之柱已折，这世间当起一阵风，落一场雨。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfumou_dc_sb_jiaxu_shadow1.mp3",
+      "sourceGitBlob": "bba5680d0c3459b253ea46035d05f6d724c84ac6",
+      "bytes": 118988,
+      "sha256": "1675368ee0488b961c1f3fdfe074d5bd7a1be636a3b156c9855be138e7752389"
+    },
+    "skill/dcsbfumou_dc_sb_jiaxu_shadow2": {
+      "key": "skill/dcsbfumou_dc_sb_jiaxu_shadow2",
+      "file": "audio/skill/dcsbfumou_dc_sb_jiaxu_shadow2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 覆谋",
+      "text": "善谋者，不与善战者争功。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbfumou_dc_sb_jiaxu_shadow2.mp3",
+      "sourceGitBlob": "e6141c0b05dc55efc45df00643433e818aa10388",
+      "bytes": 72524,
+      "sha256": "d187591277f932ffdae9b985a36c7f83466f67a04995f4c78263eab5ca39128c"
+    },
+    "skill/dcsbrushi_dc_sb_jiaxu_shadow1": {
+      "key": "skill/dcsbrushi_dc_sb_jiaxu_shadow1",
+      "file": "audio/skill/dcsbrushi_dc_sb_jiaxu_shadow1.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 入世",
+      "text": "曾寄青鸟凌云志，归来城头看王旗。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbrushi_dc_sb_jiaxu_shadow1.mp3",
+      "sourceGitBlob": "74c1bddd5bb461a8356d1fe202060a842859120f",
+      "bytes": 121124,
+      "sha256": "00693bf954c6db55614c0b55ad097f4bcffe648ea83b94bf4ae916df2bffc463"
+    },
+    "skill/dcsbrushi_dc_sb_jiaxu_shadow2": {
+      "key": "skill/dcsbrushi_dc_sb_jiaxu_shadow2",
+      "file": "audio/skill/dcsbrushi_dc_sb_jiaxu_shadow2.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 入世",
+      "text": "烽火照长安，淯水洗枯骨，今日对弈何人？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbrushi_dc_sb_jiaxu_shadow2.mp3",
+      "sourceGitBlob": "588d9fe61b46ff390d4f5b14ae2e50d72186287a",
+      "bytes": 135044,
+      "sha256": "a785f1dd89c03eb60379403e9ef7fea8e13b881f1c03eb2b93b773b33be3e994"
+    },
+    "die/dc_sb_jiaxu_shadow": {
+      "key": "die/dc_sb_jiaxu_shadow",
+      "file": "audio/die/dc_sb_jiaxu_shadow.mp3",
+      "character": "dc_sb_jiaxu",
+      "label": "新杀谋贾诩（转换形态） · 阵亡",
+      "text": "未见青山草木，枯骨徒付浊流……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_jiaxu_shadow.mp3",
+      "sourceGitBlob": "cbd6458e76e49286c5abbb298de9d8711e332a3d",
+      "bytes": 87668,
+      "sha256": "0634920ad7a3dd98641a0589158517734be488b6076c3126da38304a56679ee2"
+    },
+    "skill/dcsbquanmou1": {
+      "key": "skill/dcsbquanmou1",
+      "file": "audio/skill/dcsbquanmou1.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿 · 权谋",
+      "text": "洛水为誓，皇天为证，吾意不在刀兵。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbquanmou1.mp3",
+      "sourceGitBlob": "5d679c2f32c5c88cb8e2f531d35655c3078df067",
+      "bytes": 86468,
+      "sha256": "95750b2c3888bbfa227c2ff16165f296b13301e258ef1ec7e77d2ff8ac7c7a54"
+    },
+    "skill/dcsbquanmou2": {
+      "key": "skill/dcsbquanmou2",
+      "file": "audio/skill/dcsbquanmou2.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿 · 权谋",
+      "text": "以谋代战，攻形不以力，攻心不以勇。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbquanmou2.mp3",
+      "sourceGitBlob": "cb9ab44fe86449b83f3799e3fec7692fb81be55f",
+      "bytes": 93812,
+      "sha256": "122dc290b646ad40a65e0761d80678516dde1de451ae05c1b8130628b1e57d59"
+    },
+    "skill/dcsbpingliao1": {
+      "key": "skill/dcsbpingliao1",
+      "file": "audio/skill/dcsbpingliao1.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿 · 平辽",
+      "text": "烽烟起大荒，戎军远役，问不臣者谁？",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbpingliao1.mp3",
+      "sourceGitBlob": "9bb840bb2b8af1213e01d6e12d1538348ec40b30",
+      "bytes": 107396,
+      "sha256": "43e9802a5449301a13c8b7e8caf2729bd35023289320597d83c2408299474133"
+    },
+    "skill/dcsbpingliao2": {
+      "key": "skill/dcsbpingliao2",
+      "file": "audio/skill/dcsbpingliao2.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿 · 平辽",
+      "text": "挥斥千军之贲，长驱万里之远。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbpingliao2.mp3",
+      "sourceGitBlob": "f96dd1fe8973ba6cc19b75478de449b97b2a7367",
+      "bytes": 79556,
+      "sha256": "4951a7aeda5c10d6122f8cf7b66437fb93c9e83022199a6e2aa36af8bc83c079"
+    },
+    "die/dc_sb_simayi": {
+      "key": "die/dc_sb_simayi",
+      "file": "audio/die/dc_sb_simayi.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿 · 阵亡",
+      "text": "以权谋而立者，必失大义于千秋……",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_simayi.mp3",
+      "sourceGitBlob": "af5d902a3d230f16fcee609717eb3057c4b5f459",
+      "bytes": 92852,
+      "sha256": "19546e636733533e8a51888845b876e187303ab9c28ffacd27611320ccec7556"
+    },
+    "skill/dcsbquanmou_dc_sb_simayi_shadow1": {
+      "key": "skill/dcsbquanmou_dc_sb_simayi_shadow1",
+      "file": "audio/skill/dcsbquanmou_dc_sb_simayi_shadow1.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿（转换形态） · 权谋",
+      "text": "鸿门之宴虽歇，会稽之胆尚悬，孤岂姬、项之辈！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbquanmou_dc_sb_simayi_shadow1.mp3",
+      "sourceGitBlob": "8ecc2142fc6e6643d96e32df74cb156bc07a6380",
+      "bytes": 130796,
+      "sha256": "2925eb441cad86eeb5f64ab8b74c56516df285a698b3ef248db8fd86b614112a"
+    },
+    "skill/dcsbquanmou_dc_sb_simayi_shadow2": {
+      "key": "skill/dcsbquanmou_dc_sb_simayi_shadow2",
+      "file": "audio/skill/dcsbquanmou_dc_sb_simayi_shadow2.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿（转换形态） · 权谋",
+      "text": "昔藏青锋于沧海，今潮落，可现兵！",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbquanmou_dc_sb_simayi_shadow2.mp3",
+      "sourceGitBlob": "97a936b5970d428cb056f85a9ef77be1e63f5b0d",
+      "bytes": 93044,
+      "sha256": "e11831423c31abd9a5d603116accb66ffb4ab1155057b5936681f7ab39745498"
+    },
+    "skill/dcsbpingliao_dc_sb_simayi_shadow1": {
+      "key": "skill/dcsbpingliao_dc_sb_simayi_shadow1",
+      "file": "audio/skill/dcsbpingliao_dc_sb_simayi_shadow1.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿（转换形态） · 平辽",
+      "text": "率土之滨皆为王城，辽土亦居普天之下。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbpingliao_dc_sb_simayi_shadow1.mp3",
+      "sourceGitBlob": "262c362441610bb2221a7fd0e3e82a5eb1dea882",
+      "bytes": 114068,
+      "sha256": "66e815bfb7048b1b76313691cb2e158480870b2ffeae1825cc5590e990077ff5"
+    },
+    "skill/dcsbpingliao_dc_sb_simayi_shadow2": {
+      "key": "skill/dcsbpingliao_dc_sb_simayi_shadow2",
+      "file": "audio/skill/dcsbpingliao_dc_sb_simayi_shadow2.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿（转换形态） · 平辽",
+      "text": "青云远上，寒风试刃，北雁当寄红绫。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbpingliao_dc_sb_simayi_shadow2.mp3",
+      "sourceGitBlob": "39a257c1af34240d47b778f49b4712f21af43f2a",
+      "bytes": 112220,
+      "sha256": "9749f021e96751e8235f59c368f9000c6e5e9e0edfe8fe6e23f8f0c0e11b62da"
+    },
+    "die/dc_sb_simayi_shadow": {
+      "key": "die/dc_sb_simayi_shadow",
+      "file": "audio/die/dc_sb_simayi_shadow.mp3",
+      "character": "dc_sb_simayi",
+      "label": "新杀谋司马懿（转换形态） · 阵亡",
+      "text": "人立中流，非己力可向，实大势所迫。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_simayi_shadow.mp3",
+      "sourceGitBlob": "d239a75b4decb28eb256f759eb8d113d88263721",
+      "bytes": 116492,
+      "sha256": "335f8a7eb9812268ede23ab3fc234b54fd171406e5542f14d40a5e3e609e85ee"
+    },
+    "skill/dcsbjunmou1": {
+      "key": "skill/dcsbjunmou1",
+      "file": "audio/skill/dcsbjunmou1.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊 · 隽谋",
+      "text": "燎原之势已成，七十万枯骨作柴薪! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjunmou1.mp3",
+      "sourceGitBlob": "f597c126c4703cf8979672d054975ff2403a0363",
+      "bytes": 93061,
+      "sha256": "03f97884a2b2e466678ec1e94fecd6ed9e201e62094f6ea9414ac3e4e3d47687"
+    },
+    "skill/dcsbjunmou2": {
+      "key": "skill/dcsbjunmou2",
+      "file": "audio/skill/dcsbjunmou2.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊 · 隽谋",
+      "text": "夷陵宴始，邀玄德公献头! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjunmou2.mp3",
+      "sourceGitBlob": "55a3a067614a14b5890668da1a275f41fc04f5a6",
+      "bytes": 100375,
+      "sha256": "21e67f84d9f32d60ad4588c195c4fe579b8fe00f1d50a7d49bbe47e0f250fa04"
+    },
+    "skill/dcsbzhanyan1": {
+      "key": "skill/dcsbzhanyan1",
+      "file": "audio/skill/dcsbzhanyan1.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊 · 绽炎",
+      "text": "东风若知趣，应携离火来! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbzhanyan1.mp3",
+      "sourceGitBlob": "41be68ad4f13e0b9283a58f6bb18ec8060847319",
+      "bytes": 79999,
+      "sha256": "64cbe044e6d7c37ade0fcce9b36e71de211e21e15e7e052c0b88a41153318874"
+    },
+    "skill/dcsbzhanyan2": {
+      "key": "skill/dcsbzhanyan2",
+      "file": "audio/skill/dcsbzhanyan2.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊 · 绽炎",
+      "text": "今日便让这七百里烽火，照亮尔等愚目! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbzhanyan2.mp3",
+      "sourceGitBlob": "2ea720115bce898d7a68c7813f7d461fb45928ec",
+      "bytes": 117616,
+      "sha256": "e31d2f8ddbc78aaa93dd952ca9b1b1031cb3003cf05bb445f623dc82ed490100"
+    },
+    "die/dc_sb_luxun": {
+      "key": "die/dc_sb_luxun",
+      "file": "audio/die/dc_sb_luxun.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊 · 阵亡",
+      "text": "夷陵火光，终究照不亮江东长夜。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_luxun.mp3",
+      "sourceGitBlob": "1504db3f01ba8e5ad881f8d2d6fae425603e54c2",
+      "bytes": 147395,
+      "sha256": "300f9d6d9c5dc867965d1cc6db5668627c29855199b8a1aca46c898307076816"
+    },
+    "skill/dcsbjunmou_dc_sb_luxun_shadow1": {
+      "key": "skill/dcsbjunmou_dc_sb_luxun_shadow1",
+      "file": "audio/skill/dcsbjunmou_dc_sb_luxun_shadow1.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊（转换形态） · 隽谋",
+      "text": "此棋方至中盘，勿用潜龙惊渊。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjunmou_dc_sb_luxun_shadow1.mp3",
+      "sourceGitBlob": "75b79c12cfbc8eecf5a2987fad38b14d96d0ed85",
+      "bytes": 82612,
+      "sha256": "adcba5bcb89f43dc2a7f6e568bdf008250a392fbc11436b9312c21db526d39da"
+    },
+    "skill/dcsbjunmou_dc_sb_luxun_shadow2": {
+      "key": "skill/dcsbjunmou_dc_sb_luxun_shadow2",
+      "file": "audio/skill/dcsbjunmou_dc_sb_luxun_shadow2.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊（转换形态） · 隽谋",
+      "text": "昔年越王卧薪，非惧甲戈，乃待天时。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbjunmou_dc_sb_luxun_shadow2.mp3",
+      "sourceGitBlob": "2568a0a021608786b3cf8e7a92152b66e0c2add0",
+      "bytes": 99852,
+      "sha256": "34be419ceef5b6acd44dc4a88a2879cf522039d35b7e8678a354679747491f58"
+    },
+    "skill/dcsbzhanyan_dc_sb_luxun_shadow1": {
+      "key": "skill/dcsbzhanyan_dc_sb_luxun_shadow1",
+      "file": "audio/skill/dcsbzhanyan_dc_sb_luxun_shadow1.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊（转换形态） · 绽炎",
+      "text": "江东陆伯言，问刘皇叔安! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbzhanyan_dc_sb_luxun_shadow1.mp3",
+      "sourceGitBlob": "b435eef7bb7732b7b6c1bb296e4cd5e44274c2cd",
+      "bytes": 90448,
+      "sha256": "b3e5a9505cca06a4d58560b68642a15c6fd33497bdcc5e176982232482683b8c"
+    },
+    "skill/dcsbzhanyan_dc_sb_luxun_shadow2": {
+      "key": "skill/dcsbzhanyan_dc_sb_luxun_shadow2",
+      "file": "audio/skill/dcsbzhanyan_dc_sb_luxun_shadow2.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊（转换形态） · 绽炎",
+      "text": "汝非真金，当惧火炼! ",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/skill/dcsbzhanyan_dc_sb_luxun_shadow2.mp3",
+      "sourceGitBlob": "25b40b5212773c5ff3975c2b264e4c9b1c781129",
+      "bytes": 54399,
+      "sha256": "65e07db0474e8e6557024d741c7b2b1bd5be22b2c4468438a574302364b28cca"
+    },
+    "die/dc_sb_luxun_shadow": {
+      "key": "die/dc_sb_luxun_shadow",
+      "file": "audio/die/dc_sb_luxun_shadow.mp3",
+      "character": "dc_sb_luxun",
+      "label": "新杀谋陆逊（转换形态） · 阵亡",
+      "text": "滔滔大江，不及人心之险。",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/die/dc_sb_luxun_shadow.mp3",
+      "sourceGitBlob": "cea301c45a5cb41a3b7636d4aef18a99aad4e022",
+      "bytes": 102987,
+      "sha256": "30c261d7a021b792b26d8db3371f15cff571079bae27a7cb809368421ef61d8c"
     }
   }
 }

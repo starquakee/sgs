@@ -14,7 +14,8 @@ const source = path => readFileSync(new URL(`../../apps/core/noname/${path}`, im
 const gameSource = source('game/index.js');
 const clickSource = source('ui/click/index.js');
 const pauseCode = ts.transpileModule(source('game/PauseManager.ts'), { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText;
-const settle = () => new Promise(resolve => setImmediate(resolve));
+// Flush pending timer releases as well as native Deferred promise callbacks.
+const settle = () => new Promise(resolve => setTimeout(resolve, 0));
 function storage(seed = {}) {
   const values = new Map(Object.entries(seed));
   return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) };
@@ -83,6 +84,87 @@ test('same-turn dialog handoff retains the actual asynchronous native pause gate
   first(); const second = pause.acquire('leave');
   await settle(); assert.equal(advanced, false); assert.equal(f._status.paused2, true);
   second(); await settle(); assert.equal(advanced, true); pause.dispose();
+});
+
+for (const [name, schedule] of [
+  ['queued microtask', callback => queueMicrotask(callback)],
+  ['nested promise', callback => Promise.resolve().then(() => Promise.resolve().then(callback))],
+]) {
+  test(`${name} dialog handoff keeps the original native wait pending until the final owner closes`, async t => {
+    const f = engine(), resume = t.mock.method(f.game, 'resume2'), pause = installOwnedPause(f);
+    t.after(() => pause.dispose());
+    const first = pause.acquire('settings'), selected = structuredClone(f.ui.selected), event = f._status.event;
+    let advanced = false, second;
+    const nativeWait = f._status.pauseManager.waitPause().then(() => { advanced = true; });
+    first();
+    schedule(() => { second = pause.acquire('leave'); });
+    await settle();
+    assert.deepEqual(pause.reasons(), ['leave']);
+    assert.equal(advanced, false, 'the original native wait must not advance during the handoff');
+    assert.equal(f._status.paused2, true);
+    assert.equal(resume.mock.callCount(), 0);
+    assert.deepEqual(f.ui.selected, selected); assert.equal(f._status.event, event);
+    second(); second(); f.game.resume2();
+    await nativeWait;
+    assert.equal(advanced, true); assert.equal(f._status.paused2, false);
+    assert.equal(resume.mock.callCount(), 1, 'repeated closes and native resume coalesce into one release');
+  });
+}
+
+test('a native pause acquired in a microtask cancels a pending SGS release', async t => {
+  const f = engine(), resume = t.mock.method(f.game, 'resume2'), pause = installOwnedPause(f);
+  t.after(() => pause.dispose());
+  const close = pause.acquire('settings');
+  let advanced = false;
+  const nativeWait = f._status.pauseManager.waitPause().then(() => { advanced = true; });
+  close(); queueMicrotask(() => f.game.pause2());
+  await settle();
+  assert.equal(advanced, false); assert.equal(f._status.paused2, true);
+  assert.equal(resume.mock.callCount(), 0);
+  f.game.resume2(); await nativeWait;
+  assert.equal(resume.mock.callCount(), 1); assert.equal(f._status.paused2, false);
+});
+
+test('handoff and disposal cancel scheduled releases without leaving callbacks or releasing native ownership', async t => {
+  const pending = new Set(), schedule = globalThis.setTimeout, cancel = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+    const id = schedule(() => { pending.delete(id); callback(...args); }, delay);
+    pending.add(id);
+    return id;
+  });
+  t.mock.method(globalThis, 'clearTimeout', id => { pending.delete(id); cancel(id); });
+  t.after(() => { for (const id of pending) cancel(id); });
+  for (const keepNative of [false, true]) {
+    const f = engine(), resume = t.mock.method(f.game, 'resume2'), pause = installOwnedPause(f);
+    t.after(() => pause.dispose());
+    pause.acquire('settings')();
+    const second = pause.acquire('leave');
+    assert.equal(pending.size, 0, 'a new owner cancels scheduled release work');
+    second(); f.game.pause2();
+    assert.equal(pending.size, 0, 'native ownership cancels scheduled release work');
+    if (!keepNative) f.game.resume2();
+    pause.dispose(); pause.dispose(); second();
+    assert.equal(pending.size, 0, 'disposal leaves no scheduled release');
+    await settle();
+    assert.equal(resume.mock.callCount(), keepNative ? 0 : 1, 'no delayed or duplicate resume after disposal');
+    assert.equal(f._status.paused2, keepNative);
+  }
+});
+
+test('clock excludes pending release and microtask handoff time until the gate is released', async t => {
+  const f = engine(); let time = 0;
+  const pause = installOwnedPause({ ...f, now: () => time });
+  t.after(() => pause.dispose());
+  time = 1000; const first = pause.acquire('settings');
+  time = 2000; first();
+  let second;
+  queueMicrotask(() => { time = 3000; second = pause.acquire('leave'); });
+  await settle();
+  time = 4000; assert.equal(pause.elapsedMs(), 1000);
+  second(); time = 5000;
+  assert.equal(pause.elapsedMs(), 1000, 'the native gate is still paused until the release task');
+  await settle();
+  time = 6000; assert.equal(pause.elapsedMs(), 2000);
 });
 
 test('clock excludes nested, background and native pause time without double subtraction, and stops at over', async () => {

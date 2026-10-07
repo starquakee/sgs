@@ -43,23 +43,37 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   let preload;
 
   const changed = () => options.onStateChange?.(controller.status());
+  function deviceFailure(error) {
+    state.blocked = true;
+    state.lastError = error?.message || '声音设备暂时无法启用。';
+    changed();
+  }
   function ensureContext() {
-    if (!context && !disposed) context = createContext();
+    if (!context && !disposed) {
+      try { context = createContext(); }
+      catch (error) { deviceFailure(error); return null; }
+      if (!context) deviceFailure(new Error('当前浏览器不支持声音播放。'));
+    }
     return context;
   }
   function unlock() {
     if (!state.enabled || disposed) return Promise.resolve(false);
+    const token = generation;
+    const current = () => !disposed && state.enabled && token === generation;
     const ctx = ensureContext();
-    if (!ctx) {
-      state.lastError = '当前浏览器不支持声音播放。';
-      changed();
-      return Promise.resolve(false);
-    }
+    if (!ctx) return Promise.resolve(false);
     // resume() is called synchronously from the click/key handler. One shared
     // context keeps subsequent AI clips unlocked across fresh buffer sources.
-    const resumed = ctx.state === 'running' ? Promise.resolve() : ctx.resume();
+    // Device failures can also throw before returning a Promise.
+    let resumed;
+    try { resumed = ctx.state === 'running' ? undefined : ctx.resume(); }
+    catch (error) { deviceFailure(error); return Promise.resolve(false); }
     return Promise.resolve(resumed).then(() => {
+      // A resume requested before mute/disposal cannot preload or update the
+      // current session, including after sound has since been enabled again.
+      if (!current()) return false;
       state.blocked = ctx.state !== 'running';
+      if (!state.blocked) state.lastError = null;
       if (!state.blocked && !preload && options.damageManifest) {
         // Warm the small hit pack after a user gesture. Loading never plays a
         // sound, and a failed warm-up can retry on the real damage request.
@@ -68,9 +82,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
       changed();
       return !state.blocked;
     }).catch(error => {
-      state.blocked = true;
-      state.lastError = error.message;
-      changed();
+      if (current()) deviceFailure(error);
       return false;
     });
   }
@@ -95,7 +107,8 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     const seen = immediate ? seenDamageEvents : seenEvents;
     if (!clip || !state.enabled || disposed || (event && seen.has(event))) return;
     const ctx = ensureContext();
-    if (!ctx || ctx.state !== 'running') {
+    if (!ctx) return;
+    if (ctx.state !== 'running') {
       state.blocked = true;
       changed();
       return;
