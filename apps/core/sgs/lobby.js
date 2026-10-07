@@ -7,7 +7,7 @@ import { openBattleRecords } from './records-dialog.mjs';
 import { createLaunchHandoff } from './launch-handoff.mjs';
 import { loadRosterAssets } from './loading.mjs';
 import { canPersist, storageNotice } from './storage.mjs';
-import { browsePackName, isOldGeneral, hasUnknownYear, releaseLabel, inBrowseScope, compareBrowseCharacters } from './roster-filters.mjs';
+import { browsePackName, isOldGeneral, releaseLabel, inBrowseScope, compareBrowseCharacters } from './roster-filters.mjs';
 import { ratingScopes, ratingScopeName, ratingValue, compareOfficialRatings, normalizeRatingPreference } from './official-rating.mjs';
 import { skillReadingHTML, closeReadingDetails } from './skill-reading.mjs';
 import { reconcileKeyedHTML, installComposedSearch, focusAfterFilterRemoval } from './lobby-continuity.mjs';
@@ -81,14 +81,13 @@ function render(resetScroll = false) {
   $('selected-filter-note').textContent = selectionHidden ? `出战武将仍为${displayName(selected.name)}，不在当前筛选结果中。` : '';
   $('hide-old').setAttribute('aria-pressed', String(hideOld));
   $('age-filter-note').hidden = !hideOld;
-  const unknownYears = results.filter(hasUnknownYear).length;
-  $('age-filter-note').textContent = hideOld ? `保留2021年起的新将与新版本${unknownYears ? `；另有 ${unknownYears} 位年份待核实，暂时保留。` : '。'}` : '';
+  $('age-filter-note').textContent = hideOld ? '隐藏2020年及以前的武将与版本。' : '';
   $('result-count').textContent = `${collection === 'recent' ? '最近使用' : collection === 'favorites' ? '已收藏' : '可选武将'} ${results.length} 位${faction !== 'all' ? ` · ${factionNames[faction]}势力` : ''}`;
   $('sort-order').setAttribute('title', `按${ratingScopeName(ratingPreference.scope)}官方评分排序；未收录的排在最后`);
   const selectedScore = ratingValue(selected, ratingPreference.scope);
   $('rating-detail').textContent = selectedScore === null ? '此版本评分待收录 · 查看说明 ↗' : `${ratingScopeName(ratingPreference.scope)} ${selectedScore} / 10 · 查看分项 ↗`;
   $('rating-source-date').textContent = catalog.ratingSource ? `官方客户端评分 · ${catalog.ratingSource.versionTime.slice(0,10)}` : '暂无官方评分数据';
-  reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}${hideOld && hasUnknownYear(c) ? '，年份待核实' : ''}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="192" height="256" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}${hideOld && hasUnknownYear(c) ? '<span class="card-year">年份待核实</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
+  reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="192" height="256" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
   $('previous').disabled = currentPage === 1; $('next').disabled = currentPage === pages;
   $('page-number').textContent = `${currentPage} / ${pages}`;
   $('favorite-count').textContent = favorites.size;
@@ -109,6 +108,7 @@ function select(character) {
   $('detail-group').textContent = character.browsePack ? browsePackName(character.browsePack) : text(character.groups[0]?.name || packName(character.pack));
   $('detail-pack').textContent = `${factionNames[character.faction] || character.faction} · ${character.browsePack ? browsePackName(character.browsePack) : packName(character.pack)}`;
   $('release-status').textContent = releaseLabel(character);
+  $('release-status').hidden = !$('release-status').textContent;
   $('detail-hp').textContent = character.maxHp <= 8 ? '●'.repeat(Math.max(0, Math.floor(character.hp))) + '○'.repeat(Math.max(0, Math.floor(character.maxHp-character.hp))) : `${character.hp}/${character.maxHp}`;
   $('detail-hp').setAttribute('aria-label', `体力 ${character.hp}，体力上限 ${character.maxHp}`);
   $('skill-list').innerHTML = skillReadingHTML(character.skills, catalog);
@@ -161,9 +161,9 @@ $('roster-policy').onclick = () => {
       : release?.basis === 'source-edition' ? '依据原始武将包标注的版本年份；不等同于官方首次上架日期。'
       : release?.basis === 'series-debut' ? '该系列在2020年之后推出；此武将的具体首次上线年份仍未单独确认。'
       : source?.note || (release?.basis === 'official-announcement' ? '依据对应版本的官方上新公告。' : '尚无足够的年份依据，开启筛选时继续保留。');
-    evidence = `<h3>当前武将：${escape(displayName(selected.name))}</h3><p>${escape(releaseLabel(selected))}。${escape(basis)}${url ? ` <a href="${escape(url)}" target="_blank" rel="noreferrer">查看年份依据 ↗</a>` : ''}</p>`;
+    evidence = `<h3>当前武将：${escape(displayName(selected.name))}</h3><p>${releaseLabel(selected) ? `${escape(releaseLabel(selected))}。` : ''}${escape(basis)}${url ? ` <a href="${escape(url)}" target="_blank" rel="noreferrer">查看年份依据 ↗</a>` : ''}</p>`;
   }
-  showInfo('武将包与年份', `<p>主要按<strong>一将成名、限定专属、群英荟萃、星河璀璨、谋包、威包</strong>浏览，一将成名排在前面。</p><p>神将、祈福将、王朗、刘徽和武庙将归入限定专属；许绍归入群英荟萃；星曹仁、星袁术等归入新的星河璀璨。谋将、威将各自独立。</p><p>“全部”也保留经典与界限突破。其他版本可在“更多筛选”中切换范围和原始包；原有收藏、出战武将和技能版本保持独立。</p><h3>隐藏老武将</h3><p>隐藏已有依据属于2020年及以前的版本，保留2021年起的新将和新版本。年份未核实的条目继续保留并标注，不按姓名、强度或“界”字判断年份。</p>${evidence}`);
+  showInfo('武将包与年份', `<p>主要按<strong>一将成名、限定专属、群英荟萃、星河璀璨、谋包、威包</strong>浏览，一将成名排在前面。</p><p>神将、祈福将、王朗、刘徽和武庙将归入限定专属；许绍归入群英荟萃；星曹仁、星袁术等归入新的星河璀璨。谋将、威将各自独立。</p><p>“全部”也保留经典与界限突破。其他版本可在“更多筛选”中切换范围和原始包；原有收藏、出战武将和技能版本保持独立。</p><h3>隐藏老武将</h3><p>隐藏已有依据属于2020年及以前的版本，保留2021年起的新将和新版本。年份未核实的条目继续保留，不按姓名、强度或“界”字判断年份。</p>${evidence}`);
 };
 const stopSearch = installComposedSearch($('search'), value => { if (searchQuery === value) return; searchQuery = value; currentPage = 1; render(true); });
 for (const id of ['version','pack']) $(id).addEventListener('change', () => { currentPage = 1; render(true); });

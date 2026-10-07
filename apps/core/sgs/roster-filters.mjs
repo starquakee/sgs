@@ -8,7 +8,7 @@ export const isOldGeneral = character => character.release?.era === 'old';
 export const hasUnknownYear = character => !['old', 'recent'].includes(character.release?.era);
 export function releaseLabel(character) {
   const release = character.release;
-  if (hasUnknownYear(character)) return '年份待核实';
+  if (hasUnknownYear(character)) return '';
   if (release.year) return `${release.year}年${release.basis === 'source-edition' ? '版' : '推出'}`;
   return release.era === 'old' ? '2020年及以前已有' : '2021年起的新系列';
 }

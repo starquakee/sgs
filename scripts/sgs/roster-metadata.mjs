@@ -40,5 +40,5 @@ export function validateRosterPolicy(catalog, policy) {
   for (const rule of Object.values(policy.releaseOverrides)) {
     if (!policy.evidence[rule.evidence]?.url || rule.era !== (rule.year >= policy.cutoffYear ? 'recent' : 'old')) throw new Error('Invalid dated release rule');
   }
-  if (policy.cutoffYear !== 2021 || policy.unknownBehavior !== 'keep-and-label') throw new Error('Review the accepted year-filter policy before changing it');
+  if (policy.cutoffYear !== 2021 || policy.unknownBehavior !== 'keep') throw new Error('Review the accepted year-filter policy before changing it');
 }

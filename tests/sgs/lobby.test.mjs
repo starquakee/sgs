@@ -422,7 +422,7 @@ test('real roster defaults to pack ordering and all six tabs filter exact catalo
   assert.ok(app.visible().includes('sp2:xushao'), 'common homophone search finds 许劭 without renaming the general');
 });
 
-test('hide-old button excludes confirmed old editions but retains modern standard/refresh editions and labels unknown years', async () => {
+test('hide-old button excludes confirmed old editions but retains modern standard/refresh and unknown editions without year labels', async () => {
   const app = await lobby({roster: realRoster}), e = app.elements;
   e['hide-old'].onclick();
   assert.equal(e['hide-old'].attrs['aria-pressed'], 'true');
@@ -430,8 +430,11 @@ test('hide-old button excludes confirmed old editions but retains modern standar
     e.search.value = key.split(':')[1]; e.search.emit('input');
     assert.equal(app.visible().includes(key), visible, key);
   }
-  assert.match(e['general-grid'].innerHTML, /年份待核实/);
-  assert.match(e['age-filter-note'].textContent, /年份待核实，暂时保留/);
+  assert.doesNotMatch(e['general-grid'].innerHTML, /年份待核实|card-year/);
+  assert.doesNotMatch(e['age-filter-note'].textContent, /年份待核实/);
+  app.select('xianding:liuhui');
+  assert.equal(e['release-status'].textContent, '');
+  assert.equal(e['release-status'].hidden, true);
   e['hide-old'].onclick(); e.search.value = 're_caocao'; e.search.emit('input');
   assert.ok(app.visible().includes('refresh:re_caocao'), 'toggle only hides, never deletes a catalog entry');
 });

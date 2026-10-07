@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "cutoffYear": 2021,
-  "unknownBehavior": "keep-and-label",
+  "unknownBehavior": "keep",
   "browsePacks": [
     { "id": "yijiang", "name": "一将成名" },
     { "id": "limited", "name": "限定专属" },

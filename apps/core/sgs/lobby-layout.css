@@ -238,7 +238,6 @@
 .lobby-client .secondary-filters select { width: 100%; max-width: none; min-width: 0; height: 36px; }
 .lobby-client .secondary-filters .factions { display: flex; flex-wrap: wrap; gap: 2px; width: 100%; }
 .lobby-client .secondary-filters .factions button { min-height: 36px; padding: 5px 8px; }
-.card-year { position: absolute; left: 7px; top: 36px; max-width: calc(100% - 50px); padding: 3px 2px; color: #fff0d8; background: #523523eb; font: 10px/1.3 var(--sgs-font-body); text-align: left; }
 .lobby-client .roster-footer { border-top: 1px solid var(--sgs-line); margin: 2px 0 0; padding-top: 3px; }
 .tools .age-toggle { flex-shrink: 0; }
 .sort-select { flex-shrink: 0; margin-left: auto; }
@@ -321,7 +320,6 @@ html body .sgs-client-dialog.skill-reading-dialog { width: min(700px, calc(100vw
 .lobby-client .general-card:hover { translate: 0 -1px; box-shadow: 0 2px 5px #49322440; }
 .lobby-client .general-card.selected { box-shadow: 0 0 0 2px var(--sgs-bronze); }
 .lobby-client .general-card .card-name { top: 29px; max-height: calc(100% - 34px); font-size: 23px; letter-spacing: 2px; }
-.lobby-client .card-year { top: 34px; }
 .lobby-client .pagination { margin: 4px 0; gap: 16px; }
 .lobby-client .pagination button { min-height: 30px; padding: 3px 14px; background: transparent; }
 .lobby-client .roster-footer { padding-top: 2px; }

@@ -42,15 +42,15 @@ test('age filter respects the 2021 boundary, dated editions and exact native ver
   assert.equal(classifyRelease(fixture, policy, history, audio).era, 'old');
 });
 
-test('unverified years remain visible with a clear label, and absence in old source never proves recency', () => {
+test('unverified editions remain selectable without a year label, and absence in old source never proves recency', () => {
   const fixture = {key: 'xianding:dc_unknown', id: 'dc_unknown', pack: 'xianding', groups: [], skills: []};
   const release = classifyRelease(fixture, policy, history, audio);
   assert.equal(release.era, 'unknown');
   assert.equal(isOldGeneral({release}), false);
   assert.equal(hasUnknownYear({release}), true);
-  assert.equal(releaseLabel({release}), '年份待核实');
-  assert.equal(releaseLabel({}), '年份待核实', 'older caches degrade conservatively');
-  assert.equal(policy.unknownBehavior, 'keep-and-label');
+  assert.equal(releaseLabel({release}), '');
+  assert.equal(releaseLabel({}), '', 'older caches must not invent a release year');
+  assert.equal(policy.unknownBehavior, 'keep');
 });
 
 test('audio release evidence is edition-specific and availability alone leaves the release year unknown', () => {
