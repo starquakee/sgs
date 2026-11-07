@@ -53,8 +53,8 @@
         "真实3/4/8人桌在1024×640/1280×720/1920×1080视觉验收；至少一次选牌、换牌、重铸或复杂选择、设置往返；保存前后截图。CSS解析及生产构建通过。"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "CSS-only quieter dragon tabletop, narrower faction/name details, preserved native HP artwork/lost/shield and root-only hand paper edges/shadows. Parent silent native3/4/8tables checked at actual1024x640,1280x720,1920x1080; teammate pane/seat/equipment/hand geometry and126x50primaryconfirm remain usable. Real weapon-to-PeachGarden switch/settings return preserved1card/3targets then manual cancel;8identity mulligan changed4cards once, nativeNeifa drew6to9 then manualdiscard9to8. Review caught nonexistent nativebr long-name selector and actualcompact4-player clipping; fixed against real6-character袁谭袁尚袁熙: at1024 8seatclient=scroll90/namebottom575.81<counttop577.14;4seatclient=scroll111/bottom567.76<counttop577.14. FinalNode22/pnpmproductionbuild,PostCSS/source-dist/diffchecks pass; browserconsoleempty andsoundoff. No rules/portrait/card-face/assets changed."
     },
     {
       "id": "BTL-05",

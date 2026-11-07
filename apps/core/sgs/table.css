@@ -25,24 +25,26 @@ html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-crea
 .sgs-game #arena>.player:not(.minskin){width:var(--sgs-player-w)!important;height:var(--sgs-player-h)!important;border:2px solid #c4ad81!important;border-radius:7px!important;background:#302018!important;box-shadow:0 3px 8px #21120899,0 0 0 1px #39200d!important;overflow:visible}
 .sgs-game #arena>.player:not(.minskin)>.avatar{inset:0!important;width:100%!important;height:100%!important;border-radius:5px!important;background-position:center top!important;box-shadow:none!important}
 .sgs-game #arena>.player>.framebg{display:none!important}
-.sgs-game #arena>.player>.name{left:-5px!important;top:30px!important;bottom:auto!important;right:auto!important;box-sizing:border-box;min-width:27px;max-width:32px;padding:15px 4px 20px;background:linear-gradient(90deg,#641b15,#a13422 55%,#651b17);border:1px solid #d0a564;border-top:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),50% 100%,0 calc(100% - 10px));font:20px/1.1 SGSTableKai,'KaiTi',serif!important;letter-spacing:2px;color:#fff1d1!important;text-shadow:0 1px 3px #321408;z-index:4;max-height:calc(100% - 35px);overflow:hidden}
-.sgs-game #arena>.player[data-sgs-faction='wei']>.name{background:linear-gradient(90deg,#193049,#345873,#1f344a)}
-.sgs-game #arena>.player[data-sgs-faction='wu']>.name{background:linear-gradient(90deg,#164429,#286548,#123c2b)}
-.sgs-game #arena>.player[data-sgs-faction='qun']>.name{background:linear-gradient(90deg,#41352d,#6c5843,#3b2c24)}
-.sgs-game #arena>.player[data-sgs-faction='shen']>.name{background:linear-gradient(90deg,#795021,#ad8434,#6a4419)}
-.sgs-game #arena>.player[data-sgs-faction='jin']>.name{background:linear-gradient(90deg,#3b294a,#78546f,#38203f)}
-.sgs-faction{position:absolute;top:-12px;left:-13px;z-index:5;width:35px;height:38px;display:grid;place-items:center;border:2px solid #d0a478;border-radius:50%;background:radial-gradient(circle at 35% 25%,#d35d49,#7e201c 65%,#421813);color:#fff3d6;font:28px SGSTableKai,'KaiTi',serif;text-shadow:0 1px 4px #591509;box-shadow:0 2px 4px #211008aa;pointer-events:none}
-[data-sgs-faction='wei']>.sgs-faction{background:radial-gradient(circle at 35% 25%,#6494bc,#22496b 65%,#152a3c)}
-[data-sgs-faction='wu']>.sgs-faction{background:radial-gradient(circle at 35% 25%,#81af55,#287142 65%,#163626)}
-[data-sgs-faction='qun']>.sgs-faction{background:radial-gradient(circle at 35% 25%,#b4a17b,#645237 65%,#38281e)}
-[data-sgs-faction='shen']>.sgs-faction{background:radial-gradient(circle at 35% 25%,#f7d078,#af7d25 65%,#78531c)}
+.sgs-game #arena>.player>.name{left:-5px!important;top:30px!important;bottom:auto!important;right:auto!important;box-sizing:border-box;min-width:24px;max-width:28px;padding:6px 2px 10px;background:linear-gradient(90deg,#512b24f2,#734432e8);border:1px solid #b99466;border-top:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 6px),50% 100%,0 calc(100% - 6px));font:18px/1.1 SGSTableKai,'KaiTi',serif!important;letter-spacing:1px;color:#fff1d1!important;text-shadow:0 1px 2px #21150de6;z-index:4;max-height:calc(100% - var(--sgs-ornament)*.82 - 30px);overflow:hidden}
+.sgs-game #arena>.player[data-sgs-faction='wei']>.name{background:linear-gradient(90deg,#233749f2,#3e5669e8)}
+.sgs-game #arena>.player[data-sgs-faction='wu']>.name{background:linear-gradient(90deg,#243e30f2,#42604ae8)}
+.sgs-game #arena>.player[data-sgs-faction='qun']>.name{background:linear-gradient(90deg,#3d342af2,#625442e8)}
+.sgs-game #arena>.player[data-sgs-faction='shen']>.name{background:linear-gradient(90deg,#594323f2,#806334e8)}
+.sgs-game #arena>.player[data-sgs-faction='jin']>.name{background:linear-gradient(90deg,#403147f2,#63516ae8)}
+.sgs-faction{position:absolute;top:-9px;left:-13px;z-index:5;width:35px;height:38px;display:grid;place-items:center;border:1px solid #c4a476;border-radius:50%;background:linear-gradient(135deg,#885741,#573326);color:#fff0d5;font:28px SGSTableKai,'KaiTi',serif;text-shadow:0 1px 2px #2d1b10;box-shadow:inset 0 0 0 2px #412a1b70,0 2px 3px #21150d80;pointer-events:none}
+[data-sgs-faction='wei']>.sgs-faction{background:linear-gradient(135deg,#57758a,#2d465a)}
+[data-sgs-faction='wu']>.sgs-faction{background:linear-gradient(135deg,#667957,#354c3b)}
+[data-sgs-faction='qun']>.sgs-faction{background:linear-gradient(135deg,#89785b,#574832)}
+[data-sgs-faction='shen']>.sgs-faction{background:linear-gradient(135deg,#b09353,#715327)}
 .sgs-game #arena>.player>.identity{top:5px!important;right:5px!important;left:auto!important;width:30px!important;height:31px!important;border-radius:50%;background:#eee4c9;border:2px solid #a8905f;box-shadow:0 1px 3px #29180670;z-index:5;font:24px SGSTableKai,'KaiTi',serif;line-height:30px;color:#6e331e}
 .sgs-game #arena>.player>.identity>div{position:static!important;text-shadow:none!important;transform:none!important;font-size:23px;line-height:30px;color:inherit!important}
 .sgs-game #arena>.player>.identity[data-color='zhu']{color:#a42920}.sgs-game #arena>.player>.identity[data-color='zhong']{color:#865c20}.sgs-game #arena>.player>.identity[data-color='fan']{color:#31723b}.sgs-game #arena>.player>.identity[data-color='nei']{color:#5c457b}
-.sgs-game #arena>.player>.hp{left:auto!important;right:3px!important;top:auto!important;bottom:7px!important;width:16px;line-height:19px;background:#302314a0;border-radius:8px;padding:4px 2px;z-index:5}
-.sgs-game #arena>.player>.hp:not(.text)>div{width:11px;height:11px;margin:4px 2px;display:block;transform:scale(1.4)}
+.sgs-game #arena>.player>.hp{left:auto!important;right:3px!important;top:auto!important;bottom:7px!important;width:16px;line-height:19px;background:#241b14b8;border:1px solid #d1b17a38;border-radius:3px;padding:4px 2px;z-index:5}
+.sgs-game #arena>.player>.hp:not(.text)>div{width:11px;height:11px;margin:3px 2px;display:block;transform:scale(1)}
+/* Keep native condition artwork, lost greyscale and shield treatment intact. */
+.sgs-game #arena>.player>.hp:not(.text):not(.actcount):not(.treasure)>div:not(.lost):not(.shield){filter:brightness(1.08);-webkit-filter:brightness(1.08)}
 .sgs-game #arena>.player>.hp.text{width:auto;min-width:20px;font-size:18px;line-height:20px;color:#f3e5b8}
-.sgs-game #arena>.player>.count{left:3px!important;right:auto!important;bottom:0!important;top:auto!important;width:27px;height:26px;line-height:26px;font:23px/26px SGSTableKai,'KaiTi',serif;text-align:center!important;padding:0;background:#77613de6!important;border:1px solid #d0bc90;border-radius:2px!important;color:#fff4d7;text-shadow:0 1px 2px #332312;z-index:5}
+.sgs-game #arena>.player>.count{left:3px!important;right:auto!important;bottom:0!important;top:auto!important;width:27px;height:26px;line-height:26px;font:23px/26px SGSTableKai,'KaiTi',serif;text-align:center!important;padding:0;background:#483622ed!important;border:1px solid #bda377;border-radius:2px!important;color:#fff4d7;text-shadow:0 1px 2px #24180f;z-index:5}
 .sgs-seat{position:absolute;left:0;right:0;top:calc(100% + 5px);text-align:center;font:16px SGSTableKai,'KaiTi',serif;color:#ebd7ae;text-shadow:0 1px 3px #301c11;pointer-events:none;white-space:nowrap}
 .sgs-game #arena>.player.unseen>.sgs-faction{display:none}
 .sgs-game #arena>.player.selected{box-shadow:0 0 0 3px #f5d389,0 0 18px #d98a2e99!important}
@@ -114,13 +116,16 @@ html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-crea
 .sgs-game #arena>.player[data-position='0']>.equips>.emptyequip.hidden{opacity:1!important}
 .sgs-game #arena>.player[data-position='0']>.equips>.emptyequip>.name2{font-size:14px;color:#cbb28b}
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div{clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,10px 100%,0 50%);padding-left:28px;padding-right:28px}
-.sgs-game #arena{--sgs-ornament:clamp(35px,2.5vw,48px)}
-.sgs-game #arena:is([data-number='7'],[data-number='8']){--sgs-ornament:clamp(30px,2.1vw,40px)}
-.sgs-game #arena>.player>.sgs-faction{width:var(--sgs-ornament);height:var(--sgs-ornament);font-size:calc(var(--sgs-ornament)*.77);left:calc(var(--sgs-ornament)*-.3)}
-.sgs-game #arena>.player>.name{top:calc(var(--sgs-ornament)*.82)!important;min-width:calc(var(--sgs-ornament)*.75);max-width:calc(var(--sgs-ornament)*.85);min-height:44%;font-size:clamp(20px,1.4vw,26px)!important}
+.sgs-game #arena{--sgs-ornament:clamp(28px,2vw,36px)}
+.sgs-game #arena:is([data-number='7'],[data-number='8']){--sgs-ornament:clamp(25px,1.7vw,30px)}
+.sgs-game #arena>.player>.sgs-faction{width:var(--sgs-ornament);height:var(--sgs-ornament);font-size:calc(var(--sgs-ornament)*.7);left:calc(var(--sgs-ornament)*-.3)}
+.sgs-game #arena>.player>.name{top:calc(var(--sgs-ornament)*.82)!important;min-width:clamp(24px,1.5vw,28px);max-width:clamp(24px,1.5vw,28px);min-height:0;font-size:clamp(18px,1.1vw,21px)!important}
+/* Native names use vertical text, not line breaks. Leave the 26px count lane
+   clear while allowing the native font metrics of a six-character name. */
+.sgs-game #arena:is([data-number='7'],[data-number='8'])>.player>.name{min-width:22px;max-width:26px;max-height:calc(100% - var(--sgs-ornament)*.82 - 26px);font-size:clamp(13px,1.15vw,18px)!important;line-height:1.05!important;letter-spacing:0;padding:3px 2px 6px}
 .sgs-game #arena>.player>.identity{width:calc(var(--sgs-ornament)*.85)!important;height:calc(var(--sgs-ornament)*.85)!important;line-height:calc(var(--sgs-ornament)*.85)!important}
 .sgs-game #arena>.player>.identity>div{font-size:calc(var(--sgs-ornament)*.65);line-height:calc(var(--sgs-ornament)*.85)}
-.sgs-game #arena>.player>.hp:not(.text)>div{width:clamp(11px,.85vw,15px);height:clamp(11px,.85vw,15px);margin:5px 2px}
+.sgs-game #arena>.player>.hp:not(.text)>div{width:clamp(11px,.85vw,15px);height:clamp(11px,.85vw,15px);margin:3px 2px}
 /* The table is a fixed game surface; only card rails and dialogs may scroll. */
 .sgs-game #window{overflow:clip!important}
 .sgs-game #arena>.dialog:not(.nobutton){top:auto!important;bottom:calc(var(--sgs-hand-h) + 100px)!important;max-height:calc(100% - var(--sgs-hand-h) - 145px);overflow-y:auto}
@@ -144,7 +149,7 @@ html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-crea
 /* Refined table rhythm: quieter chrome, crisp controls and native card motion. */
 html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-game #window{top:var(--sgs-toolbar-h)!important;height:calc(100% - var(--sgs-toolbar-h))!important;background:radial-gradient(ellipse at 48% 37%,#c4985930,transparent 62%),linear-gradient(0deg,#20120ef5,transparent 42%),linear-gradient(#623c2528,#59351f24),url('../image/background/ol_bg.jpg') center/cover!important}
-.sgs-game #window::before{box-shadow:inset 0 0 140px #25130850}
+.sgs-game #window::before{box-shadow:inset 0 1px #bf986244,inset 0 0 0 5px #38261b70,inset 0 0 54px #23170e66}
 .sgs-hud{height:var(--sgs-toolbar-h);gap:14px;padding:0 22px;background:linear-gradient(#37271d,#2a1c15);border-bottom:1px solid #ad895b80;box-shadow:0 2px 12px #170d0740;font:12px/1.4 'Microsoft YaHei','PingFang SC',sans-serif;color:#ceb58e}
 .sgs-hud strong{font:24px SGSTableKai,'KaiTi',serif;letter-spacing:2px}.sgs-hud strong span{font:16px SGSTableKai,'KaiTi',serif;padding-left:14px;margin-left:12px;color:#d8b782}
 .sgs-return{font:13px 'Microsoft YaHei',sans-serif;color:#bfab8c;padding:7px 0}.sgs-table-state{font-size:12px;color:#a99271}.sgs-table-clock{font-size:12px;color:#baa486}
@@ -157,7 +162,7 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-hud .sgs-tools:not([open]) #system{display:none!important}.sgs-hud .sgs-tools #system>div{display:flex!important;flex-direction:column;align-items:stretch;gap:3px}
 .sgs-hud .sgs-tools #system>div>div{font:12px/1.5 'Microsoft YaHei','PingFang SC',sans-serif!important;padding:8px 10px;border:0;border-radius:3px!important;text-align:left;margin:0;transition:background .15s}
 .sgs-hud .sgs-tools #system>div>div:hover{background:#a8834140!important}
-.sgs-game #arena>.player:not(.minskin){border-radius:8px!important;box-shadow:0 5px 16px #23120c70,0 0 0 1px #4c332180!important;transition:border-color .2s,box-shadow .2s,translate .16s}
+.sgs-game #arena>.player:not(.minskin){border-radius:8px!important;box-shadow:0 4px 10px #21150da6,0 0 0 1px #38271bcc!important;transition:border-color .2s,box-shadow .2s,translate .16s}
 .sgs-game #arena>.player:not(.minskin)>.avatar{border-radius:6px!important;transition:filter .18s,opacity .18s}
 .sgs-game #arena>.player[data-sgs-target='available']:hover{translate:0 -3px}.sgs-game #arena>.player[data-sgs-target='selected']{translate:0 -2px}
 .sgs-game #arena .handcards>.card{border-radius:5px!important;box-shadow:0 4px 9px #160b085c;transition:transform .18s ease-out,translate .16s,box-shadow .16s}
@@ -216,6 +221,8 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 @media(max-width:1100px){.sgs-game #window #arena #me,.sgs-game #window #arena #mebg,.sgs-game #window #arena #autonode{right:calc(var(--sgs-player-w) + var(--sgs-edge) + 156px)!important}}
 .sgs-game #window #arena #me #handcards1>.handcards{margin:0!important;transition:none!important}
 .sgs-game #arena .card.fullskin:not(.infohidden):not(.equips>.card){height:var(--sgs-hand-h)!important;border:1px solid #737d89!important;border-radius:3px!important;background:#eee4cc url('../theme/style/card/image/ol.png') center/100% 100%!important;box-shadow:inset 0 0 0 1px #f7efd9,0 3px 6px #160b0870;color:#171916}
+/* Paper edges and cast shadows belong to the hand root, never face children. */
+.sgs-game #arena #me .handcards>.card:not(.infohidden){border-color:#8b795c!important;box-shadow:inset 0 0 0 1px #fff3d5,0 2px 0 #55412b,0 5px 9px #1e130b99}
 .sgs-game #arena .card.fullskin:not(.infohidden):not(.equips>.card)>:is(.name,.info,.image,.range,.gaintag,.addinfo){transition:none!important;animation:none!important;opacity:1!important}
 .sgs-game #arena .card.fullskin:not(.infohidden):not(.equips>.card)>.image{left:3px!important;top:55px!important;width:calc(100% - 6px)!important;height:calc(100% - 59px)!important;background-position:58% 88%!important;background-size:120% 145%!important;background-repeat:no-repeat!important;filter:none!important;mix-blend-mode:normal}
 .sgs-game #arena .card.fullskin:not(.infohidden):not(.equips>.card)>.name{position:absolute;left:28px!important;right:4px!important;top:5px!important;width:auto!important;height:48px!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;writing-mode:horizontal-tb!important;white-space:normal!important;word-break:break-all;text-align:center;font:26px/23px SGSTableKai,'KaiTi',serif!important;color:#171916!important;text-shadow:none!important;transform:none!important;transform-origin:center!important;z-index:3}
@@ -245,9 +252,9 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
    Keep the whole face opaque and shade its root so labels and artwork stay
    together; idle/opening hands retain their normal appearance. */
 .sgs-game #arena.selecting:not(.video) #me .handcards>.card:not(.selectable):not(.selected):not([data-sgs-switchable='true']){opacity:1!important;filter:brightness(.48) saturate(.35)!important;border-color:#635a49!important;box-shadow:inset 0 0 0 1px #544734,0 1px 3px #130b08b8!important;cursor:not-allowed}
-.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected){opacity:1!important;filter:brightness(1.04)!important;border-color:#d4ba83!important;box-shadow:inset 0 0 0 1px #fff0ca,0 7px 13px #130a08b8!important}
-.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected):hover{filter:brightness(1.1)!important;box-shadow:inset 0 0 0 1px #fff5d7,0 10px 18px #100805c9,0 0 0 1px #e8c781!important}
-.sgs-game #arena #me .handcards>.card.selected{opacity:1!important;filter:brightness(1.08)!important;border-color:#ffdc82!important;box-shadow:inset 0 0 0 1px #fff1bd,0 0 0 3px #f2c765,0 9px 20px #160a05cc!important}
+.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected){opacity:1!important;filter:brightness(1.04)!important;border-color:#d4ba83!important;box-shadow:inset 0 0 0 1px #fff0ca,0 2px 0 #60492e,0 6px 10px #160e09c2!important}
+.sgs-game #arena.selecting:not(.video) #me .handcards>.card:is(.selectable,[data-sgs-switchable='true']):not(.selected):hover{filter:brightness(1.1)!important;box-shadow:inset 0 0 0 1px #fff5d7,0 2px 0 #60492e,0 9px 14px #160e09cf,0 0 0 1px #e8c781!important}
+.sgs-game #arena #me .handcards>.card.selected{opacity:1!important;filter:brightness(1.08)!important;border-color:#ffdc82!important;box-shadow:inset 0 0 0 1px #fff1bd,0 0 0 3px #f2c765,0 3px 0 3px #654620,0 8px 13px #160e09c7!important}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='fire']{background:#f3d7b9;border-color:#b36138;box-shadow:inset 0 -3px #b36138}.sgs-teammate-card[data-card-name='sha'][data-nature~='fire']>.sgs-teammate-card-name{color:#8c2c18}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']{background:#d7e5ec;border-color:#577d98;box-shadow:inset 0 -3px #577d98}.sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']>.sgs-teammate-card-name{color:#20445c}
 @media(max-width:1100px),(max-height:680px){.sgs-teammate-cards{max-height:142px}.sgs-teammate-card{min-height:58px}.sgs-game #arena>.sgs-teammate-hand{padding:8px;width:168px}}
@@ -255,6 +262,9 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 
 /* UX-01 surface theme. Do not target card roots, face internals or rule classes. */
 html.sgs-game {
+  /* BTL-04: the existing dragon stays on the tabletop, below the portraits.
+     Scope the material to the game so paper dialogs and the lobby stay light. */
+  --sgs-scene: radial-gradient(ellipse at 50% 40%, transparent 25%, #27180f70), linear-gradient(#513a2c66, #513a2c66), url('../image/background/ol_bg.jpg') center / cover;
   --table-ink: var(--sgs-bg);
   --table-gold: var(--sgs-gold);
   --table-cream: var(--sgs-text);
@@ -469,4 +479,11 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   .sgs-game #window #arena > .sgs-teammate-hand { width: 164px; }
   .sgs-game .sgs-teammate-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 17px; }
+}
+@media (max-width: 1100px), (max-height: 680px) {
+  .sgs-game #arena:not([data-number='7']):not([data-number='8']) > .player > .name {
+    font-size: 16px!important;
+    letter-spacing: 0;
+    padding: 4px 2px 8px;
+  }
 }

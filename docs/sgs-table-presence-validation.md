@@ -10,7 +10,7 @@ Date: 2026-11-07 Asia/Shanghai. Baseline: 8cbfac3. Node22.12;247 existing tests 
 - Old archived MAT-07/UX-09/US-006 remain incomplete. No completion claim for BFCache/background/long-session matrix.
 
 ## Per-story evidence
-Pending. No implementation story is passing yet.
+BTL-01 through BTL-04 have parent browser acceptance below; BTL-05 remains pending.
 
 ### BTL-01 accepted
 Read-only refresh of newer canonical preferences preserves muted memory on denied/corrupt/missing storage and unchanged stale records after failed writes. Real cached-lobby handler regression failed before fix, then56focused/253fulltests pass; independent review clear. Node22/pnpm production build passed. Parent actual1280x720 silent landlord settings fast/card.4/hero.25/effect.6 survived Back and next native launch with sound:false; same ShenHuangzhong/landlord retained, console empty. Screenshot btl01-return-settings.jpg. IAB Back was ordinary reload; true BFCache hit remains unverified and persisted-pageshow path is source-handler-tested separately.
@@ -28,3 +28,10 @@ Local16f0bec; bounded snapshotf0b1c5dac0f02f9f22088bbaec96da8d743c9933 pushed to
 ### BTL-03 accepted
 CSS-only acting tab fixes a real1024x640 eight-seat6.4px text box: new intrinsic label52.95px (~53px), complete行动中. Anchored above/right of portrait,18px-high; top-seat minimum66px and44pxtoolbar leave the tab below chrome. Independent copper inner acting frame remains alongside ivory dashed legal and3px gold selected target frames, using scoped light colors. Parent native8identity1024, landlord1280 and2v2 checked. Real2v2 Nanman Slash response retained selected card through settings/reduced-motion on/off; static acting label remains while flash display:none. Direct-switch from equipment to Slash cleared self-target; native legal ally/enemy states rendered, selectingZhaoYun producedgoldframe, manual target cancellation stayed0, reselect+settings preserved1card/1target/manualconfirm. No rules/classes/transforms changed.5feedbacktests,PostCSS,Node22/pnpm build,source-dist/diff checks pass;consoleempty.
 Screenshots btl03-acting-before/eight-1024/target-2v2/landlord-1280. ActualCSSviewports verified; IAB retained zoom on some reloads, so screenshot raster dimensions are not used as viewport evidence.
+
+### BTL-03 publication
+Local379b6d3; bounded snapshot71ec1d0221ada83ae5d1b072d35c9d7f7a6289b0 pushed to sgs/main after ancestor check and remoteSHA verification.
+
+### BTL-04 accepted
+CSS-only quieter dragon tabletop, narrower faction/name details, preserved native HP artwork/lost/shield and root-only hand paper edges/shadows. Parent silent native3/4/8tables checked at actual1024x640,1280x720,1920x1080; teammate pane/seat/equipment/hand geometry and126x50primaryconfirm remain usable. Real weapon-to-PeachGarden switch/settings return preserved1card/3targets then manual cancel;8identity mulligan changed4cards once, nativeNeifa drew6to9 then manualdiscard9to8. Review caught nonexistent nativebr long-name selector and actualcompact4-player clipping; fixed against real6-character袁谭袁尚袁熙: at1024 8seatclient=scroll90/namebottom575.81<counttop577.14;4seatclient=scroll111/bottom567.76<counttop577.14. FinalNode22/pnpmproductionbuild,PostCSS/source-dist/diffchecks pass; browserconsoleempty andsoundoff. No rules/portrait/card-face/assets changed.
+Screenshots: btl04-before and btl04-{landlord,2v2,eight}-{1024,1280,1920}. The final compact name fixes are shown in eight-1024 and 2v2-1024. CSS viewport dimensions were measured directly; IAB capture scaling leaves a margin and is not layout-size evidence. Normal/lost/text HP, card rank/suit/art and native information visibility were retained.
