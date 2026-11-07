@@ -39,8 +39,8 @@
         "1024×640 真实8身份行动者以及2v2选牌/取消/设置往返浏览器验证；减少动态保留静态提示。CSS解析、相关回归通过。"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "CSS-only acting tab fixes a real1024x640 eight-seat6.4px text box: new intrinsic label52.95px (~53px), complete行动中. Anchored above/right of portrait,18px-high; top-seat minimum66px and44pxtoolbar leave the tab below chrome. Independent copper inner acting frame remains alongside ivory dashed legal and3px gold selected target frames, using scoped light colors. Parent native8identity1024, landlord1280 and2v2 checked. Real2v2 Nanman Slash response retained selected card through settings/reduced-motion on/off; static acting label remains while flash display:none. Direct-switch from equipment to Slash cleared self-target; native legal ally/enemy states rendered, selectingZhaoYun producedgoldframe, manual target cancellation stayed0, reselect+settings preserved1card/1target/manualconfirm. No rules/classes/transforms changed.5feedbacktests,PostCSS,Node22/pnpm build,source-dist/diff checks pass;consoleempty."
     },
     {
       "id": "BTL-04",
