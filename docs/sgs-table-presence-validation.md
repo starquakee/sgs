@@ -45,3 +45,9 @@ Screenshots: btl05-ai-use, manual-shan, native-respond, real-hit, native-complex
 
 ### Run completion
 The active five-story table-presence scope is accepted. Earlier incomplete compatibility/long-session matrices remain unchanged. Browser debugging stayed silent throughout; the preview is back at the landlord lobby with ShenHuangzhong selected.
+
+### BTL-05 publication
+Local 791a096; bounded snapshot 23fe6dc1bc8e8d00fea01ab599d079b20f9268c9 pushed to sgs/main after ancestor check and remote SHA verification.
+
+### 2026-11-08 equipment placement follow-up
+Moved only the human player's native equipment rail from the portrait's left side into its lower centre (26px side insets, 30px above the bottom, max-height 48%). Names, HP and hand-count bounds remain separate. Native order, empty/disabled/extra slots and card handlers are unchanged; overflow scrolls, rank/suit/name wrap at readable size, and native selected equipment gets an inset gold frame inside the clipping boundary. Real silent landlord equipped ZhugeLiannu and Zixing, and keyboard End reached the bottom slot. Real native SunQuan identity-8 at 1024×640 selected/canceled/reselected Gudingdao for Zhiheng and manually confirmed native consumption back to the empty weapon slot. Final build: FangtianHuaji + Tengjia equipped; selecting Tengjia scrolled the rail to28px, showed the gold frame and selected zero characters; cancel and full native weapon introduction worked. Final compact label clientWidth=scrollWidth40px, rail clientWidth=scrollWidth42px. Final 3-player and 2v2 at1280×720 had no name/HP/count overlap, functional teammate panel, no horizontal equipment overflow and no console warnings/errors. Source-only CSS adjustment; Node22/pnpm production build, PostCSS, source/dist equality and git diff check pass. Debugging remained muted. Screenshots equipment-lower-middle-{selected-1024,2v2,landlord}.
