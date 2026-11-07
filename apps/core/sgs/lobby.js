@@ -301,8 +301,12 @@ let restoreSearchTimer;
 function restoreLobby(event) {
   clearTimeout(restoreSearchTimer);
   // Browser-restored input values arrive after pageshow without an input event.
-  restoreSearchTimer = setTimeout(() => { restoreSearchTimer = undefined; stopSearch.sync(); }, 0);
+  restoreSearchTimer = setTimeout(() => {
+    restoreSearchTimer = undefined; stopSearch.sync(); applyPreferences(preferences.get());
+  }, 0);
   if (!event.persisted) return;
+  preferences.refresh();
+  applyPreferences(preferences.get());
   handoff.reset();
   $('start-game').disabled = !selected || catalogState !== 'ready';
   // Do not reload/re-render: the cached DOM owns filters, focus and scroll.

@@ -184,6 +184,72 @@ test('cached lobby returns preserve transient browsing and live settings/search,
   assert.equal(app.window.listeners.get('pageshow')?.size || 0, 0);
 });
 
+test('cached lobby adopts table preferences without losing browsing state and carries them into the next launch', async () => {
+  const app = await lobby(), e = app.elements;
+  app.select('xianding:recent');
+  app.modes.find(button => button.dataset.mode === 'doudizhu').emit('click');
+  app.roles.forEach(role => { role.checked = role.value === 'farmer'; }); app.roles[1].emit('change');
+  e.search.value = 'general'; e.search.emit('input');
+  e['general-grid'].scrollTop = 73; app.document.activeElement = e.search;
+  const before = e['general-grid'].innerHTML;
+  e['start-game'].onclick(); app.window.emit('pagehide', { persisted: true });
+
+  // A real second preferences owner models changes made on the table while the
+  // original lobby closure is frozen in the browser's history cache.
+  const tablePreferences = createPreferences(() => app.local);
+  tablePreferences.set({ sound: false, speed: 'fast', cardVolume: 0.4, heroVolume: 0.25,
+    effectVolume: 0.6, backgroundPause: false, reducedMotion: true });
+  const expected = tablePreferences.get(), saved = app.local.getItem('sgs.preferences.v1');
+  app.window.emit('pageshow', { persisted: true });
+  e['settings-link'].onclick();
+  const settings = app.document.body.children.at(-1);
+  assert.equal(settings.querySelector('[name="sound"]').checked, false, 'a cached lobby must retain the table mute');
+  assert.equal(e.speed.value, 'fast');
+  for (const key of ['cardVolume', 'heroVolume', 'effectVolume']) assert.equal(settings.querySelector(`[name="${key}"]`).value, expected[key]);
+  assert.equal(settings.querySelector('[name="backgroundPause"]').checked, false);
+  assert.equal(settings.querySelector('[name="reducedMotion"]').checked, true);
+  settings.querySelector('[data-close]').onclick();
+
+  // Browsers may restore form controls after dispatching pageshow. Reconcile
+  // the speed control without rebuilding the roster or disturbing its focus.
+  e.speed.value = 'normal'; app.flushTimers();
+  assert.equal(e.speed.value, 'fast');
+  assert.equal(e['general-grid'].innerHTML, before);
+  assert.equal(e['general-grid'].scrollTop, 73);
+  assert.equal(app.document.activeElement, e.search);
+  assert.equal(e.search.value, 'general');
+  assert.equal(e['launch-general'].textContent, 'recent');
+  assert.equal(app.local.getItem('sgs.preferences.v1'), saved, 'restoring preferences must not write storage');
+  e['start-game'].onclick();
+  assert.equal(app.navigations.length, 2);
+  assert.equal(app.carrier().mode, 'doudizhu'); assert.equal(app.carrier().landlordRole, 'farmer');
+  assert.equal(app.carrier().generalId, 'recent'); assert.equal(app.carrier().pack, 'xianding');
+  assert.equal(app.carrier().speed, 'fast');
+  assert.deepEqual(app.carrier().preferences, expected);
+});
+
+test('cached lobby keeps current muted preferences when stored preferences cannot be read or are damaged', async () => {
+  for (const failure of ['denied', 'malformed', 'missing']) {
+    const local = storage(), app = await lobby({ local }), e = app.elements;
+    e['settings-link'].onclick();
+    const settings = app.document.body.children.at(-1);
+    const sound = settings.querySelector('[name="sound"]'); sound.checked = false; sound.emit('change');
+    const speed = settings.querySelector('[name="speed"]'); speed.value = 'fast'; speed.emit('change');
+    const heroVolume = settings.querySelector('[name="heroVolume"]'); heroVolume.value = 0.25; heroVolume.emit('input');
+    settings.querySelector('[data-close]').onclick();
+    const expected = createPreferences(() => local).get();
+    e['start-game'].onclick(); app.window.emit('pagehide', { persisted: true });
+    if (failure === 'denied') local.getItem = () => { throw new Error('read denied'); };
+    else if (failure === 'malformed') local.setItem('sgs.preferences.v1', '{broken');
+    else local.removeItem('sgs.preferences.v1');
+    app.window.emit('pageshow', { persisted: true }); app.flushTimers();
+    e['start-game'].onclick();
+    assert.deepEqual(app.carrier().preferences, expected, failure);
+    assert.equal(app.carrier().speed, 'fast', failure);
+    assert.equal(app.navigations.length, 2, failure);
+  }
+});
+
 test('history-restored search text updates the actual roster after pageshow without committing IME or changing the selected hero', async () => {
   const app = await lobby(), e = app.elements;
   app.select('xianding:recent');
