@@ -26,8 +26,8 @@
         "CSS 解析、生产构建通过；保留前后截图和 computed 样式证据，不增加纯 CSS 镜像测试。"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "CSS-only: arena dialog surfaces now set background-color without erasing native images/contain/position; lieqiong uses an unpadded4:7 surface with caption above the art and native50px hit areas. Restored non-arena menu/intro shorthand after browser caught an unreadable inherited gray gradient; final intro computed paper rgb234/220/192 with image:none and brown text. Real silent landlord: female CuiLingyi FireSlash3→2, all4points switched one selected_cp at a time and canceled; male XiahouDun Slash4→3, hand-part confirmation caused native4→2 hand discard. Final caption pass: XingZhangchunhua ThunderSlash then secondSlash unlocked native5th Tianchong; head selection/help/cancel checked at1024. Final1280 surface221.712×388/top80.4/bottom470, controls480..530;1024 surface185.137×324/bottom406, controls416..466; caption47.6..73.2 below44pxbar. Settings/native intro and ordinary native Zhanjue/Ganglie choices remain readable. PostCSS/Node22-pnpm production build/source-dist/diff checks pass, browser console empty. No rules/asset/handler changes, no CSS mirror tests."
     },
     {
       "id": "BTL-03",

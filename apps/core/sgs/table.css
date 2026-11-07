@@ -88,7 +88,7 @@ html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-crea
 .sgs-game #arena>.player>.marks{left:auto!important;right:-14px!important;top:44px!important}
 .sgs-game #arena>.dialog{color:#f0dfbb;text-shadow:0 1px 3px #321b0d}
 .sgs-game #arena>.dialog.nobutton{left:calc(var(--sgs-player-w) + 55px)!important;right:calc(var(--sgs-player-w) + 55px)!important;top:auto!important;bottom:calc(var(--sgs-hand-h) + 108px)!important;width:auto!important;max-height:110px;background:linear-gradient(90deg,transparent,#4227159c 25%,#4227159c 75%,transparent);border:0!important;border-radius:0!important;box-shadow:none!important;font-size:20px;overflow-y:auto;pointer-events:auto}
-.sgs-game #arena>.dialog:not(.nobutton){max-width:calc(100% - 2*var(--sgs-player-w) - 100px);background:#eadfc4f5;color:#483120;text-shadow:none;border:1px solid #9b7848;box-shadow:0 6px 30px #24130b70}
+.sgs-game #arena>.dialog:not(.nobutton){max-width:calc(100% - 2*var(--sgs-player-w) - 100px);background-color:#eadfc4f5;color:#483120;text-shadow:none;border:1px solid #9b7848;box-shadow:0 6px 30px #24130b70}
 .sgs-game #arena>.dialog:not(.nobutton) .caption{color:#5f3c23}
 .sgs-game #arena>.dialog .caption{font-family:SGSTableKai,'KaiTi',serif;font-size:23px}
 .sgs-game #arena>.dialog .buttons .button{color:inherit}
@@ -322,7 +322,9 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game #window>.dialog.popped,
 .sgs-game .menu-container>.menu.dialog,
 .sgs-game .sgs-leave-dialog {
-  background: var(--sgs-panel)!important;
+  /* Color only here: custom arena dialogs own their artwork and its geometry.
+     Non-arena reading surfaces above still clear the native dark gradients. */
+  background-color: var(--sgs-panel)!important;
   color: var(--sgs-text)!important;
   border: 1px solid var(--sgs-bronze)!important;
   border-radius: var(--sgs-radius)!important;
@@ -432,6 +434,35 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game #window #arena > .dialog:not(.nobutton) {
   bottom: calc(var(--sgs-hand-h) + 106px)!important;
   max-height: calc(100% - var(--sgs-hand-h) - 144px);
+}
+/* The native body illustration and its percentage-based hit areas must share
+   the same unpadded 4:7 surface. Bound that surface above the native controls
+   without clamping an independently sized image or clipping point help. */
+.sgs-game #window #arena > .dialog.dclieqiong {
+  box-sizing: content-box;
+  padding: 0;
+  height: calc(100% - var(--sgs-hand-h) - 144px)!important;
+  max-height: none;
+  max-width: none;
+  overflow: visible;
+}
+/* Keep the instruction off the illustration and its native head hit area. */
+.sgs-game #window #arena > .dialog.dclieqiong > .title {
+  top: auto;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: calc(100vw - 40px);
+  box-sizing: border-box;
+  padding: 2px 10px;
+  border: 1px solid var(--sgs-bronze);
+  background: var(--sgs-panel);
+  color: var(--sgs-text);
+  font: 14px/20px var(--sgs-font-body);
+}
+.sgs-game #window #arena > .dialog.dclieqiong > .position.selected_cp::before {
+  background-color: var(--sgs-panel-raised);
+  color: var(--sgs-text);
+  border-color: var(--sgs-bronze);
 }
 @media (max-width: 1100px) {
   .sgs-game #window #arena { --sgs-equip-w: 116px; }
