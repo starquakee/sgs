@@ -1,10 +1,13 @@
-// Presentation only. Native video calls mark actual phase/damage/death visuals;
-// check/uncheck hooks expose the engine's completed target selection decisions.
+// Presentation only. Native card triggers mark committed use/response; video
+// calls mark actual phase/damage/death visuals, and check hooks expose targets.
 export function installBattleFeedback({ lib, game, ui, get, _status, preferences,
   document = globalThis.document, timers = globalThis }) {
   const nativeAddVideo = game.addVideo;
   const marked = new Map();
-  const seenDamage = new WeakSet(), seenDeath = new WeakSet();
+  const seenDamage = new WeakSet(), seenDeath = new WeakSet(), seenCards = new WeakSet();
+  const skillName = '_sgs_committed_card_feedback';
+  const hadSkill = Object.hasOwn(lib.skill, skillName), previousSkill = lib.skill[skillName];
+  const previouslyGlobal = lib.skill.global.includes(skillName);
   let disposed = false;
   const reduced = () => preferences.get().reducedMotion;
   function view(player) {
@@ -23,14 +26,32 @@ export function installBattleFeedback({ lib, game, ui, get, _status, preferences
     entry.timer = null; delete entry.flash.dataset.kind;
   }
   function pulse(player, kind) {
+    if (disposed || reduced()) return;
     const entry = view(player);
-    if (!entry || reduced() || disposed) return;
+    if (!entry) return;
     // A later real event replaces a still-visible pulse; no playback backlog.
     clearPulse(entry);
     void entry.flash.offsetWidth;
     entry.flash.dataset.kind = kind;
     entry.timer = timers.setTimeout(() => clearPulse(entry), 240);
   }
+  const committed = (event, player) => !disposed && !_status.video
+    && ['useCard', 'respond'].includes(event?.name) && event.player === player
+    && player?.parentNode === ui.arena && typeof event.card?.name === 'string' && !!event.card.name
+    && event.animate !== false && !event._cancelled && !seenCards.has(event);
+  const cardFeedback = {
+    trigger: { player: ['useCard1', 'respond'] }, forced: true, silent: true,
+    popup: false, charlotte: true, firstDo: true, priority: 10000, forceDie: true,
+    filter: committed,
+    // Async content retains the closure in the native compiler. The trigger is
+    // the committed effective card, even for empty/foreign costs and view-as;
+    // get.event() here would be this presentation skill's own wrapper event.
+    async content(event, trigger, player) {
+      if (!committed(trigger, player)) return;
+      seenCards.add(trigger);
+      pulse(trigger.player, trigger.name === 'useCard' ? 'use' : 'respond');
+    },
+  };
   function refresh(event = _status.event) {
     if (disposed) return;
     const mine = !_status.over && !_status.auto && event?.isMine?.() && event.filterTarget;
@@ -63,8 +84,11 @@ export function installBattleFeedback({ lib, game, ui, get, _status, preferences
     // $damage records only the native animation path, after all prevention and
     // modification. Respect animate:false, unreal/zero/canceled and victim ID.
     if (type === 'damage' && event?.name === 'damage' && event.player === player
-      && event.num > 0 && !event.unreal && !event._cancelled && !seenDamage.has(event)) {
-      seenDamage.add(event); pulse(player, 'hit');
+      && event.num > 0 && event.animate !== false && !event.unreal && !event._cancelled && !seenDamage.has(event)) {
+      seenDamage.add(event);
+      // The finalized damage event owns nature. Mixed/unknown natures remain
+      // neutral; a source card's artwork never implies either a hit or nature.
+      pulse(player, event.nature === 'fire' ? 'hit-fire' : event.nature === 'thunder' ? 'hit-thunder' : 'hit');
     }
     // diex precedes mode victory checks, after native dead/roster mutation.
     if (type === 'diex' && event?.name === 'die' && event.player === player
@@ -75,6 +99,9 @@ export function installBattleFeedback({ lib, game, ui, get, _status, preferences
   }
   const checked = event => refresh(event);
   const unchecked = () => refresh();
+  if (previouslyGlobal) game.removeGlobalSkill(skillName);
+  lib.skill[skillName] = cardFeedback;
+  game.addGlobalSkill(skillName);
   lib.hooks.checkEnd.push(checked); lib.hooks.uncheckEnd.push(unchecked);
   game.addVideo = addVideo;
   const unsubscribe = preferences.subscribe(() => {
@@ -84,6 +111,11 @@ export function installBattleFeedback({ lib, game, ui, get, _status, preferences
   return { refresh, dispose() {
     if (disposed) return;
     disposed = true; unsubscribe();
+    if (lib.skill[skillName] === cardFeedback) {
+      game.removeGlobalSkill(skillName);
+      if (hadSkill) lib.skill[skillName] = previousSkill; else delete lib.skill[skillName];
+      if (previouslyGlobal) game.addGlobalSkill(skillName);
+    }
     if (game.addVideo === addVideo) game.addVideo = nativeAddVideo;
     for (const [name, fn] of [['checkEnd', checked], ['uncheckEnd', unchecked]]) {
       const index = lib.hooks[name].indexOf(fn);

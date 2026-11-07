@@ -68,8 +68,8 @@
         "执行锁定 useCard/respond/damage 源码的回归通过，全部Node回归/JS/CSS解析/生产构建通过；父真实静音出牌、响应、受击、复杂选择、自然2v2结算验证，最终3/4/8布局、普通入口和console检查通过。"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added an independent silent native useCard1/respond observer with 240 ms source-player feedback, separate from audio deduplication. Parent muted native 2v2: choosing Shan/Nanman and a Lieqiong part produced no committed pulse; manual Shan resolved without damage, manual Nanman triggered the ally's actual respond pulse (#b8d7d5, 0.24s). AI and human-seat committed uses showed #e8c991; manual Slash caused XinSunziLiufang HP 2→1 and a hit pulse on that victim (#c6533d, 0.24s). Native illustrated Lieqiong selection/cancellation remained intact. Iron Chain recast used native manual confirmation; settings preserved selection, reduced motion hid flashes while keeping the acting tab, and restoring motion did not replay old events. The same real game continued through native autoplay to a round-3 2v2 victory (04:59), saved its local record and returned to a functional lobby. Final real 3/4/8 layouts checked; fresh 1280×720 landlord and 1024×640 identity-8 screenshots have 3/8 overlay pairs, readable 53.4px acting tab and sound off. Ordinary index.html retained the native mode chooser with zero SGS styles/overlays. All browser warning/error logs empty. Exact pinned use/respond regressions failed before implementation; 10 focused and 258 full Node22 tests pass, including final fire/thunder/mixed damage and disposal boundaries. JS syntax, PostCSS, production build, source/dist equality and diff checks pass; independent review clear. Fire/thunder color branches are source-executed tests; no claim of browser capture for those two colors."
     }
   ]
 }
