@@ -38,7 +38,8 @@ export function installTeammateHand({ game, ui, get }, mode) {
       panel = node('aside', 'sgs-teammate-hand');
       panel.tabIndex = 0;
       heading = node('header', 'sgs-teammate-heading');
-      summary = node('p', 'sgs-teammate-summary');
+      summary = node('ul', 'sgs-teammate-summary');
+      summary.setAttribute('aria-label', '队友手牌预览，最多五张');
       const detail = node('div', 'sgs-teammate-detail');
       list = node('ul', 'sgs-teammate-cards');
       list.tabIndex = 0;
@@ -88,7 +89,17 @@ export function installTeammateHand({ game, ui, get }, mode) {
     signature = next;
     heading.replaceChildren(node('strong', '', `${name} · 手牌`), node('span', '', `${cards.length}张`));
     panel.setAttribute('aria-label', `队友${name}的手牌，共${cards.length}张；悬停或聚焦查看详情，Esc收起`);
-    summary.textContent = cards.map(card => card.name).join(' · ') || '暂无手牌';
+    summary.replaceChildren(...cards.slice(0, 5).map(card => {
+      const row = node('li', 'sgs-teammate-summary-card', card.name);
+      row.title = card.name;
+      return row;
+    }));
+    if (!cards.length) summary.append(node('li', 'sgs-teammate-summary-empty', '暂无手牌'));
+    if (cards.length > 5) {
+      const more = node('li', 'sgs-teammate-more', '…');
+      more.setAttribute('aria-label', `还有${cards.length - 5}张，悬停查看全部手牌`);
+      summary.append(more);
+    }
     const scrollTop = list.scrollTop;
     list.replaceChildren(...cards.map(card => {
       const item = node('li', 'sgs-teammate-card');

@@ -115,6 +115,7 @@ function panelFixture(t, mode = 'versus') {
   return { document, game, ui, arena, hand1, hand2, fire, dodge, card, controller, observer: observers[0],
     reads: () => reads, permission: value => { permitted = value; }, panel: () => arena.querySelector('.sgs-teammate-hand') };
 }
+const summaryRows = panel => panel.querySelector('.sgs-teammate-summary').children.map(row => row.textContent);
 
 test('compact teammate summary and expanded list track the same live native hand without replacing the focused panel', t => {
   const h = panelFixture(t); h.controller.refresh();
@@ -126,7 +127,7 @@ test('compact teammate summary and expanded list track the same live native hand
   assert.equal(list.tabIndex, 0, 'the expanded list can receive keyboard scrolling focus');
   assert.match(panel.attrs['aria-label'], /队友甲.*2张/);
   assert.match(panel.attrs['aria-label'], /悬停/); assert.match(panel.attrs['aria-label'], /键盘|聚焦|焦点/);
-  assert.equal(summary.textContent, '火杀 · 闪');
+  assert.deepEqual(summaryRows(panel), ['火杀', '闪']);
   assert.equal(list.children.length, 2);
   assert.equal(list.children[0].querySelector('.sgs-teammate-card-name').textContent, '火杀');
   assert.equal(list.children[0].querySelector('.sgs-teammate-rank').textContent, '♥A');
@@ -142,7 +143,7 @@ test('compact teammate summary and expanded list track the same live native hand
   h.game.friend.dataset.position = '1'; h.observer.deliver();
   assert.equal(h.panel(), panel); assert.equal(panel.querySelector('.sgs-teammate-summary'), summary);
   assert.equal(h.document.activeElement, panel); assert.equal(list.scrollTop, 42);
-  assert.equal(panel.dataset.position, '1'); assert.equal(summary.textContent, '桃 · 闪');
+  assert.equal(panel.dataset.position, '1'); assert.deepEqual(summaryRows(panel), ['桃', '闪']);
   assert.deepEqual(list.children.map(item => item.querySelector('.sgs-teammate-card-name').textContent), ['桃', '闪']);
   assert.equal(peach.parentNode, h.hand1); assert.equal(h.dodge.parentNode, h.hand2, 'native selectable card nodes are never moved into the panel');
 });
@@ -152,7 +153,7 @@ test('empty hands stay explicit and permission loss, death or roster removal dis
   h.hand1.replaceChildren(); h.hand2.replaceChildren(); h.observer.deliver();
   const panel = h.panel(), detail = panel.querySelector('.sgs-teammate-detail');
   assert.ok(panel.querySelector('.sgs-teammate-summary') && detail, 'empty hands keep both presentation regions');
-  assert.equal(panel.querySelector('.sgs-teammate-summary').textContent, '暂无手牌');
+  assert.deepEqual(summaryRows(panel), ['暂无手牌']);
   assert.equal(detail.querySelector('.sgs-teammate-cards').hidden, true);
   assert.equal(detail.querySelector('.sgs-teammate-empty').hidden, false);
   assert.match(panel.attrs['aria-label'], /0张/);
@@ -185,7 +186,7 @@ test('inspection rechecks permission and current cards; Escape is contained with
   panel.setAttribute('data-dismissed', 'true');
   h.fire.name = 'tao'; h.fire.nature = '';
   panel.emit('pointerenter');
-  assert.equal(panel.querySelector('.sgs-teammate-summary').textContent, '桃 · 闪', 'inspection refreshes even before an observer delivery');
+  assert.deepEqual(summaryRows(panel), ['桃', '闪'], 'inspection refreshes even before an observer delivery');
   assert.equal(panel.attrs['data-dismissed'], undefined);
   let stopped = 0, prevented = 0;
   panel.emit('keydown', { key: 'Escape', stopPropagation() { stopped++; }, preventDefault() { prevented++; } });
@@ -229,4 +230,35 @@ test('keyboard reveal survives panel-to-list focus transfer and closes only on o
   assert.equal(panel.attrs['data-dismissed'], undefined); assert.equal(panel.attrs['data-keyboard-open'], 'true', 'a later deliberate keyboard visit can reopen');
   panel.emit('focusout', { target: panel, relatedTarget: null });
   assert.equal(panel.attrs['data-keyboard-open'], undefined, 'leaving the document is also outside focus');
+});
+
+test('vertical summary keeps at most five separate card rows, adds overflow separately and shrinks back without losing full details', t => {
+  const h = panelFixture(t); h.controller.refresh();
+  const panel = h.panel(), summary = panel.querySelector('.sgs-teammate-summary');
+  const list = panel.querySelector('.sgs-teammate-detail').querySelector('.sgs-teammate-cards');
+  const cards = [h.fire, h.dodge, h.card('sha', 'club', 3, 'fire'), h.card('tao', 'heart', 4), h.card('shan', 'spade', 5),
+    h.card('sha', 'club', 6), h.card('tao', 'heart', 7), h.card('shan', 'spade', 8), h.card('sha', 'club', 9),
+    h.card('tao', 'heart', 10), h.card('shan', 'spade', 11), h.card('sha', 'club', 12)];
+  const allNames = ['火杀', '闪', '火杀', '桃', '闪', '杀', '桃', '闪', '杀', '桃', '闪', '杀'];
+  const firstFive = ['火杀', '闪', '火杀', '桃', '闪'];
+  assert.equal(summary.tagName, 'ul');
+  for (const [count, expected, remaining] of [[0, ['暂无手牌'], 0], [1, ['火杀'], 0], [5, firstFive, 0],
+    [6, [...firstFive, '…'], 1], [12, [...firstFive, '…'], 7], [5, firstFive, 0], [1, ['火杀'], 0], [0, ['暂无手牌'], 0]]) {
+    h.hand1.replaceChildren(); h.hand2.replaceChildren();
+    const current = cards.slice(0, count), split = Math.min(3, count);
+    h.hand1.append(...current.slice(0, split)); h.hand2.append(...current.slice(split));
+    h.observer.deliver();
+    assert.equal(h.panel(), panel); assert.equal(panel.querySelector('.sgs-teammate-summary'), summary);
+    assert.deepEqual(summaryRows(panel), expected, `${count} current cards`);
+    assert.ok(summary.children.every(row => row.tagName === 'li'));
+    assert.equal(summary.querySelectorAll('.sgs-teammate-summary-card').length, Math.min(count, 5));
+    assert.equal(summary.querySelectorAll('.sgs-teammate-summary-empty').length, count === 0 ? 1 : 0);
+    const more = summary.querySelectorAll('.sgs-teammate-more');
+    assert.equal(more.length, remaining ? 1 : 0);
+    if (remaining) assert.match(more[0].attrs['aria-label'], new RegExp(`${remaining}\\s*张`));
+    assert.equal(list.children.length, count, 'the expanded list must retain every current card, including duplicates');
+    assert.deepEqual(list.children.map(item => item.querySelector('.sgs-teammate-card-name').textContent), allNames.slice(0, count));
+    assert.deepEqual([...h.hand1.children, ...h.hand2.children], current, 'summary truncation does not move or discard native cards');
+    for (let index = 0; index < current.length; index++) assert.equal(current[index].parentNode, index < split ? h.hand1 : h.hand2);
+  }
 });
