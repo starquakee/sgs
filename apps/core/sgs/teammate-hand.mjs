@@ -13,7 +13,8 @@ export function visibleTeammate(game, mode) {
 
 export function installTeammateHand({ game, ui, get }, mode) {
   const doc = ui.arena.ownerDocument;
-  let owner, panel, heading, list, empty, signature;
+  let owner, panel, heading, summary, list, empty, signature;
+  let disposed = false;
   const observer = new MutationObserver(() => refresh());
   const text = value => String(value ?? '').replace(/<[^>]*>/g, '');
   const node = (tag, className, content) => {
@@ -28,17 +29,42 @@ export function installTeammateHand({ game, ui, get }, mode) {
     panel = owner = signature = undefined;
   }
   function refresh() {
+    if (disposed) return;
     const teammate = visibleTeammate(game, mode);
     if (!teammate) { remove(); return; }
     if (teammate !== owner) {
       remove();
       owner = teammate;
       panel = node('aside', 'sgs-teammate-hand');
+      panel.tabIndex = 0;
       heading = node('header', 'sgs-teammate-heading');
+      summary = node('p', 'sgs-teammate-summary');
+      const detail = node('div', 'sgs-teammate-detail');
       list = node('ul', 'sgs-teammate-cards');
+      list.tabIndex = 0;
       list.setAttribute('aria-label', '队友当前手牌');
       empty = node('p', 'sgs-teammate-empty', '暂无手牌');
-      panel.append(heading, list, empty);
+      detail.append(list, empty);
+      panel.append(heading, summary, detail);
+      // Refresh permission before either pointer or keyboard reveals details.
+      const inspect = () => { refresh(); panel?.removeAttribute('data-dismissed'); };
+      panel.addEventListener('pointerenter', inspect);
+      panel.addEventListener('focusin', event => {
+        inspect();
+        // Hold the reveal across the browser's focus transfer into the list.
+        if (event.target.matches(':focus-visible')) panel?.setAttribute('data-keyboard-open', 'true');
+      });
+      panel.addEventListener('focusout', event => {
+        if (!panel?.contains(event.relatedTarget)) panel?.removeAttribute('data-keyboard-open');
+      });
+      panel.addEventListener('keydown', event => {
+        event.stopPropagation();
+        if (event.key === 'Escape') {
+          panel?.focus({ preventScroll: true });
+          panel?.removeAttribute('data-keyboard-open');
+          panel?.setAttribute('data-dismissed', 'true');
+        }
+      });
       // These are read-only labels, never clones of selectable game cards.
       for (const type of ['click', 'dblclick', 'pointerdown', 'touchstart', 'contextmenu']) {
         panel.addEventListener(type, event => event.stopPropagation());
@@ -61,7 +87,8 @@ export function installTeammateHand({ game, ui, get }, mode) {
     if (signature === next) return;
     signature = next;
     heading.replaceChildren(node('strong', '', `${name} · 手牌`), node('span', '', `${cards.length}张`));
-    panel.setAttribute('aria-label', `队友${name}的手牌，共${cards.length}张`);
+    panel.setAttribute('aria-label', `队友${name}的手牌，共${cards.length}张；悬停或聚焦查看详情，Esc收起`);
+    summary.textContent = cards.map(card => card.name).join(' · ') || '暂无手牌';
     const scrollTop = list.scrollTop;
     list.replaceChildren(...cards.map(card => {
       const item = node('li', 'sgs-teammate-card');
@@ -78,5 +105,5 @@ export function installTeammateHand({ game, ui, get }, mode) {
     list.hidden = !cards.length;
     empty.hidden = !!cards.length;
   }
-  return { refresh, dispose: remove };
+  return { refresh, dispose() { disposed = true; remove(); } };
 }

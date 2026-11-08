@@ -456,11 +456,35 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #window #arena > .sgs-teammate-hand {
   right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); top: var(--sgs-side-top);
-  width: clamp(164px, 14.5vw, 210px); padding: 9px; box-shadow: 0 3px 12px #35231526;
+  width: clamp(136px, 12vw, 166px); padding: 7px 9px;
+  background: #382c213d; border: 1px dashed #c0aa83;
+  color: #f4e7cd; box-shadow: none;
+}
+.sgs-game .sgs-teammate-heading { padding-bottom: 4px; }
+.sgs-game .sgs-teammate-heading strong, .sgs-game .sgs-teammate-heading > span { color: #ddc9a8; font-size: 11px; }
+.sgs-game .sgs-teammate-summary {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  margin: 0; overflow: hidden; font: 12px/18px var(--sgs-font-body);
+  word-break: keep-all;
+  color: #f4e7cd; text-shadow: 0 1px 2px #23190e;
+}
+.sgs-game .sgs-teammate-detail {
+  display: none; position: absolute; top: 100%; right: -1px;
+  width: 278px; max-width: calc(100vw - 40px); box-sizing: border-box; padding: 10px;
+  border: 1px solid var(--sgs-bronze); border-radius: 2px;
+  background: var(--sgs-paper); color: var(--sgs-ink); box-shadow: 0 4px 12px #25190f40;
+}
+.sgs-game .sgs-teammate-hand[data-position='2'] > .sgs-teammate-detail { left: -1px; right: auto; }
+.sgs-game #window #arena > .sgs-teammate-hand:is(:hover, [data-keyboard-open]) { z-index: 16; }
+.sgs-game .sgs-teammate-hand:is(:hover, [data-keyboard-open]):not([data-dismissed]) > .sgs-teammate-detail { display: block; }
+.sgs-game #window #arena > .sgs-teammate-hand:focus-visible { outline: 2px solid #f2d9af; outline-offset: 3px; }
+@media (hover: none) {
+  .sgs-game #window #arena > .sgs-teammate-hand:focus-within { z-index: 16; }
+  .sgs-game .sgs-teammate-hand:focus-within:not([data-dismissed]) > .sgs-teammate-detail { display: block; }
 }
 .sgs-game #window #arena[data-number='3'] { --sgs-side-top: 56px; }
 .sgs-game #window #arena > .sgs-teammate-hand[data-position='2'] { left: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); right: auto; }
-.sgs-game .sgs-teammate-cards { max-height: calc(var(--sgs-player-h) - 44px); }
+.sgs-game .sgs-teammate-cards { grid-template-columns: repeat(4,minmax(0,1fr)); max-height: calc(var(--sgs-player-h) - 44px); }
 .sgs-game .sgs-teammate-card { min-height: 60px; }
 .sgs-game .sgs-teammate-card-name { letter-spacing: 0; font-size: 16px; }
 .sgs-game #window #arena > .dialog.nobutton {
@@ -533,8 +557,7 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 @media (max-width: 1100px) {
   .sgs-game #window #arena { --sgs-equip-w: 116px; }
-  .sgs-game #window #arena > .sgs-teammate-hand { width: 164px; }
-  .sgs-game .sgs-teammate-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .sgs-game #window #arena > .sgs-teammate-hand { width: 136px; }
   .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 17px; }
 }
 @media (max-width: 1100px), (max-height: 680px) {
