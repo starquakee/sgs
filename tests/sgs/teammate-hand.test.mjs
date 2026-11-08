@@ -126,6 +126,8 @@ test('compact teammate summary and expanded list track the same live native hand
   assert.equal(panel.tabIndex, 0, 'the compact panel is reachable without a pointer');
   assert.equal(list.tabIndex, 0, 'the expanded list can receive keyboard scrolling focus');
   assert.match(panel.attrs['aria-label'], /队友甲.*2张/);
+  const textContent = node => [node.textContent || '', ...node.children.map(textContent)].join('');
+  assert.doesNotMatch(textContent(panel), /队友甲|2张/, 'visible content contains cards, not a name/count header');
   assert.match(panel.attrs['aria-label'], /悬停/); assert.match(panel.attrs['aria-label'], /键盘|聚焦|焦点/);
   assert.deepEqual(summaryRows(panel), ['火杀', '闪']);
   assert.equal(list.children.length, 2);

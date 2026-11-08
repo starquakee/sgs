@@ -207,7 +207,6 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-game #arena>.sgs-teammate-hand{position:absolute;right:calc(var(--sgs-edge) + var(--sgs-player-w) + 18px);top:22%;width:clamp(168px,15vw,218px);box-sizing:border-box;padding:10px;background:#30271fe8;border:1px solid #8c8d72;border-radius:6px;box-shadow:0 4px 12px #170e0733;z-index:4;cursor:default;text-shadow:none;color:#e6d6b8;font:12px/1.4 'Microsoft YaHei',sans-serif}
 .sgs-game #arena[data-number='3']>.sgs-teammate-hand{top:56px}
 .sgs-game #arena>.sgs-teammate-hand[data-position='2']{left:calc(var(--sgs-edge) + var(--sgs-player-w) + 18px);right:auto}
-.sgs-teammate-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;padding-bottom:8px}.sgs-teammate-heading strong{font-size:12px;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#c3d9d5}.sgs-teammate-heading>span{white-space:nowrap;color:#c3b294;font-variant-numeric:tabular-nums}
 .sgs-teammate-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;max-height:168px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#8c795b transparent;margin:0;padding:0;list-style:none}
 .sgs-teammate-card{display:flex;flex-direction:column;align-items:stretch;gap:4px;min-height:63px;box-sizing:border-box;padding:5px 4px;border:1px solid #bda680;border-radius:3px;background:#eadbc0;color:#302920}
 .sgs-teammate-rank{font:14px/1 Georgia,serif;color:#28251f}.sgs-teammate-rank[data-color='red']{color:#b12622}.sgs-teammate-card-name{font:17px/1.1 SGSTableKai,'KaiTi',serif;text-align:center;overflow-wrap:anywhere;margin:auto 0}
@@ -381,8 +380,7 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-leave-dialog button[data-leave] { color: var(--sgs-on-primary); background: var(--sgs-primary); border-color: var(--sgs-primary-edge); }
 .sgs-leave-dialog button[data-leave]:hover { background: var(--sgs-primary-hover); }
 .sgs-game #arena>.sgs-teammate-hand { background: var(--sgs-panel); border-color: var(--sgs-bronze); border-radius: var(--sgs-radius); color: var(--sgs-text); box-shadow: var(--sgs-shadow); }
-.sgs-teammate-heading>span, .sgs-teammate-empty { color: var(--sgs-muted); }
-.sgs-teammate-heading strong { color: var(--sgs-text); }
+.sgs-teammate-empty { color: var(--sgs-muted); }
 
 /* WUI-04: one composition for the native seat, hand and control containers.
    Keep every card's internal face and native movement transform unchanged. */
@@ -456,13 +454,10 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #window #arena > .sgs-teammate-hand {
   right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); top: var(--sgs-side-top);
-  width: clamp(104px, 9vw, 112px); padding: 6px 8px;
+  width: 76px; padding: 4px;
   background: #382c213d; border: 1px dashed #c0aa83;
   color: #f4e7cd; box-shadow: none;
 }
-.sgs-game .sgs-teammate-heading { padding-bottom: 3px; line-height: 16px; }
-.sgs-game .sgs-teammate-heading strong, .sgs-game .sgs-teammate-heading > span { color: #ddc9a8; font-size: 11px; }
-.sgs-game .sgs-teammate-heading > span { flex-shrink: 0; }
 .sgs-game .sgs-teammate-summary {
   display: block; list-style: none; margin: 0; padding: 0;
   font: 12px/23px var(--sgs-font-body);
@@ -471,8 +466,9 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game .sgs-teammate-summary > li {
   display: block; box-sizing: border-box; height: 24px;
   border-top: 1px dashed #c0aa8366; padding: 0 2px;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
 }
+.sgs-game .sgs-teammate-summary > li:first-child { border-top: 0; }
 .sgs-game .sgs-teammate-summary > .sgs-teammate-more { height: 16px; line-height: 15px; text-align: center; }
 .sgs-game .sgs-teammate-detail {
   display: none; position: absolute; top: -1px; right: calc(100% - 1px);
@@ -563,7 +559,6 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 @media (max-width: 1100px) {
   .sgs-game #window #arena { --sgs-equip-w: 116px; }
-  .sgs-game #window #arena > .sgs-teammate-hand { width: 104px; }
   .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 17px; }
 }
 @media (max-width: 1279px) {

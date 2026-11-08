@@ -13,7 +13,7 @@ export function visibleTeammate(game, mode) {
 
 export function installTeammateHand({ game, ui, get }, mode) {
   const doc = ui.arena.ownerDocument;
-  let owner, panel, heading, summary, list, empty, signature;
+  let owner, panel, summary, list, empty, signature;
   let disposed = false;
   const observer = new MutationObserver(() => refresh());
   const text = value => String(value ?? '').replace(/<[^>]*>/g, '');
@@ -37,7 +37,6 @@ export function installTeammateHand({ game, ui, get }, mode) {
       owner = teammate;
       panel = node('aside', 'sgs-teammate-hand');
       panel.tabIndex = 0;
-      heading = node('header', 'sgs-teammate-heading');
       summary = node('ul', 'sgs-teammate-summary');
       summary.setAttribute('aria-label', '队友手牌预览，最多五张');
       const detail = node('div', 'sgs-teammate-detail');
@@ -46,7 +45,7 @@ export function installTeammateHand({ game, ui, get }, mode) {
       list.setAttribute('aria-label', '队友当前手牌');
       empty = node('p', 'sgs-teammate-empty', '暂无手牌');
       detail.append(list, empty);
-      panel.append(heading, summary, detail);
+      panel.append(summary, detail);
       // Refresh permission before either pointer or keyboard reveals details.
       const inspect = () => { refresh(); panel?.removeAttribute('data-dismissed'); };
       panel.addEventListener('pointerenter', inspect);
@@ -87,7 +86,6 @@ export function installTeammateHand({ game, ui, get }, mode) {
     const next = JSON.stringify([name, cards]);
     if (signature === next) return;
     signature = next;
-    heading.replaceChildren(node('strong', '', `${name} · 手牌`), node('span', '', `${cards.length}张`));
     panel.setAttribute('aria-label', `队友${name}的手牌，共${cards.length}张；悬停或聚焦查看详情，Esc收起`);
     summary.replaceChildren(...cards.slice(0, 5).map(card => {
       const row = node('li', 'sgs-teammate-summary-card', card.name);
