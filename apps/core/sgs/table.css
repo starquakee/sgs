@@ -308,25 +308,35 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div {
   min-width: var(--sgs-action-width);
   min-height: var(--sgs-action-height);
-  font: var(--sgs-text-action)/1.3 var(--sgs-font-body)!important;
-  background: var(--sgs-control)!important;
-  border-color: var(--sgs-bronze)!important;
+  font: 18px/1.3 var(--sgs-font-body)!important;
+  letter-spacing: .04em;
+  background: #38291ec7!important;
+  border-color: #b29973!important;
   border-radius: var(--sgs-radius)!important;
-  box-shadow: var(--sgs-control-shadow)!important;
+  box-shadow: inset 0 0 0 1px #e9cea81f, inset 0 1px #fff0d81f!important;
   transition: background var(--sgs-motion), box-shadow var(--sgs-motion);
 }
-.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-action='cancel'] { background: var(--sgs-panel)!important; color: var(--sgs-muted)!important; }
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-action='cancel'] { background: #38291ec7!important; color: #eadcc5!important; }
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div:is([data-sgs-action='ok'],[data-sgs-mulligan='start']) {
-  background: var(--sgs-primary)!important;
-  color: var(--sgs-on-primary)!important;
-  border-color: var(--sgs-primary-edge)!important;
+  background: linear-gradient(#d6b986, #bb945f)!important;
+  color: #3c291b!important;
+  border-color: #ebd3a7!important;
+  box-shadow: inset 0 0 0 1px #6947213b, inset 0 2px #fff1cd7a!important;
+  font-weight: 600!important;
 }
-.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-mulligan='replace'],
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-mulligan='replace'] {
+  background: #38291ec7!important;
+  color: #eadcc5!important;
+  border-color: #b29973!important;
+  box-shadow: inset 0 0 0 1px #e9cea81f, inset 0 1px #fff0d81f!important;
+  font-weight: 400!important;
+}
 .sgs-game #arena #control>.control.sgs-skill-control>div { background: var(--sgs-control)!important; color: var(--sgs-text)!important; border-color: var(--sgs-bronze)!important; box-shadow: var(--sgs-control-shadow)!important; }
-.sgs-game #arena #control>.control:not(.disabled)>div:hover { filter: brightness(1.12); }
+.sgs-game #arena #control>.control:not(.disabled)>div:hover { filter: brightness(1.08); }
 .sgs-game #arena #control>.control.disabled>div { filter: none; cursor: default; }
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div:active { translate: none; box-shadow: inset 0 2px 4px #0005!important; }
 .sgs-game #arena #control>.control>div:focus-visible { outline: 2px solid var(--sgs-focus); outline-offset: -4px; }
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div:is([data-sgs-action='ok'],[data-sgs-mulligan='start']):not([data-sgs-mulligan='replace']):focus-visible { outline-color: #3c291b; }
 
 .sgs-game #arena>.dialog:not(.nobutton),
 .sgs-game #window>.dialog.popped,
@@ -344,7 +354,7 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #arena>.dialog .caption,
 .sgs-game #arena>.dialog:not(.nobutton) .caption { color: var(--sgs-text); font-family: var(--sgs-font-title); }
-.sgs-game #arena>.dialog.nobutton { color: var(--sgs-text); background: linear-gradient(90deg, transparent, #68442cd9 18%, #68442cd9 82%, transparent); font-family: var(--sgs-font-body); }
+.sgs-game #arena>.dialog.nobutton { color: var(--sgs-text); background: none; font-family: var(--sgs-font-body); text-shadow: 0 1px 3px #24180ee6; }
 .sgs-game #arena>.dialog .caption>.sgs-opening-copy { color: var(--sgs-text); font-family: var(--sgs-font-body); }
 .sgs-game .dialog .caption>.text { font-family: var(--sgs-font-body); }
 .sgs-game .menu-container { background: var(--sgs-backdrop); }
@@ -458,6 +468,36 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   box-sizing: border-box; padding: 7px 12px; max-height: 112px;
 }
 .sgs-game #window #arena > .dialog.nobutton .caption { font-size: 19px; line-height: 1.5; }
+/* The opening prompt is a small typeset note, using the original native
+   captions and controls. Other native choices keep their own geometry. */
+.sgs-game #window #arena > .dialog.nobutton:has(.sgs-opening-copy) {
+  height: auto!important;
+  max-height: 112px;
+  padding: 0 12px 6px;
+}
+.sgs-game #window #arena > .dialog.nobutton:has(.sgs-opening-copy) :is(.content-container, .content) {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.sgs-game #window #arena > .dialog.nobutton:has(.sgs-opening-copy) .caption {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  line-height: 30px;
+  letter-spacing: 2px;
+}
+.sgs-game #window #arena > .dialog.nobutton .caption:has(> .sgs-opening-copy) { margin-top: 7px; }
+.sgs-game #window #arena > .dialog.nobutton .sgs-opening-copy {
+  position: relative;
+  color: #f0e2cb;
+  font-size: 13px;
+  line-height: 22px;
+  letter-spacing: 0;
+}
 .sgs-game #window #arena > .dialog:not(.nobutton) {
   bottom: calc(var(--sgs-hand-h) + 106px)!important;
   max-height: calc(100% - var(--sgs-hand-h) - 144px);
