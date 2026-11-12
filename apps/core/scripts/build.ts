@@ -141,7 +141,6 @@ async function buildSelf(target: string | string[], importMap: Record<string, st
 			rollupOptions: {
 				preserveEntrySignatures: "strict",
 				treeshake: false,
-				external: ["vue"],
 				input: {
 					index: "index.html",
 					noname: "noname.js",
@@ -183,7 +182,7 @@ async function buildIndividual(type: string, target: string | string[], input: R
 			rollupOptions: {
 				preserveEntrySignatures: "strict",
 				treeshake: true,
-				external: Object.keys(importMap),
+				external: ["noname"],
 				input,
 				output: {
 					preserveModules: false,
