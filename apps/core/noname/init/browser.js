@@ -11,14 +11,15 @@ import { FileSystem, FileSystemError, FileSystemErrorCode, installLegacyFileSyst
 export default async function browserReady({ lib, game }) {
 	lib.path = (await import("path-browserify-esm")).default;
 	const adpt = new BrowserAdapter();
-	const fs = new FileSystem(adpt);
+	let fs = new FileSystem(adpt);
 
 	try {
 		// 这里只探测 dev server 的连通性和响应格式；文件不存在会返回 null。
 		await fs.stat("noname.js");
 	} catch (e) {
-		console.error("文件读写函数初始化失败:", e);
-		return;
+		// 静态托管等没有本地文件服务的环境：所有文件视为不存在，配置走浏览器本地存储。
+		console.warn("未检测到本地文件服务，以无文件权限模式运行:", e);
+		fs = new FileSystem(new OfflineAdapter());
 	}
 	lib.fs = fs;
 	installLegacyFileSystemAPI(game, fs);
@@ -171,7 +172,7 @@ class BrowserAdapter {
 		if (!options.recursive) {
 			const info = await this.stat(path);
 			if (info !== null) {
-				throw createFileSystemError(FileSystemErrorCode.AlreadyExists, path, "Path already exists");
+				throw createFileSystemError(FileSystemErrorCode.AlreadyExists, path, "Directory already exists");
 			}
 
 			const parentPath = getParentPath(path);
@@ -211,6 +212,40 @@ class BrowserAdapter {
 	}
 }
 
+/**
+ * 没有本地文件服务时的降级适配器：读取一律视为文件不存在，写操作直接失败。
+ * @implements { FileSystemAdapter }
+ */
+class OfflineAdapter {
+	async stat() {
+		return null;
+	}
+
+	async list() {
+		return [];
+	}
+
+	async open(path) {
+		throw createFileSystemError(FileSystemErrorCode.NotFound, path, "本地文件服务不可用");
+	}
+
+	async read(path) {
+		throw createFileSystemError(FileSystemErrorCode.NotFound, path, "本地文件服务不可用");
+	}
+
+	async write(path) {
+		throw createFileSystemError(FileSystemErrorCode.NotFound, path, "本地文件服务不可用");
+	}
+
+	async createDir(path) {
+		throw createFileSystemError(FileSystemErrorCode.NotFound, path, "本地文件服务不可用");
+	}
+
+	async remove(path) {
+		throw createFileSystemError(FileSystemErrorCode.NotFound, path, "本地文件服务不可用");
+	}
+}
+
 /** @implements {FileHandle} */
 class BrowserFileHandle {
 	constructor(adapter, path, readable, writable, append) {
@@ -232,7 +267,7 @@ class BrowserFileHandle {
 
 	async write(data) {
 		this.assertWritable();
-		assertUint8Array(data, this.path);
+		assertUint8Array(data, path);
 
 		if (!this.append) {
 			await this.adapter.write(this.path, data);
@@ -269,7 +304,7 @@ class BrowserFileHandle {
 			resized.set(current.subarray(0, size));
 			await this.adapter.write(this.path, resized);
 		} catch (error) {
-			throw toFileSystemError(error, this.path);
+			throw toFileSystemError(error, path);
 		}
 	}
 
@@ -284,9 +319,8 @@ class BrowserFileHandle {
 	}
 
 	assertWritable() {
-		this.assertOpen();
 		if (!this.writable) {
-			throw createFileSystemError(FileSystemErrorCode.IoError, this.path, "File is not open for writing");
+			throw createFileSystemError(FileSystemErrorCode.IoError, this.path, "File handle is not open for writing");
 		}
 	}
 }
