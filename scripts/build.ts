@@ -15,7 +15,10 @@ await fs.rm("dist", { recursive: true, force: true });
 await fs.mkdir("dist", { recursive: true });
 await Promise.all([
 	fs.cp("apps/core/dist", "dist", { recursive: true }),
-	fs.cp("apps/core/audio", "dist/audio", { recursive: true }),
+	fs.cp("apps/core/audio", "dist/audio", { recursive: true }).catch((error) => {
+		if (error?.code !== "ENOENT") throw error;
+		console.log("未找到 apps/core/audio，跳过音频资源打包");
+	}),
 	fs.cp("apps/core/image", "dist/image", { recursive: true }),
 	fs.cp("apps/core/extension", "dist/extension", { recursive: true }),
 	fs.cp("docs", "dist/docs", { recursive: true }),
