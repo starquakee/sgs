@@ -137,18 +137,16 @@ async function buildSelf(target: string | string[], importMap: Record<string, st
 		build: {
 			target,
 			sourcemap: false,
-			minify: false,
+			minify: true,
 			rollupOptions: {
 				preserveEntrySignatures: "strict",
 				treeshake: false,
-				external: ["vue"],
 				input: {
 					index: "index.html",
 					noname: "noname.js",
 				},
 				output: {
-					preserveModules: true, // 保留文件结构
-					preserveModulesRoot: "./",
+					preserveModules: false,
 
 					// 去掉 hash
 					entryFileNames: "[name].js", // 入口文件
@@ -184,7 +182,7 @@ async function buildIndividual(type: string, target: string | string[], input: R
 			rollupOptions: {
 				preserveEntrySignatures: "strict",
 				treeshake: true,
-				external: Object.keys(importMap),
+				external: ["noname"],
 				input,
 				output: {
 					preserveModules: false,
