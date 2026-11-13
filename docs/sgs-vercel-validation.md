@@ -17,3 +17,9 @@ Core minify:false retains bundling/Vue and independent-pack settings. Actual emi
 
 ## VCL-02 — 完整静态部署（发布前）
 VCL-02 local acceptance: pinned Node22/pnpm10.11.0 filtered frozen install completed in an isolated manifest/lockfile checkout with --ignore-scripts (4of6 workspaces; Electron/server not installed). Full production build passed emitted-callback3 and source-pinned2953asset gates (450audio28,381,860bytes and2491portraits). Full269Node tests,5focused deployment tests,450silentdecodes and independent review passed. Existing production failed the new verifier at root200 vs307 as expected. Parent replaced only identified local SGS preview with hidden static-only127.0.0.1:8083; complete HTTP2953asset/hash/MIME/404/root307 checks passed. Actual1280x720 browser root reached customlobby, nativeShenHuangzhong landlord opened with sound:false, manualstart/Zhanjuecancel/equipmentselect+confirm changed7to6hand and equippedZhugeLiannu, then returned to functional lobby. Console had only expected missing-file-service fallback warning, no runtime error. Screenshot vcl02-static-table.jpg. Live Vercel publication/HTTP/browser evidence remains pending, so passes=false.
+
+## VCL-02 — 发布后验收
+- 开发提交 `d5db020745cd9dbbf4fb9cc3a3def27e409cc618` 已发布为受限快照 `dc040343c36e18ee23b8058ceaed5e916dbac326`；`git ls-remote sgs refs/heads/main` 与域名 `/game/build-info.json` 均返回该快照。
+- `node scripts/sgs/verify-deployment.mjs --url https://sgs.fengchenchen.top` 全部通过：2953项资源、450条录音（28,381,860字节）、2491张画像。包含首页307、原生入口、清单、逐文件MIME/大小/SHA-256及缺失资源404检查。
+- 父会话实际1280×720浏览器从域名首页到定制大厅，画像和技能正常，打开设置、关闭声音、切换2v2并返回大厅均成功。截图 `screenshots/vercel/vcl02-live-lobby.jpg`。控制台只有预期的无本地文件服务降级警告，无运行时错误。
+- 本故事要求的真实静态开局已在本地完成，线上大厅与资源冒烟完成。该域名首次进入原生牌局会要求接受GPLv3；本次已取消并提出操作确认，尚未将线上实战记为通过。在线三模式、自然结算等仍属于未通过的VCL-05。
