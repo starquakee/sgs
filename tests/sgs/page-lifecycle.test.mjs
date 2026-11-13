@@ -134,7 +134,7 @@ test('history recovery retains the pinned native asynchronous pause promise afte
 
 test('a cached return during actual runtime preparation never installs later table adapters', async () => {
   const source = readFileSync(new URL('../../apps/core/sgs/runtime.js', import.meta.url), 'utf8')
-    .replace(/^import .*;\r?\n/gm, '').replace('export async function', 'async function');
+    .replace(/^import .*;\r?\n/gm, '').replace(/^export (?=(?:async )?function)/gm, '');
   const host = new Node('window'), document = dom(); document.head = new Node('head');
   const status = {}, game = { pause2() { status.paused2 = true; }, resume2() { status.paused2 = false; } };
   const lib = { onload: [], arenaReady: [] };

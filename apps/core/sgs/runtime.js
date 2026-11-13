@@ -23,6 +23,42 @@ import { persistentStorage, saveNativeSettings, storageNotice } from './storage.
 import { loadRosterAssets, loadAudioAssets } from './loading.mjs';
 import { installTablePageLifecycle } from './page-lifecycle.mjs';
 
+export function installAudioButton(audioButton, preferences, readAudio) {
+  const surface = audioButton.ownerDocument;
+  let unlockClick = false;
+  const clearIntent = () => { unlockClick = false; };
+  const rememberAudioIntent = event => {
+    if (event.type === 'keydown' && event.repeat) return;
+    const status = readAudio()?.status();
+    unlockClick = event.target === audioButton && !!status?.enabled && status.blocked;
+  };
+  const click = () => {
+    const cardAudio = readAudio();
+    const retry = unlockClick;
+    clearIntent();
+    if (!cardAudio) return;
+    const status = cardAudio.status();
+    if (!status.enabled) preferences.set({ sound: true });
+    else if (retry || status.blocked) void cardAudio.unlock();
+    else preferences.set({ sound: false });
+  };
+  // Register before the audio controller: its document capture listener can
+  // finish unlocking before a button listener observes the same gesture.
+  surface.addEventListener('pointerdown', rememberAudioIntent, true);
+  surface.addEventListener('keydown', rememberAudioIntent, true);
+  audioButton.addEventListener('pointercancel', clearIntent);
+  audioButton.addEventListener('blur', clearIntent);
+  audioButton.addEventListener('click', click);
+  return { dispose() {
+    clearIntent();
+    surface.removeEventListener('pointerdown', rememberAudioIntent, true);
+    surface.removeEventListener('keydown', rememberAudioIntent, true);
+    audioButton.removeEventListener('pointercancel', clearIntent);
+    audioButton.removeEventListener('blur', clearIntent);
+    audioButton.removeEventListener('click', click);
+  } };
+}
+
 export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loading) {
   const saved = readLaunch();
   const launch = normalizeLaunch(saved);
@@ -105,17 +141,11 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         audioButton.dataset[`${channel}End`] = last?.end ?? '';
       }
     };
-    const cardAudio = installCardAudio({ lib, game, get }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
+    let cardAudio;
+    const audioControls = installAudioButton(audioButton, preferences, () => cardAudio);
+    cardAudio = installCardAudio({ lib, game, get }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
     installCharacterAudio({ lib, game, get }, characterAudioManifest);
     updateAudio(cardAudio.status());
-    let unlockClick = false;
-    const rememberAudioIntent = () => { unlockClick = cardAudio.status().blocked; };
-    audioButton.addEventListener('pointerdown', rememberAudioIntent);
-    audioButton.addEventListener('keydown', rememberAudioIntent);
-    audioButton.addEventListener('click', () => {
-      if (unlockClick || cardAudio.status().blocked) { unlockClick = false; void cardAudio.unlock(); return; }
-      preferences.set({ sound: !cardAudio.status().enabled });
-    });
     const session = installTableSession({ lib, game, ui, _status, hud, preferences, audio: cardAudio });
     const tableActions = installTableActions({ lib, game, ui, get, _status }, { dialogs: session.dialogs, mode: launch.mode,
       toolsHost: hud.querySelector('.sgs-tool-reference'), toolsMenu: toolMenu });
@@ -230,7 +260,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); cardAudio.dispose(); session.dispose(); };
+    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); audioControls.dispose(); cardAudio.dispose(); session.dispose(); };
     decorate();
     loading?.ready();
   });
