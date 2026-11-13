@@ -267,7 +267,7 @@ class BrowserFileHandle {
 
 	async write(data) {
 		this.assertWritable();
-		assertUint8Array(data, path);
+		assertUint8Array(data, this.path);
 
 		if (!this.append) {
 			await this.adapter.write(this.path, data);
@@ -304,7 +304,7 @@ class BrowserFileHandle {
 			resized.set(current.subarray(0, size));
 			await this.adapter.write(this.path, resized);
 		} catch (error) {
-			throw toFileSystemError(error, path);
+			throw toFileSystemError(error, this.path);
 		}
 	}
 
@@ -319,6 +319,7 @@ class BrowserFileHandle {
 	}
 
 	assertWritable() {
+		this.assertOpen();
 		if (!this.writable) {
 			throw createFileSystemError(FileSystemErrorCode.IoError, this.path, "File handle is not open for writing");
 		}
