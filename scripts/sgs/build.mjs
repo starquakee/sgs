@@ -16,4 +16,5 @@ for(const [from,to] of [['apps/core/dist',''],['apps/core/image','image'],['apps
   await cp(resolve(root,from),resolve(output,to),{recursive:true});
 }
 run(process.execPath,['--test','tests/sgs/native-build.integration.mjs']);
+run(process.execPath,['scripts/sgs/verify-deployment.mjs']);
 console.log('Production build ready: node scripts/sgs/serve.mjs');

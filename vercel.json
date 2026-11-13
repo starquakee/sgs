@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "corepack enable pnpm && corepack pnpm --filter './' --filter 'noname...' install --frozen-lockfile --prod=false --ignore-scripts",
+  "buildCommand": "node scripts/sgs/build.mjs",
+  "outputDirectory": "dist-sgs",
+  "cleanUrls": false,
+  "redirects": [
+    { "source": "/", "destination": "/sgs.html", "permanent": false }
+  ]
+}

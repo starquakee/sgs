@@ -2,6 +2,10 @@
     "private": true,
     "version": "1.0.0",
     "type": "module",
+    "packageManager": "pnpm@10.11.0",
+    "engines": {
+        "node": "22.x"
+    },
     "scripts": {
         "dev": "tsx scripts/dev.ts",
         "build": "tsx scripts/build.ts",

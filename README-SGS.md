@@ -90,7 +90,7 @@
 
 ## 开发与构建
 
-环境：Node.js 22.12 或更高、pnpm 9 或更高。
+环境：Node.js 22、pnpm 10.11.0（由根目录 packageManager 固定）。
 
 ```powershell
 pnpm --filter noname... --filter . install --ignore-scripts
@@ -107,16 +107,24 @@ node scripts/sgs/serve.mjs
 
 开发和生产服务默认都使用 8081 端口，请只运行一个；生产预览可以用 `$env:PORT='8083'` 后启动。服务只监听本机，资源接口只读。
 
+### Vercel 部署
+
+仓库根目录的 `vercel.json` 使用 Node 22、固定版本 pnpm、冻结锁文件的核心依赖安装和 `node scripts/sgs/build.mjs`，发布完整 `dist-sgs`。安装不运行生命周期脚本，不安装 Electron 工作区。首页临时跳转至 `/sgs.html`；原生 `/index.html?sgs=1` 入口保留，缺失资源返回 404。
+
+构建会核验已有 450 条录音（28,381,860 字节）、2491 张画像、名册与清单的源校验值。部署后可在同一构建工作区运行 `node scripts/sgs/verify-deployment.mjs --url https://sgs.fengchenchen.top`，验证状态、类型、内容、全部音频及画像哈希；此命令只下载校验，不播放声音。
+
+本地模拟纯静态托管时，用 `$env:PORT='8083'` 和 `node scripts/sgs/serve.mjs --static-only` 启动专用预览。此模式不提供本地文件接口，可验证与 Vercel 相同的离线降级；原有无参数预览仍保留只读接口。
+
 ## Ralph 继续开发
 
-当前分支为 `codex/sgs-warm-client-ui`，需求见 `tasks/prd-sgs-warm-client-ui.md`；故事状态：`prd.json`；进度：`progress.txt`。可靠性清单归档于 `archive/2026-10-05-sgs-reliability/`，MAT-07仍未完成；此前 `archive/2026-10-05-sgs-client-experience/` 中UX-09和 `archive/2026-10-04-sgs-decade/` 中US-006也保持未完成。旧PRD的规则与证据约束继续有效。本轮逐故事本地提交，不自动推送。
+当前分支为 `codex/sgs-vercel-audio`，需求见 `tasks/prd-sgs-vercel-audio.md`；故事状态：`prd.json`；进度：`progress.txt`。牌桌清单已归档于 `archive/2026-11-14-sgs-table-presence/`。可靠性清单归档于 `archive/2026-10-05-sgs-reliability/`，MAT-07仍未完成；此前 `archive/2026-10-05-sgs-client-experience/` 中UX-09和 `archive/2026-10-04-sgs-decade/` 中US-006也保持未完成。旧PRD的规则与证据约束继续有效。
 
 ```bash
 scripts/ralph/ralph.sh --dry-run
 scripts/ralph/ralph.sh --agent codex 1
 ```
 
-Windows Git Bash 需要 `/usr/bin` 在 PATH 中。每轮只处理一项未完成故事；CLI实现并测试后保留 `passes=false`，由桌面父会话在真实浏览器验收，再标记并本地提交。不能将未实测的全量技能标记为完成。本轮不推送。项目仓库为 [starquakee/sgs](https://github.com/starquakee/sgs)。原始开发检出的 `origin` 仍是无名杀上游，禁止推送；后续发布必须得到用户请求，并仅推送项目远程 `sgs`。从项目仓库新克隆时，`origin` 指向项目自身。
+Windows Git Bash 需要 `/usr/bin` 在 PATH 中。每轮只处理一项未完成故事；CLI实现并测试后保留 `passes=false`，由桌面父会话在真实浏览器验收，再标记并提交。不能将未实测的全量技能标记为完成。用户已授权每次 commit 后立即通过 `scripts/sgs/create-github-snapshot.mjs` 生成受限快照并正常推送显式 `sgs/main`，核验远端祖先、SHA 和 Vercel 部署后再处理下一项。项目仓库为 [starquakee/sgs](https://github.com/starquakee/sgs)。原始开发检出的 `origin` 仍是无名杀上游，禁止推送或强推；从项目仓库新克隆时，仍应配置并核对显式项目远程 `sgs` 后发布。
 
 公开仓库采用当前可运行源码与本地素材快照，省略原本未检出的移动端、全量上游音频和武将大图；开发机器的原始提交历史保持不变。上游自动发布、部署和定时任务源码保存在 `archive/sgs-upstream-workflows/`，不会作为本项目的Actions自动执行。上游文件服务器附带的 `localhost.decrypted.key` 不在发布树中；本项目启动器只用本机HTTP服务，不依赖它。常规安装、构建和测试无需上游Git历史；重新抓取上游素材的维护脚本需要另行获取锁定上游提交的Git元数据。
 
