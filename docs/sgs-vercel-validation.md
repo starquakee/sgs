@@ -10,3 +10,7 @@
 
 ## 发布约束
 每项验证后独立commit，立即生成受限快照并正常push显式sgs/main；先查祖先，后查远端SHA与域名部署。旧MAT-07、UX-09、US-006保持未完成。
+
+## VCL-01 — 构建回调修复
+Core minify:false retains bundling/Vue and independent-pack settings. Actual emitted local/online callbacks failed before fix (ReferenceError:c is not defined), then all3 mandatory StepParser integration checks passed;264 existing tests, syntax, Node22/pnpm production build and independent review pass. Parent IAB recovered after reconnect: canonical sound:false confirmed; actual1280x720 lobby, native2v2 start and AI Nanman response displayed. Native landlord ShenHuangzhong5HP started, toolbar native giveup during Zhanjue choice executed death and round1 defeat at00:42, saved real record and returned to functional lobby. Browser warning/error logs empty; all silent. Full-page lobby and surrender before/result screenshots retained. No injected game state, rule changes or new assets.
+截图：screenshots/vercel/vcl01-lobby.jpg、vcl01-surrender-before.jpg、vcl01-surrender-result.jpg。真实投降属于规则结束验证，不宣称自然对局完成。

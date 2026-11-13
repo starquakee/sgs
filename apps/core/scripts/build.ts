@@ -137,7 +137,8 @@ async function buildSelf(target: string | string[], importMap: Record<string, st
 		build: {
 			target,
 			sourcemap: false,
-			minify: true,
+			// StepParser rebuilds callback bodies with canonical engine variable names.
+			minify: false,
 			rollupOptions: {
 				preserveEntrySignatures: "strict",
 				treeshake: false,

@@ -15,4 +15,5 @@ await mkdir(output,{recursive:true});
 for(const [from,to] of [['apps/core/dist',''],['apps/core/image','image'],['apps/core/sgs','sgs'],['apps/core/sgs.html','sgs.html'],['LICENSE','LICENSE'],['README-SGS.md','README-SGS.md']]) {
   await cp(resolve(root,from),resolve(output,to),{recursive:true});
 }
+run(process.execPath,['--test','tests/sgs/native-build.integration.mjs']);
 console.log('Production build ready: node scripts/sgs/serve.mjs');
