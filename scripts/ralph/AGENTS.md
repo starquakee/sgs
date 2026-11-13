@@ -1,13 +1,12 @@
-# Ralph iteration: SGS table presence
+# Ralph iteration: SGS Vercel audio
 
-1. Read root AGENTS.md, tasks/prd-sgs-table-presence.md, the four prior PRDs, prd.json, progress.txt and docs/sgs-table-presence-validation.md. Branch must be codex/sgs-table-presence.
-2. Implement exactly the lowest-priority unfinished BTL story. Do not implement later stories. Before edits reproduce the issue with a meaningful regression or documented real browser evidence. No guessed rules fixes.
-3. Use frontend-design for visual stories. Preserve warm brown dragon table,44px single toolbar, cream paper, wood chamfered controls. Only existing attributed assets; no new/generated art, no new status strip. Native card interiors, legality, AI, handoff, manual confirmation, cancellation and pause ownership remain unchanged.
-4. For BTL-01, test the real lobby handler seam with a second preferences instance modifying shared storage before pageshow. Preserve unreadable-storage in-memory values and UI continuity. Parent browser proof will follow. Do not overwrite all saved preferences with defaults on read failure.
-5. Node22/pnpm. Run node --check for changed JS and PostCSS parse for CSS. Focused meaningful tests then node --test --test-reporter=dot tests/sgs/*.test.mjs after logic edits. PureCSS needs real browser checks, not implementation mirror tests.
-6. CLI agents have no parent CUA. Leave passes=false and report exact pending browser steps. Append implementation/test evidence to progress.txt but DO NOT commit, push, update snapshots, or mark passing: parent owns browser acceptance and immediate per-issue commit/push. Stop after one story regardless of remaining iterations.
-7. Parent builds production and validates actual UI and real native choices before each story is committed. No injected game state, fake results or fixture-only claim of real gameplay. Isolated regression fixtures stay under tests and out of production output.
-8. ALL debugging is silent per user request. Never enable browser sound, never play audio files, never restore sound=true. Node test mocks are fine. Avoid browser navigation with stale sound=true launch fragments.
-9. windowsHide on all child processes, no visible console helpers, loopback8083 only, user8081 untouched, no --unsafe. Build or Git restrictions must be handled by parent through tools without disabling sandbox.
-10. Output bounded: no giant catalogs, manifests, image-name lists or full logs. Do not collect hidden game state. Do not modify pinned upstream source, LICENSE, original art or audio.
-11. All old archive incomplete items MAT-07/UX-09/US-006 remain false. Never emit COMPLETE while any active story false. End each iteration with specific files, regression result, and pending browser validation.
+1. Read root AGENTS.md, tasks/prd-sgs-vercel-audio.md, prior five PRDs, prd.json and progress.txt. Branch: codex/sgs-vercel-audio. Reviewed remote hosting commits are incorporated.
+2. Implement exactly the lowest-priority unfinished VCL story, then stop. Reproduce first. No broad rule/AI or UI redesign.
+3. Parent owns browser acceptance, pass flags, commits and immediate publication. CLI agents MUST NOT commit/push/update publication refs or mark passing. Report evidence and pending checks. Do not advance until parent validates and publishes the previous issue.
+4. ALL debugging is silent. Never enable browser sound or restore sound=true. Mock audio and silent decoding are permitted. Preserve native events, real decisions and visibility permissions.
+5. Node22/pnpm; changed JS syntax, focused meaningful regression, full tests/sgs suite and actual Vite output for TS changes. Production: node scripts/sgs/build.mjs. No fixture shipping.
+6. VCL-01 retains bundling/Vue, disables core minify. Exercise actual emitted surrender callbacks using real StepParser; source-only checks are insufficient.
+7. VCL-02 uses Vercel root -> /sgs.html only, dist-sgs, existing450 audio files, same-origin URLs and hashes. Keep /index.html?sgs=1. Static preview omits local filesystem APIs.
+8. VCL-03 tests real toolbar handler: disabled precedes blocked; gesture retry must not toggle off. Preserve equipment silence, timeout and disposal. VCL-04 preserves OfflineAdapter while undoing three file-handle regressions.
+9. VCL-05 records actual gameplay, never injected state/fake results. windowsHide on new children; only127.0.0.1:8083; never change user8081 or sandbox; no --unsafe; do not collect hidden state.
+10. Existing GPL/source/art/audio attribution and archived MAT-07/UX-09/US-006 remain intact. Pending browser evidence keeps passes=false. Never emit COMPLETE while an active story is false.
