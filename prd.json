@@ -69,6 +69,32 @@
       "priority": 5,
       "passes": false,
       "notes": "User explicitly approved GPL acceptance and continuing. Actual domain0d4cd702/Vercel success verified; resumed native background-pause dialog manually. Muted live2v2 seat4/ally1/mulligan5, two manualShan responses5→4→3, Wuzhong settings-preserved manualuse5→6, native托管then naturaldefeatround3at18:09 and exactnewrecord verified. Landlord5HP initial4/mulligan4/prepare+draw7/manualWuzhong7→8/settings/restart tosame5HP4cards0mulligan/return passed. Farmer4HP/mulligan4/manualShan4→3/manualWanjian5→4/allypreview4→3 synchronized/return passed. Identity8 hiddenothers/humanlord5HP/mulligan4/draw6/manualarmor6→5+existinghorse retained/all8frameswithin1024x640/AIfullcycle+Nanmanresponsecancel→nextplayerturn4HP7cards/return passed. Actual1280x720 and1024x640 table views and390x844 lobby checked; screenshots saved. Final history remains only natural2v2, aborted games not recorded; logs only expected static-file-service fallback,no runtimeerror. Source/tests/assets unchanged, prior294tests/build/450silentdecodes/2953liveasset gate/finalreview stayvalid. Controlled actual-hidden preservation STILL PENDING: browser panel hide leftdocumentvisible,clock15:04→15:34; initial genuinepause lacked before-selection/clock baseline. No syntheticvisibility/game injection. VCL05 remainsfalse, archivedMAT07UX09US006 unchanged. Returned lobby, viewportreset, allsoundoff."
+    },
+    {
+      "id": "VCL-06",
+      "title": "开局换牌音效",
+      "description": "每次成功完成原生人类开局换牌播放短操作音效",
+      "acceptanceCriteria": [
+        "真实gameDraw/replaceHandcards与SGS音频链静默复现并回归；仅已接受且成功完成换牌触发一次。",
+        "使用锁定上游原录音与完整来源哈希，统一静音、AudioContext和音效音量；取消/开始/AI发牌无误播，设备失败和迟到加载不影响牌局。",
+        "三模式无限换牌、起始张数/特殊牌堆/标签/地主摸牌时机不变；测试、静默解码、构建/资源、父浏览器验收和独立提交发布通过。"
+      ],
+      "priority": 6,
+      "passes": false,
+      "notes": "静默复现真实原生gameDraw/replaceHandcards两次成功换牌无声音请求，新增回归先5pass/2fail；补齐成功完成后的独立通知及一条锁定上游effect/draw录音14214字节，原450条不变。303项完整测试、58项专项独立审查、451条静默解码、修改语法/diff检查通过。父Node22/pnpm正式构建通过实际投降回调3项和2955资源/451音频28396074字节/2491画像校验。父实际1280×720静音浏览器：地主5HP四张，连续换两次仍四张，开始后原生跋扈/摸牌至七张；2v2四号位五张换后仍五张，开始后一号位队友原生行动；八人身份四张换后仍四张、其他身份未暴露，开始与设置往返正常。声音false、context uninitialized、played/effects0；40/25/60音量未变，操作与受击音效标签可读，返回大厅正常，无console warning/error。截图vcl06-muted-mulligan.jpg/vcl06-muted-settings.jpg。真实声音未开启，播放由真实模块+模拟设备验证。代码/浏览器本地验收完成，独立发布及域名核验仍待完成；VCL05/07及历史未完成项保持false。"
+    },
+    {
+      "id": "VCL-07",
+      "title": "拖牌到目标并出牌",
+      "description": "单张普通手牌拖到合法目标松手，通过原生确认使用",
+      "acceptanceCriteria": [
+        "单张普通有目标卡牌拖放通过原生选牌/目标/检查/确认路径提交，覆盖杀与另一单目标锦囊；不修改规则或强制可选。",
+        "无效/空白放下、暂停、取消及事件变化不得误出牌；普通点击仍手动确认，直接切换、唯一目标预选、重铸及青龙路径保留。",
+        "复杂/自定义/多牌/多目标/响应保持原生点击；真实原生处理器回归、完整测试/构建、父浏览器合法拖放与取消/窄窗口、独立提交发布通过。"
+      ],
+      "priority": 7,
+      "passes": false,
+      "notes": "2026-11-14用户明确授权拖到目标松手出牌。只读审查发现直接enable_drag会与唯一目标预选冲突并允许空白处提交；VCL-06发布后再实施。"
     }
   ]
 }

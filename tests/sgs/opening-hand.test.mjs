@@ -1,12 +1,15 @@
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { installOpeningHand } from '../../apps/core/sgs/opening-hand.mjs';
+import { installCardAudio } from '../../apps/core/sgs/card-audio.mjs';
 import { engineSettings } from '../../apps/core/sgs/launch-config.mjs';
 
 // Run the pinned engine's complete dealing and replacement functions, including
 // its special-pile/starting-tag branches. Only events, players and cards are fixtures.
 const source = readFileSync(new URL('../../apps/core/noname/library/element/content.ts', import.meta.url), 'utf8');
+const openingManifest = JSON.parse(readFileSync(new URL('../../apps/core/sgs/opening-audio.json', import.meta.url), 'utf8'));
 const previousAddArray = Object.getOwnPropertyDescriptor(Array.prototype, 'addArray');
 Object.defineProperty(Array.prototype, 'addArray', { configurable: true, value(items) { this.push(...items); return this; } });
 after(() => previousAddArray ? Object.defineProperty(Array.prototype, 'addArray', previousAddArray) : delete Array.prototype.addArray);
@@ -80,6 +83,172 @@ function fixture(mode, answers = [false]) {
   return { lib, game, _status, choices, handlers, discarded, videos, cards };
 }
 
+function openingAudio(f, options = {}) {
+  const { fetch: fetcher, ...audioOptions } = options;
+  const fetched = [], started = [], stopped = [];
+  const ctx = {
+    state: options.suspended ? 'suspended' : 'running', currentTime: 2, destination: {},
+    async resume() { this.state = 'running'; }, async close() { this.state = 'closed'; },
+    async decodeAudioData() { return { duration: 0.2 }; },
+    createGain() { return { gain: {}, connect() {}, disconnect() {} }; },
+    createBufferSource() {
+      const source = { connect(gain) { this.gain = gain; }, disconnect() {},
+        start(at) { started.push({ at, gain: this.gain.gain.value }); }, stop() { stopped.push(this); } };
+      return source;
+    },
+  };
+  f.lib.skill = {};
+  f.lib.config.volumn_audio = 6;
+  f.game.addGlobalSkill = () => {};
+  f.game.removeGlobalSkill = () => {};
+  f.game.playAudio = () => { throw new Error('Native unpackaged audio must stay muted'); };
+  f.game.playCardAudio = () => {};
+  const controller = installCardAudio({ ...f, get: { event: () => f._status.event } }, { clips: {} }, {
+    openingManifest, surface: null, host: {}, createContext: () => ctx,
+    fetch: (url, init) => {
+      fetched.push(String(url));
+      return fetcher ? fetcher(url, init) : { ok: true, arrayBuffer: async () => new ArrayBuffer(12) };
+    }, ...audioOptions,
+  });
+  const completed = [];
+  installOpeningHand(f, { onReplaced(event) { completed.push(event); controller.playOpeningHand(event); } });
+  return { controller, fetched, started, stopped, ctx, completed };
+}
+
+test('mulligan recording preserves the exact pinned upstream card-movement bytes and attribution', () => {
+  assert.equal(openingManifest.uniqueFiles, 1);
+  assert.deepEqual(Object.keys(openingManifest.clips), ['effect/draw']);
+  const clip = openingManifest.clips['effect/draw'];
+  assert.equal(openingManifest.upstreamCommit, '7fcf23ed54d8a7ce2b49ae2c15a054123891a52a');
+  assert.equal(clip.sourceGitBlob, '62933c85ae728765d07dd08160fec2aa19655b10');
+  assert.equal(clip.sourceUrl, `https://raw.githubusercontent.com/libnoname/noname/${openingManifest.upstreamCommit}/apps/core/audio/effect/draw.mp3`);
+  assert.equal(openingManifest.attribution.license, 'GPL-3.0');
+  const bytes = readFileSync(new URL(`../../apps/core/sgs/${clip.file}`, import.meta.url));
+  assert.equal(bytes.length, 14214);
+  assert.equal(clip.bytes, bytes.length);
+  assert.equal(openingManifest.totalBytes, bytes.length);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), clip.sha256);
+  assert.equal(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex'), clip.sourceGitBlob);
+});
+
+test('actual native mulligans reach the shared audio controller once each with effect volume', async () => {
+  for (const mode of ['identity', 'versus', 'doudizhu']) {
+    const f = fixture(mode, [true, true, false]);
+    const h = openingAudio(f);
+    h.controller.setVolume('effect', 0.4);
+    await f.game.gameDraw();
+    await h.controller.whenIdle();
+    assert.equal(h.started.length, 2);
+    assert.ok(h.started.every(row => row.at === h.ctx.currentTime && row.gain === 0.75 * 0.4));
+    assert.equal(h.fetched.length, 1, 'repeated replacements reuse the decoded recording');
+    assert.equal(h.controller.status().lastEffect, 'effect/draw');
+    h.controller.playOpeningHand(h.completed[0]);
+    await h.controller.whenIdle();
+    assert.equal(h.started.length, 2, 'a completed native event cannot emit twice');
+    h.controller.dispose();
+  }
+});
+
+test('start, skipped openings, general draws and incomplete or unrelated events stay silent', async () => {
+  for (const status of [{}, { auto: true }, { connectMode: true }, { brawl: { noGameDraw: true } }]) {
+    const f = fixture('identity', status.auto || status.connectMode || status.brawl ? [] : [false]);
+    Object.assign(f._status, status);
+    const h = openingAudio(f);
+    await f.game.gameDraw();
+    await f.game.gameDraw();
+    assert.equal(h.completed.length, 0);
+    const completed = { name: 'replaceHandcards', players: [f.game.me], sgsOpeningHand: true, sgsAccepted: true, sgsOpeningHandCompleted: true };
+    for (const change of [{ name: 'gameDraw' }, { name: 'chooseBool' }, { sgsOpeningHand: false },
+      { sgsAccepted: false }, { sgsOpeningHandCompleted: false }, { players: [f.game.players[1]] }, { _cancelled: true }, { audio: false }]) {
+      h.controller.playOpeningHand({ ...completed, ...change });
+    }
+    f.game.playAudio('effect', 'draw');
+    await h.controller.whenIdle();
+    assert.equal(h.fetched.length, 0);
+    assert.equal(h.started.length, 0);
+    h.controller.dispose();
+  }
+});
+
+test('muted or gesture-blocked mulligans do not load audio or replay later', async () => {
+  for (const options of [{ enabled: false }, { suspended: true }]) {
+    const f = fixture('versus', [true, true, false]);
+    const h = openingAudio(f, options);
+    await f.game.gameDraw();
+    assert.equal(h.completed.length, 2);
+    assert.equal(h.fetched.length, 0);
+    assert.equal(h.started.length, 0);
+    h.controller.setEnabled(true);
+    await h.controller.unlock();
+    await h.controller.whenIdle();
+    assert.equal(h.started.length, 0);
+    assert.equal(h.fetched.length, 0);
+    h.controller.dispose();
+  }
+});
+
+test('mute and disposal abort pending mulligan loads without replay or blocking the native hand', async () => {
+  for (const dispose of [false, true]) {
+    const f = fixture('doudizhu', [true, false]);
+    let signal, release;
+    const h = openingAudio(f, { fetch: (_url, init) => {
+      signal = init.signal;
+      return new Promise(resolve => { release = () => resolve({ ok: true, arrayBuffer: async () => new ArrayBuffer(12) }); });
+    } });
+    await f.game.gameDraw();
+    assert.equal(f.choices.length, 2, 'next opening choice does not wait for sound');
+    assert.equal(h.controller.status().pending, 1);
+    if (dispose) h.controller.dispose();
+    else h.controller.setEnabled(false);
+    assert.equal(signal.aborted, true);
+    release();
+    await h.controller.whenIdle();
+    assert.equal(h.started.length, 0);
+    assert.equal(h.controller.status().pending, 0);
+    if (!dispose) {
+      h.controller.setEnabled(true);
+      await h.controller.whenIdle();
+      assert.equal(h.started.length, 0);
+      h.controller.dispose();
+    }
+  }
+});
+
+test('missing recording, failed device and timed-out loading leave mulligan and game start functional', async () => {
+  for (const options of [
+    { openingManifest: { clips: {} } },
+    { fetch: () => ({ ok: false, status: 404 }) },
+    { createContext: () => { throw new Error('device unavailable'); } },
+    { fetch: () => new Promise(() => {}), loadTimeout: 10 },
+  ]) {
+    const f = fixture('identity', [true, false]);
+    const h = openingAudio(f, options);
+    await f.game.gameDraw();
+    await h.controller.whenIdle();
+    assert.equal(f.choices.length, 2);
+    assert.equal(f.discarded.length, 4);
+    assert.equal(h.started.length, 0);
+    assert.equal(h.controller.status().pending, 0);
+    assert.equal(f.handlers.size, 0);
+    h.controller.dispose();
+  }
+});
+
+test('native replacement failure never emits sound; notification failure cannot block game start', async () => {
+  const f = fixture('identity', [true, false]);
+  let notified = 0;
+  installOpeningHand(f, { onReplaced() { notified++; throw new Error('effect unavailable'); } });
+  await f.game.gameDraw();
+  assert.equal(notified, 1);
+  assert.equal(f.choices.length, 2);
+  const failed = fixture('identity', []);
+  failed.lib.element.content.replaceHandcards = async () => { throw new Error('native replacement failed'); };
+  installOpeningHand(failed, { onReplaced() { notified++; } });
+  await assert.rejects(async () => { await failed.game.gameDraw(); }, /native replacement failed/);
+  assert.equal(notified, 1);
+  assert.equal(failed.handlers.size, 0);
+});
+
 test('all three modes repeatedly replace only the human opening hand through native events, then stop', async () => {
   for (const mode of ['identity', 'versus', 'doudizhu']) {
     const f = fixture(mode, [true, true, true, false]);
@@ -116,6 +285,27 @@ test('begin immediately keeps the original hand and later gameDraw calls do not 
   assert.equal(f.discarded.length, 0);
   await f.game.gameDraw();
   assert.equal(f.choices.length, 1);
+});
+
+test('opening sound is requested only after each accepted native replacement has completed', async () => {
+  for (const mode of ['identity', 'versus', 'doudizhu']) {
+    const f = fixture(mode, [true, true, false]);
+    const requested = [];
+    installOpeningHand(f, { onReplaced(event) {
+      assert.equal(event.name, 'replaceHandcards');
+      assert.equal(event.sgsOpeningHand, true);
+      assert.equal(event.sgsOpeningHandCompleted, true);
+      assert.equal(event.sgsAccepted, true);
+      assert.deepEqual(event.players, [f.game.me]);
+      assert.deepEqual(f.game.me._start_cards, f.game.me.hand, 'sound follows native starting-hand update');
+      requested.push({ event, cards: f.game.me.getCards('h') });
+    } });
+    await f.game.gameDraw();
+    assert.equal(requested.length, 2, 'one sound per completed mulligan, none for begin');
+    assert.notEqual(requested[0].event, requested[1].event);
+    assert.deepEqual(requested[0].cards, f.choices[1].cards);
+    assert.deepEqual(requested[1].cards, f.choices[2].cards);
+  }
 });
 
 test('native special piles, discard callbacks and starting-card tags survive replacement', async () => {

@@ -26,16 +26,16 @@ export async function loadRosterAssets({ stage = () => {}, fetcher } = {}) {
 }
 export async function loadAudioAssets({ stage = () => {}, warn = () => {}, fetcher } = {}) {
   stage('正在读取声音清单');
-  const result = await Promise.all(['card-audio.json', 'character-audio.json', 'damage-audio.json'].map(async (path, index) => {
+  const result = await Promise.all(['card-audio.json', 'character-audio.json', 'damage-audio.json', 'opening-audio.json'].map(async (path, index) => {
     try {
       return await resourceJSON(path, value => object(value?.clips) && Object.values(value.clips).every(clip =>
         object(clip) && typeof clip.file === 'string') && (index !== 1 || object(value.characters)), fetcher);
     } catch {
-      warn(`${['卡牌语音', '武将语音', '受击音效'][index]}清单无法载入，本局该类声音已静音；其余操作照常，可重新开局重试。`);
+      warn(`${['卡牌语音', '武将语音', '受击音效', '换牌音效'][index]}清单无法载入，本局该类声音已静音；其余操作照常，可重新开局重试。`);
       return { clips: {}, aliases: {}, characters: {} };
     }
   }));
-  return { audioManifest: result[0], characterAudioManifest: result[1], damageAudioManifest: result[2] };
+  return { audioManifest: result[0], characterAudioManifest: result[1], damageAudioManifest: result[2], openingAudioManifest: result[3] };
 }
 
 export function createLoadingScreen({ document = globalThis.document, retry = () => location.reload(), back = () => { location.href = './sgs.html'; } } = {}) {

@@ -27,6 +27,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   const skillName = '_sgs_local_card_audio';
   const seenEvents = new WeakSet();
   const seenDamageEvents = new WeakSet();
+  const seenOpeningEvents = new WeakSet();
   const buffers = createAudioLoader({ fetcher: fetchAudio, baseURL: audioRoot, timeout: options.loadTimeout ?? 8000, timers: options.timers || globalThis });
   const playing = new Map();
   const volumes = { card: 1, hero: 1, effect: 1 };
@@ -101,10 +102,10 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
       voice.queue = Promise.resolve();
     }
   }
-  function play(clip, event, audioOptions = {}, channel = 'card') {
+  function play(clip, event, audioOptions = {}, channel = 'card', deduplicate) {
     const immediate = channel === 'effect';
     const voice = voices[channel];
-    const seen = immediate ? seenDamageEvents : seenEvents;
+    const seen = deduplicate || (immediate ? seenDamageEvents : seenEvents);
     if (!clip || !state.enabled || disposed || (event && seen.has(event))) return;
     const ctx = ensureContext();
     if (!ctx) return;
@@ -205,6 +206,15 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     try { game.playCardAudio(event.card, event.player); }
     finally { cardEvent = previous; }
   }
+  function playOpeningHand(event) {
+    // Only the SGS opening adapter marks a successfully awaited replacement.
+    // Ordinary draws, prompt clicks, AI hands and generic effect requests do
+    // not enter this path. Keep damage and voice event ownership independent.
+    if (event?.name !== 'replaceHandcards' || event.sgsOpeningHand !== true
+      || event.sgsOpeningHandCompleted !== true || event.sgsAccepted !== true
+      || event._cancelled || event.audio === false || !event.players?.includes(game.me)) return;
+    play(options.openingManifest?.clips?.['effect/draw'], event, {}, 'effect', seenOpeningEvents);
+  }
   const gesture = () => { void unlock(); };
   const controller = {
     status: () => ({ ...state, volumes: { ...volumes }, contextState: context?.state || 'uninitialized', loaded: buffers.size, scheduled: playing.size,
@@ -234,6 +244,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     // Used only by the committed engine trigger, also exposed for deterministic
     // adapter tests. UI card selection must never call this method.
     playCommitted,
+    playOpeningHand,
     whenIdle: () => Promise.all([...jobs, preload]),
     dispose() {
       if (disposed) return;

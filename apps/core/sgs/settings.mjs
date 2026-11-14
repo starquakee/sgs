@@ -53,9 +53,9 @@ export function openClientSettings(dialogs, preferences) {
   return dialogs.open('settings', `<h2>便捷设置</h2><p class="sgs-dialog-note">更改即时生效，并记住下次的选择。</p>
     <div class="sgs-settings-content">
     <label class="sgs-setting-row"><span>AI 行动速度<small>调整AI行动之间的等待时间</small></span><select name="speed"><option value="normal">适中</option><option value="fast">快速</option></select></label>
-    <label class="sgs-setting-row"><span>游戏声音<small>卡牌、武将语音与受击音效</small></span><input type="checkbox" name="sound"></label>
+    <label class="sgs-setting-row"><span>游戏声音<small>卡牌、武将语音、操作与受击音效</small></span><input type="checkbox" name="sound"></label>
     <fieldset class="sgs-volume-settings"><legend>独立音量</legend>
-      ${Object.entries(volumePreferences).map(([channel, key]) => `<label class="sgs-volume-row"><span>${{ card: '卡牌报音', hero: '武将语音', effect: '受击音效' }[channel]}</span><input type="range" name="${key}" min="0" max="1" step="0.01"><output data-volume="${key}"></output></label>`).join('')}
+      ${Object.entries(volumePreferences).map(([channel, key]) => `<label class="sgs-volume-row"><span>${{ card: '卡牌报音', hero: '武将语音', effect: '操作与受击音效' }[channel]}</span><input type="range" name="${key}" min="0" max="1" step="0.01"><output data-volume="${key}"></output></label>`).join('')}
     </fieldset>
     <label class="sgs-setting-row"><span>后台自动暂停<small>离开页面时暂停，回来后手动继续</small></span><input type="checkbox" name="backgroundPause"></label>
     <label class="sgs-setting-row"><span>减少动态效果<small>关闭战斗闪动，缩短界面和卡牌动画</small></span><input type="checkbox" name="reducedMotion"></label>

@@ -15,9 +15,9 @@ const inventory = { assets: [asset('index.html', html, true), asset('sgs/audio/t
 
 test('deployment inventory pins all existing recordings and portrait files to source checksums', async () => {
   const actual = await deploymentInventory(undefined, { nativeEntryBytes: html });
-  assert.equal(actual.audioFiles, 450);
-  assert.equal(actual.audioBytes, 28381860);
-  assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 450);
+  assert.equal(actual.audioFiles, 451);
+  assert.equal(actual.audioBytes, 28396074);
+  assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 451);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/portraits/')).length, 2491);
   const source = JSON.parse(await readFile(new URL('../../apps/core/sgs/card-audio.json', import.meta.url)));
   const clip = source.clips['card/female/sha'];

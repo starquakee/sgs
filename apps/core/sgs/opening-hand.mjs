@@ -1,6 +1,6 @@
 // Keep dealing and replacement in the pinned engine. This adapter only repeats
 // its native replacement event before the first turn and clarifies the choice UI.
-export function installOpeningHand({ lib, game, _status }) {
+export function installOpeningHand({ lib, game, _status }, { onReplaced } = {}) {
   const gameDraw = game.gameDraw;
   const nativeDraw = lib.element.content.gameDraw;
   let replacements = 0;
@@ -39,6 +39,10 @@ export function installOpeningHand({ lib, game, _status }) {
           await next;
           if (!next.sgsAccepted) break;
           replacements++;
+          next.sgsOpeningHandCompleted = true;
+          // This notification follows the actual native discard/gain and never
+          // waits for a device or recording. Sound failure must not block play.
+          try { onReplaced?.(next); } catch {}
         }
       } finally {
         removeHandler();

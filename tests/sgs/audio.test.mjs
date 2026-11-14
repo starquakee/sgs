@@ -776,7 +776,8 @@ test('all native normal/heavy/elemental/armor impact paths are packed and match 
     total += bytes.length;
   }
   assert.equal(total, damageManifest.totalBytes);
-  assert.equal((await readdir(new URL('audio/effect/', base))).length, 14);
+  assert.deepEqual((await readdir(new URL('audio/effect/', base))).sort(),
+    [...Object.keys(damageManifest.clips).map(key => `${key.split('/').at(-1)}.mp3`), 'draw.mp3'].sort());
   for (const nature of ['', '_fire', '_thunder', '_ice']) {
     assert.notEqual(damageManifest.clips[`effect/damage${nature}`].sha256, damageManifest.clips[`effect/damage${nature}2`].sha256);
   }

@@ -48,6 +48,22 @@ test('audio manifests fail independently and retain valid native channels; malfo
   assert.equal(assets.characterAudioManifest.clips['skill/test'].file, 'audio/test.mp3');
 });
 
+test('opening sound manifest failure only silences mulligans and preserves existing audio manifests', async () => {
+  const warnings = [], requests = [];
+  const assets = await loadAudioAssets({ warn: value => warnings.push(value), fetcher: async url => {
+    requests.push(url);
+    return url.includes('opening-audio') ? { ok: false, status: 404 }
+      : { ok: true, json: async () => ({ characters: {}, clips: { test: { file: 'audio/test.mp3' } } }) };
+  } });
+  assert.equal(requests.length, 4);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /换牌音效.*静音/);
+  assert.deepEqual(assets.openingAudioManifest.clips, {});
+  for (const name of ['audioManifest', 'characterAudioManifest', 'damageAudioManifest']) {
+    assert.equal(assets[name].clips.test.file, 'audio/test.mp3');
+  }
+});
+
 test('storage-free handoff keeps all three modes, consumes record speed once and carries later preferences through restart', () => {
   for (const mode of ['versus', 'identity', 'doudizhu']) {
     const input = { generalId: 'dc_zhouxuān', pack: 'xianding', mode, playerCount: 7, landlordRole: 'farmer', identity: 'fan', speed: 'fast', fromBattleRecord: true };

@@ -8,7 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repository = fileURLToPath(new URL('../../', import.meta.url));
 const upstream = '7fcf23ed54d8a7ce2b49ae2c15a054123891a52a';
-const audioCounts = { 'card-audio.json': 160, 'character-audio.json': 276, 'damage-audio.json': 14 };
+const audioCounts = { 'card-audio.json': 160, 'character-audio.json': 276, 'damage-audio.json': 14, 'opening-audio.json': 1 };
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const textBytes = bytes => Buffer.from(bytes.toString('utf8').replace(/\r+\n/g, '\n'));
 const mime = { '.html': ['text/html'], '.json': ['application/json'], '.js': ['text/javascript', 'application/javascript'], '.mjs': ['text/javascript', 'application/javascript'], '.css': ['text/css'], '.webp': ['image/webp'], '.mp3': ['audio/mpeg'], '.ogg': ['audio/ogg'] };
@@ -95,8 +95,8 @@ export async function deploymentInventory(root = repository, { nativeEntryBytes 
     audioBytes += total;
     for (const row of Object.values(manifest.clips)) add(`sgs/${row.file}`, { bytes: row.bytes, sha256: row.sha256 });
   }
-  assert.equal(audioBytes, 28381860);
-  return { assets: [...assets.values()], audioFiles: 450, audioBytes, portraits: uniquePortraits.size };
+  assert.equal(audioBytes, 28396074);
+  return { assets: [...assets.values()], audioFiles: Object.values(audioCounts).reduce((sum, count) => sum + count, 0), audioBytes, portraits: uniquePortraits.size };
 }
 
 export function verifyAsset(asset, body, contentType) {

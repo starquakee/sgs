@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "attribution": {
+    "name": "Noname / 无名杀",
+    "repository": "https://github.com/libnoname/noname",
+    "commit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+    "license": "GPL-3.0",
+    "licenseUrl": "https://github.com/libnoname/noname/blob/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/LICENSE",
+    "note": "音效原样取自锁定上游资源，保留来源，不主张录音原创或另行授权。"
+  },
+  "scope": "One native card-movement effect, only after a completed human opening-hand replacement.",
+  "uniqueFiles": 1,
+  "totalBytes": 14214,
+  "clips": {
+    "effect/draw": {
+      "key": "effect/draw",
+      "file": "audio/effect/draw.mp3",
+      "label": "开局换牌",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/effect/draw.mp3",
+      "sourceGitBlob": "62933c85ae728765d07dd08160fec2aa19655b10",
+      "bytes": 14214,
+      "sha256": "26a3838e743d3dd7b273dae63ffb8148e880af9707cc8a1714be098a6a7854e5"
+    }
+  }
+}
