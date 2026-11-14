@@ -65,7 +65,7 @@ export async function deploymentInventory(root = repository, { nativeEntryBytes 
   // The generated native entry stays distinct from the custom lobby, including ?sgs=1.
   const nativeEntry = textBytes(nativeEntryBytes ?? await readFile(resolve(root, 'apps/core/dist/index.html')));
   add('index.html', { bytes: nativeEntry.length, sha256: digest(nativeEntry), normalize: true });
-  for (const path of ['lobby.js', 'runtime.js', 'lobby.css', 'table.css']) {
+  for (const path of ['lobby.js', 'runtime.js', 'card-drag.mjs', 'lobby.css', 'table.css']) {
     await sourceAsset(`sgs/${path}`, `apps/core/sgs/${path}`, true);
   }
   const catalog = await sourceAsset('sgs/catalog.json', 'apps/core/sgs/catalog.json', true);

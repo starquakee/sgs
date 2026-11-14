@@ -9,6 +9,7 @@ import { installOpeningHand } from './opening-hand.mjs';
 import { installHandLayout } from './hand-layout.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
 import { installSelectedTiesuoRecast } from './card-recast.mjs';
+import { installCardDrag } from './card-drag.mjs';
 import { installTableActions, readTableAction, visiblePlayerName } from './table-actions.mjs';
 import { installPublicStates, publicBattleLog } from './table-reference.mjs';
 import { createProblemReports, installProblemReportUI } from './problem-report.mjs';
@@ -68,7 +69,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   launch.speed = preferences.get().speed;
   retainLaunch(launch, preferences.get());
   const keepLaunch = preferences.subscribe(value => retainLaunch({ ...launch, speed: value.speed }, value));
-  let disposeTable;
+  let disposeTable, cardDrag;
   const lifecycle = installTablePageLifecycle({ game, _status, cleanup() { keepLaunch(); disposeTable?.(); } });
   const { catalog: roster, portraits } = await loadRosterAssets(loading);
   if (lifecycle.stopped) return;
@@ -88,7 +89,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   document.documentElement.classList.add('sgs-game');
   installManualConfirmation(lib, ui);
   installCardSelectionSwitch({ lib, game, ui, get, _status });
-  installUniqueCardTarget({ game, ui, get, _status });
+  installUniqueCardTarget({ game, ui, get, _status, isDragging: () => !!cardDrag?.selecting });
   installTargetHints({ lib, ui, get });
   const style = document.createElement('link');
   style.rel = 'stylesheet'; style.href = './sgs/table.css'; document.head.append(style);
@@ -105,6 +106,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
 
   lib.arenaReady.push(() => {
     if (lifecycle.stopped) return;
+    cardDrag = installCardDrag({ lib, game, ui, get, _status });
     const selectedRecast = installSelectedTiesuoRecast({ lib, game, ui, get, _status });
     // chooseCharacter schedules but does not return its event.
     const teams = launch.mode === 'versus';
@@ -260,7 +262,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); audioControls.dispose(); cardAudio.dispose(); session.dispose(); };
+    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); cardDrag.dispose(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); audioControls.dispose(); cardAudio.dispose(); session.dispose(); };
     decorate();
     loading?.ready();
   });

@@ -65,12 +65,12 @@ export function installCardSelectionSwitch({ lib, game, ui, get, _status }) {
 
 // Assist a newly selected single-target card. Native target clicks perform the actual
 // selection/recheck; confirmation and any later manual target edit stay human.
-export function installUniqueCardTarget({ game, ui, get, _status }) {
+export function installUniqueCardTarget({ game, ui, get, _status, isDragging = () => false }) {
   const nativeCardClick = ui.click.card;
   ui.click.card = function (...args) {
     const event = _status.event;
     const previous = [...ui.selected.cards];
-    const eligibleClick = !_status.dragged && !_status.clicked && !ui.intro;
+    const eligibleClick = !_status.dragged && !_status.clicked && !ui.intro && !isDragging();
     const result = nativeCardClick.apply(this, args);
     // Qinglong uses complex selection to require the defender of the missed
     // Slash first. Its ordinary one-target follow-up still has no target choice.

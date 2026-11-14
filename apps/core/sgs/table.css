@@ -4,6 +4,11 @@
 @import url('./results.css');
 @import url('./table-reference.css');
 @import url('./problem-report.css');
+.sgs-game .sgs-card-drag-line{position:fixed;height:3px;z-index:80;pointer-events:none;transform-origin:0 50%;background:#e1cba5;box-shadow:0 1px 4px #1d100dc9;border-radius:2px}
+.sgs-game .sgs-card-drag-line[data-legal='true']{background:#ffdf8d;box-shadow:0 0 5px #d9a947,0 1px 4px #1d100dc9}
+.sgs-game .sgs-card-drag-line::after{content:'';position:absolute;right:-1px;top:-4px;border-left:10px solid #e1cba5;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.sgs-game .sgs-card-drag-line[data-legal='true']::after{border-left-color:#ffdf8d}
+.sgs-game #arena #me .card[data-sgs-dragging='true']{cursor:grabbing}
 @font-face{font-family:SGSTableKai;src:url('../font/xinwei.woff2') format('woff2');font-display:swap}
 html.sgs-game{--table-ink:#332015;--table-gold:#dab47a;--table-cream:#f1dfb8;--table-line:#ad8250;--sgs-player-w:clamp(148px,12.5vw,238px);--sgs-player-h:calc(var(--sgs-player-w)*1.34);--sgs-hand-h:clamp(144px,17vh,184px);--sgs-edge:22px}
 html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-cream);font-family:SGSTableKai,'KaiTi',serif}
