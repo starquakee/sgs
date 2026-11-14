@@ -171,3 +171,7 @@ VCL-11源提交f4cd38dae0e1f935f4218942cf848ed0aba03b19已独立发布为受限�
 父最终生产构建真实静音浏览器：1280x720神黄忠地主，手动装备藤甲7→6手牌，赤兔选/撤选保持6张，重新选并确定后6→5；出牌选择态藤甲和赤兔name2均opacity1、原色不变，空槽仍0.6。选择决斗未自动出牌，右键藤甲打开原生说明，点击说明外层关闭后决斗仍selected。1024x640下装备文字同样opacity1，原生装备栏可滚动（scrollTop53.6），决斗选择保留；撤选后仍5张。console warn/error为空，声音关，音量40/25/60/25未改。返回选将后恢复1280x720与原选神黄忠/地主/隐藏老武将，关闭临时测试页，未操作用户线上牌局。
 
 截图vcl12-equipment-before.jpg、vcl12-equipment-1280.jpg、vcl12-equipment-1024.jpg及vcl12-equipment-1024-scroll.jpg。正式table.css归一化65533字节，SHA256 8c41e6f02c864347e295ae2d90dae6693ef2cff1ab6a3ab8d6984d08d7f0f0aa。待独立提交发布及域名核验；VCL-05与历史MAT-07/UX-09/US-006保持未完成。
+
+## VCL-12 发布核验 — 2026-11-14
+
+源提交83bd812f96176cd0090775e53dacddfc0ae7045a已发布为受限快照39372d3a6e991ce03e3197ce27fc7a285342e321。正常推送显式sgs/main前核对3ee236a为祖先，之后核对远端精确SHA、Vercel success及域名build-info一致。线上table.css返回200/text/css，归一化65533字节、SHA256 8c41e6f02c864347e295ae2d90dae6693ef2cff1ab6a3ab8d6984d08d7f0f0aa与最终已验收本地构建完全一致。本次产品变化仅4行CSS，完整2963资源门禁已在正式本地构建通过，线上仅复核变化样式与版本。VCL-12通过；VCL-05及历史MAT-07/UX-09/US-006保持未完成。
