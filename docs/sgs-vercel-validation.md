@@ -38,3 +38,26 @@ VCL-04 source96d7349e710c5575b6cf359f2e74187f5dadee78 -> bounded snapshot291f35b
 
 ## VCL-05 — 已检查部分与未完成项
 Partial VCL-05 only: actual custom-domain1280x720 lobby and390x844 CSS lobby checked; no horizontal overflow(document width375 within390), fixed startbutton162x50 stays at y784..834. Chinese search for ShenHuangzhong returned one exact entry; selecting and Limited filter preserve selected general, native2v2 config and fixed start control. Full skill dialog readable with reachable return, Escape closes. Screenshot vcl05-live-mobile-skills.jpg. Fresh domain first-use GPLv3 acceptance was canceled and action-time confirmation requested; no user answer received, so online three-mode gameplay/natural result remain unverified. Actual IAB tab switch left local test document.visibilityState=visible and its clock advanced02:34->03:49; this did NOT exercise real hidden behavior and is NOT a pause failure or hidden-page acceptance. No synthetic visibility event/game state injection used. Local test tabs closed, viewport override reset, all testing muted. VCL-05 remainsfalse; no claim of full run completion.
+
+## VCL-05 — 获得确认后的线上实战（2026-11-14）
+
+用户明确回复“同意接受并继续验收”。恢复页面时协议弹窗已消失，原生牌桌显示“离开页面后已暂停”；父会话手动继续后完成以下实际操作。域名构建标识为 `0d4cd702760b084b80cbdf8182ac708635ed4220`，Vercel 状态成功。全部操作均使用真实浏览器控件、原生规则和 AI，声音始终关闭，无牌局或可见性事件注入。
+
+| 场景 | 实际证据 |
+| --- | --- |
+| 2v2 | 玩家四号位、一号位队友；五张起始牌换一手后仍为五张。两次手动选闪并确认，手牌依次5→4→3，体力保持3/4；没有闪后按提示取消，正常进入玩家回合。选中无中生有后设置往返保留选择，手动确定后5→6张。 |
+| 原生自然结算 | 手动操作后开启原生托管，第三轮自然战斗失败，局时18:09；统计为伤害3、受伤5、摸牌13、出牌12、杀敌0。结算明确提示已保存，回大厅找到相同神黄忠/四号位/2v2/18分09秒记录。没有投降或修改终局。 |
+| 斗地主·地主 | 神黄忠5/5体力、四张初始手牌；换牌仍四张，开始后跋扈及正常摸牌至七张。1024×640下选无中生有、设置往返、手动确认后7→8张。工具菜单确认重开后，同一武将与地主设置恢复为5/5、四张、换牌0次、声音关闭；返回大厅正常。 |
+| 斗地主·农民 | 神黄忠4/4体力、四张初始手牌；换牌不改队友手牌。地主先手两次杀，手动闪后4→3张且体力保持4/4。玩家回合手动万箭齐发后5→4张，队友响应后预览从四行同步为三行。返回大厅正常。 |
+| 八人身份局 | 主公神黄忠5/5，八个原生座位，其余身份仍隐藏。换牌四张不变；开始摸至六张，手动装备白银狮子后6→5张，原有的卢保留。1024×640下全部角色框在视口内。结束回合后AI接续，南蛮响应取消后玩家4/5体力，正常推进回下一轮玩家选择，手牌七张；返回大厅正常。 |
+| 记录与日志 | 所有中途退出和重开的测试局均未生成败局；最后战绩仍只有上述自然结束的2v2。日志只有预期的静态文件服务降级警告，没有新运行时错误。 |
+
+桌面实际 CSS 尺寸为1280×720与1024×640，已读取角色、工具栏与操作区域的边界；大厅390×844证据沿用上节。浏览器页面缩放比为1.4，视口覆盖值按实际 CSS 尺寸校准；完整浏览器截图保留工具生成的缩放与留白，没有裁图伪装尺寸。紧凑手牌重叠时通过露出的点数点击成功，未强制原生可选状态。
+
+截图：`screenshots/vercel/vcl05-live-2v2-natural-result.jpg`、`vcl05-live-landlord-1024-settings.jpg`、`vcl05-live-farmer-selection.jpg`、`vcl05-live-identity-1024.jpg`。
+
+### 仍待验证：受控的真实后台保留
+
+本次恢复时出现原生后台暂停提示，证明曾发生真实后台暂停，但缺少该次隐藏前的选择与局时基线。随后保留选中的无中生有，使用浏览器可见性控制真正隐藏面板；页面仍报告 `visibilityState=visible`，局时从15:04推进到15:34，未触发后台暂停。此结果是测试环境没有产生所需隐藏状态，不是暂停功能失败；没有用合成事件替代验收。
+
+因此 VCL-05 保持 `passes:false`，受控隐藏后的选择、局时和手动恢复仍为 pending。VCL-01–04 已通过；历史 MAT-07、UX-09、US-006 仍未完成。原294项回归、生产构建、450条静默解码、最终2953项线上资源校验及独立审查证据保持有效，本次未改代码或素材，未重复无必要的测试。测试已返回大厅并重置浏览器尺寸覆盖。
