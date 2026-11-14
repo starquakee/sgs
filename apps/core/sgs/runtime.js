@@ -74,7 +74,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
   const lifecycle = installTablePageLifecycle({ game, _status, cleanup() { keepLaunch(); disposeTable?.(); } });
   const { catalog: roster, portraits } = await loadRosterAssets(loading);
   if (lifecycle.stopped) return;
-  const { audioManifest, characterAudioManifest, damageAudioManifest, openingAudioManifest } = await loadAudioAssets(loading);
+  const { audioManifest, characterAudioManifest, damageAudioManifest, openingAudioManifest, recoveryAudioManifest } = await loadAudioAssets(loading);
   if (lifecycle.stopped) return;
   const selected = roster.characters.find(c => c.id === launch.generalId && c.pack === launch.pack && !c.isUnseen);
   if (!selected) throw new Error('武将配置无效，请返回选将。');
@@ -129,7 +129,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       if (status.lastError) loading?.warn('部分声音暂时无法播放，已跳过；不影响出牌与结算。可重新开局重试声音。');
       label(audioButton, status.enabled ? status.blocked ? '点击开启声音' : '声音：开' : '声音：关');
       audioButton.setAttribute('aria-pressed', String(status.enabled));
-      audioButton.title = status.lastError || (status.lastClip ? `最近播放：${status.lastLabel || get.translation(status.lastClip.split('/').at(-1))}` : '卡牌、已收录武将语音、操作与受击音效');
+      audioButton.title = status.lastError || (status.lastClip ? `最近播放：${status.lastLabel || get.translation(status.lastClip.split('/').at(-1))}` : '卡牌、已收录武将语音、战斗与操作音效');
       audioButton.dataset.played = status.played;
       audioButton.dataset.lastClip = status.lastClip || '';
       audioButton.dataset.audioState = status.contextState;
@@ -145,7 +145,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     };
     let cardAudio;
     const audioControls = installAudioButton(audioButton, preferences, () => cardAudio);
-    cardAudio = installCardAudio({ lib, game, get }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, openingManifest: openingAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
+    cardAudio = installCardAudio({ lib, game, get, _status }, audioManifest, { enabled: audioEnabled, characterManifest: characterAudioManifest, damageManifest: damageAudioManifest, openingManifest: openingAudioManifest, recoveryManifest: recoveryAudioManifest, baseURL: new URL('./sgs/', location.href), onStateChange: updateAudio });
     installOpeningHand({ lib, game, _status }, { onReplaced: cardAudio.playOpeningHand });
     installCharacterAudio({ lib, game, get }, characterAudioManifest);
     updateAudio(cardAudio.status());

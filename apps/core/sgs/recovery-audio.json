@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "attribution": {
+    "name": "Noname / 无名杀",
+    "repository": "https://github.com/libnoname/noname",
+    "commit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+    "license": "GPL-3.0",
+    "licenseUrl": "https://github.com/libnoname/noname/blob/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/LICENSE",
+    "note": "音效原样取自锁定上游资源，保留来源，不主张录音原创或另行授权。"
+  },
+  "scope": "Native recovery effect, only after an actual positive HP change directly owned by a recover event.",
+  "uniqueFiles": 1,
+  "totalBytes": 8834,
+  "clips": {
+    "effect/recover": {
+      "key": "effect/recover",
+      "file": "audio/effect/recover.mp3",
+      "label": "回复体力",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/effect/recover.mp3",
+      "sourceGitBlob": "1472462d35dc98d4206e5fb33e13970283e2a92d",
+      "bytes": 8834,
+      "sha256": "aaa0b1f427b4671843098391369781742915bd289ab97023e182bc3d80386580"
+    }
+  }
+}

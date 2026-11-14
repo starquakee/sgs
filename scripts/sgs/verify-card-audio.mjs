@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const base = new URL('../../apps/core/sgs/', import.meta.url);
-const manifests = await Promise.all(['card-audio.json', 'character-audio.json', 'damage-audio.json', 'opening-audio.json'].map(async file => JSON.parse(await readFile(new URL(file, base), 'utf8'))));
+const manifests = await Promise.all(['card-audio.json', 'character-audio.json', 'damage-audio.json', 'opening-audio.json', 'recovery-audio.json'].map(async file => JSON.parse(await readFile(new URL(file, base), 'utf8'))));
 const clips = manifests.flatMap(manifest => Object.values(manifest.clips));
 let next = 0;
 async function worker() {

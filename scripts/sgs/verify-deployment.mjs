@@ -8,7 +8,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repository = fileURLToPath(new URL('../../', import.meta.url));
 const upstream = '7fcf23ed54d8a7ce2b49ae2c15a054123891a52a';
-const audioCounts = { 'card-audio.json': 160, 'character-audio.json': 276, 'damage-audio.json': 14, 'opening-audio.json': 1 };
+const audioCounts = { 'card-audio.json': 160, 'character-audio.json': 276, 'damage-audio.json': 14, 'opening-audio.json': 1, 'recovery-audio.json': 1 };
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const textBytes = bytes => Buffer.from(bytes.toString('utf8').replace(/\r+\n/g, '\n'));
 const mime = { '.html': ['text/html'], '.json': ['application/json'], '.js': ['text/javascript', 'application/javascript'], '.mjs': ['text/javascript', 'application/javascript'], '.css': ['text/css'], '.webp': ['image/webp'], '.mp3': ['audio/mpeg'], '.ogg': ['audio/ogg'] };
@@ -65,7 +65,7 @@ export async function deploymentInventory(root = repository, { nativeEntryBytes 
   // The generated native entry stays distinct from the custom lobby, including ?sgs=1.
   const nativeEntry = textBytes(nativeEntryBytes ?? await readFile(resolve(root, 'apps/core/dist/index.html')));
   add('index.html', { bytes: nativeEntry.length, sha256: digest(nativeEntry), normalize: true });
-  for (const path of ['lobby.js', 'runtime.js', 'card-drag.mjs', 'prompt-layout.mjs', 'lobby.css', 'table.css']) {
+  for (const path of ['lobby.js', 'runtime.js', 'card-drag.mjs', 'prompt-layout.mjs', 'recovery-audio.mjs', 'lobby.css', 'table.css']) {
     await sourceAsset(`sgs/${path}`, `apps/core/sgs/${path}`, true);
   }
   const catalog = await sourceAsset('sgs/catalog.json', 'apps/core/sgs/catalog.json', true);
@@ -95,7 +95,7 @@ export async function deploymentInventory(root = repository, { nativeEntryBytes 
     audioBytes += total;
     for (const row of Object.values(manifest.clips)) add(`sgs/${row.file}`, { bytes: row.bytes, sha256: row.sha256 });
   }
-  assert.equal(audioBytes, 28396074);
+  assert.equal(audioBytes, 28404908);
   return { assets: [...assets.values()], audioFiles: Object.values(audioCounts).reduce((sum, count) => sum + count, 0), audioBytes, portraits: uniquePortraits.size };
 }
 

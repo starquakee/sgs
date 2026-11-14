@@ -127,3 +127,15 @@ VCL-07源提交 `d78e854b048baf1fb40a464c921a1865fa746ffe` 已立即发布为受
 
 ## VCL-09 published acceptance - 2026-11-14
 源提交 `871b586926060a13b91087eb29a5b0816ea3942b` 已立即发布为受限快照 `c48967b4b57f6828355c533e9d3d6628f9f1c429`。正常推送显式sgs/main前核对72760e3为祖先，之后核对远端精确SHA、Vercel成功及自定义域名build-info一致。完整线上2957项资源、451录音28,396,074字节、2491画像、root307/原生入口/缺项404/MIME/大小/哈希全部通过。线上table.css、prompt-layout.mjs和实际runtime.js均返回200与正确类型，归一化字节数/哈希逐项匹配上述最终生产构建。VCL-09通过；VCL-08已单独发布通过，VCL-05与历史MAT-07、UX-09、US-006仍未完成。本轮未开启声音，未改原生规则或素材。
+
+## VCL-10 实际回血音效 — 本地验收 2026-11-14
+
+用户要求桃的报音之外有回血声。真实原生recover/changeHp/Player.update/ArrayCompiler回归先2pass/2fail，复现2→3HP与-2→-1HP无声音。适配层保留原生提前请求的静音，在原生onChangeHp内容开始记录HP、首次同步checkUpdate后核对实际增加量，直接父recover和角色一致才即时播放；后续被动不污染判断，取消/零/负/满血/回放不误播。每个recover独立去重，钩子按拥有关系清理，音频失败不改变原生结算。
+
+新增唯一上游原录音effect/recover.mp3，8834字节，Git blob 1472462d35dc98d4206e5fb33e13970283e2a92d，SHA256 aaa0b1f427b4671843098391369781742915bd289ab97023e182bc3d80386580。原451条不变，共452条28,404,908字节，统一context/静音/即时effect音量和8秒总期限。设置音量文案更新为“战斗与操作音效”。音乐本项尚未实现。
+
+15项回血专项、341项完整Node测试、452条完整静默解码、修改JS语法/diff通过；独立83项组合审查无问题并验证原blob/解码。父Node22/pnpm正式构建通过实际投降回调3项及2960资源/2491画像门禁。构建所用pnpm因Windows沙箱读取用户目录受限，按现有权限流程提权完成，未关闭沙箱或启动可见窗口。
+
+父实际1280×720静音浏览器：武皇甫嵩地主原生2/5HP四张，五次原生换牌仍四张，保留红桃7桃；开始后朝镇取得黑桃A闪电，HP2→3；跋扈/摸牌后八张。桃选择/撤销均保持3/5HP和八张；再次选择并开关设置，原选牌保留、仍需确定。手动确定后八→七张，HP3→4，公开记录同时包含朝镇回复与桃回复。声音false、AudioContext uninitialized、played/effects0；40/25/60音量不变，设置文案可读。console warn/error为空，正常返回点将台。截图vcl10-muted-settings.jpg及vcl10-recovery-log.jpg。没有注入状态、开启声音或声称真人听验；播放由真实模块+模拟设备验证。
+
+最终构建归一化：recovery-audio.mjs 2251字节/SHA256 aa2ee00ecb7cc4bc83775021ff92cfff2d95a94e74fba6f054969baf4229d3af；实际runtime.js 144260字节/9131140a46d1be133bd2104a74260d79cf4245d22adb352ef90674ee77f49c25。发布与域名核验待完成，VCL-10暂false；VCL-05及历史MAT-07/UX-09/US-006未完成状态不变。

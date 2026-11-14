@@ -2,6 +2,7 @@
 // committed use/respond timing, while serving only local, allowlisted audio.
 import { resolveCharacterAudio } from './character-audio.mjs';
 import { resolveDamageAudio } from './damage-audio.mjs';
+import { installRecoveryAudio } from './recovery-audio.mjs';
 import { createAudioLoader } from './audio-loads.mjs';
 export function resolveCardAudio(path, manifest) {
   const key = String(path).replace(/^audio\//, '').replace(/\.(mp3|ogg)$/i, '');
@@ -10,7 +11,7 @@ export function resolveCardAudio(path, manifest) {
   return manifest.clips?.[resolved] || null;
 }
 
-export function installCardAudio({ lib, game, get }, manifest, options = {}) {
+export function installCardAudio({ lib, game, get, _status }, manifest, options = {}) {
   const surface = options.surface || globalThis.document;
   const host = options.host || globalThis;
   const fetchAudio = options.fetch || globalThis.fetch.bind(globalThis);
@@ -28,6 +29,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   const seenEvents = new WeakSet();
   const seenDamageEvents = new WeakSet();
   const seenOpeningEvents = new WeakSet();
+  const seenRecoveryEvents = new WeakSet();
   const buffers = createAudioLoader({ fetcher: fetchAudio, baseURL: audioRoot, timeout: options.loadTimeout ?? 8000, timers: options.timers || globalThis });
   const playing = new Map();
   const volumes = { card: 1, hero: 1, effect: 1 };
@@ -249,6 +251,7 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
     dispose() {
       if (disposed) return;
       disposed = true;
+      recoveryAudio?.dispose();
       stop();
       buffers.dispose();
       surface?.removeEventListener('pointerdown', gesture, true);
@@ -263,6 +266,9 @@ export function installCardAudio({ lib, game, get }, manifest, options = {}) {
   };
   game.playAudio = playAudio;
   game.playCardAudio = playCardAudio;
+  const recoveryAudio = options.recoveryManifest && installRecoveryAudio({ lib, game, get, _status }, event => {
+    play(options.recoveryManifest.clips?.['effect/recover'], event, {}, 'effect', seenRecoveryEvents);
+  });
   // Some native skill conversions suppress card voice in favor of a hero line.
   // Supplement card names only after the real engine commits use/respond.
   // A WeakSet prevents duplicates with the normal native path.

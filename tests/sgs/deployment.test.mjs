@@ -15,10 +15,10 @@ const inventory = { assets: [asset('index.html', html, true), asset('sgs/audio/t
 
 test('deployment inventory pins all existing recordings and portrait files to source checksums', async () => {
   const actual = await deploymentInventory(undefined, { nativeEntryBytes: html });
-  assert.equal(actual.assets.length, 2957);
-  assert.equal(actual.audioFiles, 451);
-  assert.equal(actual.audioBytes, 28396074);
-  assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 451);
+  assert.equal(actual.assets.length, 2960);
+  assert.equal(actual.audioFiles, 452);
+  assert.equal(actual.audioBytes, 28404908);
+  assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 452);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/portraits/')).length, 2491);
   const drag = Buffer.from((await readFile(new URL('../../apps/core/sgs/card-drag.mjs', import.meta.url), 'utf8')).replace(/\r\n/g, '\n'));
   assert.deepEqual(actual.assets.find(row => row.path === 'sgs/card-drag.mjs'), asset('sgs/card-drag.mjs', drag, true));

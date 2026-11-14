@@ -55,11 +55,24 @@ test('opening sound manifest failure only silences mulligans and preserves exist
     return url.includes('opening-audio') ? { ok: false, status: 404 }
       : { ok: true, json: async () => ({ characters: {}, clips: { test: { file: 'audio/test.mp3' } } }) };
   } });
-  assert.equal(requests.length, 4);
+  assert.equal(requests.length, 5);
   assert.equal(warnings.length, 1);
   assert.match(warnings[0], /换牌音效.*静音/);
   assert.deepEqual(assets.openingAudioManifest.clips, {});
   for (const name of ['audioManifest', 'characterAudioManifest', 'damageAudioManifest']) {
+    assert.equal(assets[name].clips.test.file, 'audio/test.mp3');
+  }
+});
+
+test('recovery manifest failure is independent of the existing card, hero, damage and opening packs', async () => {
+  const warnings = [];
+  const assets = await loadAudioAssets({ warn: value => warnings.push(value), fetcher: async url => url.includes('recovery-audio')
+    ? { ok: true, json: async () => ({ clips: [] }) }
+    : { ok: true, json: async () => ({ characters: {}, clips: { test: { file: 'audio/test.mp3' } } }) } });
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /回血音效.*静音/);
+  assert.deepEqual(assets.recoveryAudioManifest.clips, {});
+  for (const name of ['audioManifest', 'characterAudioManifest', 'damageAudioManifest', 'openingAudioManifest']) {
     assert.equal(assets[name].clips.test.file, 'audio/test.mp3');
   }
 });
