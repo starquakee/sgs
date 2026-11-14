@@ -76,3 +76,47 @@ test('legacy mirror write failures do not block a newer successfully saved canon
   lobby.refresh();
   assert.deepEqual(lobby.get(), table.get());
 });
+
+test('existing muted preferences gain a quiet music default without rewriting the saved choices', () => {
+  const local = storage();
+  const old = { version: 1, speed: 'fast', sound: false, backgroundPause: false,
+    reducedMotion: true, cardVolume: 0.4, heroVolume: 0.25, effectVolume: 0.6 };
+  local.setItem(preferencesKey, JSON.stringify(old));
+  local.setItem('sgs.settings.v1', '{"generalId":"wu_huangfusong","mode":"doudizhu"}');
+  const writes = local.writes.length;
+  const preferences = createPreferences(() => local);
+  const { musicVolume, ...retained } = preferences.get();
+  const { version, ...expected } = old;
+  assert.equal(musicVolume, 0.25);
+  assert.deepEqual(retained, expected);
+  assert.equal(local.writes.length, writes, 'reading the new default must not rewrite saved settings');
+  assert.equal(local.getItem('sgs.settings.v1'), '{"generalId":"wu_huangfusong","mode":"doudizhu"}');
+});
+
+test('music volume persists and refreshes independently, including a zero-volume preference', () => {
+  const local = storage();
+  const lobby = createPreferences(() => local);
+  lobby.set({ sound: false, cardVolume: 0.4, heroVolume: 0.25, effectVolume: 0.6 });
+  const table = createPreferences(() => local);
+  for (const value of [0.37, 0]) {
+    table.set({ musicVolume: value });
+    lobby.refresh();
+    assert.equal(lobby.get().musicVolume, value);
+    assert.equal(createPreferences(() => local).get().musicVolume, value);
+    assert.deepEqual([lobby.get().sound, lobby.get().cardVolume, lobby.get().heroVolume, lobby.get().effectVolume],
+      [false, 0.4, 0.25, 0.6]);
+  }
+  for (const invalid of [null, '1', NaN, Infinity, undefined]) {
+    table.set({ musicVolume: invalid });
+    assert.equal(table.get().musicVolume, 0, 'invalid music values retain the explicit zero');
+  }
+  table.set({ musicVolume: 4 }); assert.equal(table.get().musicVolume, 1);
+  table.set({ musicVolume: -1 }); assert.equal(table.get().musicVolume, 0);
+  const write = local.setItem;
+  local.setItem = () => { throw new Error('denied'); };
+  assert.equal(table.set({ musicVolume: 0.15 }), false);
+  table.refresh();
+  assert.equal(table.get().musicVolume, 0.15, 'a stale saved record cannot undo a failed in-memory change');
+  assert.equal(table.get().sound, false);
+  local.setItem = write;
+});

@@ -7,7 +7,16 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
     window.onbeforeunload = null;
     if (restart) location.reload(); else location.href = './sgs.html';
   } }) {
-  const pause = installOwnedPause({ game, _status });
+  let disposed = false, musicEnded = false;
+  function syncMusic() {
+    musicEnded ||= disposed || !!_status.over;
+    audio.setMusicState?.({ paused: !!document.hidden || !!_status.paused2, ended: musicEnded });
+  }
+  function depart(restart) {
+    musicEnded = true; syncMusic();
+    return navigate(restart);
+  }
+  const pause = installOwnedPause({ game, _status, onChange: syncMusic });
   const dialogs = createClientDialogs({ document, pause });
   const buttons = [];
   const listeners = [];
@@ -51,7 +60,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
     dialogs.open(restart ? 'restart' : 'leave', `<h2>${restart ? '重新开局' : '返回点将台'}</h2><p>当前对局的进度将结束。${restart ? '使用相同的武将和设置开启新对局。' : '你可以重新选择武将与对局设置。'}</p><div class="sgs-dialog-actions"><button type="button" data-stay>继续对局</button><button type="button" data-leave data-primary>${restart ? '确认重开' : '返回选将'}</button></div>`, (dialog, close) => {
       dialog.querySelector('[data-stay]').onclick = close;
       // Keep paused until navigation actually leaves this document.
-      dialog.querySelector('[data-leave]').onclick = () => navigate(restart);
+      dialog.querySelector('[data-leave]').onclick = () => depart(restart);
     });
   }
   for (const [selector, restart] of [['.sgs-return', false], ['.sgs-restart', true]]) listen(hud.querySelector(selector), 'click', event => {
@@ -71,6 +80,7 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
     refresh();
   }
   function refresh() {
+    syncMusic();
     pause.elapsedMs();
     pauseButton.textContent = faultActions ? '异常已暂停' : resultActions ? '结算' : manual || background ? '继续' : '暂停';
     pauseButton.disabled = !!_status.over && !resultActions && !faultActions;
@@ -80,15 +90,19 @@ export function installTableSession({ game, ui, lib, _status, hud, preferences, 
   }
   listen(document, 'visibilitychange', visibility);
   visibility();
-  return { refresh, dialogs, elapsedMs: pause.elapsedMs, navigate, acquirePause: pause.acquire, setFaultActions(actions) {
+  return { refresh, dialogs, elapsedMs: pause.elapsedMs, navigate: depart, acquirePause: pause.acquire, setFaultActions(actions) {
     faultActions = actions;
+    if (actions) { musicEnded = true; syncMusic(); }
     if (actions) dialogs.closeAll();
     refresh();
   }, setResultActions(actions) {
     resultActions = actions;
+    musicEnded = true; syncMusic();
     hud.querySelector('.sgs-restart').textContent = '再来一局';
     refresh();
   }, dispose() {
+    if (disposed) return;
+    disposed = true; syncMusic();
     for (const remove of listeners) remove();
     unsubscribe(); dialogs.dispose(); manual?.(); background?.(); pause.dispose();
     for (const node of buttons) node.remove();

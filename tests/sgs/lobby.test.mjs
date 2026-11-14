@@ -198,14 +198,14 @@ test('cached lobby adopts table preferences without losing browsing state and ca
   // original lobby closure is frozen in the browser's history cache.
   const tablePreferences = createPreferences(() => app.local);
   tablePreferences.set({ sound: false, speed: 'fast', cardVolume: 0.4, heroVolume: 0.25,
-    effectVolume: 0.6, backgroundPause: false, reducedMotion: true });
+    effectVolume: 0.6, musicVolume: 0.15, backgroundPause: false, reducedMotion: true });
   const expected = tablePreferences.get(), saved = app.local.getItem('sgs.preferences.v1');
   app.window.emit('pageshow', { persisted: true });
   e['settings-link'].onclick();
   const settings = app.document.body.children.at(-1);
   assert.equal(settings.querySelector('[name="sound"]').checked, false, 'a cached lobby must retain the table mute');
   assert.equal(e.speed.value, 'fast');
-  for (const key of ['cardVolume', 'heroVolume', 'effectVolume']) assert.equal(settings.querySelector(`[name="${key}"]`).value, expected[key]);
+  for (const key of ['cardVolume', 'heroVolume', 'effectVolume', 'musicVolume']) assert.equal(settings.querySelector(`[name="${key}"]`).value, expected[key]);
   assert.equal(settings.querySelector('[name="backgroundPause"]').checked, false);
   assert.equal(settings.querySelector('[name="reducedMotion"]').checked, true);
   settings.querySelector('[data-close]').onclick();

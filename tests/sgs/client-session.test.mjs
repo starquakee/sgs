@@ -193,7 +193,7 @@ test('preferences migrate exact old speed/mute settings and leave launch/favorit
   const local = storage({ 'sgs.settings.v1': JSON.stringify({ generalId: 'caocao', mode: 'versus', speed: 'fast' }),
     'sgs.card-audio.enabled': 'false', 'sgs.favorites.v1': '["standard:caocao"]' });
   const p = createPreferences(() => local);
-  assert.deepEqual(p.get(), { speed: 'fast', sound: false, backgroundPause: true, reducedMotion: false, cardVolume: 1, heroVolume: 1, effectVolume: 1 });
+  assert.deepEqual(p.get(), { speed: 'fast', sound: false, backgroundPause: true, reducedMotion: false, cardVolume: 1, heroVolume: 1, effectVolume: 1, musicVolume: 0.25 });
   assert.equal(p.set({ speed: 'normal', reducedMotion: true, sound: true }), true);
   assert.deepEqual(JSON.parse(local.getItem('sgs.settings.v1')), { generalId: 'caocao', mode: 'versus', speed: 'normal' });
   assert.equal(local.getItem('sgs.favorites.v1'), '["standard:caocao"]');
@@ -204,7 +204,7 @@ test('preferences migrate exact old speed/mute settings and leave launch/favorit
 test('malformed, unsupported and mistyped preferences use safe defaults without coercing strings', () => {
   for (const raw of ['{bad', 'null', '[]', '{"version":2,"backgroundPause":false}', '{"version":1,"sound":"false","speed":"vvfast","backgroundPause":0,"reducedMotion":1}']) {
     const p = createPreferences(() => storage({ [preferencesKey]: raw }), { speed: 'fast' });
-    assert.deepEqual(p.get(), { speed: 'fast', sound: true, backgroundPause: true, reducedMotion: false, cardVolume: 1, heroVolume: 1, effectVolume: 1 });
+    assert.deepEqual(p.get(), { speed: 'fast', sound: true, backgroundPause: true, reducedMotion: false, cardVolume: 1, heroVolume: 1, effectVolume: 1, musicVolume: 0.25 });
     p.set({ speed: 'unsafe', sound: 0, backgroundPause: null });
     assert.equal(p.get().backgroundPause, true); assert.equal(p.get().speed, 'fast');
   }
@@ -220,11 +220,13 @@ test('denied storage and quota failures retain current preferences and notify wi
   }
 });
 
-function table(getStorage = () => storage()) {
-  const f = engine(), document = dom(), hud = new Node('header');
+function table(getStorage = () => storage(), { hidden = false, initialPause = false } = {}) {
+  const f = engine(initialPause), document = dom(), hud = new Node('header');
+  document.hidden = hidden;
   for (const name of ['sgs-return', 'sgs-restart', 'sgs-audio']) { const node = new Node('button'); node.className = name; hud.append(node); }
   const preferences = createPreferences(getStorage); let enabled = preferences.get().sound;
-  const audio = { volumes: {}, status: () => ({ enabled }), setEnabled: value => { enabled = value; }, setVolume(channel, value) { this.volumes[channel] = value; } };
+  const audio = { volumes: {}, musicStates: [], status: () => ({ enabled }), setEnabled: value => { enabled = value; },
+    setVolume(channel, value) { this.volumes[channel] = value; }, setMusicState(value) { this.musicStates.push({ ...value }); } };
   f.ui.auto = new Node(); f.ui.arena = new Node(); f.ui.control = { hide() {}, show() {} };
   f._status.event.switchToAuto = () => { f._status.switched = true; };
   f.game.resume = () => { f._status.paused = false; };
@@ -349,9 +351,9 @@ test('volume preferences migrate old v1 records, clamp finite numbers and surviv
 
 test('settings range input updates each live audio channel, percentage and persistence while preserving selection/pause', async () => {
   const local = storage(), f = table(() => local), selection = structuredClone(f.ui.selected);
-  assert.deepEqual(f.audio.volumes, { card: 1, hero: 1, effect: 1 });
+  assert.deepEqual(f.audio.volumes, { card: 1, hero: 1, effect: 1, music: 0.25 });
   f.settingsButton.emit('click');
-  for (const [channel, key, value] of [['card', 'cardVolume', .3], ['hero', 'heroVolume', .6], ['effect', 'effectVolume', 0]]) {
+  for (const [channel, key, value] of [['card', 'cardVolume', .3], ['hero', 'heroVolume', .6], ['effect', 'effectVolume', 0], ['music', 'musicVolume', .15]]) {
     const input = f.dialog().querySelector(`[name="${key}"]`);
     input.value = String(value); input.emit('input');
     assert.equal(f.audio.volumes[channel], value);
@@ -359,8 +361,90 @@ test('settings range input updates each live audio channel, percentage and persi
     assert.equal(createPreferences(() => local).get()[key], value);
   }
   const sound = f.dialog().querySelector('[name="sound"]'); sound.checked = false; sound.emit('change');
-  assert.equal(f.audio.status().enabled, false); assert.deepEqual(f.audio.volumes, { card: .3, hero: .6, effect: 0 });
+  assert.equal(f.audio.status().enabled, false); assert.deepEqual(f.audio.volumes, { card: .3, hero: .6, effect: 0, music: .15 });
   assert.equal(f._status.paused2, true); assert.deepEqual(f.ui.selected, selection);
   f.dialog().emit('cancel'); await settle(); assert.equal(f._status.paused2, false);
   f.session.dispose();
+});
+
+test('pause observers follow native deferred release and cannot change gate ownership on failure', async () => {
+  const f = engine(), changes = [];
+  const pause = installOwnedPause({ ...f, onChange: value => changes.push(value) });
+  assert.deepEqual(changes, [], 'installation must not invoke partially initialized session callbacks');
+  const first = pause.acquire('first'), second = pause.acquire('second');
+  assert.deepEqual(changes, [true]);
+  first(); second(); assert.deepEqual(changes, [true]);
+  let third;
+  queueMicrotask(() => { third = pause.acquire('handoff'); });
+  await settle(); assert.deepEqual(changes, [true]); assert.equal(f._status.paused2, true);
+  third(); await settle(); assert.deepEqual(changes, [true, false]);
+  f.game.pause2(); assert.deepEqual(changes, [true, false, true]);
+  f.game.resume2(); assert.deepEqual(changes, [true, false, true]);
+  await settle(); assert.deepEqual(changes, [true, false, true, false]); pause.dispose();
+  const throwing = installOwnedPause({ ...f, onChange() { throw Error('observer'); } });
+  let release;
+  assert.doesNotThrow(() => { release = throwing.acquire('settings'); });
+  assert.equal(f._status.paused2, true);
+  release(); await settle(); assert.equal(f._status.paused2, false); throwing.dispose();
+});
+
+test('music follows owned and native menu pauses immediately but keeps normal human choices active', async () => {
+  const f = table(), music = () => f.audio.musicStates.at(-1);
+  assert.equal(f._status.paused, true);
+  assert.deepEqual(music(), { paused: false, ended: false });
+  const selected = structuredClone(f.ui.selected), event = f._status.event;
+  f.settingsButton.emit('click'); assert.deepEqual(music(), { paused: true, ended: false });
+  f.game.pause2(); f.dialog().emit('cancel'); await settle();
+  assert.equal(music().paused, true, 'native menu keeps music paused after the SGS settings close');
+  f.game.resume2(); assert.equal(music().paused, true, 'pending native release must not briefly resume music');
+  await settle(); assert.equal(music().paused, false);
+  f.pauseButton.emit('click'); assert.equal(music().paused, true);
+  f.dialog().querySelector('[data-settings]').emit('click'); f.dialog().emit('cancel'); await settle();
+  assert.equal(music().paused, true);
+  f.dialog().querySelector('[data-continue]').emit('click'); await settle(); assert.equal(music().paused, false);
+  assert.equal(f._status.paused, true); assert.deepEqual(f.ui.selected, selected); assert.equal(f._status.event, event);
+  f.session.dispose(); assert.equal(music().ended, true);
+});
+
+test('hidden music pauses even without background game pause and initialization handles already hidden or paused tables', async () => {
+  const f = table(), music = () => f.audio.musicStates.at(-1);
+  f.preferences.set({ backgroundPause: false });
+  f.document.hidden = true; f.document.emit('visibilitychange');
+  assert.equal(f._status.paused2, false); assert.equal(music().paused, true);
+  f.document.hidden = false; f.document.emit('visibilitychange'); assert.equal(music().paused, false);
+  f.preferences.set({ backgroundPause: true });
+  f.document.hidden = true; f.document.emit('visibilitychange');
+  f.document.hidden = false; f.document.emit('visibilitychange');
+  assert.equal(music().paused, true, 'returning visible still requires the owned background continuation');
+  f.dialog().querySelector('[data-continue]').emit('click'); await settle(); assert.equal(music().paused, false);
+  f.session.dispose();
+  for (const options of [{ hidden: true }, { initialPause: true }]) {
+    const initial = table(undefined, options);
+    assert.deepEqual(initial.audio.musicStates.at(-1), { paused: true, ended: false });
+    initial.session.dispose();
+  }
+});
+
+test('result, fault, confirmed navigation and disposal terminate music before cleanup can release pauses', async () => {
+  for (const ending of ['result', 'native-result', 'fault', 'leave', 'navigation', 'dispose']) {
+    const f = table(), music = () => f.audio.musicStates.at(-1);
+    f.settingsButton.emit('click');
+    if (ending === 'result') f.session.setResultActions({ show() {}, replay() {}, leave() {} });
+    else if (ending === 'native-result') { f._status.over = true; f.session.refresh(); }
+    else if (ending === 'fault') f.session.setFaultActions({ show() {} });
+    else if (ending === 'leave') {
+      f.dialog().emit('cancel'); await settle();
+      f.hud.querySelector('.sgs-return').emit('click'); f.dialog().querySelector('[data-leave]').emit('click');
+    } else if (ending === 'navigation') f.session.navigate(true);
+    else f.session.dispose();
+    assert.equal(music().ended, true, ending);
+    const terminalIndex = f.audio.musicStates.findIndex(value => value.ended);
+    f.session.setFaultActions(null); f._status.over = false;
+    f.session.dialogs.closeAll(); f.game.resume2(); await settle();
+    f.document.hidden = true; f.document.emit('visibilitychange');
+    f.document.hidden = false; f.document.emit('visibilitychange');
+    f.preferences.set({ musicVolume: 0.75 }); f.session.refresh();
+    assert.ok(f.audio.musicStates.slice(terminalIndex).every(value => value.ended), ending);
+    f.session.dispose();
+  }
 });

@@ -4,6 +4,7 @@ import { resolveCharacterAudio } from './character-audio.mjs';
 import { resolveDamageAudio } from './damage-audio.mjs';
 import { installRecoveryAudio } from './recovery-audio.mjs';
 import { createAudioLoader } from './audio-loads.mjs';
+import { createBackgroundMusic } from './music-audio.mjs';
 export function resolveCardAudio(path, manifest) {
   const key = String(path).replace(/^audio\//, '').replace(/\.(mp3|ogg)$/i, '');
   if (!/^card\/(male|female|shared)\/[a-z0-9_]+$/i.test(key)) return null;
@@ -32,7 +33,7 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
   const seenRecoveryEvents = new WeakSet();
   const buffers = createAudioLoader({ fetcher: fetchAudio, baseURL: audioRoot, timeout: options.loadTimeout ?? 8000, timers: options.timers || globalThis });
   const playing = new Map();
-  const volumes = { card: 1, hero: 1, effect: 1 };
+  const volumes = { card: 1, hero: 1, effect: 1, music: 0.25 };
   const jobs = new Set();
   const voices = {
     card: { nextStart: 0, queue: Promise.resolve(), last: null },
@@ -46,6 +47,9 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
   let preload;
 
   const changed = () => options.onStateChange?.(controller.status());
+  const music = createBackgroundMusic({ clip: options.musicManifest?.clips?.['background/music_default'],
+    fetcher: fetchAudio, baseURL: audioRoot, timeout: options.loadTimeout ?? 8000, timers: options.timers || globalThis,
+    enabled: state.enabled, volume: volumes.music, onStateChange: changed });
   function deviceFailure(error) {
     state.blocked = true;
     state.lastError = error?.message || '声音设备暂时无法启用。';
@@ -82,6 +86,7 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
         // sound, and a failed warm-up can retry on the real damage request.
         preload = Promise.all(Object.values(options.damageManifest.clips).map(clip => load(clip).catch(() => null)));
       }
+      if (!state.blocked) music.unlocked(ctx);
       changed();
       return !state.blocked;
     }).catch(error => {
@@ -219,12 +224,13 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
   }
   const gesture = () => { void unlock(); };
   const controller = {
-    status: () => ({ ...state, volumes: { ...volumes }, contextState: context?.state || 'uninitialized', loaded: buffers.size, scheduled: playing.size,
+    status: () => ({ ...state, volumes: { ...volumes }, music: music.status(), contextState: context?.state || 'uninitialized', loaded: buffers.size, scheduled: playing.size,
       channels: Object.fromEntries(Object.entries(voices).map(([name, voice]) => [name, voice.last && { ...voice.last }])) }),
     setVolume(channel, value) {
       if (!Object.hasOwn(volumes, channel)) return undefined;
       if (disposed || typeof value !== 'number' || !Number.isFinite(value)) return volumes[channel];
       volumes[channel] = Math.max(0, Math.min(1, value));
+      if (channel === 'music') music.setVolume(volumes.music);
       // Update both sounding and future-scheduled sources without restarting
       // them or moving either voice queue's clock. Pending loads read on play.
       for (const source of playing.values()) {
@@ -237,6 +243,7 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
       state.enabled = Boolean(enabled);
       lib.config.background_audio = state.enabled;
       lib.config.equip_audio = false;
+      music.setEnabled(state.enabled);
       if (!state.enabled) stop();
       else void unlock();
       changed();
@@ -247,10 +254,12 @@ export function installCardAudio({ lib, game, get, _status }, manifest, options 
     // adapter tests. UI card selection must never call this method.
     playCommitted,
     playOpeningHand,
-    whenIdle: () => Promise.all([...jobs, preload]),
+    setMusicState: value => music.setActivity(value),
+    whenIdle: () => Promise.all([...jobs, preload, music.whenIdle()]),
     dispose() {
       if (disposed) return;
       disposed = true;
+      music.dispose();
       recoveryAudio?.dispose();
       stop();
       buffers.dispose();

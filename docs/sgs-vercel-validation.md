@@ -129,3 +129,21 @@ VCL-07源提交 `d78e854b048baf1fb40a464c921a1865fa746ffe` 已立即发布为受
 父实际1280×720静音浏览器：武皇甫嵩地主原生2/5HP四张，五次原生换牌仍四张，保留红桃7桃；开始后朝镇取得黑桃A闪电，HP2→3；跋扈/摸牌后八张。桃选择/撤销均保持3/5HP和八张；再次选择并开关设置，原选牌保留、仍需确定。手动确定后八→七张，HP3→4，公开记录同时包含朝镇回复与桃回复。声音false、AudioContext uninitialized、played/effects0；40/25/60音量不变，设置文案可读。console warn/error为空，正常返回点将台。截图vcl10-muted-settings.jpg及vcl10-recovery-log.jpg。没有注入状态、开启声音或声称真人听验；播放由真实模块+模拟设备验证。
 
 最终构建归一化：recovery-audio.mjs 2251字节/SHA256 aa2ee00ecb7cc4bc83775021ff92cfff2d95a94e74fba6f054969baf4229d3af；实际runtime.js 144260字节/9131140a46d1be133bd2104a74260d79cf4245d22adb352ef90674ee77f49c25。发布与域名核验待完成，VCL-10暂false；VCL-05及历史MAT-07/UX-09/US-006未完成状态不变。
+
+## VCL-10 published acceptance — 2026-11-14
+
+VCL-10源提交0f2c55ada9303d90af22a0239fb083ecca1b27dd已独立发布为受限快照1638a04c9689c7a2c98810db396026d9a7c6cf38。正常推送显式sgs/main前核对bf94107为祖先，随后核对远端精确SHA、Vercel success及域名build-info一致。完整线上2960项资源/452录音28,404,908字节/2491画像/root307/原生入口/缺项404/MIME/大小/哈希全通过。实际runtime.js及recovery/card-audio/settings/loading模块均200/正确JS类型且归一化SHA256逐项匹配本地已验收构建。VCL-10通过，此后才开始VCL-11音乐实现；VCL-05及历史MAT-07/UX-09/US-006保持未完成。
+
+## VCL-11 对局背景音乐 — 本地验收 2026-11-14
+
+用户确认采用上游原版对局音乐。新增唯一music_default原录音3,543,457字节，Git blob eaccd4570b89a824cf5300e5d8601d605828c054，SHA256 5fcefad6d89c2471c2aae05735c7d0cf6faeba015c2679bc6060afb85f8fef9d，约3分41.466秒。原452条保持原字节，合计453条31,948,365字节。
+
+音乐复用唯一解锁AudioContext、独立8秒loader和循环source/gain，默认musicVolume25%。暂停只停止自身并保存循环位置，不挂起语音context；总静音、音量0、隐藏、结算、异常、导航和销毁具有相应清理与迟到保护。失败后不随手势/轮询无限重试，明确开关声音可重试。原生music_off保留，正常人类选牌的paused不当成音乐暂停。只缓存一个曲目，约74.5MiB解码数据在结算/销毁时释放。
+
+初始真实控制器关键3项红测均失败后修复；父偏好/大厅扩展先31pass/3fail后34/34通过，保留旧静音与40/25/60、音乐零值及缓存大厅带入下一局。另有真实原生Deferred回归先2项失败：resume2返回时paused2尚未异步清除，首版音乐要等700ms轮询才恢复。改为等待原生pause2完成后重读当前归属/paused2/disposed，两项转绿，不改原生gate/规则。最终360项完整Node测试、12项音乐/28项session、73项专项、453条静默解码、JS语法/diff通过；独立163项组合审查及生命周期复审无问题。
+
+父Node22/pnpm正式构建通过实际投降回调3项与2963资源/2491画像门禁。最后仅README两处数量/四路文案在构建后同步到dist文档，产品JS未再修改。父真实浏览器：390×844大厅设置音乐25→15→0，关闭/刷新仍为0，再恢复25；三路40/25/60与sound:false不变。新开武皇甫嵩地主2/5HP四张，取消朝镇后原生摸至七张；选黑桃2藤甲并手动暂停，暂停内打开设置。1280×720和1024×640四路音量可读；1024设置框y16..624，完成按钮126×50、y549.2..599.2，内部滚动27.2px后底部选项完整可达。关闭设置仍保留外层暂停，手动继续后藤甲仍为原生selected，确定后七→六并进入装备栏。局时暂停前后均01:07。全程musicState:muted/musicPlaying:false、AudioContext uninitialized、played/effects0；console warn/error为空。
+
+同配置重开成功回到2/5HP四张、0次换牌，新音量载荷0.25且仍静音。正常返回操作后浏览器调试连接短暂超时，以新测试页恢复，确认默认1280×720并恢复原选神黄忠/地主/隐藏老武将，清空临时搜索、关闭两张测试页，仅保留用户域名页。截图vcl11-settings-1280.jpg、vcl11-settings-1024.jpg、vcl11-settings-390.jpg。未开启声音或注入牌局/visibility；播放与真实原生暂停时序由静默设备回归验证，VCL-05真实后台证据继续pending。
+
+最终归一化构建：music-audio.mjs 4594字节/SHA256 3016105601f23022865c452eab8134a0cd508988f0471e26ac52231da402a257；实际runtime.js 150837字节/479f6f5ae7a7787361c19ee14aad77d8c5cae346bd0f7e073dc45b88c9fd699f；settings.mjs 5180字节/1b089dde24ba81bb87a49d1a304813fc70f710405ec6b753b10f766f660a31ab。独立发布与线上核验待完成，VCL-11暂false；旧MAT-07、UX-09、US-006不变。

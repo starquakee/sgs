@@ -88,7 +88,7 @@ for (const failure of ['construct', 'resume-throw', 'resume-reject']) {
     assert.equal(h.storage.getItem('sgs.card-audio.enabled'), 'true');
     assert.equal(h.audio.status().enabled, true); assert.equal(h.audio.status().blocked, false);
     assert.equal(h.ctx.state, 'running'); assert.equal(h.lib.config.equip_audio, false);
-    assert.deepEqual(h.audio.status().volumes, { card: .3, hero: .6, effect: .8 });
+    assert.deepEqual(h.audio.status().volumes, { card: .3, hero: .6, effect: .8, music: .25 });
     assert.equal(h.starts.length, 0, 'enabling sound must not replay old events');
     h.button.emit('click');
     assert.equal(h.preferences.get().sound, false, 'the retry intent is consumed by the first click');
@@ -124,7 +124,7 @@ test('ordinary toolbar toggles use settings preferences, and failed enabled retr
   h.button.emit('click'); assert.equal(h.preferences.get().sound, false);
   await h.gesture('pointerdown', true); h.button.emit('click'); await settle();
   assert.equal(h.audio.status().enabled, true); assert.equal(h.lib.config.equip_audio, false);
-  assert.deepEqual(h.audio.status().volumes, { card: .3, hero: .6, effect: .8 });
+  assert.deepEqual(h.audio.status().volumes, { card: .3, hero: .6, effect: .8, music: .25 });
 });
 
 test('a settings mute between retry intent and click still enables once and clears the intent', async t => {

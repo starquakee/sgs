@@ -2,7 +2,7 @@ import { persistentStorage } from './storage.mjs';
 export const preferencesKey = 'sgs.preferences.v1';
 const audioKey = 'sgs.card-audio.enabled';
 const speedValue = value => ['normal', 'fast'].includes(value);
-export const volumePreferences = { card: 'cardVolume', hero: 'heroVolume', effect: 'effectVolume' };
+export const volumePreferences = { card: 'cardVolume', hero: 'heroVolume', effect: 'effectVolume', music: 'musicVolume' };
 
 // Storage access itself can throw (private browsing / denied site storage).
 export function createPreferences(getStorage = persistentStorage, fallback = {}) {
@@ -12,7 +12,7 @@ export function createPreferences(getStorage = persistentStorage, fallback = {})
   const legacy = json('sgs.settings.v1');
   const defaults = { speed: speedValue(fallback.speed) ? fallback.speed : speedValue(legacy?.speed) ? legacy.speed : 'normal',
     sound: read(audioKey) !== 'false', backgroundPause: true, reducedMotion: false,
-    cardVolume: 1, heroVolume: 1, effectVolume: 1 };
+    cardVolume: 1, heroVolume: 1, effectVolume: 1, musicVolume: 0.25 };
   const sanitize = (input, base) => Object.fromEntries(Object.entries(base).map(([key, value]) => {
     const next = input?.[key];
     if (Object.values(volumePreferences).includes(key)) return [key,

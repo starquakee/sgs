@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "upstreamCommit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+  "attribution": {
+    "name": "Noname / 无名杀",
+    "repository": "https://github.com/libnoname/noname",
+    "commit": "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a",
+    "license": "GPL-3.0",
+    "licenseUrl": "https://github.com/libnoname/noname/blob/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/LICENSE",
+    "note": "音乐原样取自锁定上游资源，保留来源，不主张录音原创或另行授权。"
+  },
+  "scope": "One original battle track, looping only in the current SGS table on the shared unlocked audio context.",
+  "uniqueFiles": 1,
+  "totalBytes": 3543457,
+  "clips": {
+    "background/music_default": {
+      "key": "background/music_default",
+      "file": "audio/background/music_default.mp3",
+      "label": "原版对局音乐",
+      "sourceUrl": "https://raw.githubusercontent.com/libnoname/noname/7fcf23ed54d8a7ce2b49ae2c15a054123891a52a/apps/core/audio/background/music_default.mp3",
+      "sourceGitBlob": "eaccd4570b89a824cf5300e5d8601d605828c054",
+      "bytes": 3543457,
+      "sha256": "5fcefad6d89c2471c2aae05735c7d0cf6faeba015c2679bc6060afb85f8fef9d"
+    }
+  }
+}

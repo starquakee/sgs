@@ -708,7 +708,7 @@ test('three channel volumes preserve native loudness and change playing, schedul
   assert.equal(h.controller.setVolume('card', 5), 1);
   assert.equal(h.controller.setVolume('hero', -1), 0);
   for (const value of [NaN, Infinity, '0.5', null]) assert.equal(h.controller.setVolume('card', value), 1);
-  assert.equal(h.controller.setVolume('music', .2), undefined);
+  assert.equal(h.controller.setVolume('unknown', .2), undefined);
   const snapshot = h.controller.status(); snapshot.volumes.card = 0;
   assert.equal(h.controller.status().volumes.card, 1);
   h.controller.setEnabled(false); assert.equal(h.stopped.length, 4, 'all remaining scheduled/running sources stop');
