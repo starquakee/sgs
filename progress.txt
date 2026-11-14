@@ -161,3 +161,13 @@ VCL-10源提交0f2c55ada9303d90af22a0239fb083ecca1b27dd已独立发布为受限�
 ## VCL-11 published acceptance — 2026-11-14
 
 VCL-11源提交f4cd38dae0e1f935f4218942cf848ed0aba03b19已独立发布为受限快照5a4dd0bd03955e68b001fdf4d2827b81986f6857。正常推送显式sgs/main前核对1638a04为祖先，随后核对远端精确SHA、Vercel success及域名build-info一致。完整线上2963项资源/453录音31,948,365字节/2491画像/root307/原生入口/缺项404/MIME/大小/哈希全部通过。实际runtime.js、music-audio/preferences/settings/pause/table-session模块均200/正确JS类型，归一化字节与SHA256逐项匹配最终本地构建。域名新测试页设置已显示独立背景音乐25%，原域名声音仍关闭，原三路100%保留；未更改在线偏好、未开局或开声。线上截图vcl11-live-settings.jpg已保存；浏览器连接/截图传输曾超时，不视为产品运行错误。最终独立范围审查确认仅新增recover与music_default两录音、原451未变；LICENSE、原生规则/AI、锁文件未改，无测试夹具进入生产。VCL-10/11均通过；VCL-05及历史MAT-07/UX-09/US-006仍未完成。
+
+## VCL-12 自己回合装备名称亮度 — 本地验收 2026-11-14
+
+用户反馈自己回合装备名发灰。真实静音神黄忠地主局手动装备丈八蛇矛后复现：arena为selecting tempnoe，装备根opacity1/filter none，name2颜色rgb(233,211,167)但opacity0.6；上游通用选择态规则使不可选装备文字变暗。
+
+仅在SGS table.css增加4行，限定非回放选择态、自己座位的实际装备name2恢复opacity1，排除emptyequip和feichu；不改颜色、根节点、filter、布局、原生类或事件。独立审查无问题，412条CSS规则及选择器解析、diff检查、Node22/pnpm正式构建通过；构建内3项原生回调和2963资源门禁通过，453录音31,948,365字节/2491画像不变。纯CSS改动未新增镜像逻辑测试，未重复未变的360项逻辑测试。
+
+父最终生产构建真实静音浏览器：1280x720神黄忠地主，手动装备藤甲7→6手牌，赤兔选/撤选保持6张，重新选并确定后6→5；出牌选择态藤甲和赤兔name2均opacity1、原色不变，空槽仍0.6。选择决斗未自动出牌，右键藤甲打开原生说明，点击说明外层关闭后决斗仍selected。1024x640下装备文字同样opacity1，原生装备栏可滚动（scrollTop53.6），决斗选择保留；撤选后仍5张。console warn/error为空，声音关，音量40/25/60/25未改。返回选将后恢复1280x720与原选神黄忠/地主/隐藏老武将，关闭临时测试页，未操作用户线上牌局。
+
+截图vcl12-equipment-before.jpg、vcl12-equipment-1280.jpg、vcl12-equipment-1024.jpg及vcl12-equipment-1024-scroll.jpg。正式table.css归一化65533字节，SHA256 8c41e6f02c864347e295ae2d90dae6693ef2cff1ab6a3ab8d6984d08d7f0f0aa。待独立提交发布及域名核验；VCL-05与历史MAT-07/UX-09/US-006保持未完成。

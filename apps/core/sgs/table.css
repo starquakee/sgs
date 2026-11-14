@@ -453,6 +453,10 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   font-size: clamp(12px, 1vw, 15px); line-height: 18px;
   white-space: normal; overflow-wrap: anywhere;
 }
+/* Equipped card names stay readable while native choices dim unavailable cards. */
+.sgs-game #window #arena.selecting:not(.video) > .player[data-position='0'] > .equips > .card:not(.emptyequip):not(.feichu) > .name2 {
+  opacity: 1;
+}
 .sgs-game #window #arena > .sgs-sort-hand {
   width: var(--sgs-equip-w); right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); bottom: 14px;
   height: 34px; border-radius: 2px;
