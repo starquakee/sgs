@@ -7,6 +7,7 @@ import { installCharacterAudio } from './character-audio.mjs';
 import { installTeammateHand } from './teammate-hand.mjs';
 import { installOpeningHand } from './opening-hand.mjs';
 import { installHandLayout } from './hand-layout.mjs';
+import { installPromptLayout } from './prompt-layout.mjs';
 import { installCardSelectionSwitch, installUniqueCardTarget } from './card-selection.mjs';
 import { installSelectedTiesuoRecast } from './card-recast.mjs';
 import { installCardDrag } from './card-drag.mjs';
@@ -179,6 +180,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       game.me?.sortHandcardOL(_status.tempHandcardSort);
     });
     ui.arena.append(sortHandButton);
+    const promptLayout = installPromptLayout(ui.arena);
     const decorateControls = () => {
       for (const button of ui.system?.querySelectorAll(':scope > div > div') || []) {
         const name = button.textContent.trim();
@@ -203,6 +205,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
           button.dataset.sgsMulligan = button.link === 'ok' ? 'replace' : 'start';
         } else delete button.dataset.sgsMulligan;
       }
+      promptLayout.observe(ui.control);
     };
     const controlsObserver = new MutationObserver(decorateControls);
     if (ui.control) controlsObserver.observe(ui.control, { childList: true, subtree: true });
@@ -262,7 +265,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         || game.me.countCards('h') < 2 || game.me.hasSkillTag('noSortCard');
     };
     const timer = setInterval(decorate, 700);
-    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); cardDrag.dispose(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); audioControls.dispose(); cardAudio.dispose(); session.dispose(); };
+    disposeTable = () => { clearInterval(timer); controlsObserver.disconnect(); promptLayout.dispose(); cardDrag.dispose(); selectedRecast.dispose(); handLayout.dispose(); teammateHand.dispose(); tableActions.dispose(); publicStates.dispose(); battleFeedback.dispose(); results.dispose(); runtimeErrors.dispose(); reportUI.dispose(); reports.dispose(); audioControls.dispose(); cardAudio.dispose(); session.dispose(); };
     decorate();
     loading?.ready();
   });

@@ -533,8 +533,12 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
    Let only plain caption stacks size themselves; opening notes, card choices
    and custom skill artwork keep their own geometry and original nodes. */
 .sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) {
+  /* Wrapped native actions grow upward. Keep the same 10px gap above their
+     measured height and preserve the prompt's top bound on compact tables. */
+  --sgs-control-extra: max(0px, calc(var(--sgs-control-height, 50px) - 50px));
+  bottom: calc(var(--sgs-hand-h) + 106px + var(--sgs-control-extra))!important;
   height: auto!important;
-  max-height: min(240px, calc(100% - var(--sgs-hand-h) - 144px));
+  max-height: min(240px, calc(100% - var(--sgs-hand-h) - 144px - var(--sgs-control-extra)));
   padding: 4px 12px 6px;
   overflow-x: hidden;
   overflow-y: auto;

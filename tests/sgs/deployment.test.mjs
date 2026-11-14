@@ -15,13 +15,15 @@ const inventory = { assets: [asset('index.html', html, true), asset('sgs/audio/t
 
 test('deployment inventory pins all existing recordings and portrait files to source checksums', async () => {
   const actual = await deploymentInventory(undefined, { nativeEntryBytes: html });
-  assert.equal(actual.assets.length, 2956);
+  assert.equal(actual.assets.length, 2957);
   assert.equal(actual.audioFiles, 451);
   assert.equal(actual.audioBytes, 28396074);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 451);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/portraits/')).length, 2491);
   const drag = Buffer.from((await readFile(new URL('../../apps/core/sgs/card-drag.mjs', import.meta.url), 'utf8')).replace(/\r\n/g, '\n'));
   assert.deepEqual(actual.assets.find(row => row.path === 'sgs/card-drag.mjs'), asset('sgs/card-drag.mjs', drag, true));
+  const prompt = Buffer.from((await readFile(new URL('../../apps/core/sgs/prompt-layout.mjs', import.meta.url), 'utf8')).replace(/\r\n/g, '\n'));
+  assert.deepEqual(actual.assets.find(row => row.path === 'sgs/prompt-layout.mjs'), asset('sgs/prompt-layout.mjs', prompt, true));
   const source = JSON.parse(await readFile(new URL('../../apps/core/sgs/card-audio.json', import.meta.url)));
   const clip = source.clips['card/female/sha'];
   assert.deepEqual(actual.assets.find(row => row.path === `sgs/${clip.file}`), { path: `sgs/${clip.file}`, bytes: clip.bytes, sha256: clip.sha256 });
