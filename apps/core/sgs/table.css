@@ -569,6 +569,59 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   bottom: calc(var(--sgs-hand-h) + 106px)!important;
   max-height: calc(100% - var(--sgs-hand-h) - 144px);
 }
+/* Small native character choices (for example Pingjian) need room to inspect
+   their portraits. Only the plain title + character row uses this layout;
+   card choices, opening selection and custom skill artwork stay native. */
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) {
+  --sgs-control-extra: max(0px, calc(var(--sgs-control-height, 50px) - 50px));
+  box-sizing: border-box;
+  left: 50%!important;
+  translate: -50% 0;
+  width: min(620px, calc(100% - 2 * var(--sgs-player-w) - 80px))!important;
+  max-width: none;
+  height: auto!important;
+  min-height: 0!important;
+  bottom: calc(var(--sgs-hand-h) + 106px + var(--sgs-control-extra))!important;
+  max-height: calc(100% - var(--sgs-hand-h) - 144px - var(--sgs-control-extra));
+  padding: 18px 24px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) :is(.content-container, .content) {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto!important;
+  max-height: none;
+  overflow: visible;
+}
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) > .content-container > .content > .caption {
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 0;
+  font-size: 23px;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) > .content-container > .content > .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  margin: 0;
+}
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) > .content-container > .content > .buttons > .button.character {
+  flex: 0 0 auto;
+  width: 128px;
+  height: 168px;
+  margin: 0;
+}
+.sgs-game #window #arena:not(.choose-character) > .dialog.forcebutton-auto:not(.nobutton):has(> .content-container > .content > .caption:first-child + .buttons:last-child > .button.character):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > .buttons > :not(.button.character))) > .content-container > .content > .buttons > .button.character > .name {
+  font-size: 20px;
+  line-height: 1.15;
+  max-height: calc(100% - 34px);
+}
 /* The native body illustration and its percentage-based hit areas must share
    the same unpadded 4:7 surface. Bound that surface above the native controls
    without clamping an independently sized image or clipping point help. */
