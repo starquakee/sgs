@@ -529,6 +529,34 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   line-height: 22px;
   letter-spacing: 0;
 }
+/* Native text choices may contain a title, explanation and live card count.
+   Let only plain caption stacks size themselves; opening notes, card choices
+   and custom skill artwork keep their own geometry and original nodes. */
+.sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) {
+  height: auto!important;
+  max-height: min(240px, calc(100% - var(--sgs-hand-h) - 144px));
+  padding: 4px 12px 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) :is(.content-container, .content) {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) > .content-container > .content > .caption {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  text-wrap: balance;
+}
+.sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) > .content-container > .content > .caption + .caption { margin-top: 6px; }
+.sgs-game #window #arena > .dialog.nobutton:has(> .content-container > .content > .caption):not(:has(> :not(.content-container, .bar), > .content-container > :not(.content), > .content-container > .content > :not(.caption), .caption > :not(.text), .text > *)) > .content-container > .content > .caption > .text {
+  text-align: center;
+  line-height: 1.6;
+}
 .sgs-game #window #arena > .dialog:not(.nobutton) {
   bottom: calc(var(--sgs-hand-h) + 106px)!important;
   max-height: calc(100% - var(--sgs-hand-h) - 144px);
