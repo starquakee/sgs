@@ -258,7 +258,9 @@ test('table settings apply native speed, shared mute and motion; denied storage 
   const sound = dialog.querySelector('[name="sound"]'); sound.checked = false; sound.emit('change'); assert.equal(f.audio.status().enabled, false);
   const motion = dialog.querySelector('[name="reducedMotion"]'); motion.checked = true; motion.emit('change'); assert.equal(f.document.documentElement.classList.contains('sgs-reduced-motion'), true);
   assert.match(dialog.querySelector('.sgs-save-status').textContent, /未能保存/);
+  assert.equal(dialog.dataset.soundMuted, 'true');
   f.preferences.set({ sound: true }); assert.equal(sound.checked, true);
+  assert.equal(dialog.dataset.soundMuted, 'false');
   dialog.querySelector('[data-close]').emit('click'); await settle(); assert.equal(f._status.paused2, false); f.session.dispose();
 });
 

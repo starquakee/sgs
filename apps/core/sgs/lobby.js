@@ -41,10 +41,15 @@ const preferred = ['caocao','liubei','sunquan','guanyu','zhaoyun','zhangfei','dc
 const pageSize = () => innerWidth < 540 ? 9 : innerWidth >= 1450 ? 12 : innerWidth >= 1000 && innerWidth < 1150 ? 6 : 8;
 const packName = id => catalog?.packs.find(p => p.id === id)?.name || id;
 
+let toastTimer;
 function showInfo(title, html) {
   $('dialog-title').textContent = title; $('dialog-content').innerHTML = html; $('info-dialog').showModal();
 }
-function toast(message) { $('toast').textContent = message; $('toast').hidden = false; setTimeout(() => $('toast').hidden = true, 2200); }
+function toast(message) {
+  clearTimeout(toastTimer);
+  $('toast').textContent = message; $('toast').hidden = false;
+  toastTimer = setTimeout(() => { $('toast').hidden = true; toastTimer = undefined; }, 2200);
+}
 function eligible(character) {
   return inBrowseScope(character, $('version').value) && (!hideOld || !isOldGeneral(character));
 }
@@ -89,6 +94,7 @@ function render(resetScroll = false) {
   $('rating-source-date').textContent = catalog.ratingSource ? `官方客户端评分 · ${catalog.ratingSource.versionTime.slice(0,10)}` : '暂无官方评分数据';
   reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="192" height="256" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
   $('previous').disabled = currentPage === 1; $('next').disabled = currentPage === pages;
+  $('random-general').disabled = catalogState !== 'ready' || !results.length;
   $('page-number').textContent = `${currentPage} / ${pages}`;
   $('favorite-count').textContent = favorites.size;
   if (!rows.length && collection === 'recent' && !recent.keys().length) $('general-grid').innerHTML = '<div class="empty">还没有出战记录<p>出战后，这里会保留最近使用的 8 位武将。</p><button id="empty-reset">返回点将台</button></div>';
@@ -137,6 +143,25 @@ function syncTabs() {
   }
 }
 $('general-grid').addEventListener('click', event => { const button = event.target.closest('[data-key]'); if (button) { select(catalog.characters.find(c => c.key === button.dataset.key)); if (innerWidth < 1000) document.querySelector('.general-detail').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'}); } });
+$('general-grid').addEventListener('dblclick', event => {
+  if (catalogState !== 'ready' || $('start-game').disabled) return;
+  const button = event.target?.closest?.('[data-key]');
+  const character = button && catalog?.characters.find(c => c.key === button.dataset.key);
+  if (!character) return;
+  select(character);
+  $('start-game').onclick();
+});
+$('random-general').onclick = () => {
+  if (catalogState !== 'ready') return;
+  const results = list();
+  if (!results.length) return;
+  const pool = results.length > 1 && selected ? results.filter(c => c.key !== selected.key) : results;
+  const picked = pool[Math.floor(Math.random() * pool.length)];
+  const index = results.findIndex(c => c.key === picked.key);
+  currentPage = Math.floor(Math.max(0, index) / pageSize()) + 1;
+  select(picked);
+  toast(`已随机点将：${displayName(picked.name)}`);
+};
 document.querySelectorAll('.factions button').forEach(button => button.onclick = () => { faction = button.dataset.faction; currentPage = 1; syncTabs(); render(true); });
 document.querySelectorAll('[data-browse]').forEach(button => button.onclick = () => { browsePack = button.dataset.browse; currentPage = 1; syncTabs(); render(true); });
 $('hide-old').onclick = () => { hideOld = !hideOld; saveAgeFilter(); currentPage = 1; render(true); };
@@ -255,13 +280,31 @@ $('read-skills').onclick = () => {
     dialog.querySelector('[data-close]').onclick = close;
   });
 };
-document.addEventListener('keydown', event => { if(event.key === '/' && !['INPUT','TEXTAREA'].includes(document.activeElement.tagName) && !$('info-dialog').open && !settingsDialogs.has('records') && !settingsDialogs.has('settings') && !settingsDialogs.has('skill-reading')) { event.preventDefault(); $('search').focus(); } });
+const modalOpen = () => $('info-dialog').open || settingsDialogs.has('records') || settingsDialogs.has('settings') || settingsDialogs.has('skill-reading');
+const onKeyDown = event => {
+  if (event.isComposing) return;
+  if (event.key === 'Escape' && $('more-filters')?.open) {
+    $('more-filters').open = false;
+    $('more-filters-summary')?.focus?.();
+    return;
+  }
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || modalOpen()) return;
+  if (event.key === '/') { event.preventDefault(); $('search').focus(); }
+  else if (event.key === 'PageDown' && !$('next').disabled) { event.preventDefault(); $('next').onclick(); }
+  else if (event.key === 'PageUp' && !$('previous').disabled) { event.preventDefault(); $('previous').onclick(); }
+};
+const onPointerDown = event => {
+  const details = $('more-filters');
+  if (details?.open && !details.contains?.(event.target)) details.open = false;
+};
+document.addEventListener('keydown', onKeyDown);
+document.addEventListener('pointerdown', onPointerDown);
 window.addEventListener('resize', () => render());
 function init() {
   if (catalogRequest) return catalogRequest;
   catalogState = 'loading'; catalog = undefined; portraits = undefined;
   $('start-game').disabled = true;
-  $('sort-order').disabled = true; $('rating-scope').disabled = true;
+  $('sort-order').disabled = true; $('rating-scope').disabled = true; $('random-general').disabled = true;
   notifyCatalog();
   catalogRequest = (async () => { try {
     const assets = await loadRosterAssets({ stage(message) {
@@ -278,8 +321,10 @@ function init() {
     syncTabs();
     catalogState = 'ready';
     $('sort-order').disabled = false; $('rating-scope').disabled = false;
+    $('random-general').disabled = !list().length;
   } catch (error) {
     catalogState = 'failed'; catalog = undefined; portraits = undefined;
+    $('random-general').disabled = true;
     $('result-count').textContent = '武将名册未能载入';
     $('general-grid').innerHTML = `<div class="empty">${escape(error.message)}<button id="retry-load">重试名册</button></div>`;
     $('retry-load').onclick = init;
@@ -314,8 +359,11 @@ function restoreLobby(event) {
 }
 function leaveLobby(event) {
   clearTimeout(restoreSearchTimer); restoreSearchTimer = undefined;
+  clearTimeout(toastTimer); toastTimer = undefined;
   if (event.persisted) return;
   settingsDialogs.dispose(); unsubscribePreferences(); catalogListeners.clear(); stopSearch();
+  document.removeEventListener?.('keydown', onKeyDown);
+  document.removeEventListener?.('pointerdown', onPointerDown);
   window.removeEventListener('pagehide', leaveLobby);
   window.removeEventListener('pageshow', restoreLobby);
 }

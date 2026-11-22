@@ -4,7 +4,7 @@ import { createBattleRecords, battleRecordsKey, createBattleSessionId, recordLau
 import { createPreferences, preferencesKey } from '../../apps/core/sgs/preferences.mjs';
 import { launchKey } from '../../apps/core/sgs/launch-config.mjs';
 import { createClientDialogs } from '../../apps/core/sgs/settings.mjs';
-import { openBattleRecords } from '../../apps/core/sgs/records-dialog.mjs';
+import { openBattleRecords, summarizeBattleRecords } from '../../apps/core/sgs/records-dialog.mjs';
 import { dom } from './helpers/client-dom.mjs';
 import { completedBattle } from './helpers/battle-record.mjs';
 
@@ -145,5 +145,49 @@ test('unavailable recorded versions and unreadable storage explain their state w
   dialog = openBattleRecords(dialogs, createBattleRecords(() => { throw Error('denied'); }), { document, characters });
   assert.match(dialog.querySelector('[data-record-status]').textContent, /无法读取/);
   assert.equal(dialog.querySelector('.sgs-record-content').children[0].textContent, '暂无可读取的战绩');
+  dialogs.dispose();
+});
+
+test('summarizeBattleRecords excludes non-decided matches from winRate and averages damage', () => {
+  assert.deepEqual(summarizeBattleRecords([]), {
+    total: 0, wins: 0, losses: 0, decided: 0, winRate: null, totalKills: 0, avgDamage: '0.0',
+  });
+  const sample = [
+    completedBattle({ outcome: 'win', stats: { damage: 7, damaged: 2, gain: 6, cards: 5, kill: 2 } }),
+    completedBattle({ outcome: 'loss', stats: { damage: 2, damaged: 4, gain: 3, cards: 3, kill: 0 } }),
+    completedBattle({ outcome: 'ended', stats: { damage: 3, damaged: 1, gain: 2, cards: 2, kill: 1 } }),
+  ];
+  assert.deepEqual(summarizeBattleRecords(sample), {
+    total: 3, wins: 1, losses: 1, decided: 2, winRate: 50, totalKills: 3, avgDamage: '4.0',
+  });
+});
+
+test('records dialog mode filters update summary, keep empty mode honest and restore from detail', () => {
+  const document = dom(), dialogs = createClientDialogs({ document }), records = createBattleRecords(() => storage());
+  records.record(completedBattle({ sessionId: 'a', completedAt: 100, outcome: 'win', replay: { ...completedBattle().replay, mode: 'doudizhu', playerCount: 3 } }));
+  records.record(completedBattle({ sessionId: 'b', completedAt: 200, outcome: 'loss', replay: { ...completedBattle().replay, mode: 'identity', playerCount: 8 } }));
+  const dialog = openBattleRecords(dialogs, records, { document, characters });
+  const summary = dialog.querySelector('.sgs-record-summary');
+  const filters = dialog.querySelector('.sgs-record-filters');
+  const content = dialog.querySelector('.sgs-record-content');
+  assert.equal(summary.hidden, false);
+  assert.equal(filters.hidden, false);
+  assert.equal(summary.children[0].children[0].textContent, 2);
+  assert.equal(summary.children[1].children[0].textContent, '50%');
+  filters.children.find(btn => btn.dataset.modeFilter === 'doudizhu').emit('click');
+  assert.equal(content.children.length, 1);
+  assert.equal(summary.children[0].children[0].textContent, 1);
+  assert.equal(summary.children[1].children[0].textContent, '100%');
+  filters.children.find(btn => btn.dataset.modeFilter === 'versus').emit('click');
+  assert.equal(content.children[0].textContent, '该玩法暂无已完成的对局记录');
+  assert.equal(summary.children[1].children[0].textContent, '—');
+  filters.children.find(btn => btn.dataset.modeFilter === 'identity').emit('click');
+  content.children[0].emit('click');
+  assert.equal(summary.hidden, true);
+  assert.equal(filters.hidden, true);
+  dialog.querySelector('[data-back]').emit('click');
+  assert.equal(summary.hidden, false);
+  assert.equal(filters.hidden, false);
+  assert.equal(content.children.length, 1);
   dialogs.dispose();
 });

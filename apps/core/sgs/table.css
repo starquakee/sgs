@@ -4,11 +4,13 @@
 @import url('./results.css');
 @import url('./table-reference.css');
 @import url('./problem-report.css');
-.sgs-game .sgs-card-drag-line{position:fixed;height:3px;z-index:80;pointer-events:none;transform-origin:0 50%;background:#e1cba5;box-shadow:0 1px 4px #1d100dc9;border-radius:2px}
-.sgs-game .sgs-card-drag-line[data-legal='true']{background:#ffdf8d;box-shadow:0 0 5px #d9a947,0 1px 4px #1d100dc9}
-.sgs-game .sgs-card-drag-line::after{content:'';position:absolute;right:-1px;top:-4px;border-left:10px solid #e1cba5;border-top:5px solid transparent;border-bottom:5px solid transparent}
-.sgs-game .sgs-card-drag-line[data-legal='true']::after{border-left-color:#ffdf8d}
-.sgs-game #arena #me .card[data-sgs-dragging='true']{cursor:grabbing}
+.sgs-game .sgs-card-drag-line{position:fixed;height:4px;margin-top:-2px;z-index:80;pointer-events:none;transform-origin:0 50%;background:linear-gradient(90deg,#c9b08880,#ecd7b2);box-shadow:0 1px 4px #1d100dc9;border-radius:2px}
+.sgs-game .sgs-card-drag-line::before{content:'';position:absolute;left:-4px;top:-2px;width:8px;height:8px;border-radius:50%;background:#ecd7b2;box-shadow:0 0 4px #1d100dc9}
+.sgs-game .sgs-card-drag-line[data-legal='true']{background:linear-gradient(90deg,#f5c967,#ffeaa6);box-shadow:0 0 8px #e4b144,0 1px 4px #1d100dc9}
+.sgs-game .sgs-card-drag-line[data-legal='true']::before{background:#ffeaa6;box-shadow:0 0 6px #e4b144}
+.sgs-game .sgs-card-drag-line::after{content:'';position:absolute;right:-2px;top:-5px;border-left:12px solid #ecd7b2;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.sgs-game .sgs-card-drag-line[data-legal='true']::after{border-left-color:#ffeaa6}
+.sgs-game #arena #me .card[data-sgs-dragging='true']{cursor:grabbing;translate:0 -10px;box-shadow:0 0 0 2px #ffe08d,0 12px 22px #140905d6!important}
 @font-face{font-family:SGSTableKai;src:url('../font/xinwei.woff2') format('woff2');font-display:swap}
 html.sgs-game{--table-ink:#332015;--table-gold:#dab47a;--table-cream:#f1dfb8;--table-line:#ad8250;--sgs-player-w:clamp(148px,12.5vw,238px);--sgs-player-h:calc(var(--sgs-player-w)*1.34);--sgs-hand-h:clamp(144px,17vh,184px);--sgs-edge:22px}
 html.sgs-game,.sgs-game body{background:#38271e!important;color:var(--table-cream);font-family:SGSTableKai,'KaiTi',serif}
@@ -285,8 +287,9 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-return, .sgs-table-state, .sgs-table-clock { color: var(--sgs-muted); }
 .sgs-return:hover { color: var(--sgs-gold); }
 .sgs-turn { font-family: var(--sgs-font-body); color: var(--sgs-text); border-color: var(--sgs-line); }
-.sgs-hud[data-your-turn='true'] .sgs-turn { color: var(--sgs-gold); background: var(--sgs-control); border-color: var(--sgs-bronze); }
-.sgs-audio, .sgs-restart, .sgs-tools>summary, .sgs-game #arena>.sgs-sort-hand {
+.sgs-game .sgs-hud[data-your-turn='true'] .sgs-turn { color: #ffe9b5; background: linear-gradient(#855b2c, #684520); border-color: #d9b06a; box-shadow: inset 0 1px #ffe7ad33; }
+.sgs-game .sgs-hud[data-your-turn='true'] .sgs-turn::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 6px; vertical-align: 1px; border-radius: 50%; background: #ffdf89; box-shadow: 0 0 6px #f3c15a; }
+.sgs-audio, .sgs-restart, .sgs-tools>summary {
   background: var(--sgs-panel-raised);
   color: var(--sgs-text);
   border-color: var(--sgs-line);
@@ -295,9 +298,8 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   box-shadow: var(--sgs-control-shadow);
   transition: background var(--sgs-motion), border-color var(--sgs-motion);
 }
-.sgs-audio:hover, .sgs-restart:hover, .sgs-tools>summary:hover,
-.sgs-game #arena>.sgs-sort-hand:hover:not(:disabled) { background: var(--sgs-control-hover); border-color: var(--sgs-bronze); }
-.sgs-game #arena>.sgs-sort-hand:focus-visible { outline-color: var(--sgs-focus); }
+.sgs-audio:hover, .sgs-restart:hover, .sgs-tools>summary:hover { background: var(--sgs-control-hover); border-color: var(--sgs-bronze); }
+.sgs-game #arena>.sgs-sort-hand:focus-visible { outline-color: #f2d9af; }
 .sgs-audio[aria-pressed='false'], .sgs-tools>summary:after { color: var(--sgs-muted); }
 .sgs-hud .sgs-tools #system { background: var(--sgs-panel); border-color: var(--sgs-bronze); border-radius: var(--sgs-radius); box-shadow: var(--sgs-shadow); }
 .sgs-hud .sgs-tools #system>div>div { color: var(--sgs-text); }
@@ -317,28 +319,28 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   min-height: var(--sgs-action-height);
   font: 18px/1.3 var(--sgs-font-body)!important;
   letter-spacing: .04em;
-  background: #38291ec7!important;
-  border-color: #b29973!important;
+  background: linear-gradient(#4c3525e8, #342217ed)!important;
+  border-color: #b79565!important;
   border-radius: var(--sgs-radius)!important;
-  box-shadow: inset 0 0 0 1px #e9cea81f, inset 0 1px #fff0d81f!important;
+  box-shadow: inset 0 1px #ffe7c226, inset 0 0 0 1px #e9cea81a, 0 2px 6px #180c0659!important;
   transition: background var(--sgs-motion), box-shadow var(--sgs-motion);
 }
-.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-action='cancel'] { background: #38291ec7!important; color: #eadcc5!important; }
+.sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-action='cancel'] { background: linear-gradient(#4a3425e6, #322218eb)!important; color: #eadcc5!important; }
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div:is([data-sgs-action='ok'],[data-sgs-mulligan='start']) {
-  background: linear-gradient(#d6b986, #bb945f)!important;
+  background: linear-gradient(#dfb976, #b78a4d)!important;
   color: #3c291b!important;
-  border-color: #ebd3a7!important;
-  box-shadow: inset 0 0 0 1px #6947213b, inset 0 2px #fff1cd7a!important;
+  border-color: #f1d9a9!important;
+  box-shadow: inset 0 0 0 1px #6947213b, inset 0 2px #fff4d685, 0 2px 8px #180c0666!important;
   font-weight: 600!important;
 }
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div[data-sgs-mulligan='replace'] {
-  background: #38291ec7!important;
+  background: linear-gradient(#4c3525e8, #342217ed)!important;
   color: #eadcc5!important;
-  border-color: #b29973!important;
-  box-shadow: inset 0 0 0 1px #e9cea81f, inset 0 1px #fff0d81f!important;
+  border-color: #b79565!important;
+  box-shadow: inset 0 1px #ffe7c226, inset 0 0 0 1px #e9cea81a, 0 2px 6px #180c0659!important;
   font-weight: 400!important;
 }
-.sgs-game #arena #control>.control.sgs-skill-control>div { background: var(--sgs-control)!important; color: var(--sgs-text)!important; border-color: var(--sgs-bronze)!important; box-shadow: var(--sgs-control-shadow)!important; }
+.sgs-game #arena #control>.control.sgs-skill-control>div { background: linear-gradient(#6e5138, #4b3523)!important; color: #ffecc7!important; border-color: #c29b62!important; box-shadow: inset 0 1px #ffdfaa2b, 0 2px 4px #1a0d0666!important; }
 .sgs-game #arena #control>.control:not(.disabled)>div:hover { filter: brightness(1.08); }
 .sgs-game #arena #control>.control.disabled>div { filter: none; cursor: default; }
 .sgs-game #arena #control>.control:not(.sgs-skill-control)>div:active { translate: none; box-shadow: inset 0 2px 4px #0005!important; }
@@ -436,14 +438,23 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game #window #arena > .player[data-position='0'] > .equips {
   /* Keep the native equipment rail on the portrait's lower centre, clear of
      the name, HP and hand count. Extra/disabled slots retain native order. */
-  left: 26px!important; right: 26px!important; bottom: 30px!important;
-  width: auto!important; max-height: 48%; gap: 2px;
+  left: 24px!important; right: 24px!important; bottom: 28px!important;
+  width: auto!important; max-height: calc(100% - 66px); gap: 2px;
   overflow-x: hidden; overflow-y: auto; scrollbar-width: thin;
   scrollbar-color: #aa895d #332318;
 }
+.sgs-game #window #arena > .player[data-position='0'] > .equips::-webkit-scrollbar { width: 4px; }
+.sgs-game #window #arena > .player[data-position='0'] > .equips::-webkit-scrollbar-track { background: #26180f88; }
+.sgs-game #window #arena > .player[data-position='0'] > .equips::-webkit-scrollbar-thumb { background: #a88657aa; border-radius: 2px; }
 .sgs-game #window #arena > .player[data-position='0'] > .equips > .card {
   box-sizing: border-box; flex-shrink: 0; height: auto!important;
-  min-height: 22px; line-height: 22px!important; border-radius: 2px!important;
+  min-height: 17px; line-height: 15px!important; border-radius: 2px!important;
+}
+.sgs-game #window #arena > .player[data-position='0'] > .equips > .card.emptyequip {
+  background: #24170f78!important; border-color: #9e825a42!important; box-shadow: none!important; opacity: .72!important;
+}
+.sgs-game #window #arena > .player[data-position='0'] > .equips > .card:not(.emptyequip):not(.feichu) {
+  background: #2a1b12ed!important; border-color: #c29c5c!important; border-left: 3px solid #e4b766!important; color: #f7e6c4!important;
 }
 .sgs-game #window #arena > .player[data-position='0'] > .equips > .card.selected {
   /* The native selected card stays visible inside the scroll boundary. */
@@ -452,9 +463,13 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 .sgs-game #window #arena > .player[data-position='0'] > .equips > .card > .name2 {
   position: relative!important; left: 0!important; top: auto!important;
   display: block!important; box-sizing: border-box; width: 100%; max-width: 100%;
-  height: auto!important; margin: 0; padding: 1px;
-  font-size: clamp(12px, 1vw, 15px); line-height: 18px;
+  height: auto!important; margin: 0; padding: 1px 2px;
+  font-size: clamp(11px, .9vw, 13px); line-height: 15px;
   white-space: normal; overflow-wrap: anywhere;
+}
+.sgs-game #window #arena > .player[data-position='0'] > .equips > .card.emptyequip > .name2 {
+  color: #b79c73!important; font-size: clamp(10px, .85vw, 11px)!important; line-height: 15px!important;
+  padding: 1px 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 /* Equipped card names stay readable while native choices dim unavailable cards. */
 .sgs-game #window #arena.selecting:not(.video) > .player[data-position='0'] > .equips > .card:not(.emptyequip):not(.feichu) > .name2 {
@@ -462,13 +477,25 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game #window #arena > .sgs-sort-hand {
   width: var(--sgs-equip-w); right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); bottom: 14px;
-  height: 34px; border-radius: 2px;
+  height: 34px; border-radius: var(--sgs-radius);
+  background: linear-gradient(#4d3524f0, #362418f2);
+  color: #f0dcba;
+  border: 1px solid #a88352;
+  box-shadow: inset 0 1px #ffe2af26, 0 2px 6px #180c0666;
+  font: 14px/32px var(--sgs-font-body);
+  letter-spacing: 1px;
+  transition: background var(--sgs-motion), border-color var(--sgs-motion), color var(--sgs-motion);
 }
+.sgs-game #window #arena > .sgs-sort-hand:hover:not(:disabled) {
+  background: linear-gradient(#61432d, #483020); border-color: #d6b174; color: #fff2d6;
+}
+.sgs-game #window #arena > .sgs-sort-hand:active:not(:disabled) { background: #2d1e14; }
+.sgs-game #window #arena > .sgs-sort-hand:disabled { opacity: .45; cursor: default; }
 .sgs-game #window #arena > .sgs-teammate-hand {
   right: calc(var(--sgs-edge) + var(--sgs-player-w) + 18px); top: var(--sgs-side-top);
   width: 76px; padding: 4px;
-  background: #382c213d; border: 1px dashed #c0aa83;
-  color: #f4e7cd; box-shadow: none;
+  background: #2b1d1499; border: 1px dashed #c7ad80b8; border-radius: 3px;
+  color: #f4e7cd; box-shadow: 0 2px 8px #180c0638;
 }
 .sgs-game .sgs-teammate-summary {
   display: block; list-style: none; margin: 0; padding: 0;
@@ -477,7 +504,7 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 }
 .sgs-game .sgs-teammate-summary > li {
   display: block; box-sizing: border-box; height: 24px;
-  border-top: 1px dashed #c0aa8366; padding: 0 2px;
+  border-top: 1px dashed #c7ad8059; padding: 0 2px;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
 }
 .sgs-game .sgs-teammate-summary > li:first-child { border-top: 0; }
@@ -667,4 +694,16 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
     letter-spacing: 0;
     padding: 4px 2px 8px;
   }
+}
+.sgs-game #arena > .player.dead:not(.minskin) { border-color: #7b6c5c!important; }
+.sgs-game #arena > .player.dead > .avatar { filter: grayscale(.78) brightness(.72)!important; }
+.sgs-game .sgs-target-hint {
+  background: #3d2614f0; border: 1px solid #dfb976; color: #ffebc1;
+  font: 14px/1.2 var(--sgs-font-body); padding: 4px 2px;
+}
+.sgs-game .player[data-sgs-target='unavailable'] > .sgs-target-hint {
+  background: #2f2318de; color: #b5a58d; border-color: #826e55;
+}
+.sgs-game .player[data-sgs-target='selected'] > .sgs-target-hint {
+  background: #9f6a29f2; color: #fff6df; border-color: #ffe09a;
 }

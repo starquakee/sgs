@@ -1,27 +1,47 @@
 /* The result sits above the untouched native detail dialog. */
 html body .sgs-client-dialog.sgs-result-dialog {
-  width: min(640px, calc(100vw - 32px)); padding: 28px;
+  width: min(640px, calc(100vw - 32px)); padding: 26px 28px;
 }
-.sgs-result-dialog h2 { font-size: 38px; margin-bottom: 14px; overflow-wrap: anywhere; }
-.sgs-result-dialog[data-outcome='loss'] h2 { color: var(--sgs-text); }
-.sgs-result-dialog .sgs-result-player { font-size: 18px; margin-bottom: 8px; }
-.sgs-result-dialog .sgs-result-context { color: var(--sgs-muted); font-size: 13px; }
-.sgs-result-dialog .sgs-result-stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-block: 1px solid var(--sgs-bronze); margin: 22px 0 14px; }
-.sgs-result-stats>div { display: flex; flex-direction: column; gap: 2px; padding: 14px 4px; text-align: center; }
-.sgs-result-stats>div+div { border-left: 1px solid var(--sgs-line); }
+.sgs-result-dialog[data-outcome='win'] { border-top: 4px solid #b57a2e; }
+.sgs-result-dialog[data-outcome='loss'] { border-top: 4px solid #756454; }
+.sgs-result-dialog[data-outcome='ended'] { border-top: 4px solid var(--sgs-bronze); }
+.sgs-result-hero { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+.sgs-result-portrait {
+  flex: none; width: 72px; height: 96px; overflow: hidden;
+  border: 1px solid var(--sgs-bronze); border-radius: 3px;
+  background: var(--sgs-paper-shade); box-shadow: 0 3px 10px #4128192e;
+}
+.sgs-result-portrait[hidden] { display: none; }
+.sgs-result-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 18%; }
+.sgs-result-summary { min-width: 0; flex: 1; }
+.sgs-result-dialog h2 { font-size: 38px; margin: 0 0 8px; overflow-wrap: anywhere; }
+.sgs-result-dialog[data-outcome='win'] h2 { color: #8c4f1d; }
+.sgs-result-dialog[data-outcome='loss'] h2 { color: #5b493a; }
+.sgs-result-dialog .sgs-result-player { font-size: 17px; font-weight: 500; margin: 0 0 4px; color: var(--sgs-text); }
+.sgs-result-dialog .sgs-result-context { color: var(--sgs-muted); font-size: 13px; margin: 0; }
+.sgs-result-dialog .sgs-result-stats {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px;
+  border-block: 1px solid var(--sgs-bronze); padding: 14px 0; margin: 6px 0 14px;
+}
+.sgs-result-stats>div {
+  display: flex; flex-direction: column; gap: 3px; padding: 10px 4px; text-align: center;
+  background: var(--sgs-panel-raised); border: 1px solid #b6977055; border-radius: 3px;
+}
 html body .sgs-result-stats strong { position: static; inset: auto; color: var(--sgs-gold); font: 28px/1.25 var(--sgs-font-body); font-variant-numeric: tabular-nums; }
 .sgs-result-stats span { color: var(--sgs-muted); font-size: 13px; }
 .sgs-result-dialog .sgs-result-note { color: var(--sgs-muted); font-size: 12px; margin-bottom: 0; }
 .sgs-result-dialog [data-result-status] { color: var(--sgs-gold); font-size: 13px; margin: 10px 0 0; }
 .sgs-result-dialog [data-result-status]:empty { display: none; }
-.sgs-result-dialog .sgs-dialog-actions { margin-top: 24px; }
+.sgs-result-dialog .sgs-dialog-actions { margin-top: 20px; }
 html body .sgs-result-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
 .sgs-result-dialog > :not(.sgs-result-content) { flex-shrink: 0; }
 .sgs-result-dialog .sgs-result-content { min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) var(--sgs-paper); }
 @media (max-width: 540px), (max-height: 650px) {
   html body .sgs-client-dialog.sgs-result-dialog { padding: 20px; }
-  .sgs-result-dialog h2 { font-size: 32px; }
-  .sgs-result-dialog .sgs-result-stats { margin-top: 14px; }
+  .sgs-result-hero { gap: 14px; margin-bottom: 12px; }
+  .sgs-result-portrait { width: 60px; height: 80px; }
+  .sgs-result-dialog h2 { font-size: 30px; }
+  .sgs-result-dialog .sgs-result-stats { gap: 5px; padding: 10px 0; }
 }
 @media (max-width: 540px) {
   .sgs-result-dialog .sgs-dialog-actions { display: grid; grid-template-columns: 1fr; gap: 8px; }

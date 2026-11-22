@@ -14,14 +14,16 @@ html body .sgs-client-dialog :is(div, p, h2, label, span, small, select, input, 
 .sgs-client-dialog h2 { margin: 0 0 10px; font: 28px/1.3 var(--sgs-font-title); color: var(--sgs-gold); }
 .sgs-client-dialog p { margin: 0 0 16px; }
 .sgs-client-dialog .sgs-dialog-note { color: var(--sgs-muted); }
-.sgs-client-dialog .sgs-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-top: 1px solid var(--sgs-line); cursor: pointer; }
+.sgs-client-dialog .sgs-setting-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 11px 0; border-top: 1px solid var(--sgs-line); cursor: pointer; }
 .sgs-setting-row span { min-width: 0; }
 .sgs-setting-row small { display: block; color: var(--sgs-muted); font-size: 12px; }
 .sgs-client-dialog select { width: 92px; min-height: 38px; padding: 4px 8px; background: var(--sgs-control); color: var(--sgs-text); border: 1px solid var(--sgs-bronze); font: inherit; }
 .sgs-client-dialog input[type='checkbox'] { flex: none; width: 22px; height: 22px; margin: 0; accent-color: var(--sgs-primary); cursor: pointer; }
-.sgs-client-dialog .sgs-volume-settings { min-width: 0; margin: 0 0 12px; padding: 0 0 4px; border: 0; }
+.sgs-client-dialog .sgs-volume-settings { min-width: 0; margin: 0 0 12px; padding: 0 0 4px; border: 0; transition: opacity var(--sgs-motion); }
 .sgs-volume-settings legend { padding: 0; color: var(--sgs-muted); font-size: 12px; }
-.sgs-client-dialog .sgs-volume-row { display: grid; grid-template-columns: 64px minmax(0, 1fr) 42px; align-items: center; gap: 12px; min-height: 38px; font-size: 13px; }
+.sgs-settings-dialog[data-sound-muted='true'] .sgs-volume-settings { opacity: .6; }
+.sgs-settings-dialog[data-sound-muted='true'] .sgs-volume-settings legend::after { content: '（当前已静音）'; color: var(--sgs-muted); }
+.sgs-client-dialog .sgs-volume-row { display: grid; grid-template-columns: minmax(104px, auto) minmax(0, 1fr) 42px; align-items: center; gap: 12px; min-height: 34px; font-size: 13px; }
 .sgs-volume-row input[type='range'] { width: 100%; min-width: 0; height: 28px; margin: 0; accent-color: var(--sgs-bronze); cursor: pointer; }
 .sgs-volume-row output { color: var(--sgs-gold); text-align: right; font-variant-numeric: tabular-nums; }
 @media (max-height: 700px) {

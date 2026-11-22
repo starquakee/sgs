@@ -62,6 +62,7 @@ export function openClientSettings(dialogs, preferences) {
     </div><p class="sgs-save-status" role="status"></p><div class="sgs-dialog-actions"><button type="button" data-close data-primary>完成</button></div>`, (dialog, close) => {
     dialog.classList.add('sgs-settings-dialog');
     const render = (value, saved) => {
+      dialog.dataset.soundMuted = String(!value.sound);
       for (const key of ['speed', 'sound', 'backgroundPause', 'reducedMotion']) {
         const input = dialog.querySelector(`[name="${key}"]`);
         if (key === 'speed') input.value = value[key]; else input.checked = value[key];

@@ -156,7 +156,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
     const tableActions = installTableActions({ lib, game, ui, get, _status }, { dialogs: session.dialogs, mode: launch.mode,
       toolsHost: hud.querySelector('.sgs-tool-reference'), toolsMenu: toolMenu });
     const publicStates = installPublicStates({ game, ui });
-    const results = installBattleResults({ lib, game, get, _status, launch, preferences,
+    const results = installBattleResults({ lib, game, get, _status, launch, preferences, portraits,
       retainReplay: config => retainLaunch(config, preferences.get()),
       elapsedMs: session.elapsedMs, navigate: session.navigate, onReady: session.setResultActions });
     const battleFeedback = installBattleFeedback({ lib, game, ui, get, _status, preferences });
@@ -224,7 +224,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
       }
       for (const slot of game.me?.node.equips.children || []) {
         if (slot.classList.contains('emptyequip') && !slot.extraEquip && slot.node?.name2) {
-          label(slot.node.name2, `${get.translation(`equip${get.equipNum(slot)}`)} · 空`);
+          label(slot.node.name2, `${get.translation(`equip${get.equipNum(slot)}`)}·空`);
         }
       }
       for (const player of [...game.players, ...game.dead]) {

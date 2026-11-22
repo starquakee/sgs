@@ -15,9 +15,14 @@ html body .sgs-reference-dialog[open] { display: flex; flex-direction: column; o
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content) { scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) var(--sgs-bg); }
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar { width: 6px; }
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar-thumb { background: var(--sgs-bronze); border-radius: 3px; }
-.sgs-game #arena > .player > .sgs-public-states { position: absolute; z-index: 6; left: 30px; right: 23px; top: 36px; display: flex; flex-wrap: wrap; gap: 3px; pointer-events: none; }
+.sgs-game #arena > .player > .sgs-public-states { position: absolute; z-index: 6; left: 26px; right: 40px; top: 5px; display: flex; flex-wrap: wrap; gap: 3px; pointer-events: none; }
+.sgs-landlord #arena > .player > .sgs-public-states { right: 60px; }
+.sgs-game #arena:is([data-number='7'], [data-number='8']) > .player > .sgs-public-states { left: 22px; right: 34px; top: 4px; gap: 2px; }
 .sgs-game #arena > .player > .sgs-public-states[hidden] { display: none; }
-.sgs-public-states span { position: static; padding: 2px 5px; border: 1px solid #b79165; border-radius: 3px; background: #523523ed; color: #fff0d8; font: 12px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; }
+.sgs-public-states span { position: static; padding: 1px 5px; border: 1px solid #b79165; border-radius: 3px; background: #523523ed; color: #fff0d8; font: 11px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; box-shadow: 0 1px 2px #1a0d0670; }
+.sgs-public-states span[data-state='linked'] { background: #223c42eb; border-color: #7eb8c4; color: #dff7fb; }
+.sgs-public-states span[data-state='turned'] { background: #4e2a38eb; border-color: #c8859a; color: #fce3eb; }
+.sgs-public-states span[data-state='armor'] { background: #4a3b22eb; border-color: #d6b672; color: #fff2cf; }
 .sgs-game #arena > .player.turnedover > .sgs-public-states { opacity: 1; }
 .sgs-game #window > .dialog.sgs-readable-intro {
   position: fixed!important; bottom: auto!important; right: auto!important;

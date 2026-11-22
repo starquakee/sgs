@@ -137,6 +137,7 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
   if (!pending) assert.equal(elements['detail-name'].textContent, roster.find(c => c.id === 'caocao').name, 'real lobby init should finish');
   return {
     elements, local, session, location, modes, factions, browse, roles, document, window, navigations,
+    pendingTimers: () => timers.size,
     flushTimers() { for (const [id, fn] of timers) { timers.delete(id); fn(); } },
     carrier: () => readLaunch({ location: { hash: new URL(location.href, 'http://localhost').hash } }),
     select(key) { elements['general-grid'].emit('click', {target: {closest: () => ({dataset: {key}})}}); },
@@ -641,4 +642,38 @@ test('malformed and unwritable rating preferences do not prevent numeric sorting
   app.select('newjiang:yj_hanbing');
   assert.match(e['rating-detail'].textContent, /评分待收录/);
   e['start-game'].onclick(); assert.equal(app.carrier().generalId, 'yj_hanbing');
+});
+
+test('random general rolls within filtered pool, jumps to its page, avoids repeating and cancels stale toast timers', async () => {
+  const app = await lobby({roster: realRoster}), e = app.elements;
+  assert.equal(e['random-general'].disabled, false);
+  app.factions.find(f => f.dataset.faction === 'wei').onclick();
+  const weiKeys = realRoster.filter(c => !c.isUnseen && (c.faction === 'wei' || c.factions.includes('wei'))).map(c => c.key);
+  assert.ok(weiKeys.length > 1);
+  e['random-general'].onclick();
+  const firstKey = app.elements['launch-general'].textContent;
+  const firstSelected = e['general-grid'].innerHTML.match(/general-card selected" data-key="([^"]+)"/)?.[1];
+  assert.ok(weiKeys.includes(firstSelected));
+  assert.equal(e.toast.hidden, false);
+  assert.match(e.toast.textContent, new RegExp(firstKey));
+  e['random-general'].onclick();
+  const secondSelected = e['general-grid'].innerHTML.match(/general-card selected" data-key="([^"]+)"/)?.[1];
+  assert.ok(weiKeys.includes(secondSelected));
+  assert.notEqual(secondSelected, firstSelected);
+  assert.equal(app.pendingTimers(), 1, 'rapid toasts cancel earlier hide timer');
+  app.flushTimers();
+  assert.equal(e.toast.hidden, true);
+  e.search.value = '不存在的武将名字xyz'; e.search.emit('input');
+  assert.equal(e['random-general'].disabled, true);
+});
+
+test('double-clicking a roster card selects and launches that general exactly once', async () => {
+  const app = await lobby(), e = app.elements;
+  const target = {target: {closest: () => ({dataset: {key: 'xianding:recent'}})}};
+  e['general-grid'].emit('dblclick', target);
+  e['general-grid'].emit('dblclick', target);
+  assert.equal(app.navigations.length, 1);
+  assert.equal(app.carrier().pack, 'xianding');
+  assert.equal(app.carrier().generalId, 'recent');
+  assert.equal(e['start-game'].disabled, true);
 });

@@ -18,11 +18,33 @@ html body .sgs-client-dialog.sgs-record-dialog {
 }
 .sgs-record-dialog [data-record-status] { color: var(--sgs-gold); font-size: 13px; overflow-wrap: anywhere; }
 .sgs-record-dialog [data-record-status]:empty { display: none; }
+.sgs-record-summary {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
+  margin: 0 0 12px; padding: 10px 0; border-block: 1px solid var(--sgs-line);
+}
+.sgs-record-summary > div {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 6px 4px; background: var(--sgs-panel-raised); border: 1px solid #b697704d; border-radius: 3px;
+}
+.sgs-record-summary strong { color: var(--sgs-gold); font: 22px/1.25 var(--sgs-font-body); font-variant-numeric: tabular-nums; }
+.sgs-record-summary span { color: var(--sgs-muted); font-size: 11px; }
+.sgs-record-filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.sgs-record-dialog .sgs-record-filters button {
+  min-width: 0; min-height: 32px; padding: 4px 10px; font-size: 12px;
+  background: var(--sgs-panel-raised); border: 1px solid var(--sgs-line); color: var(--sgs-muted);
+}
+.sgs-record-dialog .sgs-record-filters button:hover { border-color: var(--sgs-bronze); color: var(--sgs-text); }
+.sgs-record-dialog .sgs-record-filters button[aria-pressed='true'] {
+  background: var(--sgs-control); border-color: var(--sgs-bronze); color: var(--sgs-gold); font-weight: 600;
+}
 .sgs-record-dialog button.sgs-record-row {
   display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 3px 14px;
-  width: 100%; padding: 14px 12px; border: 0; border-bottom: 1px solid var(--sgs-line);
+  width: 100%; padding: 14px 12px; border: 0; border-left: 3px solid transparent; border-bottom: 1px solid var(--sgs-line);
   border-radius: 0; text-align: left; background: transparent; font-size: 15px;
 }
+.sgs-record-row[data-outcome='win'] { border-left-color: #b57a2e; }
+.sgs-record-row[data-outcome='loss'] { border-left-color: #9e8a74; }
+.sgs-record-row[data-outcome='ended'] { border-left-color: var(--sgs-bronze); }
 .sgs-record-row > * { min-width: 0; overflow-wrap: anywhere; }
 .sgs-record-row strong { font-weight: 500; color: var(--sgs-gold); }
 .sgs-record-row[data-outcome='loss'] strong { color: var(--sgs-muted); }
@@ -39,6 +61,8 @@ html body .sgs-client-dialog.sgs-record-dialog {
 .sgs-record-dialog [hidden] { display: none!important; }
 @media (max-width: 540px) {
   html body .sgs-client-dialog.sgs-record-dialog { padding: 18px; }
+  .sgs-record-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sgs-record-dialog .sgs-record-filters button { min-height: 40px; }
   .sgs-record-dialog button.sgs-record-row { grid-template-columns: 90px minmax(0, 1fr); gap: 4px 8px; padding-inline: 2px; }
   .sgs-record-dialog .sgs-dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .sgs-record-dialog [data-launch] { grid-column: 1 / -1; grid-row: 1; }

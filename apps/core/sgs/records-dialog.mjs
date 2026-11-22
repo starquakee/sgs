@@ -4,19 +4,41 @@ const modeName = config => config.mode === 'versus' ? '双人对抗 · 2v2' : co
 const duration = ms => `${Math.floor(ms / 60000)}分${String(Math.floor(ms / 1000) % 60).padStart(2, '0')}秒`;
 const date = ms => new Date(ms).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
 
+export function summarizeBattleRecords(records = []) {
+  let wins = 0, losses = 0, totalKills = 0, totalDamage = 0;
+  for (const record of records) {
+    if (record.outcome === 'win') wins++;
+    else if (record.outcome === 'loss') losses++;
+    totalKills += record.stats?.kill || 0;
+    totalDamage += record.stats?.damage || 0;
+  }
+  const total = records.length, decided = wins + losses;
+  return {
+    total,
+    wins,
+    losses,
+    decided,
+    winRate: decided > 0 ? Math.round((wins / decided) * 100) : null,
+    totalKills,
+    avgDamage: total > 0 ? (totalDamage / total).toFixed(1) : '0.0',
+  };
+}
+
 export function openBattleRecords(dialogs, records, { characters, getCatalog = () => ({ characters, status: characters ? 'ready' : 'loading' }),
   subscribeCatalog = () => () => {}, launch, document = globalThis.document }) {
   let unsubscribe = () => {};
   return dialogs.open('records', `<h2>本地战绩</h2><p class="sgs-dialog-note">最近 50 场已完成对局 · 仅保存在当前浏览器</p>
-    <p data-record-status role="status"></p><div class="sgs-record-content" tabindex="0" role="region" aria-label="战绩列表与详情"></div>
+    <p data-record-status role="status"></p><div class="sgs-record-summary" hidden></div><div class="sgs-record-filters" role="group" aria-label="按玩法筛选战绩" hidden></div><div class="sgs-record-content" tabindex="0" role="region" aria-label="战绩列表与详情"></div>
     <div class="sgs-dialog-actions"><button type="button" data-back hidden>返回列表</button><button type="button" data-close>关闭战绩</button><button type="button" data-catalog-retry hidden>重试名册</button><button type="button" data-launch data-primary hidden>按此配置开局</button></div>`, (dialog, close) => {
     dialog.classList.add('sgs-record-dialog');
+    const summary = dialog.querySelector('.sgs-record-summary');
+    const filters = dialog.querySelector('.sgs-record-filters');
     const content = dialog.querySelector('.sgs-record-content');
     const status = dialog.querySelector('[data-record-status]');
     const back = dialog.querySelector('[data-back]'), start = dialog.querySelector('[data-launch]');
     const state = records.get();
     const retry = dialog.querySelector('[data-catalog-retry]');
-    let currentRecord, navigating = false;
+    let currentRecord, navigating = false, modeFilter = 'all';
     function availability() {
       const catalog = getCatalog();
       retry.hidden = !currentRecord || catalog.status !== 'failed';
@@ -36,6 +58,8 @@ export function openBattleRecords(dialogs, records, { characters, getCatalog = (
       return element;
     }
     function detail(record) {
+      summary.hidden = true;
+      filters.hidden = true;
       content.innerHTML = '';
       content.scrollTop = 0;
       dialog.querySelector('h2').textContent = '战绩详情';
@@ -70,11 +94,43 @@ export function openBattleRecords(dialogs, records, { characters, getCatalog = (
       status.textContent = state.notice;
       back.hidden = true; start.hidden = true; start.onclick = null;
       if (!state.records.length) {
+        summary.hidden = true;
+        filters.hidden = true;
         content.append(node('p', state.notice ? '暂无可读取的战绩' : '还没有完成的对局', 'sgs-record-empty'),
           node('p', '对局结束后会自动记录。提前返回或重开不计胜负。', 'sgs-record-meta'));
         return;
       }
-      for (const record of state.records) {
+      filters.hidden = false;
+      filters.replaceChildren();
+      for (const [key, label] of [['all', '全部'], ['doudizhu', '斗地主'], ['versus', '双人对抗'], ['identity', '身份军争']]) {
+        const count = key === 'all' ? state.records.length : state.records.filter(r => r.replay.mode === key).length;
+        const chip = node('button', `${label} (${count})`);
+        chip.type = 'button';
+        chip.dataset.modeFilter = key;
+        chip.setAttribute('aria-pressed', String(modeFilter === key));
+        chip.onclick = () => { modeFilter = key; list(); };
+        filters.append(chip);
+      }
+      const filtered = modeFilter === 'all' ? state.records : state.records.filter(r => r.replay.mode === modeFilter);
+      const stats = summarizeBattleRecords(filtered);
+      summary.hidden = false;
+      summary.replaceChildren();
+      for (const [value, caption] of [
+        [stats.total, '已记场次'],
+        [stats.winRate === null ? '—' : `${stats.winRate}%`, stats.decided ? `${stats.wins}胜 ${stats.losses}负` : '胜率待统计'],
+        [stats.totalKills, '累计杀敌'],
+        [stats.avgDamage, '场均伤害'],
+      ]) {
+        const cell = node('div');
+        cell.append(node('strong', value), node('span', caption));
+        summary.append(cell);
+      }
+      if (!filtered.length) {
+        content.append(node('p', '该玩法暂无已完成的对局记录', 'sgs-record-empty'),
+          node('p', '可切换其他玩法查看，或完成对局后再来。', 'sgs-record-meta'));
+        return;
+      }
+      for (const record of filtered) {
         const row = node('button', undefined, 'sgs-record-row');
         row.type = 'button'; row.dataset.outcome = record.outcome;
         row.append(node('strong', record.title), node('span', `${record.general} · ${record.role}`),

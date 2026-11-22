@@ -23,10 +23,12 @@ export function captureBattleResult({ result, nativeText, game, get, launch, ela
   const role = replay.mode === 'versus' ? '己方 · 四号位' : replay.mode === 'doudizhu'
     ? me === game.zhu ? '地主' : '农民'
     : ({ zhu: '主公', zhong: '忠臣', mingzhong: '忠臣', fan: '反贼', nei: '内奸', commoner: '平民' }[identity] || get.translation(identity) || '身份未定');
+  const generalId = me.name1 || me.name || replay.generalId;
   return {
     outcome: result === true ? 'win' : result === false ? 'loss' : 'ended',
     title: result === true ? '战斗胜利' : result === false ? '战斗失败' : nativeText || '战斗结束',
-    general: get.translation(me.name1 || me.name || replay.generalId),
+    generalId,
+    general: get.translation(generalId),
     secondGeneral: me.name2 ? get.translation(me.name2) : '',
     role, dead: game.dead.includes(me),
     rounds: Number.isFinite(game.roundNumber) ? game.roundNumber : null,
@@ -40,7 +42,7 @@ function duration(milliseconds) {
 }
 
 export function installBattleResults({ lib, game, get, _status, launch, preferences, elapsedMs, navigate, onReady = () => {},
-  document = globalThis.document, storage = () => globalThis.sessionStorage, retainReplay = () => {},
+  portraits = null, document = globalThis.document, storage = () => globalThis.sessionStorage, retainReplay = () => {},
   records = createBattleRecords(), sessionId = createBattleSessionId(), now = Date.now }) {
   const dialogs = createClientDialogs({ document });
   const previous = game.addOverDialog;
@@ -74,14 +76,29 @@ export function installBattleResults({ lib, game, get, _status, launch, preferen
   }
   function show() {
     if (!snapshot || disposed) return null;
-    return dialogs.open('result', `<h2></h2><div class="sgs-result-content" tabindex="0" role="region" aria-label="本局结算详情">
-      <p class="sgs-result-player"></p><p class="sgs-result-context"></p>
+    return dialogs.open('result', `<div class="sgs-result-hero"><div class="sgs-result-portrait" hidden></div><div class="sgs-result-summary"><h2></h2><p class="sgs-result-player"></p><p class="sgs-result-context"></p></div></div><div class="sgs-result-content" tabindex="0" role="region" aria-label="本局结算详情">
       <div class="sgs-result-stats" aria-label="你的本局统计"></div>
       <p class="sgs-result-note">摸牌包含通过技能或其他角色获得的牌。</p>
       <p data-result-status role="status"></p>
       </div><div class="sgs-dialog-actions"><button type="button" data-details>本局详情</button><button type="button" data-return>返回点将台</button><button type="button" data-replay data-primary>再来一局</button></div>`, (dialog, close) => {
       dialog.classList.add('sgs-result-dialog');
       dialog.dataset.outcome = snapshot.outcome;
+      const portraitBox = dialog.querySelector('.sgs-result-portrait');
+      const portrait = portraits?.[snapshot.generalId];
+      if (portraitBox) {
+        if (portrait?.file) {
+          const image = document.createElement('img');
+          image.src = `./sgs/portraits/${portrait.file}`;
+          image.alt = snapshot.general;
+          image.width = 192;
+          image.height = 256;
+          portraitBox.replaceChildren(image);
+          portraitBox.hidden = false;
+        } else {
+          portraitBox.replaceChildren();
+          portraitBox.hidden = true;
+        }
+      }
       dialog.querySelector('h2').textContent = snapshot.title;
       dialog.querySelector('.sgs-result-player').textContent = `${[snapshot.general, snapshot.secondGeneral].filter(Boolean).join(' / ')} · ${snapshot.role} · ${snapshot.dead ? '已阵亡' : '存活'}`;
       const mode = snapshot.replay.mode === 'versus' ? '双人对抗 · 2v2' : snapshot.replay.mode === 'doudizhu' ? '斗地主' : `${snapshot.replay.playerCount}人身份军争`;

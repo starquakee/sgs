@@ -17,22 +17,22 @@
 .sgs-game #arena > .player[data-sgs-acting] > .sgs-battle-frame::after {
   content: '行动中'; position: absolute; right: 6px; top: -18px;
   width: max-content; max-width: calc(100% - 34px); box-sizing: border-box;
-  padding: 0 7px; border: 1px solid var(--sgs-acting-edge); border-radius: 2px;
-  text-align: center; white-space: nowrap; color: #fff0d8; background: #654124;
+  padding: 0 8px; border: 1px solid #e4b26b; border-radius: 3px;
+  text-align: center; white-space: nowrap; color: #fff6df; background: linear-gradient(#7c4e2a, #59351c);
   font: 12px/16px var(--sgs-font-body); letter-spacing: .05em;
-  text-shadow: none; box-shadow: 0 1px 2px #35201466;
+  text-shadow: 0 1px 1px #27150a99; box-shadow: 0 1px 4px #24130988;
 }
 .sgs-game #arena > .player[data-sgs-aim='legal'] > .sgs-battle-frame {
-  border: 1px dashed var(--sgs-target-edge);
+  border: 1.5px dashed #f3dfb6;
 }
 .sgs-game #arena > .player[data-sgs-aim='selected'] > .sgs-battle-frame {
   border: 3px solid var(--sgs-selected-edge);
-  box-shadow: 0 0 0 1px #5b371d, inset 0 0 0 1px #5b371d;
+  box-shadow: 0 0 0 1px #5b371d, inset 0 0 0 1px #5b371d, 0 0 14px #f5c96f88;
 }
 .sgs-game .sgs-battle-flash { opacity: 0; }
 .sgs-game .sgs-battle-flash[data-kind] {
   --sgs-flash-color: var(--sgs-gold); border: 2px solid var(--sgs-flash-color);
-  box-shadow: inset 0 0 20px var(--sgs-flash-color), 0 0 8px var(--sgs-flash-color);
+  box-shadow: inset 0 0 22px var(--sgs-flash-color), 0 0 10px var(--sgs-flash-color);
   animation: sgs-battle-pulse 240ms ease-out both;
 }
 .sgs-game .sgs-battle-flash[data-kind='use'] { --sgs-flash-color: #e8c991; }
@@ -41,6 +41,6 @@
 .sgs-game .sgs-battle-flash[data-kind='hit-fire'] { --sgs-flash-color: #ef9b50; }
 .sgs-game .sgs-battle-flash[data-kind='hit-thunder'] { --sgs-flash-color: #9ab9e0; }
 .sgs-game .sgs-battle-flash[data-kind='death'] { --sgs-flash-color: #bcb5a6; }
-@keyframes sgs-battle-pulse { from { opacity: .85; } to { opacity: 0; } }
+@keyframes sgs-battle-pulse { from { opacity: .92; } to { opacity: 0; } }
 html.sgs-reduced-motion .sgs-battle-flash { display: none; animation: none!important; }
 @media (prefers-reduced-motion: reduce) { .sgs-game .sgs-battle-flash { display: none; animation: none!important; } }

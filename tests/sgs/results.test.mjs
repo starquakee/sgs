@@ -235,3 +235,22 @@ test('record failure leaves native result and rematch usable with a persistent u
   f.actions().replay(); assert.deepEqual(f.navigation, [true]); assert.equal(f.writes.has(launchKey), true);
   assert.deepEqual(f.recorded, [null]); adapter.dispose();
 });
+
+test('result dialog renders general portrait when provided and keeps portrait hidden otherwise', async () => {
+  const f1 = fixture();
+  const withPortrait = installBattleResults({ ...f1, portraits: { caocao: { file: 'caocao.webp' } } });
+  f1.game.over(true); await settle();
+  const shown = f1.dialog().querySelector('.sgs-result-portrait');
+  assert.equal(shown.hidden, false);
+  assert.equal(shown.children[0].tagName, 'img');
+  assert.equal(shown.children[0].src, './sgs/portraits/caocao.webp');
+  withPortrait.dispose();
+
+  const f2 = fixture();
+  const withoutPortrait = installBattleResults(f2);
+  f2.game.over(false); await settle();
+  const hidden = f2.dialog().querySelector('.sgs-result-portrait');
+  assert.equal(hidden.hidden, true);
+  assert.equal(hidden.children.length, 0);
+  withoutPortrait.dispose();
+});
