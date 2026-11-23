@@ -16,8 +16,9 @@ html body .sgs-reference-dialog[open] { display: flex; flex-direction: column; o
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar { width: 6px; }
 .sgs-reference-dialog :is(.sgs-log-list,.sgs-guide-content)::-webkit-scrollbar-thumb { background: var(--sgs-bronze); border-radius: 3px; }
 .sgs-game #arena > .player > .sgs-public-states { position: absolute; z-index: 6; left: 26px; right: 40px; top: 5px; display: flex; flex-wrap: wrap; gap: 3px; pointer-events: none; }
-.sgs-landlord #arena > .player > .sgs-public-states { right: 60px; }
-.sgs-game #arena:is([data-number='7'], [data-number='8']) > .player > .sgs-public-states { left: 22px; right: 34px; top: 4px; gap: 2px; }
+.sgs-landlord #arena > .player > .sgs-public-states { top: calc(var(--sgs-ornament) * .95); left: 26px; right: 6px; }
+.sgs-game #arena:is([data-number='7'], [data-number='8']) > .player > .sgs-public-states { top: calc(var(--sgs-ornament) * .92); left: 24px; right: 4px; gap: 2px; }
+.sgs-game #arena:is([data-number='7'], [data-number='8']) .sgs-public-states span { font-size: 10px; line-height: 1.3; padding: 0 3px; }
 .sgs-game #arena > .player > .sgs-public-states[hidden] { display: none; }
 .sgs-public-states span { position: static; padding: 1px 5px; border: 1px solid #b79165; border-radius: 3px; background: #523523ed; color: #fff0d8; font: 11px/1.4 var(--sgs-font-body); white-space: nowrap; text-shadow: none; box-shadow: 0 1px 2px #1a0d0670; }
 .sgs-public-states span[data-state='linked'] { background: #223c42eb; border-color: #7eb8c4; color: #dff7fb; }

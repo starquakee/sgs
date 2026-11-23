@@ -129,8 +129,8 @@
         "Node 22全量测试、构建与1024x640及640x720静音浏览器验证通过"
       ],
       "priority": 10,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Updated table-reference.css to position .sgs-landlord and 7/8-player .sgs-public-states cleanly below the identity badge clear of .identity/.name/human .equips, added compact 7/8-player .sgs-target-hint sizing in table.css so target prompts fit inside 100px portraits without right-edge overflow, and moved @media (max-width: 650px) teammate-hand positioning to the bottom of table.css with .sgs-game #window #arena specificity while retaining the slim vertical 5-row+ellipsis layout. Full Node 22 suite 371/371 pass; 3/3 native-build and build.mjs 3019 assets pass; muted browser verified 1024x640 8-player Identity (.sgs-target-hint 76px inside 107.2px portrait), 1024x640 Doudizhu (.identity/.equips unobstructed), and 640x720 2v2 (.sgs-teammate-hand below seat 1, zero overlap with seat 0, hover detail inside viewport) with 0 console errors."
     },
     {
       "id": "OPT-11",

@@ -267,7 +267,7 @@ html.sgs-game{--sgs-toolbar-h:48px;--sgs-edge:26px}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='fire']{background:#f3d7b9;border-color:#b36138;box-shadow:inset 0 -3px #b36138}.sgs-teammate-card[data-card-name='sha'][data-nature~='fire']>.sgs-teammate-card-name{color:#8c2c18}
 .sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']{background:#d7e5ec;border-color:#577d98;box-shadow:inset 0 -3px #577d98}.sgs-teammate-card[data-card-name='sha'][data-nature~='thunder']>.sgs-teammate-card-name{color:#20445c}
 @media(max-width:1100px),(max-height:680px){.sgs-teammate-cards{max-height:142px}.sgs-teammate-card{min-height:58px}.sgs-game #arena>.sgs-teammate-hand{padding:8px;width:168px}}
-@media(max-width:650px){.sgs-game #arena>.sgs-teammate-hand{width:var(--sgs-player-w);right:var(--sgs-edge);top:calc(22% + var(--sgs-player-h) + 38px)}.sgs-game #arena[data-number='3']>.sgs-teammate-hand{top:calc(56px + var(--sgs-player-h) + 38px)}.sgs-game #arena>.sgs-teammate-hand[data-position='2']{left:var(--sgs-edge);right:auto}.sgs-teammate-cards{grid-template-columns:repeat(2,minmax(0,1fr));max-height:126px}}
+
 
 /* UX-01 surface theme. Do not target card roots, face internals or rule classes. */
 html.sgs-game {
@@ -703,9 +703,29 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
   background: #3d2614f0; border: 1px solid #dfb976; color: #ffebc1;
   font: 14px/1.2 var(--sgs-font-body); padding: 4px 2px;
 }
+.sgs-game #arena:is([data-number='7'], [data-number='8']) > .player > .sgs-target-hint {
+  left: 22px; right: 6px; bottom: 28px;
+  font-size: 12px; padding: 2px 3px;
+}
 .sgs-game .player[data-sgs-target='unavailable'] > .sgs-target-hint {
   background: #2f2318de; color: #b5a58d; border-color: #826e55;
 }
 .sgs-game .player[data-sgs-target='selected'] > .sgs-target-hint {
   background: #9f6a29f2; color: #fff6df; border-color: #ffe09a;
+}
+@media (max-width: 650px) {
+  .sgs-game #window #arena > .sgs-teammate-hand {
+    right: var(--sgs-edge);
+    top: calc(var(--sgs-side-top) + var(--sgs-player-h) + 32px);
+  }
+  .sgs-game #window #arena[data-number='3'] > .sgs-teammate-hand {
+    top: calc(56px + var(--sgs-player-h) + 32px);
+  }
+  .sgs-game #window #arena > .sgs-teammate-hand[data-position='2'] {
+    left: var(--sgs-edge);
+    right: auto;
+  }
+  .sgs-game .sgs-teammate-summary { font-size: 11px; line-height: 19px; }
+  .sgs-game .sgs-teammate-summary > li { height: 20px; }
+  .sgs-game .sgs-teammate-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 126px; }
 }

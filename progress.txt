@@ -53,3 +53,9 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - Saved `savedVersion` before leaving `#all-generals` for `#favorites` or `#recent-generals` and restored it when returning to `#all-generals` (clearing `savedVersion` on `reset()`, explicit `#version` change, or removing the `'version'` filter chip), preventing stray `全部版本` chips after viewing favorites/recent.
 - Added `western: '西'` and `devil: '魔'` to `factionNames` in `apps/core/sgs/lobby.js`.
 - Added regression test in `tests/sgs/lobby.test.mjs` (`33/33` pass); full Node 22 suite `371/371` pass, `build.mjs` (`3019` assets) pass, and muted browser verified default & `十年版` version round-trips plus real `西`/`魔` faction labels with `0` console/network errors.
+
+## OPT-10 — 2026-11-23
+- Positioned `.sgs-landlord #arena > .player > .sgs-public-states` and 7/8-player `.sgs-public-states` cleanly below the top-right identity badge in `apps/core/sgs/table-reference.css`, keeping badges clear of `.identity`, `.name`, and human lower-middle `.equips`.
+- Compacted 7/8-player `.sgs-target-hint` (`left: 22px; right: 6px; bottom: 28px; font-size: 12px; padding: 2px 3px`) in `apps/core/sgs/table.css` so target prompts fit inside compact portraits without right-edge overflow.
+- Removed dead line-270 `@media(max-width:650px)` teammate-hand override in `apps/core/sgs/table.css` and placed `.sgs-game #window #arena > .sgs-teammate-hand` at the bottom of `table.css`, keeping the slim dashed single-column layout clear of seat labels and seat 0 at `<=650px`.
+- Verified Node 22 tests (`371/371`), `build.mjs` (`3019` assets), and muted browser checks across `1024x640` 8-player Identity, `1024x640` Doudizhu, and `640x720` 2v2 (`final_step_45.png`) with 0 console errors.
