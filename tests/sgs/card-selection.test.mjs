@@ -532,7 +532,7 @@ function dragFixture() {
   f.event.type = 'phase';
   f.lib.config.enable_drag = false;
   const document = new Node('document'), host = new Node('window');
-  document.body = new Node('body'); document.hidden = false;
+  document.documentElement = new Node('html'); document.body = new Node('body'); document.hidden = false;
   document.createElement = tag => Object.assign(new Node(tag), { style: {} });
   let hit, controller, resumed = 0, nextTask = 0;
   const tasks = new Map(), frames = new Map(), listeners = [];
@@ -616,6 +616,7 @@ test('dragging a physical Slash or single-target trick commits only through the 
     assert.deepEqual(f.event.result.targets, [f.target]);
     assert.equal(f.ui.selected.cards.length, 0, 'native ok unchecks selection');
     assert.equal(f._status.mousedown, false, 'native mouseup bookkeeping still runs');
+    assert.equal(f.document.documentElement.children.length, 0, 'owned drag visual is removed');
     assert.equal(f.document.body.children.length, 0, 'owned drag visual is removed');
     f.controller.dispose();
   }
@@ -628,6 +629,7 @@ test('empty and illegal drag endpoints never use the preselected sole target', (
     f.emit('mouseup', node, endpoint === 'outside' ? { clientX: 900, clientY: 300 } : {});
     assert.equal(f.resumed(), 0, endpoint);
     assert.equal(f.ui.selected.targets.length, 0, endpoint);
+    assert.equal(f.document.documentElement.children.length, 0, endpoint);
     assert.equal(f.document.body.children.length, 0, endpoint);
     f.controller.dispose();
   }
@@ -734,7 +736,8 @@ test('Escape cancels the gesture, preserves IME composition and restores native 
 test('pause, visibility, blur, selection changes and disposal remove drag visuals without committing or clearing a new choice', () => {
   for (const kind of ['pause', 'auto', 'over', 'hidden', 'blur', 'event', 'skill', 'card', 'cardName', 'lostCard', 'lostButton', 'dispose']) {
     const f = dragFixture(); f.down(f.cards[0]); f.move(f.target);
-    assert.equal(f.document.body.children.length, 1);
+    assert.equal(f.document.documentElement.children.length, 1);
+    assert.equal(f.document.body.children.length, 0);
     if (kind === 'pause') f._status.paused2 = true;
     if (kind === 'auto') f._status.auto = true;
     if (kind === 'over') f._status.over = true;
@@ -751,6 +754,7 @@ test('pause, visibility, blur, selection changes and disposal remove drag visual
     f.tick(); f.up(f.target);
     assert.equal(f.resumed(), 0, kind);
     assert.equal(f.controller.selecting, false, kind);
+    assert.equal(f.document.documentElement.children.length, 0, kind);
     assert.equal(f.document.body.children.length, 0, kind);
     assert.deepEqual([...f.ui.selected.cards], before, `${kind}: cancellation leaves the native card choice alone`);
     f.controller.dispose();
@@ -787,6 +791,7 @@ test('responses, skills, complex/multiple/custom choices, other mouse buttons an
     f.up(f.target);
     assert.equal(f.resumed(), 0, kind);
     assert.equal(f.ui.selected.cards.length, 0, kind);
+    assert.equal(f.document.documentElement.children.length, 0, kind);
     assert.equal(f.document.body.children.length, 0, kind);
     assert.notEqual(moved.stopped, true, kind);
     f.controller.dispose();
@@ -847,4 +852,31 @@ test('a replacement card selection immediately before release keeps its native t
   assert.deepEqual([...f.ui.selected.cards], [f.cards[1]]);
   assert.deepEqual([...f.ui.selected.targets], [f.target]);
   f.controller.dispose();
+});
+
+
+test('drag indicator line mounts to documentElement outside zoomed body and cleans up on release and disposal', () => {
+  const f = dragFixture();
+  f.down(f.cards[0]);
+  f.move(f.target);
+  assert.equal(f.document.body.children.length, 0, 'never mount drag line under zoomed body');
+  assert.equal(f.document.documentElement.children.length, 1);
+  const line = f.document.documentElement.children[0];
+  assert.equal(line.className, 'sgs-card-drag-line');
+  assert.equal(line.dataset.legal, 'true');
+  assert.equal(f.cards[0].dataset.sgsDragging, 'true');
+  assert.equal(line.style.left, '150px');
+  assert.equal(line.style.top, '475px');
+  f.up(f.target);
+  assert.equal(f.document.documentElement.children.length, 0);
+  assert.equal(f.document.body.children.length, 0);
+  f.controller.dispose();
+
+  const f2 = dragFixture();
+  f2.down(f2.cards[0]);
+  f2.move(f2.target);
+  assert.equal(f2.document.documentElement.children.length, 1);
+  f2.controller.dispose();
+  assert.equal(f2.document.documentElement.children.length, 0);
+  assert.equal(f2.document.body.children.length, 0);
 });

@@ -82,7 +82,7 @@ export function installCardDrag({ lib, game, ui, get, _status }, { document = gl
   const draw = (state, event) => {
     if (!line) {
       line = document.createElement('div'); line.className = 'sgs-card-drag-line';
-      line.setAttribute('aria-hidden', 'true'); document.body.append(line);
+      line.setAttribute('aria-hidden', 'true'); (document.documentElement || document.body).append(line);
     }
     const dx = event.clientX - state.x, dy = event.clientY - state.y;
     Object.assign(line.style, { left: `${state.x}px`, top: `${state.y}px`, width: `${Math.hypot(dx, dy)}px`, transform: `rotate(${Math.atan2(dy, dx)}rad)` });

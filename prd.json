@@ -142,8 +142,8 @@
         "新增card-selection.test.mjs回归用例，Node 22测试、构建与860x640/1280x720静音浏览器验证通过"
       ],
       "priority": 11,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Updated apps/core/sgs/card-drag.mjs to mount .sgs-card-drag-line on (document.documentElement || document.body) outside Noname's CSS-scaled body, moved [data-sgs-dragging='true'] after .selected with matching specificity in apps/core/sgs/table.css, and added transition: none !important on .sgs-card-drag-line to prevent layout.css div transitions from lagging cursor tracking. Updated existing assertions and added documentElement cleanup/alignment test in tests/sgs/card-selection.test.mjs (35/35 pass); full Node 22 suite 372/372 pass; 3/3 native-build and build.mjs 3019 assets pass; muted browser verified 1280x720 and 860x640 (0.4x body transform) exact viewport alignment, lifted gold highlight, empty cancel, and direct drop commits (final_step_16.png) with 0 console errors."
     },
     {
       "id": "OPT-12",
