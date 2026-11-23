@@ -38,3 +38,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - Closed any stale `records` dialog inside `restoreLobby()` on `event.persisted` pageshow so bfcache Back navigation never strands `navigating = true` and disabled `[data-launch]`.
 - Reset `$('dialog-content').scrollTop = 0` inside `showInfo()` and named `onResize` so `leaveLobby()` removes the `resize` listener alongside `keydown`/`pointerdown`.
 - Added bfcache records relaunch, `#dialog-content.scrollTop`, and `resize` listener cleanup regression tests to `tests/sgs/lobby.test.mjs` (32/32 pass, 369/369 full suite pass, `build.mjs` 3019 assets pass, muted browser `goBack()` & relaunch verified).
+
+## OPT-07 — 2026-11-23
+- Compacted `apps/core/sgs/lobby-layout.css` desktop (`max-height: 820px` and `max-height: 680px`) vertical rhythm so two full card rows fit cleanly without `#general-grid` internal vertical clipping or scrollbars at `1280x720` and `1024x640` (with `#hide-old` off and on).
+- Updated `apps/core/sgs/lobby.js`: `pageSize()` uses `innerWidth <= 540 ? 9 : 8` matching CSS breakpoints, and `#random-general` resets `$('general-grid').scrollTop = 0` and aligns the selected card via `scrollIntoView({ block: 'nearest' })`.
+- Added regression checks to `tests/sgs/lobby.test.mjs`; Node 22 tests (`32/32` lobby, `369/369` total), `build.mjs` (`3019` assets), and muted browser verification across `1280x720`, `1024x640`, and `540x800` passed with 0 console/network errors.

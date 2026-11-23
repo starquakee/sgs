@@ -38,7 +38,7 @@ let activeMode = 'identity', initialChosen;
 let favorites;
 try { favorites = new Set(JSON.parse(localStorage.getItem('sgs.favorites.v1') || '[]')); } catch { favorites = new Set(); }
 const preferred = ['caocao','liubei','sunquan','guanyu','zhaoyun','zhangfei','dc_sb_zhouyu','dc_sb_lusu','caoyi','shen_zhangfei','dc_sb_zhugeliang','dc_caochun','shen_huangzhong','dc_shen_sunquan'];
-const pageSize = () => innerWidth < 540 ? 9 : innerWidth >= 1450 ? 12 : innerWidth >= 1000 && innerWidth < 1150 ? 6 : 8;
+const pageSize = () => innerWidth <= 540 ? 9 : innerWidth >= 1450 ? 12 : innerWidth >= 1000 && innerWidth < 1150 ? 6 : 8;
 const packName = id => catalog?.packs.find(p => p.id === id)?.name || id;
 
 let toastTimer;
@@ -164,6 +164,8 @@ $('random-general').onclick = () => {
   const index = results.findIndex(c => c.key === picked.key);
   currentPage = Math.floor(Math.max(0, index) / pageSize()) + 1;
   select(picked);
+  $('general-grid').scrollTop = 0;
+  Array.from($('general-grid').children || []).find(node => node.dataset?.key === picked.key)?.scrollIntoView?.({ block: 'nearest' });
   toast(`已随机点将：${displayName(picked.name)}`);
 };
 document.querySelectorAll('.factions button').forEach(button => button.onclick = () => { faction = button.dataset.faction; currentPage = 1; syncTabs(); render(true); });

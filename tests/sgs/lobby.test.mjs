@@ -667,6 +667,16 @@ test('random general rolls within filtered pool, jumps to its page, avoids repea
   assert.equal(e.toast.hidden, true);
   e.search.value = '不存在的武将名字xyz'; e.search.emit('input');
   assert.equal(e['random-general'].disabled, true);
+
+  // Random pick after scrolling must reset stale scrollTop rather than preserving the prior page offset.
+  const scrollable = await lobby({ roster: realRoster });
+  scrollable.elements['general-grid'].scrollTop = 180;
+  scrollable.elements['random-general'].onclick();
+  assert.equal(scrollable.elements['general-grid'].scrollTop, 0);
+
+  // 540px matches the 3-column @media (max-width: 540px) breakpoint with 9 cards per page.
+  const mobile540 = await lobby({ roster: realRoster, innerWidth: 540 });
+  assert.equal(mobile540.visible().length, 9);
 });
 
 test('double-clicking a roster card selects and launches that general exactly once', async () => {

@@ -90,8 +90,8 @@
         "新增lobby.test.mjs回归测试，Node 22测试、构建与1280/1024/540静音浏览器验证通过"
       ],
       "priority": 7,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Compacted desktop/1024px lobby-layout.css vertical spacing so 2 rows of cards fit cleanly inside #general-grid with zero internal overflow at 1280x720 (8 cards, 2x4) and 1024x640 (6 cards, 2x3 with #hide-old both OFF and ON), updated pageSize() to innerWidth <= 540 ? 9 : 8, and updated #random-general to reset #general-grid.scrollTop = 0 and call scrollIntoView({ block: 'nearest' }). Added regression assertions in tests/sgs/lobby.test.mjs (32/32 pass); full Node 22 suite 369/369 pass; build.mjs 3019 assets pass; muted browser verified 1280x720, 1024x640 (#hide-old off/on), #random-general visibility, and 540x800 (9 cards, 3x3) with 0 console/network errors."
     },
     {
       "id": "OPT-08",
