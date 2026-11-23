@@ -38,8 +38,8 @@
         "1280x720与1024x640静音浏览器验证主动技能按钮、装备栏、手牌区与主控制区边界零重叠且均可正常点击"
       ],
       "priority": 3,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Anchored .sgs-skill-control to left: calc(100% + 8px), width: var(--sgs-equip-w), bottom: calc(-1 * var(--sgs-hand-h) + var(--sgs-skill-row,0) * 34px + 8px) in table.css so it sits cleanly above .sgs-sort-hand (6px gap) and 14.8px left of player[data-position='0']. Node 22 full suite 366/366 passed, production build.mjs passed 3019 assets, and muted browser verification (界孙权 Landlord Turn 1 with equipped ♠2 藤甲 + 制衡) confirmed zero bounding-box overlap and full click/right-click interactivity at both 1280x720 and 1024x640."
     },
     {
       "id": "OPT-04",

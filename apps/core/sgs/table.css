@@ -428,8 +428,10 @@ html.sgs-game, .sgs-game body { background: var(--sgs-bg)!important; font-family
 /* Large hands may use the free lower-left space; the confirmation stays put. */
 .sgs-game #window #arena #me:has(.handcards > .card:nth-child(n+8)) { left: var(--sgs-edge)!important; }
 .sgs-game #window #arena #control > .control.sgs-skill-control {
-  left: calc(100% + var(--sgs-equip-w) + 26px)!important;
-  bottom: calc(-1 * var(--sgs-hand-h) + var(--sgs-skill-row,0) * 34px - 2px)!important;
+  left: calc(100% + 8px)!important;
+  bottom: calc(-1 * var(--sgs-hand-h) + var(--sgs-skill-row,0) * 34px + 8px)!important;
+  width: var(--sgs-equip-w)!important;
+  justify-content: center;
   gap: 4px;
 }
 .sgs-game #window #arena #control > .control.sgs-skill-control > div { min-height: 30px; padding: 4px 8px; }
