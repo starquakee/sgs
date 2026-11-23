@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { engineSettings, normalizeLaunch } from '../../apps/core/sgs/launch-config.mjs';
-import { seatTwoPlayerTeams, installTwoPlayerTeamMode } from '../../apps/core/sgs/team-mode.mjs';
+import { seatTwoPlayerTeams, installTwoPlayerTeamMode, resolveSeatNumber } from '../../apps/core/sgs/team-mode.mjs';
 import { readFileSync } from 'node:fs';
 
 function fixture() {
@@ -70,4 +70,33 @@ test('larger tables retain the identity game', () => {
   for (const playerCount of [5,6,8]) {
     assert.equal(engineSettings(normalizeLaunch({playerCount})).mode, 'identity');
   }
+});
+
+test('identity mode seat numbers use native getSeatNum or Lord-relative order rather than raw dataset.position', () => {
+  const players = Array.from({ length: 8 }, (_, index) => ({
+    dataset: { position: String(index) },
+    getSeatNum: () => 0,
+  }));
+  // Human is Lord (position 0): Lord must be seat 1 during opening mulligan before phaseLoop sets seatNum.
+  assert.deepEqual(
+    players.map(player => resolveSeatNumber(player, { zhu: players[0], players, playerCount: 8 })),
+    [1, 2, 3, 4, 5, 6, 7, 8]
+  );
+  // Human is Rebel (position 0) and Lord sits at position 3: Lord is seat 1, human is seat 6.
+  assert.deepEqual(
+    players.map(player => resolveSeatNumber(player, { zhu: players[3], players, playerCount: 8 })),
+    [6, 7, 8, 1, 2, 3, 4, 5]
+  );
+  // Once native phaseLoop assigns seatNum, getSeatNum() takes precedence even if positions or player counts change.
+  const settled = players.map((player, index) => ({
+    ...player,
+    getSeatNum: () => ((index + 5) % 8) + 1,
+  }));
+  assert.deepEqual(
+    settled.map(player => resolveSeatNumber(player, { zhu: settled[3], players: settled.slice(0, 6), playerCount: 8 })),
+    [6, 7, 8, 1, 2, 3, 4, 5]
+  );
+  // 2v2 and Doudizhu retain explicit player.sgsSeat.
+  assert.equal(resolveSeatNumber({ sgsSeat: 4, dataset: { position: '0' }, getSeatNum: () => 2 }, { teams: true }), 4);
+  assert.equal(resolveSeatNumber({ sgsSeat: 2, dataset: { position: '1' }, getSeatNum: () => 3 }, { landlord: true }), 2);
 });

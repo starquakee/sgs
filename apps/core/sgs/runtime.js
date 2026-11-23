@@ -1,6 +1,6 @@
 import { normalizeLaunch, engineSettings, attachInitialIdentity } from './launch-config.mjs';
 import { installManualConfirmation, applyPortraits, installTargetHints } from './experience.mjs';
-import { installTwoPlayerTeamMode } from './team-mode.mjs';
+import { installTwoPlayerTeamMode, resolveSeatNumber } from './team-mode.mjs';
 import { installDoudizhuMode } from './doudizhu-mode.mjs';
 import { installCardAudio } from './card-audio.mjs';
 import { installCharacterAudio } from './character-audio.mjs';
@@ -239,7 +239,7 @@ export async function prepareSinglePlayer({ lib, game, ui, get, _status }, loadi
         label(faction, hidden ? '' : get.translation(player.group));
         let seat = player.querySelector(':scope > .sgs-seat');
         if (!seat) { seat = document.createElement('span'); seat.className = 'sgs-seat'; player.append(seat); }
-        const seatNumber = teams || landlord ? player.sgsSeat : Number(player.dataset.position) || launch.playerCount;
+        const seatNumber = resolveSeatNumber(player, { teams, landlord, zhu: game.zhu, players: game.players, playerCount: launch.playerCount });
         const relation = player === game.me ? '你' : player.side === game.me.side ? '队友' : '敌方';
         const seatName = `${['零','一','二','三','四','五','六','七','八'][seatNumber] || seatNumber}号位`;
         const roleName = player.identity === 'zhu' ? '地主' : '农民';

@@ -1,5 +1,24 @@
 // The lobby replaces only native 2v2 character selection. Versus start, turn
 // order, AI attitudes, damage, death and team victory stay in the upstream mode.
+export function resolveSeatNumber(player, { teams = false, landlord = false, zhu, players = [], playerCount } = {}) {
+  if (teams || landlord) return player?.sgsSeat;
+  const nativeSeat = typeof player?.getSeatNum === 'function' ? player.getSeatNum() : 0;
+  if (Number.isInteger(nativeSeat) && nativeSeat > 0) return nativeSeat;
+  const pos = Number(player?.dataset?.position);
+  const zhuPos = Number(zhu?.dataset?.position);
+  const count = Number.isInteger(playerCount) && playerCount > 0 ? playerCount : players.length;
+  if (Number.isInteger(pos) && pos >= 0 && Number.isInteger(zhuPos) && zhuPos >= 0 && count > 0) {
+    return ((pos - zhuPos + count) % count) + 1;
+  }
+  const index = players.indexOf(player);
+  const zhuIndex = zhu ? players.indexOf(zhu) : -1;
+  if (index >= 0 && zhuIndex >= 0 && players.length > 0) {
+    return ((index - zhuIndex + players.length) % players.length) + 1;
+  }
+  if (Number.isInteger(pos) && pos >= 0) return pos + 1;
+  return index >= 0 ? index + 1 : 1;
+}
+
 export function seatTwoPlayerTeams(game, status) {
   const seats = [game.me.next, game.me.next.next, game.me.previous, game.me];
   if (game.players.length !== 4 || new Set(seats).size !== 4) throw new Error('双人对抗需要四个独立席位。');

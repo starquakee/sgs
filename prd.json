@@ -51,8 +51,8 @@
         "Node 22全量测试、生产构建与静音8人身份局浏览器座次核验通过"
       ],
       "priority": 4,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Extracted resolveSeatNumber() in team-mode.mjs and wired into runtime.js: retains sgsSeat for 2v2/Doudizhu, uses native player.getSeatNum() in Identity mode, and falls back to Lord-relative turn order during opening mulligan before phaseLoop sets seatNum. Focused team-mode 6/6 and Node 22 full suite 367/367 passed; build.mjs passed 3019 assets; muted 8-player Identity browser checks confirmed Lord human = '一号位 · 你' (1..8) and Rebel human with Lord at pos 2 = '七号位 · 你' (1..8 in turn order) in both mulligan and Turn 1."
     },
     {
       "id": "OPT-05",

@@ -23,3 +23,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 ## OPT-03 — 2026-11-23
 - Repositioned `.sgs-skill-control` in `apps/core/sgs/table.css` to `left: calc(100% + 8px)!important`, `width: var(--sgs-equip-w)!important`, `bottom: calc(-1 * var(--sgs-hand-h) + var(--sgs-skill-row,0) * 34px + 8px)!important`, `justify-content: center` inside the `--sgs-equip-w` column directly above `.sgs-sort-hand` (6px vertical gap) and left of `player[data-position='0']`.
 - Verified Node 22 full tests (366/366 pass), `build.mjs` (3019 assets pass), and muted `browser` gameplay verification (界孙权 Landlord Turn 1 with equipped `♠︎2 藤甲` + `制衡`) at both `1280x720` and `1024x640`: zero bounding-box overlap between `.sgs-skill-control`, `.sgs-sort-hand`, `.equips`, `#me`, and `#control`; equipment right-click tooltip and `制衡` toggle/cancel both work cleanly; zero console errors.
+
+## OPT-04 — 2026-11-23
+- Exported `resolveSeatNumber()` in `apps/core/sgs/team-mode.mjs` and wired it into `apps/core/sgs/runtime.js`: 2v2/Doudizhu keep `player.sgsSeat`; Identity mode uses native `player.getSeatNum()` and falls back to Lord-relative order during opening mulligan before `phaseLoop` sets `seatNum`.
+- Added unit tests in `tests/sgs/team-mode.test.mjs` covering 8-player Identity (Lord at pos 0 and pos 3), settled `getSeatNum()` precedence after deaths/shrink, and 2v2/Doudizhu preservation.
+- Verified Node 22 syntax, 6/6 `team-mode.test.mjs`, 367/367 full suite, `build.mjs` (3019 assets), and muted 8-player Identity browser tests (`主公` -> `一号位 · 你`, `反贼` with Lord at pos 2 -> Lord `一号位` / human `七号位 · 你`), zero console errors.
