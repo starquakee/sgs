@@ -2,6 +2,13 @@ export const clientVersion = 'reliability-1';
 const text = (value, limit = 500) => typeof value === 'string' ? value.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').slice(0, limit) : '';
 const attempt = (read, fallback) => { try { return read(); } catch { return fallback; } };
 const ownText = (object, key) => attempt(() => text(Object.getOwnPropertyDescriptor(object, key)?.value), '');
+const runtimeModulePath = /(?:^|.*\/)((?:sgs\/[\w.-]+|(?:noname|character|card|mode)\/[\w./-]+)\.(?:m?js|ts))$/;
+const productionRootBundle = /(?:^|\/)((?:runtime|index\d*|noname\d*|browser|sandbox|compatible|polyfill|update)\.m?js)$/;
+
+function extractRuntimeFile(raw) {
+  const clean = text(raw).split(/[?#]/)[0].replace(/\\/g, '/');
+  return clean.match(runtimeModulePath)?.[1] || clean.match(productionRootBundle)?.[1] || '';
+}
 
 export function summarizeProblem(error, kind = 'script', now = Date.now, location = {}) {
   // Never stringify an arbitrary rejected object: it may contain an event, a
@@ -9,9 +16,15 @@ export function summarizeProblem(error, kind = 'script', now = Date.now, locatio
   const message = ownText(error, 'message').split('\n')[0]
     .replace(/https?:\/\/[^\s)]+/g, '[资源地址]').replace(/[A-Za-z]:[\\/][^\n]*/g, '[本地路径]');
   const stack = ownText(error, 'stack');
-  const frames = [...stack.matchAll(/(?:^|[\s/(])((?:sgs|noname|character|card)\/[\w./-]+\.(?:m?js|ts)):(\d+):(\d+)/gm)]
-    .slice(0, 8).map(([, file, line, column]) => ({ file, line: Number(line), column: Number(column) }));
-  const file = text(location.filename).split(/[?#]/)[0].match(/(?:^|\/)((?:sgs|noname|character|card)\/[\w./-]+\.(?:m?js|ts))$/)?.[1];
+  const frames = [];
+  for (const rawLine of stack.split(/\r?\n/)) {
+    const match = rawLine.match(/([^\s()@]+):(\d+):(\d+)\)?\s*$/);
+    const file = match ? extractRuntimeFile(match[1]) : '';
+    if (!file) continue;
+    frames.push({ file, line: Number(match[2]), column: Number(match[3]) });
+    if (frames.length >= 8) break;
+  }
+  const file = extractRuntimeFile(location.filename);
   if (!frames.length && file && Number.isInteger(location.line) && Number.isInteger(location.column)) frames.push({ file, line: location.line, column: location.column });
   const name = ownText(error, 'name') || attempt(() => ownText(Object.getPrototypeOf(error), 'name'), '') || 'Error';
   return { at: new Date(now()).toISOString(), kind: kind === 'promise' ? 'promise' : 'script',

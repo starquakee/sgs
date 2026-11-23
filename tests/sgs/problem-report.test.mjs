@@ -60,3 +60,41 @@ test('report dialog owns only its pause, download failure stays recoverable, ret
   dialog.querySelector('[data-close]').emit('click');await Promise.resolve();assert.equal(leases,1);
   ui.dispose();dialogs.dispose();assert.equal(disposed,1);assert.equal(menu.children.length,0);
 });
+
+
+test('error stack and location extraction avoid outer workspace sgs/ leaks and support query hashes and root bundles',()=>{
+  const err=new Error('boom');
+  Object.defineProperty(err,'stack',{value:[
+    'Error: boom',
+    '    at ext (chrome-extension://abc123/content.js:1:1)',
+    '    at build (/mnt/c/Users/foo/sgs/scripts/build.mjs:1:1)',
+    '    at win (file:///C:/Users/me/Desktop/sgs/apps/core/sgs/runtime.js?v=123:12:3)',
+    '    at core (/mnt/c/Users/foo/sgs/apps/core/noname/game/index.js#hash:45:6)',
+    '    at bundle@https://sgs.fengchenchen.top/game/noname2.js?h=abc:100:20',
+    '    at boot (https://sgs.fengchenchen.top/game/runtime.js:5:8)',
+  ].join('\n')});
+  const summary=summarizeProblem(err);
+  assert.deepEqual(summary.frames,[
+    {file:'sgs/runtime.js',line:12,column:3},
+    {file:'noname/game/index.js',line:45,column:6},
+    {file:'noname2.js',line:100,column:20},
+    {file:'runtime.js',line:5,column:8},
+  ]);
+  assert.ok(!JSON.stringify(summary).includes('/mnt/'));
+  assert.ok(!JSON.stringify(summary).includes('Users'));
+
+  const winErr=new Error('win');
+  Object.defineProperty(winErr,'stack',{value:'Error: win\n    at C:\\Users\\me\\Desktop\\sgs\\apps\\core\\sgs\\lobby.js:7:9'});
+  assert.deepEqual(summarizeProblem(winErr).frames,[{file:'sgs/lobby.js',line:7,column:9}]);
+
+  const locErr=new Error('no stack');
+  Object.defineProperty(locErr,'stack',{value:''});
+  assert.deepEqual(
+    summarizeProblem(locErr,'script',base.now,{filename:'https://sgs.fengchenchen.top/game/index2.js?h=abc',line:14,column:2}).frames,
+    [{file:'index2.js',line:14,column:2}],
+  );
+  assert.deepEqual(
+    summarizeProblem(locErr,'script',base.now,{filename:'/mnt/c/Users/foo/sgs/scripts/build.mjs',line:1,column:1}).frames,
+    [],
+  );
+});

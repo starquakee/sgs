@@ -168,8 +168,8 @@
         "Node 22全量测试、构建、deployment校验与静音音频校验全通过"
       ],
       "priority": 13,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Added extractRuntimeFile(raw) in apps/core/sgs/problem-report.mjs stripping ?query/#hash and normalizing backslashes to extract only the rightmost runtime module path (restricting sgs/ to flat runtime filenames so outer workspace /sgs/ directories never leak) or Vite production root bundles (runtime.js, index*.js, noname*.js, browser.js, etc.), applied across stack lines (up to 8 valid frames) and location.filename. Added regression test in tests/sgs/problem-report.test.mjs covering Linux/Windows workspace paths, query/hash URLs, production root chunks, and extension/script exclusions (12/12 combined problem-report + runtime-errors pass); full Node 22 suite passed, build.mjs 3019 assets passed, verify-deployment.mjs on http://127.0.0.1:8083 passed (3019 assets), and verify-card-audio.mjs passed (453 audio files decoded cleanly)."
     }
   ]
 }
