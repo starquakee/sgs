@@ -15,11 +15,14 @@ const inventory = { assets: [asset('index.html', html, true), asset('sgs/audio/t
 
 test('deployment inventory pins all existing recordings and portrait files to source checksums', async () => {
   const actual = await deploymentInventory(undefined, { nativeEntryBytes: html });
-  assert.equal(actual.assets.length, 2963);
+  assert.equal(actual.assets.length, 3013);
   assert.equal(actual.audioFiles, 453);
   assert.equal(actual.audioBytes, 31948365);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/audio/')).length, 453);
   assert.equal(actual.assets.filter(row => row.path.startsWith('sgs/portraits/')).length, 2491);
+  for (const expected of ['sgs/records-dialog.mjs', 'sgs/lobby-layout.css', 'sgs/results.mjs', 'sgs/settings.css', 'sgs/table-reference.css', 'sgs/battle-feedback.css', 'sgs/loading.css', 'sgs/seal.svg', 'sgs/cards/official-source/fire-slash.jpg']) {
+    assert.ok(actual.assets.some(row => row.path === expected), `Expected ${expected} in deployment inventory`);
+  }
   const drag = Buffer.from((await readFile(new URL('../../apps/core/sgs/card-drag.mjs', import.meta.url), 'utf8')).replace(/\r\n/g, '\n'));
   assert.deepEqual(actual.assets.find(row => row.path === 'sgs/card-drag.mjs'), asset('sgs/card-drag.mjs', drag, true));
   const prompt = Buffer.from((await readFile(new URL('../../apps/core/sgs/prompt-layout.mjs', import.meta.url), 'utf8')).replace(/\r\n/g, '\n'));
@@ -47,6 +50,29 @@ test('resource verification rejects HTML fallbacks, wrong MIME, truncation and s
   const source = Buffer.from('first\nsecond');
   verifyAsset(asset('entry.js', source, true), Buffer.from('first\r\nsecond'), 'text/javascript; charset=utf-8');
   verifyAsset(asset('index.html', source, true), Buffer.from('first\r\r\nsecond'), 'text/html');
+  const vue = { ...asset('noname2.js', Buffer.from('_sfc,[["__scopeId","data-v-00000000"]]'), true), normalizeVueScope: true };
+  verifyAsset(vue, Buffer.from('_sfc,[["__scopeId","data-v-ad69e583"]]'), 'text/javascript');
+  verifyAsset(vue, Buffer.from('_sfc,[["__scopeId","data-v-4f8c42b4"]]'), 'text/javascript');
+  assert.throws(() => verifyAsset(vue, Buffer.from('_sfc,[["__scopeId","data-v-4f8c42b4"]]!'), 'text/javascript'), /byte length/);
+});
+
+test('deployment inventory includes dist root chunks when supplied and rejects stale/missing dist chunks', async t => {
+  const runtimeChunk = Buffer.from('export function runtime(){return 1;}\n');
+  const actual = await deploymentInventory(undefined, {
+    nativeEntryBytes: html,
+    distChunks: [{ path: 'runtime.js', bytes: runtimeChunk }],
+  });
+  assert.equal(actual.assets.length, 3014);
+  const entry = actual.assets.find(row => row.path === 'runtime.js');
+  assert.ok(entry);
+  verifyAsset(entry, runtimeChunk, 'text/javascript');
+  assert.throws(() => verifyAsset(entry, Buffer.from('export function runtime(){return 2;}\n'), 'text/javascript'), /SHA-256/);
+  const root = await mkdtemp(join(tmpdir(), 'sgs-dist-chunk-test-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await mkdir(join(root, 'sgs/audio'), { recursive: true });
+  await writeFile(join(root, 'index.html'), html);
+  await writeFile(join(root, 'sgs/audio/test.mp3'), recording);
+  await assert.rejects(verifyOutput(root, { assets: [...inventory.assets, entry] }), /deployment checks failed/);
 });
 
 test('output check fails on omitted assets and shipped test fixtures', async t => {

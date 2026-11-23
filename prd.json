@@ -13,8 +13,8 @@
         "tests/sgs/deployment.test.mjs补充全量sgs文件与root chunk失败回归，build.mjs与verify-deployment.mjs全通过"
       ],
       "priority": 1,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Expanded verify-deployment.mjs to inventory all 67 non-portrait/non-audio files under apps/core/sgs/ plus core Vite dist root chunks (noname.js, noname2.js, index2.js, noname.css, browser.js, runtime.js) with Vue scope-ID normalization across Windows/Linux builds, and normalized CRLF on committed catalog/coverage checks in catalog.test.mjs. Node 22 full suite 366/366 passed (0 fail); production build.mjs passed native-build (3/3) and verify-deployment.mjs (3019 assets, 453 audio / 31,948,365 B, 2491 portraits)."
     },
     {
       "id": "OPT-02",

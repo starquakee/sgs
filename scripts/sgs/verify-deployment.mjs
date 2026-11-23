@@ -2,16 +2,18 @@
 // HTTP mode downloads bytes for validation only; it never plays or unlocks audio.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile, stat } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repository = fileURLToPath(new URL('../../', import.meta.url));
 const upstream = '7fcf23ed54d8a7ce2b49ae2c15a054123891a52a';
 const audioCounts = { 'card-audio.json': 160, 'character-audio.json': 276, 'damage-audio.json': 14, 'opening-audio.json': 1, 'recovery-audio.json': 1, 'music-audio.json': 1 };
+const textExtensions = new Set(['.html', '.json', '.js', '.mjs', '.css', '.svg', '.txt']);
+const skipSgsFiles = new Set(['catalog.json', 'roster.json', 'portraits.json', ...Object.keys(audioCounts)]);
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 const textBytes = bytes => Buffer.from(bytes.toString('utf8').replace(/\r+\n/g, '\n'));
-const mime = { '.html': ['text/html'], '.json': ['application/json'], '.js': ['text/javascript', 'application/javascript'], '.mjs': ['text/javascript', 'application/javascript'], '.css': ['text/css'], '.webp': ['image/webp'], '.mp3': ['audio/mpeg'], '.ogg': ['audio/ogg'] };
+const mime = { '.html': ['text/html'], '.json': ['application/json'], '.js': ['text/javascript', 'application/javascript'], '.mjs': ['text/javascript', 'application/javascript'], '.css': ['text/css'], '.svg': ['image/svg+xml'], '.png': ['image/png'], '.jpg': ['image/jpeg'], '.jpeg': ['image/jpeg'], '.webp': ['image/webp'], '.mp3': ['audio/mpeg'], '.ogg': ['audio/ogg'], '.txt': ['text/plain'], '.woff2': ['font/woff2'], '.woff': ['font/woff'] };
 
 function normalizedBytes(body, asset) {
   if (asset.sourceHashes) {
@@ -20,7 +22,12 @@ function normalizedBytes(body, asset) {
     const data = JSON.parse(body.toString());
     return Buffer.from(JSON.stringify(data, (key, value) => key === 'sha256' && asset.sourceHashes[value] ? asset.sourceHashes[value] : value));
   }
-  return asset.normalize ? textBytes(body) : body;
+  let bytes = asset.normalize ? textBytes(body) : body;
+  if (asset.normalizeVueScope) {
+    // @vitejs/plugin-vue hashes OS-specific file paths into data-v-XXXXXXXX.
+    bytes = Buffer.from(bytes.toString('utf8').replace(/data-v-[0-9a-f]{8}/g, 'data-v-00000000'));
+  }
+  return bytes;
 }
 
 async function sourceFingerprintVariants(document, root) {
@@ -48,25 +55,56 @@ async function sourceFingerprintVariants(document, root) {
   return hashes;
 }
 
-export async function deploymentInventory(root = repository, { nativeEntryBytes } = {}) {
+async function listSgsAssets(directory, prefix = '') {
+  const entries = (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name));
+  const files = [];
+  for (const entry of entries) {
+    const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+    if (entry.isDirectory()) {
+      if (!prefix && (entry.name === 'portraits' || entry.name === 'audio')) continue;
+      files.push(...await listSgsAssets(resolve(directory, entry.name), rel));
+    } else if (!skipSgsFiles.has(rel)) {
+      files.push(rel);
+    }
+  }
+  return files;
+}
+
+function entryChunkPaths(nativeEntryHtml) {
+  const refs = new Set(['noname.js', 'browser.js', 'runtime.js']);
+  for (const [, path] of nativeEntryHtml.matchAll(/(?:src|href)=["']\.\/([^"'?#]+\.(?:m?js|css))["']/g)) refs.add(path);
+  return [...refs].sort();
+}
+
+export async function deploymentInventory(root = repository, { nativeEntryBytes, distChunks } = {}) {
   const assets = new Map();
   const add = (path, metadata) => {
     assert.ok(!assets.has(path), `Duplicate asset: ${path}`);
     assert.ok(!path.includes('..') && !path.startsWith('/'), `Unsafe asset path: ${path}`);
     assets.set(path, { path, ...metadata });
   };
-  const sourceAsset = async (path, source, normalize = false) => {
+  const sourceAsset = async (path, source, normalize = false, extra = {}) => {
     let bytes = await readFile(resolve(root, source));
-    if (normalize) bytes = textBytes(bytes);
-    add(path, { bytes: bytes.length, sha256: digest(bytes), normalize });
+    if (normalize || extra.normalizeVueScope) bytes = normalizedBytes(bytes, { normalize, ...extra });
+    add(path, { bytes: bytes.length, sha256: digest(bytes), normalize, ...extra });
     return JSON.parse(extname(path) === '.json' ? bytes.toString() : 'null');
   };
   await sourceAsset('sgs.html', 'apps/core/sgs.html', true);
   // The generated native entry stays distinct from the custom lobby, including ?sgs=1.
   const nativeEntry = textBytes(nativeEntryBytes ?? await readFile(resolve(root, 'apps/core/dist/index.html')));
   add('index.html', { bytes: nativeEntry.length, sha256: digest(nativeEntry), normalize: true });
-  for (const path of ['lobby.js', 'runtime.js', 'card-drag.mjs', 'prompt-layout.mjs', 'recovery-audio.mjs', 'music-audio.mjs', 'lobby.css', 'table.css']) {
-    await sourceAsset(`sgs/${path}`, `apps/core/sgs/${path}`, true);
+  if (distChunks) {
+    for (const chunk of distChunks) {
+      const bytes = normalizedBytes(chunk.bytes, { normalize: chunk.normalize ?? true, normalizeVueScope: !!chunk.normalizeVueScope });
+      add(chunk.path, { bytes: bytes.length, sha256: digest(bytes), normalize: chunk.normalize ?? true, ...(chunk.normalizeVueScope ? { normalizeVueScope: true } : {}) });
+    }
+  } else if (nativeEntryBytes === undefined) {
+    for (const chunk of entryChunkPaths(nativeEntry.toString('utf8'))) {
+      await sourceAsset(chunk, `apps/core/dist/${chunk}`, true, chunk === 'noname2.js' || chunk === 'noname.css' ? { normalizeVueScope: true } : {});
+    }
+  }
+  for (const rel of await listSgsAssets(resolve(root, 'apps/core/sgs'))) {
+    await sourceAsset(`sgs/${rel}`, `apps/core/sgs/${rel}`, textExtensions.has(extname(rel).toLowerCase()));
   }
   const catalog = await sourceAsset('sgs/catalog.json', 'apps/core/sgs/catalog.json', true);
   const roster = await sourceAsset('sgs/roster.json', 'apps/core/sgs/roster.json', true);

@@ -15,7 +15,7 @@ const skill = key => catalog.skillDefinitions.find(s => s.key === key);
 
 test("generated artifacts exactly reproduce from the locked source and policy", async () => {
   for (const [file, value] of [["apps/core/sgs/catalog.json", catalog], ["docs/sgs-coverage.json", report]]) {
-    const committed = await readFile(new URL(`../../${file}`, import.meta.url), "utf8");
+    const committed = (await readFile(new URL(`../../${file}`, import.meta.url), "utf8")).replace(/\r\n/g, "\n");
     assert.equal(committed, `${JSON.stringify(value, null, 2)}\n`);
   }
   assert.equal(catalog.upstream.commit, "7fcf23ed54d8a7ce2b49ae2c15a054123891a52a");

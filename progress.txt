@@ -9,3 +9,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - One story per iteration: reproduce -> minimal fix -> Node 22 tests -> `build.mjs` -> muted browser check (UI stories) -> update `prd.json` & `progress.txt` -> `git commit` -> `create-github-snapshot.mjs` -> verify ancestry & `git push sgs publish/sgs:main` -> remote/live check.
 - Never push to `origin`, never force-push, never enable browser sound, never forge visibility or game state, never modify `LICENSE` / upstream rules / AI / art / audio / lockfiles.
 - Keep `VCL-05`, `MAT-07`, `UX-09`, `US-006` incomplete in archives (`archive/2026-11-23-sgs-vercel-audio/` etc.).
+
+## OPT-01 — 2026-11-23
+- Reproduced CRLF strict equality failure in `tests/sgs/catalog.test.mjs` and verified `scripts/sgs/verify-deployment.mjs` omitted ~50 shipped `apps/core/sgs/*` files and all Vite dist root chunks.
+- Normalized `\r\n` -> `\n` when reading committed artifacts in `catalog.test.mjs`; updated `verify-deployment.mjs` to recursively inventory all shipped `apps/core/sgs/*` assets (adding `.svg/.png/.jpg/.txt/.woff2/.woff` MIME types) and core dist root chunks (`noname.js`, `noname2.js`, `index2.js`, `noname.css`, `browser.js`, `runtime.js`), normalizing `@vitejs/plugin-vue` OS-path `data-v-XXXXXXXX` scope hashes on `noname2.js`/`noname.css` so Windows and Linux Vercel outputs match cleanly.
+- Verified Node 22 full test suite: 366/366 pass (0 failures); `scripts/sgs/build.mjs`: native-build 3/3 + `verify-deployment.mjs` 3019 assets (`453` audio / `31948365` B, `2491` portraits) pass.
