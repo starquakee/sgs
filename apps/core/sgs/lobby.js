@@ -43,7 +43,11 @@ const packName = id => catalog?.packs.find(p => p.id === id)?.name || id;
 
 let toastTimer;
 function showInfo(title, html) {
-  $('dialog-title').textContent = title; $('dialog-content').innerHTML = html; $('info-dialog').showModal();
+  $('dialog-title').textContent = title;
+  $('dialog-content').innerHTML = html;
+  $('dialog-content').scrollTop = 0;
+  $('info-dialog').showModal();
+  $('dialog-content').scrollTop = 0;
 }
 function toast(message) {
   clearTimeout(toastTimer);
@@ -302,9 +306,10 @@ const onPointerDown = event => {
   const details = $('more-filters');
   if (details?.open && !details.contains?.(event.target)) details.open = false;
 };
+const onResize = () => render();
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('pointerdown', onPointerDown);
-window.addEventListener('resize', () => render());
+window.addEventListener('resize', onResize);
 function init() {
   if (catalogRequest) return catalogRequest;
   catalogState = 'loading'; catalog = undefined; portraits = undefined;
@@ -355,6 +360,7 @@ function restoreLobby(event) {
     restoreSearchTimer = undefined; stopSearch.sync(); applyPreferences(preferences.get());
   }, 0);
   if (!event.persisted) return;
+  settingsDialogs.close('records');
   preferences.refresh();
   applyPreferences(preferences.get());
   handoff.reset();
@@ -369,6 +375,7 @@ function leaveLobby(event) {
   settingsDialogs.dispose(); unsubscribePreferences(); catalogListeners.clear(); stopSearch();
   document.removeEventListener?.('keydown', onKeyDown);
   document.removeEventListener?.('pointerdown', onPointerDown);
+  window.removeEventListener('resize', onResize);
   window.removeEventListener('pagehide', leaveLobby);
   window.removeEventListener('pageshow', restoreLobby);
 }

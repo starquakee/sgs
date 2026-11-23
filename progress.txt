@@ -33,3 +33,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - Disabled `#previous` and `#next` initially in `apps/core/sgs.html` and `lobby.js:init()`, clamped `currentPage = Math.max(1, Math.min(currentPage, pages))`, and guarded `!catalog` in click handlers.
 - Hardened `onKeyDown` in `apps/core/sgs/lobby.js`: ignores modifier chords (`ctrl/meta/alt`), checks `modalOpen()` before `#more-filters` Escape handling, and skips `PageUp`/`PageDown` pagination when `innerWidth < 1000` or focus is inside `#skill-list`, `#battle-settings`, or `dialog`.
 - Updated `tests/sgs/lobby.test.mjs` harness (`Object.assign(dom(), ...)`) and added keyboard/pre-load pagination regression test; 31/31 lobby tests, 368/368 full tests, `build.mjs` (3019 assets), and muted browser checks passed cleanly.
+
+## OPT-06 — 2026-11-23
+- Closed any stale `records` dialog inside `restoreLobby()` on `event.persisted` pageshow so bfcache Back navigation never strands `navigating = true` and disabled `[data-launch]`.
+- Reset `$('dialog-content').scrollTop = 0` inside `showInfo()` and named `onResize` so `leaveLobby()` removes the `resize` listener alongside `keydown`/`pointerdown`.
+- Added bfcache records relaunch, `#dialog-content.scrollTop`, and `resize` listener cleanup regression tests to `tests/sgs/lobby.test.mjs` (32/32 pass, 369/369 full suite pass, `build.mjs` 3019 assets pass, muted browser `goBack()` & relaunch verified).

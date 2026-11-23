@@ -89,6 +89,8 @@ class Element {
   emit(name, event = {}) { this.listeners[name]?.(event); }
   focus() { this.focused = true; }
   scrollIntoView() { this.scrolled = true; }
+  showModal() { this.open = true; }
+  close() { this.open = false; }
 }
 async function lobby({local = storage(), session = storage(), fetcher, pending = false, roster = characters, innerWidth = 1024} = {}) {
   const elements = Object.fromEntries([...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, new Element()]));
@@ -721,4 +723,40 @@ test('pre-load pagination stays disabled and clamps page >= 1; keyboard shortcut
   const narrow = await lobby({ innerWidth: 800 });
   narrow.document.emit('keydown', { key: 'PageDown', preventDefault });
   assert.equal(narrow.elements['page-number'].textContent, '1 / 2', 'narrow single-column layout reserves PageDown for page scrolling');
+});
+
+test('bfcache return closes stale records launch lock, showInfo resets scrollTop and leaveLobby removes resize listener', async () => {
+  const local = storage();
+  createBattleRecords(() => local).record(completedBattle({ sessionId: 'first-match', completedAt: 100 }));
+  const app = await lobby({ local }), e = app.elements;
+
+  e['records-button'].onclick();
+  const staleDialog = app.document.body.children.at(-1);
+  staleDialog.querySelector('.sgs-record-content').children[0].emit('click');
+  const launchButton = staleDialog.querySelector('[data-launch]');
+  launchButton.emit('click');
+  assert.equal(launchButton.disabled, true);
+  assert.equal(app.navigations.length, 1);
+
+  app.window.emit('pagehide', { persisted: true });
+  createBattleRecords(() => local).record(completedBattle({ sessionId: 'second-match', completedAt: 200 }));
+  app.window.emit('pageshow', { persisted: true });
+  assert.equal(app.document.body.children.length, 0, 'bfcache return closes stale records dialog');
+
+  e['records-button'].onclick();
+  const freshDialog = app.document.body.children.at(-1);
+  assert.equal(freshDialog.querySelector('.sgs-record-content').children.length, 2, 'reopened records list refreshes');
+  freshDialog.querySelector('.sgs-record-content').children[0].emit('click');
+  const freshLaunch = freshDialog.querySelector('[data-launch]');
+  assert.equal(freshLaunch.disabled, false);
+  freshLaunch.emit('click');
+  assert.equal(app.navigations.length, 2);
+
+  e['dialog-content'].scrollTop = 140;
+  e['rules-button'].onclick();
+  assert.equal(e['dialog-content'].scrollTop, 0);
+
+  app.window.emit('pagehide', { persisted: false });
+  assert.equal(app.window.listeners.get('resize')?.size || 0, 0);
+  assert.equal(app.document.listeners.get('keydown')?.size || 0, 0);
 });

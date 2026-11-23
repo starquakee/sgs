@@ -77,8 +77,8 @@
         "新增lobby.test.mjs bfcache战绩开局回归测试，Node 22测试、构建与静音浏览器验证通过"
       ],
       "priority": 6,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Closed stale records dialog on persisted pageshow in restoreLobby(), reset #dialog-content.scrollTop=0 in showInfo(), and moved window resize handler to named onResize cleaned up in leaveLobby(). 32/32 lobby tests and 369/369 full Node 22 tests pass; build.mjs 3019 assets pass; muted browser verified #info-dialog top reset after bottom-scrolled rules dialog, completed real native surrender match into Local Records, launched from Local Records, navigated Back via goBack() confirming stale records dialog closed, reopened Local Records with enabled [data-launch] and successfully relaunched."
     },
     {
       "id": "OPT-07",
