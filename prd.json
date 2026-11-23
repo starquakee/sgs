@@ -103,8 +103,8 @@
         "新增battle-records.test.mjs焦点回归，Node 22测试、构建与多视口静音浏览器验证通过"
       ],
       "priority": 8,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Wrapped .sgs-record-summary, .sgs-record-filters, and .sgs-record-content inside <section class=\"sgs-record-body\"> in records-dialog.mjs and updated records.css so only .sgs-record-body absorbs dialog height constraints while h2/status/.sgs-dialog-actions stay pinned and unclipped (with compact padding and single-container body scroll under max-width: 540px or max-height: 580px). Reused the 4 mode-filter buttons inside list() instead of replaceChildren() so keyboard focus remains intact across filter switches. Added battle-records.test.mjs test (11/11 pass); full Node 22 suite 370/370 pass; build.mjs 3019 assets pass; muted browser verified 1280x720, 390x667, and 640x420 list/detail bounding boxes unclipped plus Tab/Enter filter focus retention."
     },
     {
       "id": "OPT-09",

@@ -191,3 +191,32 @@ test('records dialog mode filters update summary, keep empty mode honest and res
   assert.equal(content.children.length, 1);
   dialogs.dispose();
 });
+
+
+test('records dialog includes scrollable body wrapper before actions and preserves mode filter chips across re-renders', () => {
+  const document = dom(), dialogs = createClientDialogs({ document }), records = createBattleRecords(() => storage());
+  records.record(completedBattle({ sessionId: 'focus-a', completedAt: 100, outcome: 'win', replay: { ...completedBattle().replay, mode: 'doudizhu', playerCount: 3 } }));
+  records.record(completedBattle({ sessionId: 'focus-b', completedAt: 200, outcome: 'loss', replay: { ...completedBattle().replay, mode: 'identity', playerCount: 8 } }));
+  const dialog = openBattleRecords(dialogs, records, { document, characters });
+  const classes = dialog.children.map(node => node.className);
+  assert.ok(classes.includes('sgs-record-body'));
+  assert.ok(classes.indexOf('sgs-record-body') < classes.indexOf('sgs-record-summary'));
+  assert.ok(classes.indexOf('sgs-record-content') < classes.indexOf('sgs-dialog-actions'));
+
+  const filters = dialog.querySelector('.sgs-record-filters');
+  const ddChip = filters.children.find(btn => btn.dataset.modeFilter === 'doudizhu');
+  ddChip.focus();
+  ddChip.emit('click');
+  assert.equal(filters.children.find(btn => btn.dataset.modeFilter === 'doudizhu'), ddChip);
+  assert.equal(ddChip.focused, true);
+  assert.equal(ddChip.parent, filters);
+  assert.equal(ddChip.attrs['aria-pressed'], 'true');
+
+  const idChip = filters.children.find(btn => btn.dataset.modeFilter === 'identity');
+  idChip.focus();
+  idChip.emit('click');
+  assert.equal(filters.children.find(btn => btn.dataset.modeFilter === 'identity'), idChip);
+  assert.equal(idChip.focused, true);
+  assert.equal(idChip.attrs['aria-pressed'], 'true');
+  dialogs.dispose();
+});

@@ -11,6 +11,12 @@ html body .sgs-client-dialog.sgs-record-dialog {
 }
 .sgs-record-dialog[open] { display: flex; flex-direction: column; overflow: hidden; }
 .sgs-record-dialog > * { flex-shrink: 0; }
+.sgs-record-dialog .sgs-record-body {
+  flex: 0 1 auto; min-height: 0; display: flex; flex-direction: column;
+  overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) transparent;
+}
+.sgs-record-dialog .sgs-record-body > * { flex-shrink: 0; }
 .sgs-record-dialog .sgs-record-content {
   flex: 0 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain;
   scrollbar-width: thin; scrollbar-color: var(--sgs-bronze) transparent;
@@ -67,4 +73,13 @@ html body .sgs-client-dialog.sgs-record-dialog {
   .sgs-record-dialog .sgs-dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .sgs-record-dialog [data-launch] { grid-column: 1 / -1; grid-row: 1; }
   .sgs-record-dialog .sgs-dialog-actions button { padding-inline: 8px; }
+}
+
+@media (max-width: 540px), (max-height: 580px) {
+  .sgs-record-dialog .sgs-record-content { flex: 0 0 auto; overflow: visible; }
+}
+@media (max-height: 580px) {
+  html body .sgs-client-dialog.sgs-record-dialog { padding: 14px 18px; }
+  .sgs-record-dialog .sgs-dialog-note { margin-bottom: 6px; }
+  .sgs-record-dialog .sgs-dialog-actions { margin-top: 10px; }
 }

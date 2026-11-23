@@ -28,7 +28,7 @@ export function openBattleRecords(dialogs, records, { characters, getCatalog = (
   subscribeCatalog = () => () => {}, launch, document = globalThis.document }) {
   let unsubscribe = () => {};
   return dialogs.open('records', `<h2>本地战绩</h2><p class="sgs-dialog-note">最近 50 场已完成对局 · 仅保存在当前浏览器</p>
-    <p data-record-status role="status"></p><div class="sgs-record-summary" hidden></div><div class="sgs-record-filters" role="group" aria-label="按玩法筛选战绩" hidden></div><div class="sgs-record-content" tabindex="0" role="region" aria-label="战绩列表与详情"></div>
+    <p data-record-status role="status"></p><section class="sgs-record-body"><div class="sgs-record-summary" hidden></div><div class="sgs-record-filters" role="group" aria-label="按玩法筛选战绩" hidden></div><div class="sgs-record-content" tabindex="0" role="region" aria-label="战绩列表与详情"></div></section>
     <div class="sgs-dialog-actions"><button type="button" data-back hidden>返回列表</button><button type="button" data-close>关闭战绩</button><button type="button" data-catalog-retry hidden>重试名册</button><button type="button" data-launch data-primary hidden>按此配置开局</button></div>`, (dialog, close) => {
     dialog.classList.add('sgs-record-dialog');
     const summary = dialog.querySelector('.sgs-record-summary');
@@ -101,16 +101,22 @@ export function openBattleRecords(dialogs, records, { characters, getCatalog = (
         return;
       }
       filters.hidden = false;
-      filters.replaceChildren();
-      for (const [key, label] of [['all', '全部'], ['doudizhu', '斗地主'], ['versus', '双人对抗'], ['identity', '身份军争']]) {
-        const count = key === 'all' ? state.records.length : state.records.filter(r => r.replay.mode === key).length;
-        const chip = node('button', `${label} (${count})`);
-        chip.type = 'button';
-        chip.dataset.modeFilter = key;
-        chip.setAttribute('aria-pressed', String(modeFilter === key));
-        chip.onclick = () => { modeFilter = key; list(); };
-        filters.append(chip);
+      const modes = [['all', '全部'], ['doudizhu', '斗地主'], ['versus', '双人对抗'], ['identity', '身份军争']];
+      if (!filters.children.length) {
+        for (const [key] of modes) {
+          const chip = node('button', '');
+          chip.type = 'button';
+          chip.dataset.modeFilter = key;
+          chip.onclick = () => { modeFilter = key; list(); };
+          filters.append(chip);
+        }
       }
+      modes.forEach(([key, label], index) => {
+        const count = key === 'all' ? state.records.length : state.records.filter(r => r.replay.mode === key).length;
+        const chip = filters.children[index];
+        chip.textContent = `${label} (${count})`;
+        chip.setAttribute('aria-pressed', String(modeFilter === key));
+      });
       const filtered = modeFilter === 'all' ? state.records : state.records.filter(r => r.replay.mode === modeFilter);
       const stats = summarizeBattleRecords(filtered);
       summary.hidden = false;
