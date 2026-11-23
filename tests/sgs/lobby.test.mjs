@@ -90,15 +90,16 @@ class Element {
   focus() { this.focused = true; }
   scrollIntoView() { this.scrolled = true; }
 }
-async function lobby({local = storage(), session = storage(), fetcher, pending = false, roster = characters} = {}) {
+async function lobby({local = storage(), session = storage(), fetcher, pending = false, roster = characters, innerWidth = 1024} = {}) {
   const elements = Object.fromEntries([...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, new Element()]));
   for (const [id, value] of Object.entries({version: 'target', pack: 'all', 'player-count': '8', identity: 'random', speed: 'normal'})) elements[id].value = value;
+  elements.previous.disabled = html.includes('id="previous" aria-label="上一页" disabled');
+  elements.next.disabled = html.includes('id="next" aria-label="下一页" disabled');
   const modes = ['identity', 'versus', 'doudizhu'].map(mode => Object.assign(new Element(), {dataset: {mode}}));
   const factions = ['all', 'wei', 'shu'].map(faction => Object.assign(new Element(), {dataset: {faction}}));
   const browse = ['all', 'yijiang', 'limited', 'huicui', 'xinghe', 'mou', 'wei'].map(browse => Object.assign(new Element(), {dataset: {browse}}));
   const roles = ['landlord', 'farmer'].map(value => Object.assign(new Element(), {value, checked: value === 'landlord'}));
-  const document = {
-    ...dom(),
+  const document = Object.assign(dom(), {
     documentElement: new Element(),
     getElementById: id => elements[id] ??= new Element(),
     querySelectorAll: selector => ({'[data-mode]': modes, '.factions button': factions, '[data-browse]': browse, '[name="landlord-role"]': roles}[selector] ?? []),
@@ -109,15 +110,14 @@ async function lobby({local = storage(), session = storage(), fetcher, pending =
       if (selector === '.general-detail') return elements['detail-name'];
       throw new Error(`Unexpected selector ${selector}`);
     },
-    addEventListener() {},
-  };
+  });
   const location = {href: ''}, navigations = [], window = dom(), timers = new Map();
   let timerId = 0;
   const fetch = fetcher || (async url => ({ok: true, json: async () => url.includes('portraits') ? {portraits: {}} : {
     characters: structuredClone(roster), packs: ['standard', 'refresh', 'xianding'].map(id => ({id, name: id})),
   }}));
   vm.runInNewContext(source, {
-    document, localStorage: local, sessionStorage: session, location, innerWidth: 1024,
+    document, localStorage: local, sessionStorage: session, location, innerWidth,
     launchKey, normalizeLaunch, createRecentGenerals: list => createRecentGenerals(list, () => local),
     createPreferences: () => createPreferences(() => local), applyMotionPreference, createClientDialogs, openClientSettings,
     createBattleRecords: () => createBattleRecords(() => local), openBattleRecords,
@@ -676,4 +676,49 @@ test('double-clicking a roster card selects and launches that general exactly on
   assert.equal(app.carrier().pack, 'xianding');
   assert.equal(app.carrier().generalId, 'recent');
   assert.equal(e['start-game'].disabled, true);
+});
+
+test('pre-load pagination stays disabled and clamps page >= 1; keyboard shortcuts ignore modifiers, modals and independent scroll panes', async () => {
+  let release;
+  const app = await lobby({ pending: true, fetcher: async url => {
+    if (url.includes('portraits')) return { ok: true, json: async () => ({ portraits: {} }) };
+    return new Promise(resolve => { release = () => resolve({ ok: true, json: async () => ({ characters: structuredClone(characters), packs: [] }) }); });
+  } });
+  const e = app.elements;
+  assert.equal(e.previous.disabled, true);
+  assert.equal(e.next.disabled, true);
+  e.previous.onclick();
+  app.document.emit('keydown', { key: 'PageUp' });
+  release();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(e['page-number'].textContent, '1 / 2');
+  assert.equal(e.previous.disabled, true);
+  assert.equal(e.next.disabled, false);
+  assert.ok(app.visible().length > 0);
+
+  let prevented = 0;
+  const preventDefault = () => { prevented++; };
+  app.document.emit('keydown', { key: 'PageDown', ctrlKey: true, preventDefault });
+  assert.equal(e['page-number'].textContent, '1 / 2');
+  assert.equal(prevented, 0);
+  app.document.activeElement = e['skill-list'];
+  app.document.emit('keydown', { key: 'PageDown', preventDefault });
+  assert.equal(e['page-number'].textContent, '1 / 2');
+  assert.equal(prevented, 0);
+  app.document.activeElement = e['general-grid'];
+  e['more-filters'].open = true;
+  e['info-dialog'].open = true;
+  app.document.emit('keydown', { key: 'Escape', preventDefault });
+  assert.equal(e['more-filters'].open, true, 'open modal owns Escape before #more-filters');
+  e['info-dialog'].open = false;
+  app.document.emit('keydown', { key: 'Escape', preventDefault });
+  assert.equal(e['more-filters'].open, false);
+  assert.equal(e['more-filters-summary'].focused, true);
+  app.document.emit('keydown', { key: 'PageDown', preventDefault });
+  assert.equal(e['page-number'].textContent, '2 / 2');
+  assert.equal(prevented, 1);
+
+  const narrow = await lobby({ innerWidth: 800 });
+  narrow.document.emit('keydown', { key: 'PageDown', preventDefault });
+  assert.equal(narrow.elements['page-number'].textContent, '1 / 2', 'narrow single-column layout reserves PageDown for page scrolling');
 });

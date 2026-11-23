@@ -70,7 +70,7 @@ function render(resetScroll = false) {
     if (index >= 0) currentPage = Math.floor(index / size) + 1;
   }
   lastPageSize = size;
-  currentPage = Math.min(currentPage, pages);
+  currentPage = Math.max(1, Math.min(currentPage, pages));
   const rows = results.slice((currentPage - 1) * size, currentPage * size);
   const filters = [];
   if (browsePack !== 'all') filters.push(['browse', browsePackName(browsePack)]);
@@ -93,7 +93,7 @@ function render(resetScroll = false) {
   $('rating-detail').textContent = selectedScore === null ? '此版本评分待收录 · 查看说明 ↗' : `${ratingScopeName(ratingPreference.scope)} ${selectedScore} / 10 · 查看分项 ↗`;
   $('rating-source-date').textContent = catalog.ratingSource ? `官方客户端评分 · ${catalog.ratingSource.versionTime.slice(0,10)}` : '暂无官方评分数据';
   reconcileKeyedHTML($('general-grid'), rows.length ? rows.map(c => `<button type="button" class="general-card${selected?.key === c.key ? ' selected' : ''}" data-key="${escape(c.key)}" data-faction="${escape(c.faction)}" aria-label="选择${escape(c.name)}，${ratingValue(c, ratingPreference.scope) === null ? "评分待收录" : `${escape(ratingScopeName(ratingPreference.scope))}官方评分${ratingValue(c, ratingPreference.scope)}分`}" aria-pressed="${selected?.key === c.key}">${portraits[c.id] ? `<img class="card-portrait" src="./sgs/portraits/${portraits[c.id].file}" alt="" width="192" height="256" loading="lazy" decoding="async">` : ''}<span class="card-mark" aria-hidden="true">${factionNames[c.faction] || '将'}</span><span class="card-faction">${factionNames[c.faction] || c.faction}</span><span class="card-hp">${c.hp}${c.maxHp !== c.hp ? '/' + c.maxHp : ''} 体力</span><span class="card-name${text(c.name).length > 4 ? ' long' : ''}">${escape(displayName(c.name))}</span>${favorites.has(c.key) ? '<span class="card-star" aria-label="已收藏">★</span>' : ''}<span class="card-score" data-missing="${ratingValue(c, ratingPreference.scope) === null}" title="${escape(ratingScopeName(ratingPreference.scope))}官方评分">${ratingValue(c, ratingPreference.scope) === null ? '评分待收录' : `${ratingValue(c, ratingPreference.scope)}分`}</span><span class="card-pack" title="${escape(c.groups[0]?.name || packName(c.pack))}">${escape(c.browsePack ? browsePackName(c.browsePack) : c.groups[0]?.name || packName(c.pack))}</span></button>`).join('') : '<div class="empty">没有找到符合条件的武将<button id="empty-reset">清除筛选，重新点将</button></div>', 'data-key', document);
-  $('previous').disabled = currentPage === 1; $('next').disabled = currentPage === pages;
+  $('previous').disabled = currentPage <= 1; $('next').disabled = currentPage >= pages;
   $('random-general').disabled = catalogState !== 'ready' || !results.length;
   $('page-number').textContent = `${currentPage} / ${pages}`;
   $('favorite-count').textContent = favorites.size;
@@ -206,8 +206,8 @@ $('active-filters').addEventListener('click', event => {
   currentPage = 1; syncTabs(); render(true);
   focusAfterFilterRemoval($('active-filters'), focusIndex, $('search'));
 });
-$('previous').onclick = () => { currentPage--; render(true); };
-$('next').onclick = () => { currentPage++; render(true); };
+$('previous').onclick = () => { if (!catalog || currentPage <= 1) return; currentPage--; render(true); };
+$('next').onclick = () => { if (!catalog) return; currentPage++; render(true); };
 $('favorites').onclick = () => { collection = 'favorites'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
 $('recent-generals').onclick = () => { collection = 'recent'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
 $('all-generals').onclick = () => { collection = 'all'; currentPage = 1; syncTabs(); render(true); };
@@ -282,16 +282,21 @@ $('read-skills').onclick = () => {
 };
 const modalOpen = () => $('info-dialog').open || settingsDialogs.has('records') || settingsDialogs.has('settings') || settingsDialogs.has('skill-reading');
 const onKeyDown = event => {
-  if (event.isComposing) return;
+  if (event.isComposing || event.ctrlKey || event.metaKey || event.altKey) return;
+  if (modalOpen()) return;
   if (event.key === 'Escape' && $('more-filters')?.open) {
     $('more-filters').open = false;
     $('more-filters-summary')?.focus?.();
     return;
   }
-  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName) || modalOpen()) return;
+  const active = document.activeElement;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(active?.tagName)) return;
   if (event.key === '/') { event.preventDefault(); $('search').focus(); }
-  else if (event.key === 'PageDown' && !$('next').disabled) { event.preventDefault(); $('next').onclick(); }
-  else if (event.key === 'PageUp' && !$('previous').disabled) { event.preventDefault(); $('previous').onclick(); }
+  else if (event.key === 'PageDown' || event.key === 'PageUp') {
+    if (innerWidth < 1000 || active === $('skill-list') || active === $('battle-settings') || active?.closest?.('#skill-list, #battle-settings, dialog')) return;
+    const target = event.key === 'PageDown' ? $('next') : $('previous');
+    if (!target.disabled) { event.preventDefault(); target.onclick(); }
+  }
 };
 const onPointerDown = event => {
   const details = $('more-filters');
@@ -303,7 +308,7 @@ window.addEventListener('resize', () => render());
 function init() {
   if (catalogRequest) return catalogRequest;
   catalogState = 'loading'; catalog = undefined; portraits = undefined;
-  $('start-game').disabled = true;
+  $('start-game').disabled = true; $('previous').disabled = true; $('next').disabled = true;
   $('sort-order').disabled = true; $('rating-scope').disabled = true; $('random-general').disabled = true;
   notifyCatalog();
   catalogRequest = (async () => { try {

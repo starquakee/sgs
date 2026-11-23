@@ -64,8 +64,8 @@
         "新增lobby.test.mjs回归用例，Node 22测试、构建与静音浏览器验证通过"
       ],
       "priority": 5,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Set initial disabled on #previous/#next in sgs.html and during init(), added !catalog guard and Math.max(1, ...) clamp in lobby.js, filtered ctrl/meta/alt modifiers, checked modalOpen() before #more-filters Escape, and restricted PageUp/PageDown pagination to desktop >=1000px outside #skill-list/#battle-settings/dialog. Upgraded lobby.test.mjs harness to preserve Node.prototype document event listeners; all 31/31 lobby tests and 368/368 full tests pass, build.mjs 3019 assets pass, and muted browser verified #skill-list PageDown scrolling, Control+PageUp passthrough, 800x844 PageUp passthrough, and Escape handling (0 console/network errors)."
     },
     {
       "id": "OPT-06",

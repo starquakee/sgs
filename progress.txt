@@ -28,3 +28,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - Exported `resolveSeatNumber()` in `apps/core/sgs/team-mode.mjs` and wired it into `apps/core/sgs/runtime.js`: 2v2/Doudizhu keep `player.sgsSeat`; Identity mode uses native `player.getSeatNum()` and falls back to Lord-relative order during opening mulligan before `phaseLoop` sets `seatNum`.
 - Added unit tests in `tests/sgs/team-mode.test.mjs` covering 8-player Identity (Lord at pos 0 and pos 3), settled `getSeatNum()` precedence after deaths/shrink, and 2v2/Doudizhu preservation.
 - Verified Node 22 syntax, 6/6 `team-mode.test.mjs`, 367/367 full suite, `build.mjs` (3019 assets), and muted 8-player Identity browser tests (`主公` -> `一号位 · 你`, `反贼` with Lord at pos 2 -> Lord `一号位` / human `七号位 · 你`), zero console errors.
+
+## OPT-05 — 2026-11-23
+- Disabled `#previous` and `#next` initially in `apps/core/sgs.html` and `lobby.js:init()`, clamped `currentPage = Math.max(1, Math.min(currentPage, pages))`, and guarded `!catalog` in click handlers.
+- Hardened `onKeyDown` in `apps/core/sgs/lobby.js`: ignores modifier chords (`ctrl/meta/alt`), checks `modalOpen()` before `#more-filters` Escape handling, and skips `PageUp`/`PageDown` pagination when `innerWidth < 1000` or focus is inside `#skill-list`, `#battle-settings`, or `dialog`.
+- Updated `tests/sgs/lobby.test.mjs` harness (`Object.assign(dom(), ...)`) and added keyboard/pre-load pagination regression test; 31/31 lobby tests, 368/368 full tests, `build.mjs` (3019 assets), and muted browser checks passed cleanly.
