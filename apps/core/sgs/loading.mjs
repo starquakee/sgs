@@ -40,7 +40,7 @@ export async function loadAudioAssets({ stage = () => {}, warn = () => {}, fetch
 
 export function createLoadingScreen({ document = globalThis.document, retry = () => location.reload(), back = () => { location.href = './sgs.html'; } } = {}) {
   const style = document.createElement('link'); style.rel = 'stylesheet'; style.href = './sgs/loading.css'; document.head.append(style);
-  const root = document.createElement('section'); root.className = 'sgs-loading';
+  const root = document.createElement('section'); root.className = 'sgs-loading'; root.dataset.state = 'loading';
   root.setAttribute('aria-label', '对局加载');
   root.innerHTML = '<div class="sgs-loading-panel"><h2>正在准备牌局</h2><p data-stage role="status"></p><p data-warning></p><div class="sgs-loading-actions"><button type="button" data-back>返回点将台</button><button type="button" data-retry hidden>重新载入</button></div></div>';
   document.body.append(root);
@@ -71,12 +71,13 @@ export function createLoadingScreen({ document = globalThis.document, retry = ()
     fail(error) {
       if (disposed || failed) return;
       failed = true;
+      root.dataset.state = 'failed';
       root.hidden = false; notice.hidden = true;
       root.querySelector('h2').textContent = '牌局未能载入';
       stage.textContent = `停在「${stage.textContent || '准备入口'}」：${error?.message || String(error)}`;
       again.hidden = false; again.focus();
     },
-    ready() { if (!disposed && !failed) { finished = true; restoreReset(); root.hidden = true; notice.hidden = !warnings.size; } },
+    ready() { if (!disposed && !failed) { finished = true; restoreReset(); root.dataset.state = 'ready'; root.hidden = true; notice.hidden = !warnings.size; } },
     dispose() { disposed = true; restoreReset(); root.remove(); notice.remove(); style.remove(); },
   };
 }

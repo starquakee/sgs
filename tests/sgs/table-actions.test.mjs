@@ -341,3 +341,41 @@ test('restart prepares parent focus before its dialog; queued native-tool close 
   f.api.dispose(); f.toolsMenu.open = true; f.queued.shift()();
   assert.equal(f.toolsMenu.open, true);
 });
+
+
+test('open general and card description entries sync disabled state when _status.paused2 changes', () => {
+  const f = mounted();
+  f.general.open = true;
+  f.general.emit('toggle');
+  const generalList = f.general.children[1].children[1];
+  const heroBtn = generalList.children[0];
+  assert.equal(heroBtn.disabled, false);
+
+  f._status.paused2 = true;
+  f.api.refresh();
+  assert.equal(generalList.children[0], heroBtn, 'existing general button node stays mounted');
+  assert.equal(heroBtn.disabled, true);
+
+  f._status.paused2 = false;
+  f.api.refresh();
+  assert.equal(generalList.children[0], heroBtn);
+  assert.equal(heroBtn.disabled, false);
+
+  f.general.open = false;
+  f.cardsMenu.open = true;
+  f.cardsMenu.emit('toggle');
+  const cardList = f.menu.children[1];
+  const cardBtn = cardList.children[0];
+  assert.equal(cardBtn.disabled, false);
+
+  f._status.paused2 = true;
+  f.api.refresh();
+  assert.equal(cardList.children[0], cardBtn, 'existing card button node stays mounted');
+  assert.equal(cardBtn.disabled, true);
+
+  f._status.paused2 = false;
+  f.api.refresh();
+  assert.equal(cardList.children[0], cardBtn);
+  assert.equal(cardBtn.disabled, false);
+  f.api.dispose();
+});

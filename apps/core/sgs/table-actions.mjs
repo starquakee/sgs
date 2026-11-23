@@ -196,29 +196,30 @@ export function installTableActions(context, { document = globalThis.document,
             prepareDialog();
             openNativeDescription(context, player, pointer, trackIntro);
           });
-          entry.disabled = !!_status.paused2;
-          return { player, label: labels[index] };
+          return { player, label: labels[index], node: entry };
         });
       }
+      for (const entry of generalEntries) entry.node.disabled = !!_status.paused2;
     }
     if (!cards.open) return;
     const owned = ownDescriptionCards(game);
     // Preserve focus and nodes while the menu remains unchanged.
     const labels = owned.map(card => plain(get.translation(card)));
-    if (entries && entries.length === owned.length && entries.every((entry, i) => entry.card === owned[i] && entry.label === labels[i])) return;
-    list.replaceChildren();
-    entries = owned.map((card, index) => {
-      const entry = button(labels[index], list, event => {
-        event.stopPropagation();
-        const pointer = position(event, summary);
-        cards.open = false;
-        prepareDialog();
-        openNativeDescription(context, card, pointer, trackIntro);
+    if (!entries || entries.length !== owned.length || entries.some((entry, i) => entry.card !== owned[i] || entry.label !== labels[i])) {
+      list.replaceChildren();
+      entries = owned.map((card, index) => {
+        const entry = button(labels[index], list, event => {
+          event.stopPropagation();
+          const pointer = position(event, summary);
+          cards.open = false;
+          prepareDialog();
+          openNativeDescription(context, card, pointer, trackIntro);
+        });
+        return { card, label: labels[index], node: entry };
       });
-      entry.disabled = !!_status.paused2;
-      return { card, label: labels[index] };
-    });
-    empty.hidden = owned.length > 0;
+      empty.hidden = owned.length > 0;
+    }
+    for (const entry of entries) entry.node.disabled = !!_status.paused2;
   };
   const toggle = () => { if (cards.open) { general.open = false; if (nativeTools) nativeTools.open = false; entries = null; refresh(); } };
   const generalToggle = () => { if (general.open) { cards.open = false; if (nativeTools) nativeTools.open = false; generalEntries = null; refresh(); } };

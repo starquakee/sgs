@@ -155,8 +155,8 @@
         "新增table-actions.test.mjs与loading.test.mjs回归用例，Node 22全量测试、构建与静音验证通过"
       ],
       "priority": 12,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Stored node references inside generalEntries and card entries in apps/core/sgs/table-actions.mjs and synced disabled = !!_status.paused2 on every refresh() even when player/card lists remain unchanged. Added root.dataset.state ('loading' -> 'failed' / 'ready') in apps/core/sgs/loading.mjs and hid/stopped h2::before spinner animation under [data-state='failed'] in apps/core/sgs/loading.css. Added regression tests in tests/sgs/table-actions.test.mjs and tests/sgs/loading.test.mjs (25/25 focused pass); full Node 22 suite 373/373 pass; 3/3 native-build and build.mjs 3019 assets pass; muted browser verified loading state, sgs/loading.css 200 OK rule, 牌桌工具 武将说明/卡牌说明 enabled pre- and post-暂停/继续, readable intro popovers, and 0 console errors (final_step_24.png)."
     },
     {
       "id": "OPT-13",
