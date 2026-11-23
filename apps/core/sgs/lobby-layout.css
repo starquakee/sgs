@@ -133,9 +133,11 @@
 .launch-config { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
 .launch-config .settings-footnote { font-size: 12px; color: var(--sgs-muted); margin: 0; }
 .settings-link { min-height: 50px; padding: 8px 12px; border: 1px solid var(--sgs-line); border-radius: var(--sgs-radius); color: var(--sgs-gold); }
-.settings-link:hover { background: var(--sgs-control); }
+.settings-link:hover { background: var(--sgs-control); color: #49240f; }
 .lobby-client .start-button { margin: 0; padding: 12px 16px; letter-spacing: 1px; }
 .lobby-client footer { padding: 0 24px; gap: 12px; align-items: center; font-size: 11px; background: var(--sgs-paper-shade); color: var(--sgs-text); }
+.lobby-client footer a { color: #683b1c; text-decoration: underline; }
+.lobby-client footer a:hover { color: #3c1f0e; }
 .lobby-client #toast { max-width: calc(100vw - 24px); width: max-content; bottom: 126px; }
 
 @media (min-width: 1450px) {
@@ -210,7 +212,7 @@
 .active-filters { display: flex; gap: 6px; margin: 0; min-width: 0; flex: 1; overflow: auto; scrollbar-width: thin; }
 .active-filters[hidden], .selected-filter-note[hidden] { display: none; }
 .active-filters button { max-width: 100%; flex-shrink: 0; min-height: 32px; padding: 5px 9px; border: 1px solid var(--sgs-line); border-radius: var(--sgs-radius); background: var(--sgs-control); color: var(--sgs-text); font: 12px/1.4 var(--sgs-font-body); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; }
-.active-filters button:hover { border-color: var(--sgs-bronze); }
+.active-filters button:hover { border-color: var(--sgs-bronze); background: var(--sgs-control-hover); color: var(--sgs-text); }
 .selected-filter-note { margin: 0 14px 8px; color: var(--sgs-muted); font: 12px/1.5 var(--sgs-font-body); }
 .result-line > :is(#result-count,#clear-filters) { flex-shrink: 0; }
 @media(max-width: 650px) { .active-filters button { min-height: 44px; } }
@@ -245,6 +247,7 @@
 .sort-select select { width: 114px; max-width: 100%; min-height: 36px; padding: 5px 6px; font-size: 11px; background: var(--sgs-control); border-color: var(--sgs-line); color: var(--sgs-text); }
 .rating-summary { flex: 0 0 auto; margin: 0 14px 8px; padding: 7px 0; border-block: 1px solid var(--sgs-line); }
 .rating-summary button { display: block; width: 100%; text-align: left; padding: 2px 0; min-height: 32px; color: var(--sgs-gold); font: 14px/1.5 var(--sgs-font-body); }
+.rating-summary button:hover:not(:disabled) { color: #49240f; text-decoration: underline; }
 .rating-summary small { color: var(--sgs-muted); font-size: 10px; }
 .rating-breakdown { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .rating-breakdown > div { padding: 8px 0; border-bottom: 1px solid var(--sgs-line); }
@@ -252,6 +255,7 @@
 .rating-breakdown dd { margin: 5px 0 0; text-align: left; color: var(--sgs-gold); font-size: 25px; }
 .rating-breakdown dd small { font-size: 11px; color: var(--sgs-muted); }
 .read-skills { flex: 0 0 auto; margin: 0 14px 6px; padding: 6px 0; min-height: 36px; text-align: left; color: var(--sgs-gold); font-size: 12px; }
+.read-skills:hover:not(:disabled) { color: #49240f; text-decoration: underline; }
 .skill-reading-body p + p, .skill-term-body p + p { margin-top: 7px; }
 .skill-reading-body ul, .skill-term-body ul { padding-left: 20px; margin: 8px 0; }
 .skill-reading-body li, .skill-term-body li { margin: 5px 0; color: var(--sgs-text); font: var(--sgs-text-body)/1.8 var(--sgs-font-body); }
@@ -339,7 +343,10 @@ html body .sgs-client-dialog.skill-reading-dialog { width: min(700px, calc(100vw
 .lobby-client .general-card.selected { box-shadow: 0 0 0 2px #d9b373, inset 0 0 0 1px #ffefc199; }
 .lobby-client .general-card .card-name { top: 29px; max-height: calc(100% - 34px); font-size: 23px; letter-spacing: 2px; }
 .lobby-client .pagination { margin: 4px 0; gap: 16px; }
-.lobby-client .pagination button { min-height: 30px; padding: 3px 14px; background: transparent; }
+.lobby-client .pagination button { min-height: 30px; padding: 3px 14px; background: transparent; color: var(--sgs-text); }
+.lobby-client .pagination button:hover:not(:disabled) { background: var(--sgs-control-hover); border-color: var(--sgs-bronze); color: var(--sgs-text); }
+.lobby-client .text-button:hover:not(:disabled) { color: #49240f; text-decoration: underline; }
+.lobby-client .mode-choices button[aria-pressed='true']:hover { background: var(--sgs-paper-light); color: var(--sgs-gold); }
 .lobby-client .roster-footer { padding-top: 2px; }
 .lobby-client .roster-footer .more-filters > summary { padding-block: 4px; }
 .lobby-client .result-line { margin-bottom: 4px; }

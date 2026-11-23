@@ -26,8 +26,8 @@
         "Node 22全量测试、生产构建与1280x720及390x844静音浏览器悬停/空态视觉核验通过"
       ],
       "priority": 2,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Scoped #edcd90 hover in lobby.css strictly to .masthead; updated .loading/.empty (#5c3f26) and .empty button (#6b3416 / #dfc9a6, hover #3c1f0e / #d2b88e), plus explicit dark warm-brown hover rules across lobby.css, lobby-layout.css, settings.css, and records.css. Node 22 full suite 366/366 passed, production build.mjs passed 3019 assets, and muted browser verification at 1280x720 and 390x844 confirmed legible light-paper & masthead hovers, empty-search state recovery, muted sound checkbox, zero horizontal overflow, and zero console/network errors."
     },
     {
       "id": "OPT-03",

@@ -49,7 +49,7 @@ html body .sgs-client-dialog.sgs-record-dialog {
 .sgs-record-row strong { font-weight: 500; color: var(--sgs-gold); }
 .sgs-record-row[data-outcome='loss'] strong { color: var(--sgs-muted); }
 .sgs-record-row .sgs-record-meta { grid-column: 2; }
-.sgs-record-dialog button.sgs-record-row:hover { background: var(--sgs-control-hover); }
+.sgs-record-dialog button.sgs-record-row:hover { background: var(--sgs-control-hover); color: var(--sgs-text); }
 .sgs-record-dialog .sgs-record-outcome { margin: 12px 0 8px; font: 32px/1.3 var(--sgs-font-title); color: var(--sgs-gold); overflow-wrap: anywhere; }
 .sgs-record-dialog .sgs-record-general { font-size: 18px; }
 .sgs-record-dialog .sgs-record-meta { color: var(--sgs-muted); font-size: 12px; overflow-wrap: anywhere; }
