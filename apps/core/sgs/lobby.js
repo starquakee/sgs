@@ -24,11 +24,11 @@ if (!canPersist()) warnStorage();
 const applyPreferences = (value, saved) => { $('speed').value = value.speed; applyMotionPreference(document, value); if (saved === false) warnStorage(); };
 applyPreferences(preferences.get());
 const unsubscribePreferences = preferences.subscribe(applyPreferences);
-const factionNames = { wei: '魏', shu: '蜀', wu: '吴', qun: '群', jin: '晋', shen: '神', key: '异' };
+const factionNames = { wei: '魏', shu: '蜀', wu: '吴', qun: '群', jin: '晋', shen: '神', key: '异', western: '西', devil: '魔' };
 const text = value => String(value ?? '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ');
 const displayName = value => text(value).replace(/^新杀/, '');
 const escape = value => text(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let catalog, portraits, selected, recent, currentPage = 1, faction = 'all', collection = 'all', searchQuery = '', lastPageSize;
+let catalog, portraits, selected, recent, currentPage = 1, faction = 'all', collection = 'all', savedVersion, searchQuery = '', lastPageSize;
 let browsePack = 'all', hideOld = false;
 try { hideOld = localStorage.getItem('sgs.hide-old-generals.v1') === 'true'; } catch { /* Use the session default. */ }
 let ratingPreference = normalizeRatingPreference();
@@ -136,7 +136,7 @@ function select(character) {
 }
 function saveAgeFilter() { try { localStorage.setItem('sgs.hide-old-generals.v1', String(hideOld)); } catch { warnStorage(); } }
 function saveRatingPreference() { try { localStorage.setItem('sgs.roster-sort.v1', JSON.stringify(ratingPreference)); } catch { warnStorage(); } }
-function reset() { $('search').value = ''; searchQuery = ''; $('pack').value = 'all'; $('version').value = 'target'; faction = 'all'; browsePack = 'all'; hideOld = false; saveAgeFilter(); collection = 'all'; currentPage = 1; syncTabs(); render(true); }
+function reset() { $('search').value = ''; searchQuery = ''; $('pack').value = 'all'; $('version').value = 'target'; faction = 'all'; browsePack = 'all'; hideOld = false; saveAgeFilter(); collection = 'all'; savedVersion = undefined; currentPage = 1; syncTabs(); render(true); }
 function syncTabs() {
   document.querySelectorAll('[data-browse]').forEach(button => { const active = button.dataset.browse === browsePack; button.setAttribute('aria-pressed', String(active)); });
   document.querySelectorAll('.factions button').forEach(button => { const active = button.dataset.faction === faction; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); });
@@ -197,7 +197,7 @@ $('roster-policy').onclick = () => {
   showInfo('武将包与年份', `<p>主要按<strong>一将成名、限定专属、群英荟萃、星河璀璨、谋包、威包</strong>浏览，一将成名排在前面。</p><p>神将、祈福将、王朗、刘徽和武庙将归入限定专属；许绍归入群英荟萃；星曹仁、星袁术等归入新的星河璀璨。谋将、威将各自独立。</p><p>“全部”也保留经典与界限突破。其他版本可在“更多筛选”中切换范围和原始包；原有收藏、出战武将和技能版本保持独立。</p><h3>隐藏老武将</h3><p>隐藏已有依据属于2020年及以前的版本，保留2021年起的新将和新版本。年份未核实的条目继续保留，不按姓名、强度或“界”字判断年份。</p>${evidence}`);
 };
 const stopSearch = installComposedSearch($('search'), value => { if (searchQuery === value) return; searchQuery = value; currentPage = 1; render(true); });
-for (const id of ['version','pack']) $(id).addEventListener('change', () => { currentPage = 1; render(true); });
+for (const id of ['version','pack']) $(id).addEventListener('change', () => { if (id === 'version') savedVersion = undefined; currentPage = 1; render(true); });
 $('clear-filters').onclick = reset;
 $('active-filters').addEventListener('click', event => {
   const button = event.target.closest('[data-filter]');
@@ -207,16 +207,19 @@ $('active-filters').addEventListener('click', event => {
   if (key === 'faction') faction = 'all';
   else if (key === 'browse') browsePack = 'all';
   else if (key === 'age') { hideOld = false; saveAgeFilter(); }
-  else $(key).value = key === 'version' ? 'target' : key === 'pack' ? 'all' : '';
+  else {
+    if (key === 'version') savedVersion = undefined;
+    $(key).value = key === 'version' ? 'target' : key === 'pack' ? 'all' : '';
+  }
   if (key === 'search') searchQuery = '';
   currentPage = 1; syncTabs(); render(true);
   focusAfterFilterRemoval($('active-filters'), focusIndex, $('search'));
 });
 $('previous').onclick = () => { if (!catalog || currentPage <= 1) return; currentPage--; render(true); };
 $('next').onclick = () => { if (!catalog) return; currentPage++; render(true); };
-$('favorites').onclick = () => { collection = 'favorites'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
-$('recent-generals').onclick = () => { collection = 'recent'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
-$('all-generals').onclick = () => { collection = 'all'; currentPage = 1; syncTabs(); render(true); };
+$('favorites').onclick = () => { if (collection === 'all') savedVersion = $('version').value; collection = 'favorites'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
+$('recent-generals').onclick = () => { if (collection === 'all') savedVersion = $('version').value; collection = 'recent'; currentPage = 1; $('version').value = 'all'; syncTabs(); render(true); };
+$('all-generals').onclick = () => { if (collection !== 'all' && savedVersion !== undefined) $('version').value = savedVersion; savedVersion = undefined; collection = 'all'; currentPage = 1; syncTabs(); render(true); };
 $('favorite-toggle').onclick = () => { if(!selected) return; favorites.has(selected.key) ? favorites.delete(selected.key) : favorites.add(selected.key); try { localStorage.setItem('sgs.favorites.v1', JSON.stringify([...favorites])); } catch { warnStorage(); } select(selected); };
 $('close-dialog').onclick = () => $('info-dialog').close();
 $('info-dialog').addEventListener('click', event => { if(event.target === $('info-dialog')) { const r = event.target.getBoundingClientRect(); if(event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) event.target.close(); } });

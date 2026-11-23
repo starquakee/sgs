@@ -116,8 +116,8 @@
         "新增lobby.test.mjs回归用例，Node 22测试、构建与静音浏览器验证通过"
       ],
       "priority": 9,
-      "passes": false,
-      "notes": ""
+      "passes": true,
+      "notes": "Saved savedVersion when switching from #all-generals into #favorites or #recent-generals and restored it when returning to #all-generals (clearing savedVersion on reset(), #version change, or removing the version chip) so no stray '全部版本' filter chip remains. Added western: '西' and devil: '魔' to factionNames in apps/core/sgs/lobby.js. Added regression test in tests/sgs/lobby.test.mjs (33/33 pass); full Node 22 suite 371/371 pass; 3/3 native-build and build.mjs 3019 assets pass; muted browser verified default target and decade version round-trips through favorites/recent back to all-generals plus real '西' (凯撒) and '魔' (魔曹操/★魔姜维) labels with 0 console/network errors."
     },
     {
       "id": "OPT-10",

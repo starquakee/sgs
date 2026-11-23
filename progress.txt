@@ -48,3 +48,8 @@ Baseline commit: bd68e3c (codex/sgs-vercel-audio, published snapshot f0f571e on 
 - Wrapped `.sgs-record-summary`, `.sgs-record-filters`, and `.sgs-record-content` inside `<section class="sgs-record-body">` in `apps/core/sgs/records-dialog.mjs` and updated `apps/core/sgs/records.css` so `.sgs-record-body` absorbs height compression (`flex: 0 1 auto; min-height: 0; overflow-y: auto`), keeping `h2`, status, and `.sgs-dialog-actions` pinned and unclipped even on `390x667` and `640x420` (where `.sgs-record-content` expands inside `.sgs-record-body`).
 - Reused the 4 mode-filter `<button>` nodes inside `list()` (`apps/core/sgs/records-dialog.mjs`) updating `textContent` and `aria-pressed` in place instead of `filters.replaceChildren()`, preserving keyboard focus on filter activation.
 - Added regression test in `tests/sgs/battle-records.test.mjs` (`11/11` pass); full Node 22 tests `370/370` pass, `build.mjs` (`3019` assets) pass, and muted browser verified `1280x720`, `390x667`, and `640x420` list/detail bounding boxes + Tab/Enter filter focus retention cleanly.
+
+## OPT-09 — 2026-11-23
+- Saved `savedVersion` before leaving `#all-generals` for `#favorites` or `#recent-generals` and restored it when returning to `#all-generals` (clearing `savedVersion` on `reset()`, explicit `#version` change, or removing the `'version'` filter chip), preventing stray `全部版本` chips after viewing favorites/recent.
+- Added `western: '西'` and `devil: '魔'` to `factionNames` in `apps/core/sgs/lobby.js`.
+- Added regression test in `tests/sgs/lobby.test.mjs` (`33/33` pass); full Node 22 suite `371/371` pass, `build.mjs` (`3019` assets) pass, and muted browser verified default & `十年版` version round-trips plus real `西`/`魔` faction labels with `0` console/network errors.

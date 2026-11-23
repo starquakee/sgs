@@ -770,3 +770,46 @@ test('bfcache return closes stale records launch lock, showInfo resets scrollTop
   assert.equal(app.window.listeners.get('resize')?.size || 0, 0);
   assert.equal(app.document.listeners.get('keydown')?.size || 0, 0);
 });
+
+
+test('returning from favorites or recent restores prior version scope without leftover version chips and maps western/devil factions', async () => {
+  const mixedFactions = [
+    ...characters,
+    { ...character('sp', 'western_hero', 'decade'), name: '凯撒', faction: 'western', factions: ['western'] },
+    { ...character('huicui', 'devil_hero', 'decade'), name: '魔司马懿', faction: 'devil', factions: ['devil'] },
+  ];
+  const app = await lobby({ roster: mixedFactions }), e = app.elements;
+
+  assert.equal(e.version.value, 'target');
+  e.favorites.onclick();
+  assert.equal(e.version.value, 'all');
+  e['recent-generals'].onclick();
+  assert.equal(e.version.value, 'all');
+  e['all-generals'].onclick();
+  assert.equal(e.version.value, 'target');
+  assert.equal(e['active-filters'].hidden, true);
+  assert.equal(e['active-filters'].innerHTML, '');
+
+  e.version.value = 'decade';
+  e.version.emit('change');
+  e.favorites.onclick();
+  assert.equal(e.version.value, 'all');
+  e['recent-generals'].onclick();
+  e['all-generals'].onclick();
+  assert.equal(e.version.value, 'decade');
+
+  e.version.value = 'all';
+  e.version.emit('change');
+  e.search.value = '凯撒';
+  e.search.emit('input');
+  assert.match(e['general-grid'].innerHTML, />西</);
+  app.select('sp:western_hero');
+  assert.equal(e['detail-faction'].textContent, '西');
+  assert.match(e['detail-pack'].textContent, /^西 · /);
+  e.search.value = '魔司马懿';
+  e.search.emit('input');
+  assert.match(e['general-grid'].innerHTML, />魔</);
+  app.select('huicui:devil_hero');
+  assert.equal(e['detail-faction'].textContent, '魔');
+  assert.match(e['detail-pack'].textContent, /^魔 · /);
+});
